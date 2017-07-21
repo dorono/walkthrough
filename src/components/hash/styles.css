@@ -1,0 +1,10 @@
+@import 'styles/variables.css';
+
+.root {
+    font-family: var(--monospace-font);
+    color: var(--blue);
+
+    &:hover {
+        color: var(--black);
+    }
+}

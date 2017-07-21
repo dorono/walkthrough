@@ -1,0 +1,84 @@
+{
+    "extends": "airbnb",
+    "parser": "babel-eslint",
+    "parserOptions": {
+        "sourceType": "module",
+        "ecmaVersion": "7",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "settings": {
+        "import/resolver": "webpack"
+    },
+    "env": {
+        "es6": true,
+        "browser": true,
+        "node": true,
+        "mocha": true
+    },
+    "globals": {
+        "CONFIG": true,
+        "CDN_URL": true,
+        "google": true,
+    },
+    "rules": {
+        // Overrides
+        "max-len": [2, 120],
+        "indent": [2, 4, {"SwitchCase": 1}],
+        "object-curly-spacing": [2, "never"],
+        "no-multiple-empty-lines": [2, {"max": 1}],
+        "jsx-quotes": [2, "prefer-single"],
+        "no-underscore-dangle": [2, {"allow": ["_id", "_rev", "_deleted", "__all__"]}],
+
+        // React
+        "react/jsx-indent": [2, 4],
+        "react/jsx-indent-props": [2, 4],
+        "react/jsx-no-bind": [2, {"ignoreRefs": false, "allowArrowFunctions": false, "allowBind": false}],
+        "react/jsx-closing-bracket-location": [1, {selfClosing: "tag-aligned", nonEmpty: "after-props"}],
+        "react/jsx-filename-extension": [0],
+        "react/jsx-curly-spacing": [2, {"when": "never", "children": true}],
+        "react/sort-comp": [2, {"order": ["static-methods", "state", "lifecycle", "everything-else", "/^handle.+$/", "/^render.+$/", "render"]}],
+        "react/prefer-stateless-function": [0],
+        "react/no-danger": [0],
+        "react/no-render-return-value": [0],
+        "react/no-multi-comp": [0],
+        "react/prop-types": [0],
+        "react/require-default-props": [0],
+        "react/forbid-prop-types": [0],
+        "react/style-prop-object": [0], // Rename Button.style to something else
+
+        // Imports
+        "import/newline-after-import": [0],
+        "import/prefer-default-export": [0],
+        "import/no-dynamic-require": [0],
+        "import/order": [2, {
+            "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
+        }],
+
+        // Accessibility... sorry :/
+        "jsx-a11y/tabindex-no-positive": [0],
+        "jsx-a11y/no-static-element-interactions": [0],
+        "jsx-a11y/no-noninteractive-element-interactions": [0],
+
+        // Disable stuff
+        "default-case": [0],
+        "consistent-return": [0],
+        "global-require": [0],
+        "yoda": [0],
+        "class-methods-use-this": [0],
+        "arrow-parens": [0],
+        "arrow-body-style": [0],
+        "no-mixed-operators": [0],
+        "no-param-reassign": [0],
+        "no-return-assign": [0],
+        "no-use-before-define": [0],
+        "no-case-declarations": [0],
+        "no-confusing-arrow": [0],
+        "no-multi-assign": [0],
+        "no-plusplus": [0],
+        "no-shadow": [0],
+        "no-alert": [0],
+        "no-useless-escape": [0],
+    }
+}

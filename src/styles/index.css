@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css?family=Montserrat:200,300,400,600|Roboto+Mono');
+@import 'variables.css';
+
+* {
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+    font: inherit;
+    line-height: 1.4em;
+    -webkit-overflow-scrolling: touch;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    &:hover,
+    &:active,
+    &:focus {
+        outline: none;
+    }
+}
+
+html {
+    font-size: 62.5%;
+}
+
+a {
+    text-decoration: none;
+    transition: all 150ms ease-out-cubic;
+}
+
+input,
+button,
+select {
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    appearance: none;
+}
+
+button {
+    cursor: pointer;
+}

@@ -1,0 +1,39 @@
+{
+    "hash": "9766d8fb6bf85f6ba4c42f426e72edde851551f21e8af7307ce87697a2889b98",
+    "dblock": {
+        "keymr": "8f98de9ce253214152cc0b3f7e2ffded93572bfe6fe50784109bb379c025ffa7",
+        "height": 95845,
+        "href": "https://explorer.factom.com/dblocks/95845"
+    },
+    "total_inputs": 25.80112500,
+    "total_outputs": 25.80000000,
+    "total_ecs": 0,
+    "ec_created": 0E-8,
+    "ec_destroyed": -0.00112500,
+    "transactions": [
+        {
+            "created_at": "2017-07-05T10:52:00Z",
+            "tx_id": "74e0a483961d9bec1d8b34713892bf64fb79dc8c8c1f167d22683a64c25b9ed2",
+            "href": "https://explorer.factom.com/tx/74e0a483961d9bec1d8b34713892bf64fb79dc8c8c1f167d22683a64c25b9ed2",
+            "total_inputs": 0E-8,
+            "total_outputs": 0E-8,
+            "total_ecs": 0
+        },
+        {
+            "created_at": "2017-07-05T10:53:07Z",
+            "tx_id": "046f75f24827e2897b51d0434f94f15cd595998d624d1eb278d7d4fd1c1e217f",
+            "href": "https://explorer.factom.com/tx/046f75f24827e2897b51d0434f94f15cd595998d624d1eb278d7d4fd1c1e217f",
+            "total_inputs": 12.90054000,
+            "total_outputs": 12.90000000,
+            "total_ecs": 0
+        },
+        {
+            "created_at": "2017-07-05T10:57:32Z",
+            "tx_id": "2cefcbb821087b505129032045ef8712756e808b692ed06ee730886f01c5dce0",
+            "href": "https://explorer.factom.com/tx/2cefcbb821087b505129032045ef8712756e808b692ed06ee730886f01c5dce0",
+            "total_inputs": 12.90058500,
+            "total_outputs": 12.90000000,
+            "total_ecs": 0
+        }
+    ]
+}

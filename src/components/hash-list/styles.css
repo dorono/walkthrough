@@ -1,0 +1,19 @@
+@import 'styles/variables.css';
+
+.item {
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 0;
+
+    & > *:first-child {
+        width: 20rem;
+    }
+
+    &.merge {
+        padding-bottom: 0;
+    }
+
+    &:not(.merge):not(:last-child) {
+        border-bottom: 1px solid var(--gray-2);
+    }
+}

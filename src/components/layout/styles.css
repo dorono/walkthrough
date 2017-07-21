@@ -1,0 +1,36 @@
+@import 'styles/variables.css';
+
+.horizontal {
+    display: flex;
+    align-items: flex-start;
+
+    & > * + * {
+        margin-left: 2rem;
+    }
+
+    & > *:last-child {
+        flex-grow: 1;
+    }
+}
+
+.vertical {
+    display: flex;
+    flex-direction: column;
+
+    & > * + * {
+        margin-top: 1rem;
+    }
+}
+
+.box {
+    padding: 1rem;
+    border-radius: var(--border-radius);
+
+    &.fill {
+        background: var(--gray-1);
+    }
+
+    &.outline {
+        border: 1px solid var(--gray-2);
+    }
+}

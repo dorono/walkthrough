@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+set -e
+
+# Bump version
+if [ "$1" != "" ]; then
+    npm version $1 -m "Release v%s"
+    git push
+    git push --tags
+fi
+
+# Build
+npm run build
+
+# Deploy
+rsync -av --delete --exclude .DS_Store build/ factom.mrph.io:/srv/http/factom

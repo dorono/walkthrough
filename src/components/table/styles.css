@@ -1,0 +1,79 @@
+@import 'styles/variables.css';
+
+.root {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+    white-space: nowrap;
+
+    & > tbody {
+        & tr {
+            &:hover {
+                background: var(--gray-1);
+            }
+        }
+
+        & th,
+        & td {
+            color: var(--gray-4);
+            border-bottom: 1px solid var(--gray-2);
+            cursor: pointer;
+        }
+    }
+}
+
+.primary {
+    composes: root;
+
+    & th,
+    & td {
+        padding: 1.4rem;
+
+        &:not(:first-child) {
+            padding-left: 0;
+        }
+    }
+
+    & thead th {
+        background: var(--gray-2);
+
+        &:first-child {
+            border-top-left-radius: var(--border-radius);
+            border-bottom-left-radius: var(--border-radius);
+        }
+
+        &:last-child {
+            border-top-right-radius: var(--border-radius);
+            border-bottom-right-radius: var(--border-radius);
+        }
+    }
+}
+
+.secondary {
+    composes: root;
+
+    & th,
+    & td {
+        padding: 1.4rem 0;
+
+        &:not(:last-child) {
+            padding-right: 1.4rem;
+        }
+    }
+
+    & thead th {
+        color: var(--blue);
+        border-bottom: 1px solid var(--gray-2);
+    }
+}
+
+.header {
+    composes: root from 'components/label/styles.css';
+}
+
+.ellipsis {
+    width: 100%;
+    max-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

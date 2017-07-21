@@ -1,0 +1,10 @@
+@import 'styles/variables.css';
+
+.root {
+    padding-bottom: 3rem;
+    min-height: 100vh;
+    font-family: var(--font);
+    font-size: 1.3rem;
+    background: var(--app-bg);
+    color: var(--black);
+}

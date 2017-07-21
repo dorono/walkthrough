@@ -1,0 +1,50 @@
+@import 'styles/variables.css';
+
+.root {
+    margin: 0 auto 3rem;
+    padding: 2rem;
+    width: var(--content-width);
+    max-width: var(--content-max-width);
+    border-radius: var(--border-radius);
+    background: var(--white);
+    box-shadow: 0 0 8px 0 rgba(var(--black), 0.12);
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2rem;
+}
+
+.title {
+    font-size: 3rem;
+
+    @nest main.root & {
+        font-weight: 300;
+    }
+
+    @nest section.root & {
+        font-weight: 200;
+    }
+}
+
+.subtitle {
+    flex-basis: 100%;
+    color: var(--gray-4);
+}
+
+.count {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 1rem;
+    padding: 0 0.8rem;
+    min-width: 3.2rem;
+    height: 3.2rem;
+    border-radius: 1.6rem;
+    border: 1px solid var(--gray-3);
+    font-size: 2rem;
+    font-weight: 300;
+    color: var(--gray-3);
+}

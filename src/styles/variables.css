@@ -1,0 +1,22 @@
+:root {
+    --blue: #417BA4;
+    --yellow: #E8B420;
+    --violet: #7F5D93;
+
+    --gray-1: #F5F5F5;
+    --gray-2: #E9E9E9;
+    --gray-3: #7B7B7B;
+    --gray-4: #4A4A4A;
+    --white: #FFF;
+    --black: #000;
+
+    --app-bg: #FAFAFA;
+    --app-header-bg: linear-gradient(90deg, #111135 0%, #343454 100%);
+
+    --content-width: 95%;
+    --content-max-width: 1400px;
+    --border-radius: 0.4rem;
+
+    --font: Montserrat, sans-serif;
+    --monospace-font: 'Roboto Mono', monospace;
+}
