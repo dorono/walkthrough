@@ -1,9 +1,5 @@
 @import 'styles/variables.css';
 
-.value {
+.root {
     font-family: var(--monospace-font);
-
-    &:not(:last-child) {
-        margin-bottom: 1rem;
-    }
 }

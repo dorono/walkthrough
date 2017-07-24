@@ -1,0 +1,19 @@
+{
+    "address": "FA2Ba1ciaqupRm6yWb2jGk2K8v2mEdY4KfHjt5KV7hFNEoLxRA7n",
+    "type": "factoid_address",
+    "balance": 0.00486000,
+    "transactions": [
+        {
+            "tx_id": "281f797ce3d1ea65fc5621f63c3297fdbc20511c447e47425ae0ead83f364490",
+            "href": "https://explorer.factom.com/tx/281f797ce3d1ea65fc5621f63c3297fdbc20511c447e47425ae0ead83f364490",
+            "created_at": "2017-07-10T11:16:16Z",
+            "amount": -339.99514000
+        },
+        {
+            "tx_id": "f495bca9438809bdf8664e4c3604ad634acbb1ebaa8a7e5661fbb00c852819ff",
+            "href": "https://explorer.factom.com/tx/f495bca9438809bdf8664e4c3604ad634acbb1ebaa8a7e5661fbb00c852819ff",
+            "created_at": "2015-09-01T17:00:00Z",
+            "amount": 340.00000000
+        }
+    ]
+}

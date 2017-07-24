@@ -6,7 +6,7 @@ import Table from 'components/table';
 import DateDisplay from 'components/date-display';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import styles from './styles.css';
+import Monospaced from 'components/monospaced';
 
 @load('/data/fblock.json')
 export default class FactoidBlock extends Component {
@@ -17,26 +17,28 @@ export default class FactoidBlock extends Component {
                     <Horizontal>
                         <Vertical>
                             <Box style='outline'>
-                                <Label>INPUTS</Label>
-                                <div className={styles.value}>
-                                    {this.props.data.total_inputs}
-                                </div>
-                                <Label>OUTPUTS</Label>
-                                <div className={styles.value}>
-                                    {this.props.data.total_outputs}
-                                </div>
-                                <Label>TOTAL ECS</Label>
-                                <div className={styles.value}>
-                                    {this.props.data.total_ecs}
-                                </div>
-                                <Label>ECS CREATED</Label>
-                                <div className={styles.value}>
-                                    {this.props.data.ec_created}
-                                </div>
-                                <Label>ECS DESTROYED</Label>
-                                <div className={styles.value}>
-                                    {this.props.data.ec_destroyed}
-                                </div>
+                                <Vertical>
+                                    <div>
+                                        <Label>INPUTS</Label>
+                                        <Monospaced>{this.props.data.total_inputs}</Monospaced>
+                                    </div>
+                                    <div>
+                                        <Label>OUTPUTS</Label>
+                                        <Monospaced>{this.props.data.total_outputs}</Monospaced>
+                                    </div>
+                                    <div>
+                                        <Label>TOTAL ECS</Label>
+                                        <Monospaced>{this.props.data.total_ecs}</Monospaced>
+                                    </div>
+                                    <div>
+                                        <Label>ECS CREATED</Label>
+                                        <Monospaced>{this.props.data.ec_created}</Monospaced>
+                                    </div>
+                                    <div>
+                                        <Label>ECS DESTROYED</Label>
+                                        <Monospaced>{this.props.data.ec_destroyed}</Monospaced>
+                                    </div>
+                                </Vertical>
                             </Box>
                         </Vertical>
                         <Vertical>
