@@ -22,7 +22,8 @@ export default class DirectoryBlockList extends Component {
                         'ENTRIES',
                     ]}
                     rows={this.props.data}
-                    ellipsis={2}>
+                    ellipsis={2}
+                    centerAlign={3}>
                     {row => (
                         <tr key={row.height}>
                             <td>{row.height}</td>

@@ -11,6 +11,7 @@ export default class Table extends Component {
         columns: PropTypes.arrayOf(PropTypes.string).isRequired,
         children: PropTypes.func.isRequired,
         ellipsis: PropTypes.number,
+        centerAlign: PropTypes.number,
         type: PropTypes.oneOf(['primary', 'secondary']),
     };
 
@@ -51,9 +52,16 @@ export default class Table extends Component {
                         const tr = this.props.children(row);
                         return React.cloneElement(tr, {
                             children: tr.props.children.map((cell, index) => {
+                                const className = [];
                                 if (index === this.props.ellipsis) {
+                                    className.push(styles.ellipsis);
+                                }
+                                if (index >= this.props.centerAlign) {
+                                    className.push(styles.center);
+                                }
+                                if (className.length) {
                                     return React.cloneElement(cell, {
-                                        className: styles.ellipsis,
+                                        className: className.join(' '),
                                     });
                                 }
                                 return cell;
