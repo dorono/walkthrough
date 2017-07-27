@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {currentTimezone, formatDate, formatDateLong} from 'utils/date';
+import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
-import Table from 'components/table';
+import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 
@@ -41,18 +41,7 @@ export default class EntryBlock extends Component {
                     </Vertical>
                 </Container>
                 <Container title='Entries' count={this.props.data.entries.length}>
-                    <Table
-                        columns={[`CREATED (${currentTimezone()})`, 'HASH']}
-                        rows={this.props.data.entries}
-                        ellipsis={1}
-                        type='secondary'>
-                        {row => (
-                            <tr key={row.hash}>
-                                <td>{formatDate(row.created_at)}</td>
-                                <td><Hash type='entry'>{row.hash}</Hash></td>
-                            </tr>
-                        )}
-                    </Table>
+                    <EntriesTable entries={this.props.data.entries} />
                 </Container>
             </div>
         );
