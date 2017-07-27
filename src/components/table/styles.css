@@ -9,8 +9,8 @@
     & > tbody {
         & th,
         & td {
-            color: var(--gray-4);
-            border-bottom: 1px solid var(--gray-2);
+            color: var(--gray);
+            border-bottom: 1px solid var(--gray-stroke-light);
             cursor: pointer;
         }
     }
@@ -29,7 +29,7 @@
     }
 
     & thead th {
-        background: var(--gray-2);
+        background: var(--gray-bg-dark);
 
         &:first-child {
             border-top-left-radius: var(--border-radius);
@@ -56,8 +56,8 @@
     }
 
     & thead th {
-        color: var(--gray-3);
-        border-bottom: 1px solid var(--gray-2);
+        color: var(--gray-light);
+        border-bottom: 1px solid var(--gray-stroke-light);
     }
 }
 

@@ -3,12 +3,15 @@
     --yellow: #E8B420;
     --violet: #7F5D93;
 
-    --gray-1: #F5F5F5;
-    --gray-2: #E9E9E9;
-    --gray-3: #7B7B7B;
-    --gray-4: #4A4A4A;
     --white: #FFF;
     --black: #000;
+
+    --gray-bg-light: #F5F5F5;
+    --gray-bg-dark: #E9E9E9;
+    --gray-stroke-light: #E9E9E9;
+    --gray-stroke-dark: #C3C3C3;
+    --gray-light: #7B7B7B;
+    --gray: #4A4A4A;
 
     --app-bg: #FAFAFA;
     --app-header-bg: linear-gradient(90deg, #111135 0%, #343454 100%);

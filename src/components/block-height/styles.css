@@ -4,6 +4,5 @@
     display: inline-block;
     font-size: 4rem;
     font-weight: 300;
-    color: var(--gray-4);
     border-bottom: 2px solid var(--black);
 }
