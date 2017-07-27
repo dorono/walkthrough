@@ -16,7 +16,7 @@ export default class FactoidBlock extends Component {
                 <Container primary title='Factoid block'>
                     <Horizontal>
                         <Vertical>
-                            <Box style='outline'>
+                            <Box type='outline'>
                                 <Vertical>
                                     <div>
                                         <Label>INPUTS</Label>
@@ -42,11 +42,11 @@ export default class FactoidBlock extends Component {
                             </Box>
                         </Vertical>
                         <Vertical>
-                            <Box style='outline'>
+                            <Box type='outline'>
                                 <Label>HASH</Label>
                                 <Hash type='ablock'>{this.props.data.hash}</Hash>
                             </Box>
-                            <Box style='fill'>
+                            <Box type='fill'>
                                 <Label>PARENT DIRECTORY BLOCK</Label>
                                 <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
                             </Box>
@@ -58,7 +58,7 @@ export default class FactoidBlock extends Component {
                         columns={[`CREATED (${currentTimezone()})`, 'HASH', 'INPUTS', 'OUTPUTS', 'TOTAL ECS']}
                         rows={this.props.data.transactions}
                         ellipsis={1}
-                        style='secondary'>
+                        type='secondary'>
                         {row => (
                             <tr key={row.tx_id}>
                                 <td>{formatDate(row.created_at)}</td>

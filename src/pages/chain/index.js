@@ -14,7 +14,7 @@ export default class Chain extends Component {
             <div>
                 <Container primary title='Chain'>
                     <Vertical>
-                        <Box style='outline'>
+                        <Box type='outline'>
                             <Label>CHAIN ID</Label>
                             <Hash type='chain'>{this.props.data.chain_id}</Hash>
                         </Box>
@@ -33,7 +33,7 @@ export default class Chain extends Component {
                         columns={[`CREATED (${currentTimezone()})`, 'HASH']}
                         rows={this.props.data.entries}
                         ellipsis={1}
-                        style='secondary'>
+                        type='secondary'>
                         {row => (
                             <tr key={row.hash}>
                                 <td>{formatDate(row.created_at)}</td>

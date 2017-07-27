@@ -11,11 +11,11 @@ export default class Table extends Component {
         columns: PropTypes.arrayOf(PropTypes.string).isRequired,
         children: PropTypes.func.isRequired,
         ellipsis: PropTypes.number,
-        style: PropTypes.oneOf(['primary', 'secondary']),
+        type: PropTypes.oneOf(['primary', 'secondary']),
     };
 
     static defaultProps = {
-        style: 'primary',
+        type: 'primary',
     };
 
     handleClick(event) {
@@ -35,7 +35,7 @@ export default class Table extends Component {
 
     render() {
         return (
-            <table className={styles[this.props.style]} onClick={this.handleClick}>
+            <table className={styles[this.props.type]} onClick={this.handleClick}>
                 <thead>
                     <tr>
                         {this.props.columns.map(header => (

@@ -24,12 +24,12 @@ export class Vertical extends Component {
 
 export class Box extends Component {
     static propTypes = {
-        style: PropTypes.oneOf(['fill', 'outline']),
+        type: PropTypes.oneOf(['fill', 'outline']),
     };
 
     render() {
         return (
-            <div className={`${styles.box} ${styles[this.props.style]}`}>
+            <div className={`${styles.box} ${styles[this.props.type]}`}>
                 {this.props.children}
             </div>
         );

@@ -16,7 +16,7 @@ export default class Address extends Component {
                 <Container primary title='Address'>
                     <Horizontal>
                         <Vertical>
-                            <Box style='outline'>
+                            <Box type='outline'>
                                 <Vertical>
                                     <div>
                                         <Label>Type</Label>
@@ -30,7 +30,7 @@ export default class Address extends Component {
                             </Box>
                         </Vertical>
                         <Vertical>
-                            <Box style='outline'>
+                            <Box type='outline'>
                                 <Label>HASH</Label>
                                 <Hash type='address'>{this.props.data.address}</Hash>
                             </Box>
@@ -45,7 +45,7 @@ export default class Address extends Component {
                         columns={['TRANSACTION ID', 'AMOUNT (BALANCE CHANGE)', `CREATED TIME (${currentTimezone()})`]}
                         rows={this.props.data.transactions}
                         ellipsis={0}
-                        style='secondary'>
+                        type='secondary'>
                         {row => (
                             <tr key={row.tx_id}>
                                 <td><Hash type='tx'>{row.tx_id}</Hash></td>

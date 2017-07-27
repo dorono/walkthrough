@@ -14,23 +14,23 @@ export default class EntryBlock extends Component {
             <div>
                 <Container primary title='Entry block'>
                     <Vertical>
-                        <Box style='fill'>
+                        <Box type='fill'>
                             <Label>NEXT ENTRY BLOCK</Label>
                             <Hash type='eblock'>{this.props.data.next.keymr}</Hash>
                         </Box>
-                        <Box style='outline'>
+                        <Box type='outline'>
                             <Label>KEYMR</Label>
                             <Hash type='eblock'>{this.props.data.keymr}</Hash>
                         </Box>
-                        <Box style='fill'>
+                        <Box type='fill'>
                             <Label>PREVIOUS ENTRY BLOCK</Label>
                             <Hash type='eblock'>{this.props.data.prev.keymr}</Hash>
                         </Box>
-                        <Box style='fill'>
+                        <Box type='fill'>
                             <Label>CHAIN</Label>
                             <Hash type='chain'>{this.props.data.chain.chain_id}</Hash>
                         </Box>
-                        <Box style='fill'>
+                        <Box type='fill'>
                             <Label>PARENT DIRECTORY BLOCK</Label>
                             <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
                         </Box>
@@ -45,7 +45,7 @@ export default class EntryBlock extends Component {
                         columns={[`CREATED (${currentTimezone()})`, 'HASH']}
                         rows={this.props.data.entries}
                         ellipsis={1}
-                        style='secondary'>
+                        type='secondary'>
                         {row => (
                             <tr key={row.hash}>
                                 <td>{formatDate(row.created_at)}</td>

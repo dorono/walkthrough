@@ -14,11 +14,11 @@ export default class EntryCreditBlock extends Component {
             <div>
                 <Container primary title='Entry credit block'>
                     <Vertical>
-                        <Box style='outline'>
+                        <Box type='outline'>
                             <Label>HASH</Label>
                             <Hash type='ablock'>{this.props.data.hash}</Hash>
                         </Box>
-                        <Box style='fill'>
+                        <Box type='fill'>
                             <Label>PARENT DIRECTORY BLOCK</Label>
                             <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
                         </Box>
@@ -29,7 +29,7 @@ export default class EntryCreditBlock extends Component {
                         columns={[`CREATED (${currentTimezone()})`, 'HASH']}
                         rows={this.props.data.entries}
                         ellipsis={1}
-                        style='secondary'>
+                        type='secondary'>
                         {row => (
                             <tr key={row.hash}>
                                 <td>{formatDate(row.created_at)}</td>

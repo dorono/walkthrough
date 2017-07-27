@@ -46,23 +46,23 @@ export default class DirectoryBlock extends Component {
                             </div>
                         </Vertical>
                         <Vertical>
-                            <Box style='fill'>
+                            <Box type='fill'>
                                 <Label>NEXT DIRECTORY BLOCK</Label>
                                 <Hash type='dblock'>{this.props.data.next.keymr}</Hash>
                             </Box>
-                            <Box style='outline'>
+                            <Box type='outline'>
                                 <Label>KEYMR</Label>
                                 <Hash type='dblock'>{this.props.data.keymr}</Hash>
                             </Box>
-                            <Box style='fill'>
+                            <Box type='fill'>
                                 <Label>PREVIOUS DIRECTORY BLOCK</Label>
                                 <Hash type='dblock'>{this.props.data.prev.keymr}</Hash>
                             </Box>
-                            <Box style='fill'>
+                            <Box type='fill'>
                                 <Label>BTC TRANSACTION</Label>
                                 <Hash type='btc'>{this.props.data.btc_transaction}</Hash>
                             </Box>
-                            <Box style='fill'>
+                            <Box type='fill'>
                                 <Label>BTC ANCHOR ENTRY</Label>
                                 <Hash type='entry'>{this.props.data.btc_anchor_entry}</Hash>
                             </Box>

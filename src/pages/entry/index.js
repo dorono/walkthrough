@@ -13,11 +13,11 @@ export default class Entry extends Component {
             <div>
                 <Container primary title='Entry'>
                     <Vertical>
-                        <Box style='outline'>
+                        <Box type='outline'>
                             <Label>HASH</Label>
                             <Hash type='eblock'>{this.props.data.hash}</Hash>
                         </Box>
-                        <Box style='fill'>
+                        <Box type='fill'>
                             <Label>CHAIN</Label>
                             <Hash type='chain'>{this.props.data.chain.chain_id}</Hash>
                         </Box>

@@ -22,11 +22,11 @@ export default class Transaction extends Component {
             <div>
                 <Container primary title='Factoid Transaction'>
                     <Vertical>
-                        <Box style='outline'>
+                        <Box type='outline'>
                             <Label>HASH</Label>
                             <Hash type='eblock'>{this.props.data.tx_id}</Hash>
                         </Box>
-                        <Box style='fill'>
+                        <Box type='fill'>
                             <Label>PARENT DIRECTORY BLOCK</Label>
                             <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
                         </Box>
@@ -44,7 +44,7 @@ export default class Transaction extends Component {
                         columns={['ADDRESS', 'AMOUNT']}
                         rows={this.props.data.inputs}
                         ellipsis={0}
-                        style='secondary'>
+                        type='secondary'>
                         {row => (
                             <tr key={row.address + row.amount}>
                                 <td><Hash type='address'>{row.address}</Hash></td>
@@ -61,7 +61,7 @@ export default class Transaction extends Component {
                         columns={['ADDRESS', 'AMOUNT']}
                         rows={this.props.data.outputs}
                         ellipsis={0}
-                        style='secondary'>
+                        type='secondary'>
                         {row => (
                             <tr key={row.address + row.amount}>
                                 <td><Hash type='address'>{row.address}</Hash></td>
