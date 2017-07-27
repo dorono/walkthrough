@@ -24,6 +24,10 @@ export default class Hash extends Component {
     render() {
         const hash = this.props.children;
 
+        if (!hash) {
+            return <span className={styles.root}>Not available</span>;
+        }
+
         if (this.props.type === 'btc') {
             return (
                 <a className={styles.root} href={`https://blockchain.info/tx/${hash}`} target='_blank'>
