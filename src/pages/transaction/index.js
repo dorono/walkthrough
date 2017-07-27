@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {currentTimezone, formatDate} from 'utils/date';
+import {currentTimezone, formatDate, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import Table from 'components/table';
@@ -32,7 +32,7 @@ export default class Transaction extends Component {
                         </Box>
                         <Box>
                             <Label>CREATED ({currentTimezone()})</Label>
-                            {formatDate(this.props.data.created_at)}
+                            {formatDateLong(this.props.data.created_at)}
                         </Box>
                     </Vertical>
                 </Container>

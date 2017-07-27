@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {currentTimezone, formatDate} from 'utils/date';
+import {currentTimezone, formatDate, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import HashList from 'components/hash-list';
@@ -44,7 +44,7 @@ export default class EntryBlock extends Component {
                         </Box>
                         <Box>
                             <Label>STARTED ({currentTimezone()})</Label>
-                            {formatDate(this.props.data.started_at)}
+                            {formatDateLong(this.props.data.started_at)}
                         </Box>
                     </Vertical>
                 </Container>
