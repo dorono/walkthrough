@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {currentTimezone, formatDate, formatDateLong} from 'utils/date';
+import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import Table from 'components/table';
@@ -10,12 +10,26 @@ import Monospaced from 'components/monospaced';
 
 @load('/data/tx.json')
 export default class Transaction extends Component {
-    getEntries() {
-        return this.props.data.entries.map(entry => ({
-            type: 'entry',
-            label: formatDate(entry.created_at),
-            value: entry.hash,
-        }));
+    renderTransactions(title, transactions) {
+        return (
+            <Container
+                title={title}
+                subtitle='(included in this transaction)'
+                count={transactions.length}>
+                <Table
+                    columns={['ADDRESS', 'AMOUNT']}
+                    rows={transactions}
+                    ellipsis={0}
+                    type='secondary'>
+                    {row => (
+                        <tr key={row.address + row.amount}>
+                            <td><Hash type='address'>{row.address}</Hash></td>
+                            <td><Monospaced>{row.amount}</Monospaced></td>
+                        </tr>
+                    )}
+                </Table>
+            </Container>
+        );
     }
 
     render() {
@@ -37,40 +51,8 @@ export default class Transaction extends Component {
                         </Box>
                     </Vertical>
                 </Container>
-                <Container
-                    title='Inputs'
-                    subtitle='(included in this transaction)'
-                    count={this.props.data.inputs.length}>
-                    <Table
-                        columns={['ADDRESS', 'AMOUNT']}
-                        rows={this.props.data.inputs}
-                        ellipsis={0}
-                        type='secondary'>
-                        {row => (
-                            <tr key={row.address + row.amount}>
-                                <td><Hash type='address'>{row.address}</Hash></td>
-                                <td><Monospaced>{row.amount}</Monospaced></td>
-                            </tr>
-                        )}
-                    </Table>
-                </Container>
-                <Container
-                    title='Outputs'
-                    subtitle='(included in this transaction)'
-                    count={this.props.data.outputs.length}>
-                    <Table
-                        columns={['ADDRESS', 'AMOUNT']}
-                        rows={this.props.data.outputs}
-                        ellipsis={0}
-                        type='secondary'>
-                        {row => (
-                            <tr key={row.address + row.amount}>
-                                <td><Hash type='address'>{row.address}</Hash></td>
-                                <td><Monospaced>{row.amount}</Monospaced></td>
-                            </tr>
-                        )}
-                    </Table>
-                </Container>
+                {this.renderTransactions('Inputs', this.props.data.inputs)}
+                {this.renderTransactions('Outputs', this.props.data.outputs)}
             </div>
         );
     }
