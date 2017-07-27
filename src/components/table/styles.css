@@ -56,7 +56,7 @@
     }
 
     & thead th {
-        color: var(--blue);
+        color: var(--gray-3);
         border-bottom: 1px solid var(--gray-2);
     }
 }
