@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {formatDate} from 'format';
+import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import HashList from 'components/hash-list';
 import Label from 'components/label';
-import DateDisplay from 'components/date-display';
 import Hash from 'components/hash';
 
 @load('/data/eblock.json')
@@ -44,8 +43,8 @@ export default class EntryBlock extends Component {
                             <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
                         </Box>
                         <Box>
-                            <Label>STARTED</Label>
-                            <DateDisplay>{this.props.data.started_at}</DateDisplay>
+                            <Label>STARTED ({currentTimezone()})</Label>
+                            {formatDate(this.props.data.started_at)}
                         </Box>
                     </Vertical>
                 </Container>

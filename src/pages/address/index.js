@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
+import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
-import DateDisplay from 'components/date-display';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
@@ -42,7 +42,7 @@ export default class Address extends Component {
                     subtitle='(involving this address)'
                     count={this.props.data.transactions.length}>
                     <Table
-                        columns={['TRANSACTION ID', 'AMOUNT (BALANCE CHANGE)', 'CREATED TIME']}
+                        columns={['TRANSACTION ID', 'AMOUNT (BALANCE CHANGE)', `CREATED TIME (${currentTimezone()})`]}
                         rows={this.props.data.transactions}
                         ellipsis={0}
                         style='secondary'>
@@ -50,7 +50,7 @@ export default class Address extends Component {
                             <tr key={row.tx_id}>
                                 <td><Hash type='tx'>{row.tx_id}</Hash></td>
                                 <td><Monospaced>{row.amount}</Monospaced></td>
-                                <td><DateDisplay>{row.created_at}</DateDisplay></td>
+                                <td>{formatDate(row.created_at)}</td>
                             </tr>
                         )}
                     </Table>

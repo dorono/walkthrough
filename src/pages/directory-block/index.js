@@ -1,11 +1,11 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
+import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
 import HashList from 'components/hash-list';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import DateDisplay from 'components/date-display';
 import BlockHeight from 'components/block-height';
 
 @load('/data/dblock.json')
@@ -40,8 +40,8 @@ export default class DirectoryBlock extends Component {
                                 {this.props.data.height}
                             </BlockHeight>
                             <div>
-                                <Label>START TIME</Label>
-                                <DateDisplay>{this.props.data.started_at}</DateDisplay>
+                                <Label>START TIME ({currentTimezone()})</Label>
+                                {formatDate(this.props.data.started_at)}
                             </div>
                         </Vertical>
                         <Vertical>

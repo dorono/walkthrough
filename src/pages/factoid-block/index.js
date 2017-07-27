@@ -1,9 +1,9 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
+import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
-import DateDisplay from 'components/date-display';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
@@ -55,13 +55,13 @@ export default class FactoidBlock extends Component {
                 </Container>
                 <Container title='Transactions' count={this.props.data.transactions.length}>
                     <Table
-                        columns={['CREATED', 'HASH', 'INPUTS', 'OUTPUTS', 'TOTAL ECS']}
+                        columns={[`CREATED (${currentTimezone()})`, 'HASH', 'INPUTS', 'OUTPUTS', 'TOTAL ECS']}
                         rows={this.props.data.transactions}
                         ellipsis={1}
                         style='secondary'>
                         {row => (
                             <tr key={row.tx_id}>
-                                <td><DateDisplay>{row.created_at}</DateDisplay></td>
+                                <td>{formatDate(row.created_at)}</td>
                                 <td><Hash type='tx'>{row.tx_id}</Hash></td>
                                 <td>{row.total_inputs}</td>
                                 <td>{row.total_outputs}</td>

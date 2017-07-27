@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {formatDate} from 'format';
+import {formatDate} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import HashList from 'components/hash-list';
