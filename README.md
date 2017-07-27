@@ -1,4 +1,4 @@
-# Explorer UI
+# Factom Explorer UI
 
 ## Development
 
