@@ -48,3 +48,8 @@
     font-weight: 300;
     color: var(--gray-light);
 }
+
+.actions {
+    flex-grow: 1;
+    text-align: right;
+}

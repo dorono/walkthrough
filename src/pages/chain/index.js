@@ -27,9 +27,7 @@ export default class Chain extends Component {
                         </Box>
                     </Vertical>
                 </Container>
-                <Container title='Entries' count={this.props.data.entries.length}>
-                    <EntriesTable entries={this.props.data.entries} />
-                </Container>
+                <EntriesTable entries={this.props.data.entries} />
             </div>
         );
     }

@@ -8,10 +8,7 @@ export default class Container extends Component {
         title: PropTypes.string.isRequired,
         subtitle: PropTypes.string,
         count: PropTypes.number,
-    };
-
-    static defaultProps = {
-        primary: false,
+        actions: PropTypes.node,
     };
 
     render() {
@@ -25,6 +22,11 @@ export default class Container extends Component {
                     {this.props.count && (
                         <div className={styles.count}>
                             {this.props.count}
+                        </div>
+                    )}
+                    {this.props.actions && (
+                        <div className={styles.actions}>
+                            {this.props.actions}
                         </div>
                     )}
                     {this.props.subtitle && (
