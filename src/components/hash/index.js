@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
-import {Link} from 'react-router-dom';
+import {Link, withRouter} from 'react-router-dom';
 import {reverse} from 'routes';
 import styles from './styles.css';
 
+@withRouter
 export default class Hash extends Component {
     static propTypes = {
         type: PropTypes.oneOf([
@@ -31,10 +32,12 @@ export default class Hash extends Component {
             );
         }
 
-        return (
-            <Link className={styles.root} to={reverse(this.props.type, {hash})}>
-                {hash}
-            </Link>
-        );
+        const url = reverse(this.props.type, {hash});
+
+        if (this.props.location.pathname === url) {
+            return <span className={styles.root}>{hash}</span>;
+        }
+
+        return <Link className={styles.root} to={url}>{hash}</Link>;
     }
 }

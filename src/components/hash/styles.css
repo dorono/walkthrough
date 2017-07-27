@@ -2,6 +2,9 @@
 
 .root {
     font-family: var(--monospace-font);
+}
+
+a.root {
     color: var(--blue);
 
     &:hover {
