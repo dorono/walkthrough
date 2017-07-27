@@ -10,7 +10,7 @@ export default class Sortable extends Component {
         items: PropTypes.array.isRequired,
         sortOptions: PropTypes.arrayOf(PropTypes.shape({
             label: PropTypes.string.isRequired,
-            compare: PropTypes.func.isRequired,
+            func: PropTypes.func.isRequired,
         })).isRequired,
     };
 
