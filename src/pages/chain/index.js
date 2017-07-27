@@ -5,6 +5,7 @@ import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import Tag from 'components/tag';
 
 @load('/data/chain.json')
 export default class Chain extends Component {
@@ -19,7 +20,7 @@ export default class Chain extends Component {
                         </Box>
                         <Box>
                             <Label>EXTERNAL IDS</Label>
-                            {this.props.data.external_ids.join(' / ')}
+                            {this.props.data.external_ids.map(externalId => <Tag key={externalId}>{externalId}</Tag>)}
                         </Box>
                         <Box>
                             <Label>CONTENT</Label>
