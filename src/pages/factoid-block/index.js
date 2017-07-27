@@ -44,7 +44,7 @@ export default class FactoidBlock extends Component {
                         <Vertical>
                             <Box type='outline'>
                                 <Label>HASH</Label>
-                                <Hash type='ablock'>{this.props.data.hash}</Hash>
+                                <Hash type='fblock'>{this.props.data.hash}</Hash>
                             </Box>
                             <Box type='fill'>
                                 <Label>PARENT DIRECTORY BLOCK</Label>
