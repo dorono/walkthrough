@@ -29,7 +29,7 @@
 }
 
 .rect3 {
-    animation-delay: -1.0s;
+    animation-delay: -1s;
 }
 
 .rect4 {
@@ -48,6 +48,6 @@
     }
 
     20% {
-        transform: scaleY(1.0);
+        transform: scaleY(1);
     }
 }
