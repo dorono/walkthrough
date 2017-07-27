@@ -7,12 +7,6 @@
     white-space: nowrap;
 
     & > tbody {
-        & tr {
-            &:hover {
-                background: var(--gray-1);
-            }
-        }
-
         & th,
         & td {
             color: var(--gray-4);
@@ -27,7 +21,7 @@
 
     & th,
     & td {
-        padding: 1.4rem;
+        padding: 1.5rem;
 
         &:not(:first-child) {
             padding-left: 0;
@@ -54,10 +48,10 @@
 
     & th,
     & td {
-        padding: 1.4rem 0;
+        padding: 1.5rem 0;
 
         &:not(:last-child) {
-            padding-right: 1.4rem;
+            padding-right: 1.5rem;
         }
     }
 
