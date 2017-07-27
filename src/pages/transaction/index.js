@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {load} from 'decorators';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
-import {Vertical, Box} from 'components/layout';
+import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
@@ -36,20 +36,40 @@ export default class Transaction extends Component {
         return (
             <div>
                 <Container primary title='Factoid Transaction'>
-                    <Vertical>
-                        <Box type='outline'>
-                            <Label>HASH</Label>
-                            <Hash type='eblock'>{this.props.data.tx_id}</Hash>
-                        </Box>
-                        <Box type='fill'>
-                            <Label>PARENT DIRECTORY BLOCK</Label>
-                            <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
-                        </Box>
-                        <Box>
-                            <Label>CREATED ({currentTimezone()})</Label>
-                            {formatDateLong(this.props.data.created_at)}
-                        </Box>
-                    </Vertical>
+                    <Horizontal>
+                        <Vertical>
+                            <Box type='outline'>
+                                <Vertical>
+                                    <div>
+                                        <Label>INPUTS</Label>
+                                        <Monospaced>{this.props.data.total_inputs}</Monospaced>
+                                    </div>
+                                    <div>
+                                        <Label>OUTPUTS</Label>
+                                        <Monospaced>{this.props.data.total_outputs}</Monospaced>
+                                    </div>
+                                    <div>
+                                        <Label>FEE</Label>
+                                        <Monospaced>{this.props.data.fee}</Monospaced>
+                                    </div>
+                                </Vertical>
+                            </Box>
+                        </Vertical>
+                        <Vertical>
+                            <Box type='outline'>
+                                <Label>HASH</Label>
+                                <Hash type='eblock'>{this.props.data.tx_id}</Hash>
+                            </Box>
+                            <Box type='fill'>
+                                <Label>PARENT DIRECTORY BLOCK</Label>
+                                <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
+                            </Box>
+                            <Box>
+                                <Label>CREATED ({currentTimezone()})</Label>
+                                {formatDateLong(this.props.data.created_at)}
+                            </Box>
+                        </Vertical>
+                    </Horizontal>
                 </Container>
                 {this.renderTransactions('Inputs', this.props.data.inputs)}
                 {this.renderTransactions('Outputs', this.props.data.outputs)}
