@@ -30,7 +30,7 @@ export default class Hash extends Component {
 
         if (this.props.type === 'btc') {
             return (
-                <a className={styles.root} href={`https://blockchain.info/tx/${hash}`} target='_blank'>
+                <a className={styles.external} href={`https://blockchain.info/tx/${hash}`} target='_blank'>
                     {hash}
                 </a>
             );
