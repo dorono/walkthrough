@@ -55,7 +55,14 @@ export default class FactoidBlock extends Component {
                 </Container>
                 <Container title='Transactions' count={this.props.data.transactions.length}>
                     <Table
-                        columns={[`CREATED (${currentTimezone()})`, 'HASH', 'INPUTS', 'OUTPUTS', 'TOTAL ECS']}
+                        columns={[
+                            `CREATED (${currentTimezone()})`,
+                            'HASH',
+                            'INPUTS',
+                            'OUTPUTS',
+                            'FEE',
+                            'TOTAL ECS',
+                        ]}
                         rows={this.props.data.transactions}
                         ellipsis={1}
                         type='secondary'>
@@ -65,6 +72,7 @@ export default class FactoidBlock extends Component {
                                 <td><Hash type='tx'>{row.tx_id}</Hash></td>
                                 <td><Monospaced>{row.total_inputs}</Monospaced></td>
                                 <td><Monospaced>{row.total_outputs}</Monospaced></td>
+                                <td><Monospaced>{row.fee}</Monospaced></td>
                                 <td><Monospaced>{row.total_ecs}</Monospaced></td>
                             </tr>
                         )}
