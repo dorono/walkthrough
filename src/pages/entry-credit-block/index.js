@@ -6,7 +6,7 @@ import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 
-@load('/data/ablock.json')
+@load('/data/ecblock.json')
 export default class EntryCreditBlock extends Component {
     render() {
         return (
@@ -15,7 +15,7 @@ export default class EntryCreditBlock extends Component {
                     <Vertical>
                         <Box type='outline'>
                             <Label>HASH</Label>
-                            <Hash type='ablock'>{this.props.data.hash}</Hash>
+                            <Hash type='ecblock'>{this.props.data.hash}</Hash>
                         </Box>
                         <Box type='fill'>
                             <Label>PARENT DIRECTORY BLOCK</Label>
