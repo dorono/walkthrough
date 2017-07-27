@@ -19,6 +19,9 @@ export default class Table extends Component {
     };
 
     handleClick(event) {
+        // Do not trigger link if selecting
+        if (window.getSelection().toString()) return;
+
         let node = event.target;
         while (node) {
             const tagName = node.tagName.toLowerCase();
