@@ -6,6 +6,7 @@ import {Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import Monospaced from 'components/monospaced';
 
 @load('/data/tx.json')
 export default class Transaction extends Component {
@@ -48,7 +49,7 @@ export default class Transaction extends Component {
                         {row => (
                             <tr key={row.address + row.amount}>
                                 <td><Hash type='address'>{row.address}</Hash></td>
-                                <td>{row.amount}</td>
+                                <td><Monospaced>{row.amount}</Monospaced></td>
                             </tr>
                         )}
                     </Table>
@@ -65,7 +66,7 @@ export default class Transaction extends Component {
                         {row => (
                             <tr key={row.address + row.amount}>
                                 <td><Hash type='address'>{row.address}</Hash></td>
-                                <td>{row.amount}</td>
+                                <td><Monospaced>{row.amount}</Monospaced></td>
                             </tr>
                         )}
                     </Table>

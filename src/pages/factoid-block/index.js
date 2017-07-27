@@ -63,9 +63,9 @@ export default class FactoidBlock extends Component {
                             <tr key={row.tx_id}>
                                 <td>{formatDate(row.created_at)}</td>
                                 <td><Hash type='tx'>{row.tx_id}</Hash></td>
-                                <td>{row.total_inputs}</td>
-                                <td>{row.total_outputs}</td>
-                                <td>{row.total_ecs}</td>
+                                <td><Monospaced>{row.total_inputs}</Monospaced></td>
+                                <td><Monospaced>{row.total_outputs}</Monospaced></td>
+                                <td><Monospaced>{row.total_ecs}</Monospaced></td>
                             </tr>
                         )}
                     </Table>
