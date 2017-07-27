@@ -1,22 +1,14 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {formatDate} from 'utils/date';
+import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
-import HashList from 'components/hash-list';
+import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 
 @load('/data/ablock.json')
 export default class AdminBlock extends Component {
-    getEntries() {
-        return this.props.data.entries.map(entry => ({
-            type: 'entry',
-            label: formatDate(entry.created_at),
-            value: entry.hash,
-        }));
-    }
-
     render() {
         return (
             <div>
@@ -33,7 +25,18 @@ export default class AdminBlock extends Component {
                     </Vertical>
                 </Container>
                 <Container title='Entries' count={this.props.data.entries.length}>
-                    <HashList hashes={this.getEntries()} />
+                    <Table
+                        columns={[`CREATED (${currentTimezone()})`, 'HASH']}
+                        rows={this.props.data.entries}
+                        ellipsis={1}
+                        style='secondary'>
+                        {row => (
+                            <tr key={row.hash}>
+                                <td>{formatDate(row.created_at)}</td>
+                                <td><Hash type='entry'>{row.hash}</Hash></td>
+                            </tr>
+                        )}
+                    </Table>
                 </Container>
             </div>
         );

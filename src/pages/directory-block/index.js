@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
 import {load} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
-import HashList from 'components/hash-list';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import BlockHeight from 'components/block-height';
+import styles from './styles.css';
 
 @load('/data/dblock.json')
 export default class DirectoryBlock extends Component {
@@ -69,7 +70,12 @@ export default class DirectoryBlock extends Component {
                     </Horizontal>
                 </Container>
                 <Container title='Blocks' subtitle='(included in this directory block)' count={blockCount}>
-                    <HashList hashes={this.getBlocks()} />
+                    {this.getBlocks().map(hash => (
+                        <div key={hash.value} className={classNames(styles.block, {[styles.merge]: hash.merge})}>
+                            <Label>{hash.label}</Label>
+                            <Hash type={hash.type}>{hash.value}</Hash>
+                        </div>
+                    ))}
                 </Container>
             </div>
         );
