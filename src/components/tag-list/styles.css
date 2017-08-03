@@ -1,6 +1,6 @@
 @import 'styles/variables.css';
 
-.root {
+.tag {
     display: inline-flex;
     align-items: center;
     padding: 0 1rem;
