@@ -6,7 +6,7 @@ import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 
-@load('/data/ecblock.json')
+@load(({match}) => `/ecblocks/${match.params.hash}`)
 export default class EntryCreditBlock extends Component {
     render() {
         return (

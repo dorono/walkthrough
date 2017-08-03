@@ -6,7 +6,7 @@ import Pagination from 'components/pagination';
 import Hash from 'components/hash';
 import TagList from 'components/tag-list';
 
-@load('/data/chains.json')
+@load('/chains')
 export default class ChainList extends Component {
     render() {
         return (
@@ -18,7 +18,7 @@ export default class ChainList extends Component {
                     {row => (
                         <tr key={row.chain_id}>
                             <td><Hash type='chain'>{row.chain_id}</Hash></td>
-                            <td><TagList>{row.external_ids}</TagList></td>
+                            <td><TagList>{row.external_ids.map(window.atob)}</TagList></td>
                         </tr>
                     )}
                 </Table>

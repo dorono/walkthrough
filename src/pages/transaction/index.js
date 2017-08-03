@@ -8,7 +8,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
 
-@load('/data/tx.json')
+@load(({match}) => `/transactions/${match.params.hash}`)
 export default class Transaction extends Component {
     renderTransactions(title, transactions) {
         return (
@@ -58,7 +58,7 @@ export default class Transaction extends Component {
                         <Vertical>
                             <Box type='outline'>
                                 <Label>HASH</Label>
-                                <Hash type='eblock'>{this.props.data.tx_id}</Hash>
+                                <Hash type='tx'>{this.props.data.tx_id}</Hash>
                             </Box>
                             <Box type='fill'>
                                 <Label>PARENT DIRECTORY BLOCK</Label>

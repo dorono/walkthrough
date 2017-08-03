@@ -6,7 +6,7 @@ import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 
-@load('/data/ablock.json')
+@load(({match}) => `/ablocks/${match.params.hash}`)
 export default class AdminBlock extends Component {
     render() {
         return (

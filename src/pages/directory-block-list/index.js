@@ -6,7 +6,7 @@ import Table from 'components/table';
 import Pagination from 'components/pagination';
 import Hash from 'components/hash';
 
-@load('/data/dblocks.json')
+@load('/dblocks')
 export default class DirectoryBlockList extends Component {
     render() {
         return (

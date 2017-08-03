@@ -7,7 +7,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import TagList from 'components/tag-list';
 
-@load('/data/chain.json')
+@load(({match}) => `/chains/${match.params.hash}`)
 export default class Chain extends Component {
     render() {
         return (
@@ -20,11 +20,11 @@ export default class Chain extends Component {
                         </Box>
                         <Box>
                             <Label>EXTERNAL IDS</Label>
-                            <TagList>{this.props.data.external_ids}</TagList>
+                            <TagList>{this.props.data.external_ids.map(window.atob)}</TagList>
                         </Box>
                         <Box>
                             <Label>CONTENT</Label>
-                            {this.props.data.content}
+                            {window.atob(this.props.data.content)}
                         </Box>
                     </Vertical>
                 </Container>

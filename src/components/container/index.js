@@ -19,7 +19,7 @@ export default class Container extends Component {
                     <h1 className={styles.title}>
                         {this.props.title}
                     </h1>
-                    {this.props.count && (
+                    {this.props.count !== undefined && (
                         <div className={styles.count}>
                             {this.props.count}
                         </div>

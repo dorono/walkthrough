@@ -9,7 +9,7 @@ import Hash from 'components/hash';
 import BlockHeight from 'components/block-height';
 import styles from './styles.css';
 
-@load('/data/dblock.json')
+@load(({match}) => `/dblocks/${match.params.hash}`)
 export default class DirectoryBlock extends Component {
     getBlocks() {
         const {ablock, ecblock, fblock, eblocks} = this.props.data;
@@ -48,7 +48,7 @@ export default class DirectoryBlock extends Component {
                         <Vertical>
                             <Box type='fill'>
                                 <Label>NEXT DIRECTORY BLOCK</Label>
-                                <Hash type='dblock'>{this.props.data.next.keymr}</Hash>
+                                <Hash type='dblock'>{this.props.data.next && this.props.data.next.keymr}</Hash>
                             </Box>
                             <Box type='outline'>
                                 <Label>KEYMR</Label>
@@ -60,7 +60,7 @@ export default class DirectoryBlock extends Component {
                             </Box>
                             <Box type='fill'>
                                 <Label>BTC TRANSACTION</Label>
-                                <Hash type='btc'>{this.props.data.btc_transaction}</Hash>
+                                <Hash type='btc'>{this.props.data.btc_block_hash}</Hash>
                             </Box>
                             <Box type='fill'>
                                 <Label>BTC ANCHOR ENTRY</Label>

@@ -9,7 +9,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
 
-@load('/data/fblock.json')
+@load(({match}) => `/fblocks/${match.params.hash}`)
 export default class FactoidBlock extends Component {
     render() {
         return (
@@ -45,7 +45,7 @@ export default class FactoidBlock extends Component {
                         <Vertical>
                             <Box type='outline'>
                                 <Label>HASH</Label>
-                                <Hash type='fblock'>{this.props.data.hash}</Hash>
+                                <Hash type='fblock'>{this.props.data.keymr}</Hash>
                             </Box>
                             <Box type='fill'>
                                 <Label>PARENT DIRECTORY BLOCK</Label>
