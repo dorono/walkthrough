@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
 import {load} from 'decorators';
-import {currentTimezone, formatDate} from 'utils/date';
+import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
 import Label from 'components/label';
@@ -42,7 +42,7 @@ export default class DirectoryBlock extends Component {
                             </BlockHeight>
                             <div>
                                 <Label>START TIME ({currentTimezone()})</Label>
-                                {formatDate(this.props.data.started_at)}
+                                {formatDateLong(this.props.data.started_at)}
                             </div>
                         </Vertical>
                         <Vertical>
