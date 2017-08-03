@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import styles from './styles.css';
 
 export class Horizontal extends Component {
@@ -29,7 +30,7 @@ export class Box extends Component {
 
     render() {
         return (
-            <div className={`${styles.box} ${styles[this.props.type]}`}>
+            <div className={classNames(styles.box, styles[this.props.type])}>
                 {this.props.children}
             </div>
         );
