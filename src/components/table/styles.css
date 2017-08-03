@@ -13,6 +13,10 @@
             border-bottom: 1px solid var(--gray-stroke-light);
             cursor: pointer;
         }
+
+        & tr:hover > * {
+            background: var(--gray-bg-light);
+        }
     }
 }
 
