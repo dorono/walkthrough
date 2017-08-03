@@ -45,6 +45,11 @@
             border-bottom-right-radius: var(--border-radius);
         }
     }
+
+    & .has-width {
+        padding-left: 0;
+        padding-right: 0;
+    }
 }
 
 .secondary {

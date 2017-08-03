@@ -42,9 +42,23 @@ export default class Table extends Component {
             <table className={styles[this.props.type]} onClick={this.handleClick}>
                 <thead>
                     <tr>
-                        {this.props.columns.map(header => (
-                            <th key={header} className={styles.header}>{header}</th>
-                        ))}
+                        {this.props.columns.map((header, index) => {
+                            const className = [styles.header];
+                            let style;
+
+                            if (index >= this.props.centerAlign) {
+                                className.push(styles.center);
+                            }
+
+                            if (this.props.fixedWidth && index >= this.props.fixedWidth.start) {
+                                className.push(styles.hasWidth);
+                                style = {minWidth: this.props.fixedWidth.width};
+                            }
+
+                            return (
+                                <th key={header} className={className.join(' ')} style={style}>{header}</th>
+                            );
+                        })}
                     </tr>
                 </thead>
                 <tbody>
@@ -53,17 +67,25 @@ export default class Table extends Component {
                         return React.cloneElement(tr, {
                             children: tr.props.children.map((cell, index) => {
                                 const className = [];
+
                                 if (index === this.props.ellipsis) {
                                     className.push(styles.ellipsis);
                                 }
+
                                 if (index >= this.props.centerAlign) {
                                     className.push(styles.center);
                                 }
+
+                                if (this.props.fixedWidth && index >= this.props.fixedWidth.start) {
+                                    className.push(styles.hasWidth);
+                                }
+
                                 if (className.length) {
                                     return React.cloneElement(cell, {
                                         className: className.join(' '),
                                     });
                                 }
+
                                 return cell;
                             }),
                         });
