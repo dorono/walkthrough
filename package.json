@@ -33,6 +33,7 @@
     "copy-webpack-plugin": "4.0.1",
     "css-loader": "0.26.2",
     "dirty-chai": "1.2.2",
+    "dotenv": "4.0.0",
     "enzyme": "2.7.1",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "15.0.1",
