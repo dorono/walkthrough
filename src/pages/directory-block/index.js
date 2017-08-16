@@ -22,7 +22,7 @@ export default class DirectoryBlock extends Component {
 
         eblocks.forEach(eblock => {
             hashes.push(
-                {type: 'eblock', label: 'ENTRY BLOCK', value: eblock.hash, merge: true},
+                {type: 'eblock', label: 'ENTRY BLOCK', value: eblock.keymr, merge: true},
                 {type: 'chain', label: 'CHAIN', value: eblock.chain.chain_id},
             );
         });
