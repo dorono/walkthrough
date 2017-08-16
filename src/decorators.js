@@ -18,7 +18,11 @@ export const load = target => Component => {
 
         async load(props) {
             const url = typeof target === 'function' ? target(props) : target;
-            const headers = {'X-3scale-proxy-secret-token': CONFIG.apiToken};
+            const headers = {
+                'accept': 'application/json',
+                'content-type': 'application/json',
+                'x-3scale-proxy-secret-token': CONFIG.apiToken,
+            };
             try {
                 const response = await fetch(`${CONFIG.api}${url}`, {headers});
                 if (response.status >= 400) {
