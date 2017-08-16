@@ -12,6 +12,7 @@ export default class EntriesTable extends Component {
             created_at: PropTypes.string.isRequired,
             hash: PropTypes.string.isRequired,
         })).isRequired,
+        hashExtraArgs: PropTypes.object,
     };
 
     render() {
@@ -32,7 +33,7 @@ export default class EntriesTable extends Component {
                             {row => (
                                 <tr key={row.hash}>
                                     <td>{formatDate(row.created_at)}</td>
-                                    <td><Hash type='entry'>{row.hash}</Hash></td>
+                                    <td><Hash type='entry' extraArgs={this.props.hashExtraArgs}>{row.hash}</Hash></td>
                                 </tr>
                             )}
                         </Table>

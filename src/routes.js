@@ -17,9 +17,9 @@ export const routes = [
     {name: 'ecblock', path: '/ecblock/:hash', exact: true, menuItem: 0, component: EntryCreditBlock},
     {name: 'fblock', path: '/fblock/:hash', exact: true, menuItem: 0, component: FactoidBlock},
     {name: 'eblock', path: '/eblock/:hash', exact: true, menuItem: 0, component: EntryBlock},
-    {name: 'entry', path: '/entry/:hash', exact: true, menuItem: 0, component: Entry},
     {name: 'chains', path: '/chains', exact: true, menuItem: 1, component: ChainList},
     {name: 'chain', path: '/chain/:hash', exact: true, menuItem: 1, component: Chain},
+    {name: 'entry', path: '/chain/:chain/entry/:hash', exact: true, menuItem: 1, component: Entry},
     {name: 'tx', path: '/tx/:hash', exact: true, component: Transaction},
     {name: 'address', path: '/address/:hash', exact: true, component: Address},
 ];

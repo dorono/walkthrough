@@ -6,7 +6,7 @@ import {Vertical, Box} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
 
-@load(({match}) => `/entries/${match.params.hash}`)
+@load(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}`)
 export default class Entry extends Component {
     render() {
         return (
@@ -14,7 +14,9 @@ export default class Entry extends Component {
                 <Vertical>
                     <Box type='outline'>
                         <Label>HASH</Label>
-                        <Hash type='eblock'>{this.props.data.hash}</Hash>
+                        <Hash type='entry' extraArgs={{chain: this.props.data.chain.chain_id}}>
+                            {this.props.data.hash}
+                        </Hash>
                     </Box>
                     <Box type='fill'>
                         <Label>CHAIN</Label>

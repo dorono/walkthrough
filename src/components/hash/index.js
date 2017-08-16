@@ -19,6 +19,11 @@ export default class Hash extends Component {
             'address',
             'btc',
         ]),
+        extraArgs: PropTypes.object,
+    };
+
+    static defaultPropTypes = {
+        extraArgs: {},
     };
 
     render() {
@@ -36,7 +41,7 @@ export default class Hash extends Component {
             );
         }
 
-        const url = reverse(this.props.type, {hash});
+        const url = reverse(this.props.type, {hash, ...this.props.extraArgs});
 
         if (this.props.location.pathname === url) {
             return <span className={styles.root}>{hash}</span>;

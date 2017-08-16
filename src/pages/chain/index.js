@@ -28,7 +28,7 @@ export default class Chain extends Component {
                         </Box>
                     </Vertical>
                 </Container>
-                <EntriesTable entries={this.props.data.entries} />
+                <EntriesTable entries={this.props.data.entries} hashExtraArgs={{chain: this.props.data.chain_id}} />
             </div>
         );
     }
