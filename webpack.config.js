@@ -114,7 +114,6 @@ module.exports = {
         }),
         new CopyWebpackPlugin([
             {from: 'static'},
-            {from: 'data', to: 'data'},
         ]),
         new webpack.optimize.UglifyJsPlugin({
             sourceMap: true,
