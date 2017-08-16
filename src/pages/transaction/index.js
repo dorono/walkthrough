@@ -23,7 +23,7 @@ export default class Transaction extends Component {
                     type='secondary'>
                     {row => (
                         <tr key={row.address + row.amount}>
-                            <td><Hash type='address'>{row.address}</Hash></td>
+                            <td><Hash type='address'>{row.user_address}</Hash></td>
                             <td><Monospaced>{row.amount}</Monospaced></td>
                         </tr>
                     )}
