@@ -7,7 +7,7 @@ import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 
-@load('/data/eblock.json')
+@load(({match}) => `/eblocks/${match.params.hash}`)
 export default class EntryBlock extends Component {
     render() {
         return (
@@ -16,7 +16,7 @@ export default class EntryBlock extends Component {
                     <Vertical>
                         <Box type='fill'>
                             <Label>NEXT ENTRY BLOCK</Label>
-                            <Hash type='eblock'>{this.props.data.next.keymr}</Hash>
+                            <Hash type='eblock'>{this.props.data.next && this.props.data.next.keymr}</Hash>
                         </Box>
                         <Box type='outline'>
                             <Label>KEYMR</Label>
@@ -40,7 +40,10 @@ export default class EntryBlock extends Component {
                         </Box>
                     </Vertical>
                 </Container>
-                <EntriesTable entries={this.props.data.entries} />
+                <EntriesTable
+                    entries={this.props.data.entries}
+                    hashExtraArgs={{chain: this.props.data.chain.chain_id}}
+                />
             </div>
         );
     }
