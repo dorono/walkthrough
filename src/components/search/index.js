@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {autobind} from 'core-decorators';
 import classNames from 'classnames';
+import {trackPageView} from 'analytics';
 import {request} from 'api';
 import {reverse} from 'routes';
 import styles from './styles.css';
@@ -38,13 +39,16 @@ export default class Search extends Component {
     async search() {
         this.setState({searching: true});
 
+        const query = this.state.query.trim();
         const state = {
             searching: false,
             error: '',
         };
 
+        trackPageView(`/search?q=${query}`);
+
         try {
-            const response = await request(`/search?term=${this.state.query.trim()}`);
+            const response = await request(`/search?term=${query}`);
             const {urlName, argName} = reverseInfo[response.type];
             const url = reverse(urlName, {hash: response.data[argName]});
             this.props.history.push(url);
