@@ -1,4 +1,5 @@
 import React from 'react';
+import {request} from 'api';
 import Spinner from 'components/spinner';
 import Error404 from 'pages/error-404';
 import Error500 from 'pages/error-500';
@@ -18,21 +19,11 @@ export const load = target => Component => {
 
         async load(props) {
             const url = typeof target === 'function' ? target(props) : target;
-            const headers = {
-                'accept': 'application/json',
-                'content-type': 'application/json',
-                'x-3scale-proxy-secret-token': CONFIG.apiToken,
-            };
             try {
-                const response = await fetch(`${CONFIG.api}${url}`, {headers});
-                if (response.status >= 400) {
-                    this.setState({error: response.status});
-                } else {
-                    const data = await response.json();
-                    this.setState({data});
-                }
+                const data = await request(url);
+                this.setState({data});
             } catch (error) {
-                this.setState({error});
+                this.setState({error: error.statusCode || error.message});
             }
         }
 

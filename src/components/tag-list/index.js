@@ -7,7 +7,7 @@ export default class TagList extends Component {
         this.props.children.forEach(tag => {
             tags.push(<div key={tag} className={styles.tag}>{tag}</div>);
             tags.push(' ');
-        })
+        });
         return <div>{tags}</div>;
     }
 }
