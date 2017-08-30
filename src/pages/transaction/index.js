@@ -6,7 +6,7 @@ import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import Monospaced from 'components/monospaced';
+import Amount from 'components/amount';
 
 @load(({match}) => `/transactions/${match.params.hash}`)
 export default class Transaction extends Component {
@@ -23,12 +23,18 @@ export default class Transaction extends Component {
                     type='secondary'>
                     {row => {
                         let amount;
-                        if (row.amount) amount = `${row.amount} FTC`;
-                        if (row.ec_amount) amount = `${row.ec_amount} EC`;
+                        let unit;
+                        if (row.amount) {
+                            amount = row.amount;
+                            unit = 'FCT';
+                        } else if (row.ec_amount) {
+                            amount = row.ec_amount;
+                            unit = 'EC';
+                        }
                         return (
                             <tr key={row.address + row.amount}>
                                 <td><Hash type='address'>{row.user_address}</Hash></td>
-                                <td><Monospaced>{amount}</Monospaced></td>
+                                <td><Amount unit={unit}>{amount}</Amount></td>
                             </tr>
                         );
                     }}
@@ -47,15 +53,15 @@ export default class Transaction extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>INPUTS</Label>
-                                        <Monospaced>{this.props.data.fct_total_inputs}</Monospaced>
+                                        <Amount unit='FCT'>{this.props.data.fct_total_inputs}</Amount>
                                     </div>
                                     <div>
                                         <Label>OUTPUTS</Label>
-                                        <Monospaced>{this.props.data.fct_total_outputs}</Monospaced>
+                                        <Amount unit='FCT'>{this.props.data.fct_total_outputs}</Amount>
                                     </div>
                                     <div>
                                         <Label>FEE</Label>
-                                        <Monospaced>{this.props.data.fee}</Monospaced>
+                                        <Amount unit='EC'>{this.props.data.fee}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>

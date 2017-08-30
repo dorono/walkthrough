@@ -7,7 +7,7 @@ import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import Monospaced from 'components/monospaced';
+import Amount from 'components/amount';
 
 @load(({match}) => `/fblocks/${match.params.hash}`)
 export default class FactoidBlock extends Component {
@@ -21,23 +21,15 @@ export default class FactoidBlock extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>INPUTS</Label>
-                                        <Monospaced>{this.props.data.total_inputs}</Monospaced>
+                                        <Amount unit='FCT'>{this.props.data.fct_total_inputs}</Amount>
                                     </div>
                                     <div>
                                         <Label>OUTPUTS</Label>
-                                        <Monospaced>{this.props.data.total_outputs}</Monospaced>
-                                    </div>
-                                    <div>
-                                        <Label>TOTAL ECS</Label>
-                                        <Monospaced>{this.props.data.total_ecs}</Monospaced>
+                                        <Amount unit='FCT'>{this.props.data.fct_total_outputs}</Amount>
                                     </div>
                                     <div>
                                         <Label>ECS CREATED</Label>
-                                        <Monospaced>{this.props.data.ec_created}</Monospaced>
-                                    </div>
-                                    <div>
-                                        <Label>ECS DESTROYED</Label>
-                                        <Monospaced>{this.props.data.ec_destroyed}</Monospaced>
+                                        <Amount unit='EC'>{this.props.data.ec_total_created}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>
@@ -59,14 +51,14 @@ export default class FactoidBlock extends Component {
                     sortOptions={[
                         {label: 'Newest first', func: (a, b) => b.created_at.localeCompare(a.created_at)},
                         {label: 'Oldest first', func: (a, b) => a.created_at.localeCompare(b.created_at)},
-                        {label: 'Highest input first', func: (a, b) => b.total_inputs - a.total_inputs},
-                        {label: 'Lowest input first', func: (a, b) => a.total_inputs - b.total_inputs},
-                        {label: 'Highest output first', func: (a, b) => b.total_outputs - a.total_outputs},
-                        {label: 'Lowest output first', func: (a, b) => a.total_outputs - b.total_outputs},
+                        {label: 'Highest input first', func: (a, b) => b.fct_total_inputs - a.fct_total_inputs},
+                        {label: 'Lowest input first', func: (a, b) => a.fct_total_inputs - b.fct_total_inputs},
+                        {label: 'Highest output first', func: (a, b) => b.fct_total_outputs - a.fct_total_outputs},
+                        {label: 'Lowest output first', func: (a, b) => a.fct_total_outputs - b.fct_total_outputs},
                         {label: 'Highest fee first', func: (a, b) => b.fee - a.fee},
                         {label: 'Lowest fee first', func: (a, b) => a.fee - b.fee},
-                        {label: 'Highest ECs first', func: (a, b) => b.total_ecs - a.total_ecs},
-                        {label: 'Lowest ECs first', func: (a, b) => a.total_ecs - b.total_ecs},
+                        {label: 'Highest ECs first', func: (a, b) => b.ec_created - a.ec_created},
+                        {label: 'Lowest ECs first', func: (a, b) => a.ec_created - b.ec_created},
                     ]}>
                     {(items, sortDropdown) => (
                         <Container title='Transactions' count={items.length} actions={sortDropdown}>
@@ -77,7 +69,7 @@ export default class FactoidBlock extends Component {
                                     'INPUTS',
                                     'OUTPUTS',
                                     'FEE',
-                                    'TOTAL ECS',
+                                    'ECS CREATED',
                                 ]}
                                 rows={items}
                                 ellipsis={1}
@@ -86,10 +78,10 @@ export default class FactoidBlock extends Component {
                                     <tr key={row.tx_id}>
                                         <td>{formatDate(row.created_at)}</td>
                                         <td><Hash type='tx'>{row.tx_id}</Hash></td>
-                                        <td><Monospaced>{row.total_inputs}</Monospaced></td>
-                                        <td><Monospaced>{row.total_outputs}</Monospaced></td>
-                                        <td><Monospaced>{row.fee}</Monospaced></td>
-                                        <td><Monospaced>{row.total_ecs}</Monospaced></td>
+                                        <td><Amount unit='FCT'>{row.fct_total_inputs}</Amount></td>
+                                        <td><Amount unit='FCT'>{row.fct_total_outputs}</Amount></td>
+                                        <td><Amount unit='EC'>{row.fee}</Amount></td>
+                                        <td><Amount unit='EC'>{row.ec_created}</Amount></td>
                                     </tr>
                                 )}
                             </Table>
