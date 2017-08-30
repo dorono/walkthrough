@@ -24,7 +24,7 @@ export const routes = [
     {name: 'address', path: '/addresses/:hash', exact: true, component: Address},
 ];
 
-export const reverse = (name, params) => {
+export const reverse = (name, params = {}) => {
     const route = routes.find(route => route.name === name);
     if (!route) throw new Error(`Invalid route name: ${name}`);
     let url = route.path;

@@ -1,12 +1,14 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
+import {addPaginationParams} from 'api';
+import {reverse} from 'routes';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import Table from 'components/table';
 import Pagination from 'components/pagination';
 import Hash from 'components/hash';
 
-@load('/dblocks')
+@load(({location}) => addPaginationParams('/dblocks', location.search))
 export default class DirectoryBlockList extends Component {
     render() {
         const adminEntries = this.props.data.map(row => row.admin_entries).filter(value => value !== null);
@@ -42,7 +44,12 @@ export default class DirectoryBlockList extends Component {
                         </tr>
                     )}
                 </Table>
-                <Pagination />
+                <Pagination
+                    baseUrl={reverse('dblocks')}
+                    count={this.props.count}
+                    limit={this.props.limit}
+                    offset={this.props.offset}
+                />
             </Container>
         );
     }
