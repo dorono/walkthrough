@@ -29,6 +29,17 @@ export default class Search extends Component {
         searching: false,
     };
 
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.location.key !== this.props.location.key) {
+            this.setState({
+                query: '',
+                error: '',
+                hasFocus: false,
+                searching: false,
+            });
+        }
+    }
+
     getHelpText() {
         if (this.state.searching) return 'Searching...';
         if (this.state.error) return this.state.error;
@@ -52,14 +63,14 @@ export default class Search extends Component {
 
         try {
             const response = await request(`/search?term=${query}`);
+            if (!this.state.searching) return;
             const {urlName, paramNames} = reverseInfo[response.type];
             const params = {}
             Object.entries(paramNames).forEach(([name, responseKey]) => params[name] = response.data[responseKey]);
             const url = reverse(urlName, params);
             this.props.history.push(url);
-            state.query = '';
-            state.hasFocus = false;
         } catch (error) {
+            if (!this.state.searching) return;
             if (error.statusCode === 404) {
                 state.error = 'No results found';
                 if (this.state.query.length < 64) state.error += ', maybe try with the full hash';
