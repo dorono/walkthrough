@@ -5,6 +5,7 @@ import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import Wrapped from 'components/wrapped';
 
 @load(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}`)
 export default class Entry extends Component {
@@ -28,7 +29,7 @@ export default class Entry extends Component {
                     </Box>
                     <Box>
                         <Label>CONTENT</Label>
-                        {window.atob(this.props.data.content)}
+                        <Wrapped>{window.atob(this.props.data.content)}</Wrapped>
                     </Box>
                 </Vertical>
             </Container>

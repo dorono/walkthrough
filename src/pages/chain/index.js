@@ -6,6 +6,7 @@ import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import TagList from 'components/tag-list';
+import Wrapped from 'components/wrapped';
 
 @load(({match}) => `/chains/${match.params.hash}`)
 export default class Chain extends Component {
@@ -24,7 +25,7 @@ export default class Chain extends Component {
                         </Box>
                         <Box>
                             <Label>CONTENT</Label>
-                            {window.atob(this.props.data.content)}
+                            <Wrapped>{window.atob(this.props.data.content)}</Wrapped>
                         </Box>
                     </Vertical>
                 </Container>
