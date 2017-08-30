@@ -60,6 +60,10 @@ export default class Transaction extends Component {
                                         <Amount unit='FCT'>{this.props.data.fct_total_outputs}</Amount>
                                     </div>
                                     <div>
+                                        <Label>ECS CREATED</Label>
+                                        <Amount unit='EC'>{this.props.data.ec_created}</Amount>
+                                    </div>
+                                    <div>
                                         <Label>FEE</Label>
                                         <Amount unit='EC'>{this.props.data.fee}</Amount>
                                     </div>
@@ -68,7 +72,7 @@ export default class Transaction extends Component {
                         </Vertical>
                         <Vertical>
                             <Box type='outline'>
-                                <Label>HASH</Label>
+                                <Label>TRANSACTION ID</Label>
                                 <Hash type='tx'>{this.props.data.tx_id}</Hash>
                             </Box>
                             <Box type='fill'>

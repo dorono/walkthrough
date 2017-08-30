@@ -65,11 +65,11 @@ export default class FactoidBlock extends Component {
                             <Table
                                 columns={[
                                     `CREATED (${currentTimezone()})`,
-                                    'HASH',
+                                    'TRANSACTION ID',
                                     'INPUTS',
                                     'OUTPUTS',
-                                    'FEE',
                                     'ECS CREATED',
+                                    'FEE',
                                 ]}
                                 rows={items}
                                 ellipsis={1}
@@ -80,8 +80,8 @@ export default class FactoidBlock extends Component {
                                         <td><Hash type='tx'>{row.tx_id}</Hash></td>
                                         <td><Amount unit='FCT'>{row.fct_total_inputs}</Amount></td>
                                         <td><Amount unit='FCT'>{row.fct_total_outputs}</Amount></td>
-                                        <td><Amount unit='EC'>{row.fee}</Amount></td>
                                         <td><Amount unit='EC'>{row.ec_created}</Amount></td>
+                                        <td><Amount unit='EC'>{row.fee}</Amount></td>
                                     </tr>
                                 )}
                             </Table>
