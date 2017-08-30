@@ -66,6 +66,8 @@ export default class Table extends Component {
                         const tr = this.props.children(row);
                         return React.cloneElement(tr, {
                             children: tr.props.children.map((cell, index) => {
+                                if (!cell) return;
+
                                 const className = [];
 
                                 if (index === this.props.ellipsis) {
