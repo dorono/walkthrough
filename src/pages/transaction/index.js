@@ -6,6 +6,7 @@ import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import DirectoryBlockLink from 'components/directory-block-link';
 import Amount from 'components/amount';
 
 @load(({match}) => `/transactions/${match.params.hash}`)
@@ -77,7 +78,7 @@ export default class Transaction extends Component {
                             </Box>
                             <Box type='fill'>
                                 <Label>PARENT DIRECTORY BLOCK</Label>
-                                <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
+                                <DirectoryBlockLink>{this.props.data.dblock}</DirectoryBlockLink>
                             </Box>
                             <Box>
                                 <Label>CREATED ({currentTimezone()})</Label>

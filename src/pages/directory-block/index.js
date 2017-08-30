@@ -6,6 +6,7 @@ import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import DirectoryBlockLink from 'components/directory-block-link';
 import BlockHeight from 'components/block-height';
 import styles from './styles.css';
 
@@ -48,7 +49,7 @@ export default class DirectoryBlock extends Component {
                         <Vertical>
                             <Box type='fill'>
                                 <Label>NEXT DIRECTORY BLOCK</Label>
-                                <Hash type='dblock'>{this.props.data.next && this.props.data.next.keymr}</Hash>
+                                <DirectoryBlockLink>{this.props.data.next}</DirectoryBlockLink>
                             </Box>
                             <Box type='outline'>
                                 <Label>KEYMR</Label>
@@ -56,7 +57,7 @@ export default class DirectoryBlock extends Component {
                             </Box>
                             <Box type='fill'>
                                 <Label>PREVIOUS DIRECTORY BLOCK</Label>
-                                <Hash type='dblock'>{this.props.data.prev.keymr}</Hash>
+                                <DirectoryBlockLink>{this.props.data.prev}</DirectoryBlockLink>
                             </Box>
                             <Box type='fill'>
                                 <Label>BTC TRANSACTION</Label>

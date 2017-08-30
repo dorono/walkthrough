@@ -5,6 +5,7 @@ import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import DirectoryBlockLink from 'components/directory-block-link';
 
 @load(({match}) => `/ecblocks/${match.params.hash}`)
 export default class EntryCreditBlock extends Component {
@@ -19,7 +20,7 @@ export default class EntryCreditBlock extends Component {
                         </Box>
                         <Box type='fill'>
                             <Label>PARENT DIRECTORY BLOCK</Label>
-                            <Hash type='dblock'>{this.props.data.dblock.keymr}</Hash>
+                            <DirectoryBlockLink>{this.props.data.dblock}</DirectoryBlockLink>
                         </Box>
                     </Vertical>
                 </Container>

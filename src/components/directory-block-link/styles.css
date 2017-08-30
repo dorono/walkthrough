@@ -1,0 +1,27 @@
+@import 'styles/variables.css';
+
+.root {
+    display: flex;
+    align-items: center;
+}
+
+.label {
+    margin-right: 0.25rem;
+    font-weight: 600;
+    color: var(--gray-light);
+
+    & ~ & {
+        margin-left: 1rem;
+    }
+}
+
+.hash {
+    width: 0;
+    flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.link {
+    composes: root from 'components/hash/styles.css';
+}
