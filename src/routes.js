@@ -12,16 +12,16 @@ import Address from 'pages/address';
 
 export const routes = [
     {name: 'dblocks', path: '/', exact: true, menuItem: 0, component: DirectoryBlockList},
-    {name: 'dblock', path: '/dblock/:hash', exact: true, menuItem: 0, component: DirectoryBlock},
-    {name: 'ablock', path: '/ablock/:hash', exact: true, menuItem: 0, component: AdminBlock},
-    {name: 'ecblock', path: '/ecblock/:hash', exact: true, menuItem: 0, component: EntryCreditBlock},
-    {name: 'fblock', path: '/fblock/:hash', exact: true, menuItem: 0, component: FactoidBlock},
-    {name: 'eblock', path: '/eblock/:hash', exact: true, menuItem: 0, component: EntryBlock},
+    {name: 'dblock', path: '/dblocks/:hash', exact: true, menuItem: 0, component: DirectoryBlock},
+    {name: 'ablock', path: '/ablocks/:hash', exact: true, menuItem: 0, component: AdminBlock},
+    {name: 'ecblock', path: '/ecblocks/:hash', exact: true, menuItem: 0, component: EntryCreditBlock},
+    {name: 'fblock', path: '/fblocks/:hash', exact: true, menuItem: 0, component: FactoidBlock},
+    {name: 'eblock', path: '/eblocks/:hash', exact: true, menuItem: 0, component: EntryBlock},
     {name: 'chains', path: '/chains', exact: true, menuItem: 1, component: ChainList},
-    {name: 'chain', path: '/chain/:hash', exact: true, menuItem: 1, component: Chain},
-    {name: 'entry', path: '/chain/:chain/entry/:hash', exact: true, menuItem: 1, component: Entry},
-    {name: 'tx', path: '/tx/:hash', exact: true, component: Transaction},
-    {name: 'address', path: '/address/:hash', exact: true, component: Address},
+    {name: 'chain', path: '/chains/:hash', exact: true, menuItem: 1, component: Chain},
+    {name: 'entry', path: '/chains/:chain/entries/:hash', exact: true, menuItem: 1, component: Entry},
+    {name: 'tx', path: '/transactions/:hash', exact: true, component: Transaction},
+    {name: 'address', path: '/addresses/:hash', exact: true, component: Address},
 ];
 
 export const reverse = (name, params) => {
