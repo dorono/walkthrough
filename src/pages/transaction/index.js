@@ -77,6 +77,10 @@ export default class Transaction extends Component {
                                 <Hash type='tx'>{this.props.data.tx_id}</Hash>
                             </Box>
                             <Box type='fill'>
+                                <Label>PARENT FACTOID BLOCK</Label>
+                                <Hash type='fblock'>{this.props.data.fblock.hash}</Hash>
+                            </Box>
+                            <Box type='fill'>
                                 <Label>PARENT DIRECTORY BLOCK</Label>
                                 <DirectoryBlockLink>{this.props.data.dblock}</DirectoryBlockLink>
                             </Box>
