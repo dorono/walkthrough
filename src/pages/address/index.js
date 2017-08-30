@@ -32,7 +32,7 @@ export default class Address extends Component {
                         </Vertical>
                         <Vertical>
                             <Box type='outline'>
-                                <Label>HASH</Label>
+                                <Label>Address</Label>
                                 <Hash type='address'>{this.props.data.user_address}</Hash>
                             </Box>
                         </Vertical>
