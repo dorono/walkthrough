@@ -42,11 +42,11 @@ export default class Transaction extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>INPUTS</Label>
-                                        <Monospaced>{this.props.data.total_inputs}</Monospaced>
+                                        <Monospaced>{this.props.data.fct_total_inputs}</Monospaced>
                                     </div>
                                     <div>
                                         <Label>OUTPUTS</Label>
-                                        <Monospaced>{this.props.data.total_outputs}</Monospaced>
+                                        <Monospaced>{this.props.data.fct_total_outputs}</Monospaced>
                                     </div>
                                     <div>
                                         <Label>FEE</Label>
