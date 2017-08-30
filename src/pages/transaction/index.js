@@ -21,12 +21,17 @@ export default class Transaction extends Component {
                     rows={transactions}
                     ellipsis={0}
                     type='secondary'>
-                    {row => (
-                        <tr key={row.address + row.amount}>
-                            <td><Hash type='address'>{row.user_address}</Hash></td>
-                            <td><Monospaced>{row.amount}</Monospaced></td>
-                        </tr>
-                    )}
+                    {row => {
+                        let amount;
+                        if (row.amount) amount = `${row.amount} FTC`;
+                        if (row.ec_amount) amount = `${row.ec_amount} EC`;
+                        return (
+                            <tr key={row.address + row.amount}>
+                                <td><Hash type='address'>{row.user_address}</Hash></td>
+                                <td><Monospaced>{amount}</Monospaced></td>
+                            </tr>
+                        );
+                    }}
                 </Table>
             </Container>
         );
