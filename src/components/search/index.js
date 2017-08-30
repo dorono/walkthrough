@@ -65,7 +65,7 @@ export default class Search extends Component {
             const response = await request(`/search?term=${query}`);
             if (!this.state.searching) return;
             const {urlName, paramNames} = reverseInfo[response.type];
-            const params = {}
+            const params = {};
             Object.entries(paramNames).forEach(([name, responseKey]) => params[name] = response.data[responseKey]);
             const url = reverse(urlName, params);
             this.props.history.push(url);
