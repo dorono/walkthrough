@@ -5,6 +5,7 @@ import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import TagList from 'components/tag-list';
 import Wrapped from 'components/wrapped';
 
 @load(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}`)
@@ -22,6 +23,10 @@ export default class Entry extends Component {
                     <Box type='fill'>
                         <Label>CHAIN</Label>
                         <Hash type='chain'>{this.props.data.chain.chain_id}</Hash>
+                    </Box>
+                    <Box>
+                        <Label>EXTERNAL IDS</Label>
+                        <TagList>{this.props.data.external_ids.map(window.atob)}</TagList>
                     </Box>
                     <Box>
                         <Label>CREATED ({currentTimezone()})</Label>
