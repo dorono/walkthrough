@@ -8,12 +8,15 @@ import {reverse} from 'routes';
 import styles from './styles.css';
 
 const reverseInfo = {
-    directory_block: {urlName: 'dblock', argName: 'keymr'},
-    factoid_block: {urlName: 'fblock', argName: 'hash'},
-    transaction: {urlName: 'tx', argName: 'tx_id'},
-    address: {urlName: 'address', argName: 'user_address'},
-    chain: {urlName: 'chain', argName: 'chain_id'},
-    entry: {urlName: 'entry', argName: 'hash'},
+    directory_block: {urlName: 'dblock', paramNames: {hash: 'keymr'}},
+    admin_block: {urlName: 'ablock', paramNames: {hash: 'keymr'}},
+    entry_credit_block: {urlName: 'ecblock', paramNames: {hash: 'keymr'}},
+    factoid_block: {urlName: 'fblock', paramNames: {hash: 'hash'}},
+    entry_block: {urlName: 'eblock', paramNames: {hash: 'keymr'}},
+    transaction: {urlName: 'tx', paramNames: {hash: 'tx_id'}},
+    address: {urlName: 'address', paramNames: {hash: 'user_address'}},
+    chain: {urlName: 'chain', paramNames: {hash: 'chain_id'}},
+    entry: {urlName: 'entry', paramNames: {hash: 'hash', chain: 'chain_id'}},
 };
 
 @withRouter
@@ -49,8 +52,10 @@ export default class Search extends Component {
 
         try {
             const response = await request(`/search?term=${query}`);
-            const {urlName, argName} = reverseInfo[response.type];
-            const url = reverse(urlName, {hash: response.data[argName]});
+            const {urlName, paramNames} = reverseInfo[response.type];
+            const params = {}
+            Object.entries(paramNames).forEach(([name, responseKey]) => params[name] = response.data[responseKey]);
+            const url = reverse(urlName, params);
             this.props.history.push(url);
             state.query = '';
             state.hasFocus = false;
