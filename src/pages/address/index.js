@@ -9,6 +9,11 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
 
+const addressTypes = {
+    FA: 'Factoid Address',
+    EC: 'EntryCredit Address',
+};
+
 @load(({match}) => `/addresses/${match.params.hash}`)
 export default class Address extends Component {
     render() {
@@ -21,7 +26,7 @@ export default class Address extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>Type</Label>
-                                        {this.props.data.type}
+                                        {addressTypes[this.props.data.type]}
                                     </div>
                                     <div>
                                         <Label>Balance</Label>
