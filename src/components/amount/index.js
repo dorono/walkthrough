@@ -6,7 +6,7 @@ const FCT_CONVERSION = 100000000;
 
 export default class Amount extends Component {
     static propTypes = {
-        unit: PropTypes.oneOf(['FCT', 'EC']),
+        unit: PropTypes.oneOf(['FCT', 'EC']).isRequired,
     };
 
     render() {
