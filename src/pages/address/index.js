@@ -7,6 +7,7 @@ import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import Amount from 'components/amount';
 import Monospaced from 'components/monospaced';
 
 const addressTypes = {
@@ -30,7 +31,7 @@ export default class Address extends Component {
                                     </div>
                                     <div>
                                         <Label>Balance</Label>
-                                        <Monospaced>{this.props.data.balance}</Monospaced>
+                                        <Amount unit='FCT'>{this.props.data.balance}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>
@@ -69,7 +70,7 @@ export default class Address extends Component {
                                 {row => (
                                     <tr key={row.tx_id}>
                                         <td><Hash type='tx'>{row.tx_id}</Hash></td>
-                                        <td><Monospaced>{row.amount}</Monospaced></td>
+                                        <td><Amount unit='FCT'>{row.amount}</Amount></td>
                                         <td>{formatDate(row.created_at)}</td>
                                     </tr>
                                 )}
