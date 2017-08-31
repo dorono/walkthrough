@@ -38,6 +38,8 @@ export default class Table extends Component {
     }
 
     render() {
+        if (this.props.rows.length === 0) return null;
+
         return (
             <table className={styles[this.props.type]} onClick={this.handleClick}>
                 <thead>
