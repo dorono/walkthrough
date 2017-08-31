@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {load} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
-import Sortable from 'components/sortable';
+import Sortable, {sortOptions} from 'components/sortable';
 import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
@@ -50,16 +50,16 @@ export default class FactoidBlock extends Component {
                 <Sortable
                     items={this.props.data.transactions}
                     sortOptions={[
-                        {label: 'Newest first', func: (a, b) => b.created_at.localeCompare(a.created_at)},
-                        {label: 'Oldest first', func: (a, b) => a.created_at.localeCompare(b.created_at)},
+                        sortOptions.newestFirst,
+                        sortOptions.oldestFirst,
                         {label: 'Highest input first', func: (a, b) => b.fct_total_inputs - a.fct_total_inputs},
                         {label: 'Lowest input first', func: (a, b) => a.fct_total_inputs - b.fct_total_inputs},
                         {label: 'Highest output first', func: (a, b) => b.fct_total_outputs - a.fct_total_outputs},
                         {label: 'Lowest output first', func: (a, b) => a.fct_total_outputs - b.fct_total_outputs},
-                        {label: 'Highest fee first', func: (a, b) => b.fee - a.fee},
-                        {label: 'Lowest fee first', func: (a, b) => a.fee - b.fee},
                         {label: 'Highest ECs first', func: (a, b) => b.ec_created - a.ec_created},
                         {label: 'Lowest ECs first', func: (a, b) => a.ec_created - b.ec_created},
+                        {label: 'Highest fee first', func: (a, b) => b.fee - a.fee},
+                        {label: 'Lowest fee first', func: (a, b) => a.fee - b.fee},
                     ]}>
                     {(items, sortDropdown) => (
                         <Container title='Transactions' count={items.length} actions={sortDropdown}>

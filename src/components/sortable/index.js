@@ -35,7 +35,7 @@ export default class Sortable extends Component {
 
     render() {
         const sort = this.props.sortOptions.find(option => option.label === this.state.currentSort);
-        const items = this.props.items.sort(sort.func);
+        const items = this.props.items.map((item, index) => ({...item, index})).sort(sort.func);
 
         const sortDropdown = (
             <Dropdown
@@ -49,3 +49,14 @@ export default class Sortable extends Component {
         return this.props.children(items, sortDropdown);
     }
 }
+
+export const sortOptions = {
+    newestFirst: {
+        label: 'Newest first',
+        func: (a, b) => b.created_at.localeCompare(a.created_at) || b.index - a.index,
+    },
+    oldestFirst: {
+        label: 'Oldest first',
+        func: (a, b) => a.created_at.localeCompare(b.created_at) || a.index - b.index,
+    },
+};

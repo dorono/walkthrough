@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {load} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
-import Sortable from 'components/sortable';
+import Sortable, {sortOptions} from 'components/sortable';
 import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
@@ -47,8 +47,8 @@ export default class Address extends Component {
                 <Sortable
                     items={this.props.data.transactions}
                     sortOptions={[
-                        {label: 'Newest first', func: (a, b) => b.created_at.localeCompare(a.created_at)},
-                        {label: 'Oldest first', func: (a, b) => a.created_at.localeCompare(b.created_at)},
+                        sortOptions.newestFirst,
+                        sortOptions.oldestFirst,
                         {label: 'Highest amount first', func: (a, b) => b.amount - a.amount},
                         {label: 'Lowest amount first', func: (a, b) => a.amount - b.amount},
                     ]}>
