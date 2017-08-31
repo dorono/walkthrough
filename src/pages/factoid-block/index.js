@@ -74,6 +74,7 @@ export default class FactoidBlock extends Component {
                                 ]}
                                 rows={items}
                                 ellipsis={1}
+                                fixedWidth={{start: 2, width: 110}}
                                 type='secondary'>
                                 {row => (
                                     <tr key={row.tx_id}>
