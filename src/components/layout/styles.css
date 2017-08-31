@@ -11,6 +11,12 @@
     & > *:last-child {
         flex-grow: 1;
     }
+
+    @nest main + & {
+        margin: 0 auto;
+        width: var(--content-width);
+        max-width: var(--content-max-width);
+    }
 }
 
 .vertical {

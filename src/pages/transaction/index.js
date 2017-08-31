@@ -91,8 +91,10 @@ export default class Transaction extends Component {
                         </Vertical>
                     </Horizontal>
                 </Container>
-                {this.renderTransactions('Inputs', this.props.data.inputs)}
-                {this.renderTransactions('Outputs', this.props.data.outputs)}
+                <Horizontal>
+                    {this.renderTransactions('Inputs', this.props.data.inputs)}
+                    {this.renderTransactions('Outputs', this.props.data.outputs)}
+                </Horizontal>
             </div>
         );
     }
