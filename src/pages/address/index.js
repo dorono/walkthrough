@@ -8,7 +8,6 @@ import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import Amount from 'components/amount';
-import Monospaced from 'components/monospaced';
 
 const addressTypes = {
     FA: 'Factoid Address',

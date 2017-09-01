@@ -58,7 +58,7 @@ export default class Pagination extends Component {
                     return (
                         <Link
                             key={page}
-                            className={page == currentPage ? styles.active : styles.link}
+                            className={page === currentPage ? styles.active : styles.link}
                             to={this.getPaginatedUrl(page)}>
                             {page}
                         </Link>
