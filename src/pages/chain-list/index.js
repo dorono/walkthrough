@@ -20,7 +20,7 @@ export default class ChainList extends Component {
                     {row => (
                         <tr key={row.chain_id}>
                             <td><Hash type='chain'>{row.chain_id}</Hash></td>
-                            <td><TagList>{row.external_ids.map(window.atob)}</TagList></td>
+                            <td><TagList fadeOut>{row.external_ids.map(window.atob)}</TagList></td>
                         </tr>
                     )}
                 </Table>

@@ -1,5 +1,27 @@
 @import 'styles/variables.css';
 
+.multiline {
+    & > * {
+        margin-top: 0.5rem;
+    }
+}
+
+.fade-out {
+    position: relative;
+    overflow: hidden;
+
+    &::after {
+        content: '';
+        display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 10rem;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #FFF 100%);
+    }
+}
+
 .tag {
     display: inline-flex;
     align-items: center;
@@ -8,7 +30,7 @@
     border-radius: 1.2rem;
     border: 1px solid var(--gray-stroke-light);
 
-    & + & {
-        margin-left: 1rem;
+    &:not(:first-child) {
+        margin-right: 1rem;
     }
 }
