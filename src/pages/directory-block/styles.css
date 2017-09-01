@@ -11,6 +11,10 @@
 
     &.merge {
         padding-bottom: 0;
+
+        & + * {
+            opacity: 0.5;
+        }
     }
 
     &:not(.merge):not(:last-child) {
