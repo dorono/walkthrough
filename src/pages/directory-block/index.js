@@ -61,11 +61,20 @@ export default class DirectoryBlock extends Component {
                             </Box>
                             <Box type='fill'>
                                 <Label>BTC TRANSACTION</Label>
-                                <Hash type='btc'>{this.props.data.btc_block_hash}</Hash>
+                                <Hash type='btc'>{this.props.data.btc_transaction}</Hash>
                             </Box>
                             <Box type='fill'>
                                 <Label>BTC ANCHOR ENTRY</Label>
-                                <Hash type='entry'>{this.props.data.btc_anchor_entry}</Hash>
+                                {this.props.data.btc_anchor_entry
+                                    ? (
+                                        <Hash
+                                            type='entry'
+                                            extraArgs={{chain: this.props.data.btc_anchor_entry.chain.chain_id}}>
+                                            {this.props.data.btc_anchor_entry.hash}
+                                        </Hash>
+                                    )
+                                    : <Hash />
+                                }
                             </Box>
                         </Vertical>
                     </Horizontal>
