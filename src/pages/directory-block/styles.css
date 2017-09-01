@@ -15,5 +15,9 @@
 
     &:not(.merge):not(:last-child) {
         border-bottom: 1px solid var(--gray-stroke-light);
+
+        &:nth-child(4) {
+            border-bottom-color: var(--gray-stroke-dark);
+        }
     }
 }
