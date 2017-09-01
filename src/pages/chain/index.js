@@ -6,7 +6,7 @@ import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import TagList from 'components/tag-list';
+import ExternlIds from 'components/external-ids';
 import Wrapped from 'components/wrapped';
 
 @load(({match}) => `/chains/${match.params.hash}`)
@@ -22,7 +22,7 @@ export default class Chain extends Component {
                         </Box>
                         <Box>
                             <Label>EXTERNAL IDS</Label>
-                            <TagList>{this.props.data.external_ids.map(window.atob)}</TagList>
+                            <ExternlIds>{this.props.data.external_ids.map(window.atob)}</ExternlIds>
                         </Box>
                         <Box>
                             <Label>CREATED ({currentTimezone()})</Label>
