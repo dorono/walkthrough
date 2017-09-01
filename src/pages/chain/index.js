@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
+import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
@@ -22,6 +23,10 @@ export default class Chain extends Component {
                         <Box>
                             <Label>EXTERNAL IDS</Label>
                             <TagList>{this.props.data.external_ids.map(window.atob)}</TagList>
+                        </Box>
+                        <Box>
+                            <Label>CREATED ({currentTimezone()})</Label>
+                            {formatDateLong(this.props.data.entries[0].created_at)}
                         </Box>
                         <Box>
                             <Label>CONTENT</Label>
