@@ -22,6 +22,8 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Production build
 
 ```
+$ export API=https://apiplus-dev.factom.com/v2
+$ export API_TOKEN=XXXXXXXX
 $ npm run build
 ```
 
