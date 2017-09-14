@@ -10,7 +10,7 @@ const resolve = dest => path.resolve(__dirname, dest);
 const isDev = process.env.NODE_ENV !== 'production';
 const version = isDev ? 'DEV' : `v${require('./package.json').version} (Build: ${new Date().toISOString()})`;
 const banner = `Factom Explorer\n${version}`;
-const api = process.env.API || 'https://apiplus-dev.factom.com/v2';
+const apiUrl = process.env.API_URL || 'https://apiplus-dev.factom.com/v2';
 const apiToken = process.env.API_TOKEN;
 
 process.noDeprecation = true;
@@ -94,7 +94,7 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-            'CONFIG': JSON.stringify({version, api, apiToken}),
+            'CONFIG': JSON.stringify({version, apiUrl, apiToken}),
         }),
         new webpack.LoaderOptionsPlugin({
             debug: isDev,

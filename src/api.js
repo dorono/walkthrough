@@ -6,7 +6,7 @@ export const request = async (url) => {
         'content-type': 'application/json',
         'x-3scale-proxy-secret-token': CONFIG.apiToken,
     };
-    const response = await fetch(`${CONFIG.api}${url}`, {headers});
+    const response = await fetch(`${CONFIG.apiUrl}${url}`, {headers});
     if (response.status >= 400) {
         const error = new Error(response.statusText);
         error.statusCode = response.status;
