@@ -1,4 +1,5 @@
 # Factom Explorer UI
+[![CircleCI](https://circleci.com/gh/FactomProject/explorer-v3/tree/develop.svg?style=shield&circle-token=abef98cc373611cebe2bccc2d8dd6cb251cecda3)](https://circleci.com/gh/FactomProject/explorer-v3/tree/develop)
 
 ## Development
 

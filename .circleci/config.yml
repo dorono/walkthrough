@@ -1,0 +1,126 @@
+
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:7.10
+
+    working_directory: ~/explorer-v3
+
+    steps:
+      - checkout
+
+      # Download and cache dependencies
+      - restore_cache:
+          keys:
+          - v1-dependencies-{{ checksum "package.json" }}
+          # fallback to using the latest cache if no exact match is found
+          - v1-dependencies-
+
+      - run: npm install
+
+      - run: npm run build
+
+      - save_cache:
+          paths:
+            - node_modules
+          key: v1-dependencies-{{ checksum "package.json" }}
+
+  # Build the docker container
+  docker_build:
+    working_directory: ~/explorer-v3
+
+    docker:
+      - image: factominc/xenial_ansible
+
+    steps:
+      - checkout
+
+      - setup_remote_docker:
+          version: 17.06.0-ce
+
+      # Restore individual docker images from the cache
+      - restore_cache:
+          keys:
+            - v1-docker-dependencies-{{ checksum "package.json" }}
+            - v1-docker-dependencies-
+
+      # Load the image if the cache hit
+      - run:
+          name: Load Docker image layer cache
+          command: |
+            set +o pipefail
+            docker load -i /images/apiplus_ui.tar | true
+
+      - run:
+          name: Build the container
+          command: |
+            docker build -t apiplus_ui .
+
+      # We write the image back into /images
+      #   - This allows for caching the image layers
+      - run:
+          name: Push the image to DockerHub, and save the docs images to the cache dir
+          command: |
+
+            # Login to DockerHub
+            docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+
+              # If there is a tag, use it
+              if [ "$CIRCLE_TAG" != "" ]; then
+                docker tag apiplus_ui factominc/apiplus_ui:${TAG}
+                docker push factominc/apiplus_ui:${TAG}
+
+              fi
+
+              # But tag it as latest anyhow
+              docker tag apiplus_ui factominc/apiplus_ui:latest
+              docker push factominc/apiplus_ui:latest
+
+            fi
+
+            docker logout
+
+      - run:
+          name: Push images to AWS ECR
+          command: |
+            # Login to AWS ECR
+            login="$(aws ecr get-login  --no-include-email --region $AWS_REGION)"
+            ${login}
+
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+
+              # If there is a tag, use it
+              if [ "$CIRCLE_TAG" != "" ]; then
+                docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:${TAG}
+                docker push ${AWS_REPO_BASE_URI}/apiplus_ui:${TAG}
+
+              fi
+
+              # But tag it as latest anyhow
+              docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:latest
+              docker push ${AWS_REPO_BASE_URI}/apiplus_ui:latest
+
+            fi
+
+            docker logout
+
+      - save_cache:
+          key: v1-docker-dependencies-{{ checksum "package.json" }}
+          paths:
+            - /images
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - build:
+          context: org-global
+      - docker_build:
+          context: org-global
+          requires:
+            - build
+
+
