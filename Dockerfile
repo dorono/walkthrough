@@ -18,12 +18,10 @@ COPY .babelrc .eslintrc .gitignore .nvmrc .stylelintrc postcss.config.js README.
 
 # Grab the URLs that are needed for the build
 ARG api_url
-ARG ws_url
+ARG api_token
 
 ENV API_URL $api_url
-ENV WS_URL $ws_url
-
-RUN echo $API_URL $WS_URL
+ENV API_TOKEN $api_token
 
 RUN npm run build
 
