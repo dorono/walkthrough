@@ -19,8 +19,7 @@
     },
     "globals": {
         "CONFIG": true,
-        "CDN_URL": true,
-        "google": true,
+        "RUNTIME_CONFIG": true,
     },
     "rules": {
         // Overrides

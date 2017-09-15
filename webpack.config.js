@@ -10,7 +10,7 @@ const resolve = dest => path.resolve(__dirname, dest);
 const isDev = process.env.NODE_ENV !== 'production';
 const version = isDev ? 'DEV' : `v${require('./package.json').version} (Build: ${new Date().toISOString()})`;
 const banner = `Factom Explorer\n${version}`;
-const apiUrl = process.env.API_URL || 'https://apiplus-dev.factom.com/v2';
+const apiUrl = process.env.API_URL || 'http://apiplus-dev.factom.com/v2';
 const apiToken = process.env.API_TOKEN;
 
 process.noDeprecation = true;
