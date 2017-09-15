@@ -25,8 +25,6 @@ ENV API_TOKEN $api_token
 
 RUN npm run build
 
-
-
 #
 # Final image is /build in an nginx container
 #
@@ -35,11 +33,9 @@ FROM nginx:1.13.3-alpine
 RUN mkdir -p /docs
 COPY --from=builder /srv/build/ /build/
 
+# Copy index.html so we always have an original version as a template
+RUN cp /build/index.html /build/index.template.html
+
 RUN apk --update add rsync
 
-
-
-
-
-
-
+CMD ["/bin/bash", "-c", "envsubst '$$API_URL $$API_TOKEN' < /build/index.template.html > /build/index.html && nginx"]
