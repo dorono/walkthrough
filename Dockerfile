@@ -38,4 +38,4 @@ RUN cp /build/index.html /build/index.template.html
 
 RUN apk --update add rsync
 
-CMD ["/bin/bash", "-c", "envsubst '$$API_URL $$API_TOKEN' < /build/index.template.html > /build/index.html && nginx"]
+CMD ["/bin/sh", "-c", "envsubst '$$API_URL $$API_TOKEN' < /build/index.template.html > /build/index.html && nginx -g 'daemon off;'"]
