@@ -11,11 +11,15 @@ import Amount from 'components/amount';
 
 const addressTypes = {
     FA: 'Factoid Address',
-    EC: 'EntryCredit Address',
+    EC: 'Entry Credit Address',
 };
 
 @load(({match}) => `/addresses/${match.params.hash}`)
 export default class Address extends Component {
+    getAmount(row) {
+        return row.amount * (row.type === 'output' ? -1 : 1);
+    }
+
     render() {
         return (
             <div>
@@ -69,7 +73,7 @@ export default class Address extends Component {
                                 {row => (
                                     <tr key={row.tx_id}>
                                         <td><Hash type='tx'>{row.tx_id}</Hash></td>
-                                        <td><Amount unit='FCT'>{row.amount}</Amount></td>
+                                        <td><Amount unit='FCT'>{this.getAmount(row)}</Amount></td>
                                         <td>{formatDate(row.created_at)}</td>
                                     </tr>
                                 )}
