@@ -33,6 +33,10 @@ export default class Hash extends Component {
             return <span className={styles.root}>Not available</span>;
         }
 
+        if (Number(hash) === 0) {
+            return <span className={styles.root}>Not available - no previous blocks</span>;
+        }
+
         if (this.props.type === 'btc') {
             return (
                 <a className={styles.external} href={`https://blockchain.info/tx/${hash}`} target='_blank'>

@@ -8,7 +8,7 @@ import styles from './styles.css';
 export default class DirectoryBlockLink extends Component {
     render() {
         const dblock = this.props.children;
-        if (!dblock) return <Hash type='dblock' />;
+        if (!dblock || Number(dblock.keymr) === 0) return <Hash type='dblock'>{dblock.keymr}</Hash>;
 
         return (
             <div className={styles.root}>
