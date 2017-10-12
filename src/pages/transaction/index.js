@@ -66,7 +66,7 @@ export default class Transaction extends Component {
                                     </div>
                                     <div>
                                         <Label>FEE</Label>
-                                        <Amount unit='EC'>{this.props.data.fee}</Amount>
+                                        <Amount unit='FCT'>{this.props.data.fct_fee}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>

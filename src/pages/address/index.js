@@ -16,11 +16,20 @@ const addressTypes = {
 
 @load(({match}) => `/addresses/${match.params.hash}`)
 export default class Address extends Component {
+    getAmountKey() {
+        return this.props.data.type === 'FA' ? 'amount' : 'ec_amount';
+    }
+
+    getAmountUnit() {
+        return this.props.data.type === 'FA' ? 'FCT' : 'EC';
+    }
+
     getAmount(row) {
-        return row.amount * (row.type === 'output' ? -1 : 1);
+        return row[this.getAmountKey()] * (row.type === 'output' ? -1 : 1);
     }
 
     render() {
+        const amountKey = this.getAmountKey();
         return (
             <div>
                 <Container primary title='Address'>
@@ -34,7 +43,7 @@ export default class Address extends Component {
                                     </div>
                                     <div>
                                         <Label>Balance</Label>
-                                        <Amount unit='FCT'>{this.props.data.balance}</Amount>
+                                        <Amount unit={this.getAmountUnit()}>{this.props.data.balance}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>
@@ -52,8 +61,8 @@ export default class Address extends Component {
                     sortOptions={[
                         sortOptions.newestFirst,
                         sortOptions.oldestFirst,
-                        {label: 'Highest amount first', func: (a, b) => b.amount - a.amount},
-                        {label: 'Lowest amount first', func: (a, b) => a.amount - b.amount},
+                        {label: 'Highest amount first', func: (a, b) => b[amountKey] - a[amountKey]},
+                        {label: 'Lowest amount first', func: (a, b) => a[amountKey] - b[amountKey]},
                     ]}>
                     {(items, sortDropdown) => (
                         <Container
@@ -73,7 +82,7 @@ export default class Address extends Component {
                                 {row => (
                                     <tr key={row.tx_id}>
                                         <td><Hash type='tx'>{row.tx_id}</Hash></td>
-                                        <td><Amount unit='FCT'>{this.getAmount(row)}</Amount></td>
+                                        <td><Amount unit={this.getAmountUnit()}>{this.getAmount(row)}</Amount></td>
                                         <td>{formatDate(row.created_at)}</td>
                                     </tr>
                                 )}
