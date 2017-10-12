@@ -18,7 +18,7 @@ export default class DirectoryBlock extends Component {
         const hashes = [
             {type: 'ablock', label: 'ADMIN BLOCK', value: ablock.hash},
             {type: 'ecblock', label: 'ENTRY CREDIT BLOCK', value: ecblock.hash},
-            {type: 'fblock', label: 'FACTOID BLOCK', value: fblock.hash},
+            {type: 'fblock', label: 'FACTOID BLOCK', value: fblock.keymr},
         ];
 
         eblocks.forEach(eblock => {
