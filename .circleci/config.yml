@@ -114,7 +114,7 @@ jobs:
 
 workflows:
   version: 2
-  build:
+  commit-workflow:
     jobs:
       - build:
           context: org-global
@@ -124,3 +124,17 @@ workflows:
             - build
 
 
+  scheduled-workflow:
+    triggers:
+      - schedule:
+          cron: "30 4 * * *"
+          filters:
+            branches:
+              only: develop
+    jobs:
+      - build:
+          context: org-global
+      - docker_build:
+          context: org-global
+          requires:
+            - build
