@@ -1,10 +1,9 @@
 import React, {Component} from 'react';
-import {Link, withRouter} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 import {reverse} from 'routes';
 import Hash from 'components/hash';
 import styles from './styles.css';
 
-@withRouter
 export default class DirectoryBlockLink extends Component {
     render() {
         const dblock = this.props.children;
