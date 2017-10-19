@@ -25,7 +25,7 @@ export default class Address extends Component {
     }
 
     getAmount(row) {
-        return row[this.getAmountKey()] * (row.type === 'output' ? -1 : 1);
+        return row[this.getAmountKey()] * (row.type === 'output' ? 1 : -1);
     }
 
     render() {
