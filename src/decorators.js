@@ -1,8 +1,7 @@
 import React from 'react';
 import {request} from 'api';
 import Spinner from 'components/spinner';
-import Error404 from 'pages/error-404';
-import Error500 from 'pages/error-500';
+import ErrorPage from 'pages/error-page';
 
 export const load = target => Component => {
     class Loader extends React.Component {
@@ -28,8 +27,8 @@ export const load = target => Component => {
         }
 
         render() {
-            if (this.state.error === 404) return <Error404 />;
-            if (this.state.error) return <Error500 />;
+            if (this.state.error === 404) return <ErrorPage status={404} />;
+            if (this.state.error) return <ErrorPage status={500} />;
             if (!this.state.data) return <Spinner />;
             return <Component {...this.props} {...this.state.data} />;
         }

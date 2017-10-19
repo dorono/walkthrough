@@ -5,7 +5,7 @@ import styles from './styles.css';
 export default class Container extends Component {
     static propTypes = {
         primary: PropTypes.bool,
-        title: PropTypes.string.isRequired,
+        title: PropTypes.string,
         subtitle: PropTypes.string,
         count: PropTypes.number,
         actions: PropTypes.node,
@@ -16,9 +16,11 @@ export default class Container extends Component {
         return (
             <ContentType className={styles.root}>
                 <header className={styles.header}>
-                    <h1 className={styles.title}>
-                        {this.props.title}
-                    </h1>
+                    {this.props.title && (
+                        <h1 className={styles.title}>
+                            {this.props.title}
+                        </h1>
+                    )}
                     {this.props.count !== undefined && (
                         <div className={styles.count}>
                             {this.props.count}

@@ -4,7 +4,7 @@ import {routes} from 'routes';
 import {trackPageView} from 'analytics';
 import AppHeader from 'components/app-header';
 import AppFooter from 'components/app-footer';
-import Error404 from 'pages/error-404';
+import ErrorPage from 'pages/error-page';
 import styles from './styles.css';
 
 export default class App extends Component {
@@ -22,7 +22,7 @@ export default class App extends Component {
                 <AppHeader />
                 <Switch>
                     {routes.map(route => <Route key={route.path} {...route} />)}
-                    <Route component={Error404} />
+                    <Route render={() => <ErrorPage status={404} />} />
                 </Switch>
                 <AppFooter />
             </div>

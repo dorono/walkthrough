@@ -1,0 +1,17 @@
+.error {
+    margin: 50px auto;
+    height: 400px;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+}
+
+.error-404 {
+    composes: error;
+    background-image: url('./assets/404.svg');
+}
+
+.error-500 {
+    composes: error;
+    background-image: url('./assets/500.svg');
+}
