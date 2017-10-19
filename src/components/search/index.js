@@ -7,16 +7,16 @@ import {request} from 'api';
 import {reverse} from 'routes';
 import styles from './styles.css';
 
-const reverseInfo = {
-    directory_block: {urlName: 'dblock', paramNames: {hash: 'keymr'}},
-    admin_block: {urlName: 'ablock', paramNames: {hash: 'keymr'}},
-    entry_credit_block: {urlName: 'ecblock', paramNames: {hash: 'keymr'}},
-    factoid_block: {urlName: 'fblock', paramNames: {hash: 'hash'}},
-    entry_block: {urlName: 'eblock', paramNames: {hash: 'keymr'}},
-    transaction: {urlName: 'tx', paramNames: {hash: 'tx_id'}},
-    address: {urlName: 'address', paramNames: {hash: 'user_address'}},
-    chain: {urlName: 'chain', paramNames: {hash: 'chain_id'}},
-    entry: {urlName: 'entry', paramNames: {hash: 'hash', chain: 'chain_id'}},
+const urls = {
+    directory_block: data => reverse('dblock', {hash: data.keymr}),
+    admin_block: data => reverse('ablock', {hash: data.keymr}),
+    entry_credit_block: data => reverse('ecblock', {hash: data.keymr}),
+    factoid_block: data => reverse('fblock', {hash: data.keymr}),
+    entry_block: data => reverse('eblock', {hash: data.keymr}),
+    transaction: data => reverse('tx', {hash: data.tx_id}),
+    address: data => reverse('address', {hash: data.user_address}),
+    chain: data => reverse('chain', {hash: data.chain_id}),
+    entry: data => reverse('entry', {hash: data.hash, chain: data.chain.chain_id}),
 };
 
 @withRouter
@@ -64,10 +64,7 @@ export default class Search extends Component {
         try {
             const response = await request(`/search?term=${query}`);
             if (!this.state.searching) return;
-            const {urlName, paramNames} = reverseInfo[response.type];
-            const params = {};
-            Object.entries(paramNames).forEach(([name, responseKey]) => params[name] = response.data[responseKey]);
-            const url = reverse(urlName, params);
+            const url = urls[response.type](response.data);
             this.props.history.push(url);
         } catch (error) {
             if (!this.state.searching) return;
