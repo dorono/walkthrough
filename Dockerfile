@@ -12,9 +12,7 @@ RUN npm install
 
 # Copy most of the files in (except Dockerfile)
 COPY src ./src
-COPY test ./test
-COPY tools ./tools
-COPY .babelrc .eslintrc .gitignore .nvmrc .stylelintrc postcss.config.js README.md webpack.config.js ./
+COPY .babelrc .eslintrc .gitignore .stylelintrc postcss.config.js webpack.config.js ./
 
 # Grab the URLs that are needed for the build
 ARG api_url
