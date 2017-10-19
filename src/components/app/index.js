@@ -22,7 +22,7 @@ export default class App extends Component {
                 <AppHeader />
                 <Switch>
                     {routes.map(route => <Route key={route.path} {...route} />)}
-                    <Route render={() => <ErrorPage status={404} />} />
+                    <Route component={ErrorPage} />
                 </Switch>
                 <AppFooter />
             </div>

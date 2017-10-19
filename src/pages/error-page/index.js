@@ -7,6 +7,10 @@ import styles from './styles.css';
 @withRouter
 @autobind
 export default class ErrorPage extends Component {
+    static defaultProps = {
+        status: 404,
+    };
+
     handleClick() {
         if (this.props.status === 404) {
             this.props.history.push('/');
