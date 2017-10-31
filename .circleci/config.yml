@@ -118,8 +118,14 @@ workflows:
     jobs:
       - build:
           context: org-global
+          filters:
+            tags:
+              only: /.*/
       - docker_build:
           context: org-global
+          filters:
+            tags:
+              only: /.*/
           requires:
             - build
 
