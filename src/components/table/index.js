@@ -87,6 +87,7 @@ export default class Table extends Component {
                                 if (className.length) {
                                     return React.cloneElement(cell, {
                                         className: className.join(' '),
+                                        key: index,
                                     });
                                 }
 
