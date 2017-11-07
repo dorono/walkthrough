@@ -62,7 +62,7 @@ export default class Search extends Component {
         trackPageView(`/search?q=${query}`);
 
         try {
-            const response = await request(`/search?term=${query}`);
+            const response = await request(`/search?stages=factom,bitcoin&term=${query}`);
             if (!this.state.searching) return;
             const url = urls[response.type](response.data);
             this.props.history.push(url);

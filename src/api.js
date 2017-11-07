@@ -17,9 +17,13 @@ export const request = async (url) => {
     return response.json();
 };
 
-export const addPaginationParams = (url, qs) => {
-    const itemsPerPage = 15;
-    const {page} = queryString.parse(qs);
-    const offset = page ? itemsPerPage * (page - 1) : 0;
-    return `${url}?limit=${itemsPerPage}&offset=${offset}`;
+export const addPaginationParams = (url, currentQueryString) => {
+    const {page} = queryString.parse(currentQueryString);
+    const limit = 15;
+    const offset = page ? limit * (page - 1) : 0;
+
+    const extra = queryString.parse(url.split('?')[1]);
+    const params = {...extra, limit, offset};
+
+    return `${url.split('?')[0]}?${queryString.stringify(params)}`;
 };

@@ -9,7 +9,7 @@ import Hash from 'components/hash';
 import ExternlIds from 'components/external-ids';
 import Wrapped from 'components/wrapped';
 
-@load(({match}) => `/chains/${match.params.hash}`)
+@load(({match}) => `/chains/${match.params.hash}?stages=factom,bitcoin`)
 export default class Chain extends Component {
     render() {
         return (
