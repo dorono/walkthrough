@@ -58,8 +58,8 @@ export default class FactoidBlock extends Component {
                         {label: 'Lowest output first', func: (a, b) => a.fct_total_outputs - b.fct_total_outputs},
                         {label: 'Highest ECs first', func: (a, b) => b.ec_created - a.ec_created},
                         {label: 'Lowest ECs first', func: (a, b) => a.ec_created - b.ec_created},
-                        {label: 'Highest fee first', func: (a, b) => b.fee - a.fee},
-                        {label: 'Lowest fee first', func: (a, b) => a.fee - b.fee},
+                        {label: 'Highest fee first', func: (a, b) => b.fct_fee - a.fct_fee},
+                        {label: 'Lowest fee first', func: (a, b) => a.fct_fee - b.fct_fee},
                     ]}>
                     {(items, sortDropdown) => (
                         <Container title='Transactions' count={items.length} actions={sortDropdown}>
@@ -83,7 +83,7 @@ export default class FactoidBlock extends Component {
                                         <td><Amount unit='FCT'>{row.fct_total_inputs}</Amount></td>
                                         <td><Amount unit='FCT'>{row.fct_total_outputs}</Amount></td>
                                         <td><Amount unit='EC'>{row.ec_created}</Amount></td>
-                                        <td><Amount unit='EC'>{row.fee}</Amount></td>
+                                        <td><Amount unit='FCT'>{row.fct_fee}</Amount></td>
                                     </tr>
                                 )}
                             </Table>
