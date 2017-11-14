@@ -31,7 +31,7 @@ jobs:
     working_directory: ~/explorer-v3
 
     docker:
-      - image: factominc/xenial_ansible
+      - image: factominc/elixir_python
 
     steps:
       - checkout
@@ -57,28 +57,31 @@ jobs:
           command: |
             docker build -t apiplus_ui .
 
-      # We write the image back into /images
-      #   - This allows for caching the image layers
       - run:
-          name: Push the image to DockerHub, and save the docs images to the cache dir
+          name: Push images to DockerHub
           command: |
 
-            # Login to DockerHub
+           # Login to DockerHub
             docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
+            
+            # If there is a tag, use it
+            if [ "$CIRCLE_TAG" != "" ]; then
+              docker tag apiplus_ui factominc/apiplus_ui:${CIRCLE_TAG}
+              docker push factominc/apiplus_ui:${CIRCLE_TAG}
+            fi
+            
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
 
-            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-
-              # If there is a tag, use it
-              if [ "$CIRCLE_TAG" != "" ]; then
-                docker tag apiplus_ui factominc/apiplus_ui:${TAG}
-                docker push factominc/apiplus_ui:${TAG}
-
-              fi
-
-              # But tag it as latest anyhow
+              # Tag master as latest
               docker tag apiplus_ui factominc/apiplus_ui:latest
               docker push factominc/apiplus_ui:latest
+            fi
 
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+            
+              # Tag develop as develop anyhow
+              docker tag apiplus_ui factominc/apiplus_ui:develop
+              docker push factominc/apiplus_ui:develop
             fi
 
             docker logout
@@ -89,20 +92,25 @@ jobs:
             # Login to AWS ECR
             login="$(aws ecr get-login  --no-include-email --region $AWS_REGION)"
             ${login}
+            
+            # If there is a tag, use it
+            if [ "$CIRCLE_TAG" != "" ]; then
+              docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:${CIRCLE_TAG}
+              docker push ${AWS_REPO_BASE_URI}/apiplus_ui:${CIRCLE_TAG}
+            fi
+            
+            if [ "${CIRCLE_BRANCH}" == "master" ]; then
 
-            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-
-              # If there is a tag, use it
-              if [ "$CIRCLE_TAG" != "" ]; then
-                docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:${TAG}
-                docker push ${AWS_REPO_BASE_URI}/apiplus_ui:${TAG}
-
-              fi
-
-              # But tag it as latest anyhow
+              # Tag master as latest
               docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:latest
               docker push ${AWS_REPO_BASE_URI}/apiplus_ui:latest
+            fi
 
+            if [ "${CIRCLE_BRANCH}" == "develop" ]; then
+            
+              # Tag develop as develop anyhow
+              docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:develop
+              docker push ${AWS_REPO_BASE_URI}/apiplus_ui:develop
             fi
 
             docker logout
