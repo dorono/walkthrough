@@ -16,7 +16,7 @@ const urls = {
     transaction: data => reverse('tx', {hash: data.tx_id}),
     address: data => reverse('address', {hash: data.user_address}),
     chain: data => reverse('chain', {hash: data.chain_id}),
-    entry: data => reverse('entry', {hash: data.hash, chain: data.chain.chain_id}),
+    entry: data => reverse('entry', {hash: data.entry_hash, chain: data.chain.chain_id}),
 };
 
 @withRouter
