@@ -11,6 +11,19 @@ import Amount from 'components/amount';
 
 @load(({match}) => `/transactions/${match.params.hash}`)
 export default class Transaction extends Component {
+    getTransactionAmount(transaction) {
+        let amount;
+        let unit;
+        if (transaction.fct_amount) {
+            amount = transaction.fct_amount;
+            unit = 'FCT';
+        } else if (transaction.ec_amount) {
+            amount = transaction.ec_amount;
+            unit = 'EC';
+        }
+        return {amount, unit};
+    }
+
     renderTransactions(title, transactions) {
         return (
             <Container
@@ -23,17 +36,9 @@ export default class Transaction extends Component {
                     ellipsis={0}
                     type='secondary'>
                     {row => {
-                        let amount;
-                        let unit;
-                        if (row.amount) {
-                            amount = row.amount;
-                            unit = 'FCT';
-                        } else if (row.ec_amount) {
-                            amount = row.ec_amount;
-                            unit = 'EC';
-                        }
+                        const {amount, unit} = this.getTransactionAmount(row);
                         return (
-                            <tr key={row.address + row.amount}>
+                            <tr key={row.address + amount}>
                                 <td><Hash type='address'>{row.user_address}</Hash></td>
                                 <td><Amount unit={unit}>{amount}</Amount></td>
                             </tr>

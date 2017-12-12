@@ -17,7 +17,7 @@ const addressTypes = {
 @load(({match}) => `/addresses/${match.params.hash}`)
 export default class Address extends Component {
     getAmountKey() {
-        return this.props.data.type === 'FA' ? 'amount' : 'ec_amount';
+        return this.props.data.type === 'FA' ? 'fct_amount' : 'ec_amount';
     }
 
     getAmountUnit() {
