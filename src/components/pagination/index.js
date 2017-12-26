@@ -1,20 +1,21 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import queryString from 'query-string';
 import styles from './styles.css';
 
 const extraPages = 3;
 
 export default class Pagination extends Component {
     static propTypes = {
-        baseUrl: PropTypes.string.isRequired,
         count: PropTypes.number.isRequired,
         limit: PropTypes.number.isRequired,
         offset: PropTypes.number.isRequired,
     };
 
     getPaginatedUrl(page) {
-        return `${this.props.baseUrl}?page=${page}`;
+        const qs = {...queryString.parse(window.location.search), page};
+        return `${window.location.pathname}?${queryString.stringify(qs)}`;
     }
 
     render() {

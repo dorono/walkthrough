@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
 import {addPaginationParams} from 'api';
-import {reverse} from 'routes';
 import Container from 'components/container';
 import Table from 'components/table';
 import Pagination from 'components/pagination';
@@ -24,12 +23,7 @@ export default class ChainList extends Component {
                         </tr>
                     )}
                 </Table>
-                <Pagination
-                    baseUrl={reverse('chains')}
-                    count={this.props.count}
-                    limit={this.props.limit}
-                    offset={this.props.offset}
-                />
+                <Pagination count={this.props.count} limit={this.props.limit} offset={this.props.offset} />
             </Container>
         );
     }

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
 import {addPaginationParams} from 'api';
-import {reverse} from 'routes';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import Table from 'components/table';
@@ -44,12 +43,7 @@ export default class DirectoryBlockList extends Component {
                         </tr>
                     )}
                 </Table>
-                <Pagination
-                    baseUrl={reverse('dblocks')}
-                    count={this.props.count}
-                    limit={this.props.limit}
-                    offset={this.props.offset}
-                />
+                <Pagination count={this.props.count} limit={this.props.limit} offset={this.props.offset} />
             </Container>
         );
     }
