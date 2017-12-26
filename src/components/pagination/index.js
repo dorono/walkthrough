@@ -39,13 +39,11 @@ export default class Pagination extends Component {
             else break;
         }
 
-        if (pages[0] > 1) {
-            pages.unshift(1, 'dots');
-        }
+        if (pages[0] > 2) pages.unshift(1, 'dots');
+        else if (pages[0] !== 1) pages.unshift(1);
 
-        if (pages[pages.length - 1] < totalPages) {
-            pages.push('dots', totalPages);
-        }
+        if (pages[pages.length - 1] < totalPages - 1) pages.push('dots', totalPages);
+        else if (pages[pages.length - 1] < totalPages) pages.push(totalPages);
 
         return (
             <div className={styles.root}>
