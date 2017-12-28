@@ -1,4 +1,3 @@
-
 version: 2
 jobs:
   build:
@@ -19,7 +18,7 @@ jobs:
 
       - run: npm install
 
-      - run: npm run build
+      - run: VERSION=$CIRCLE_SHA1 npm run build
 
       - save_cache:
           paths:
@@ -55,7 +54,7 @@ jobs:
       - run:
           name: Build the container
           command: |
-            docker build -t apiplus_ui .
+            docker build --build-arg "version=$CIRCLE_SHA1" -t apiplus_ui .
 
       - run:
           name: Push images to DockerHub
@@ -63,13 +62,13 @@ jobs:
 
            # Login to DockerHub
             docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
-            
+
             # If there is a tag, use it
             if [ "$CIRCLE_TAG" != "" ]; then
               docker tag apiplus_ui factominc/apiplus_ui:${CIRCLE_TAG}
               docker push factominc/apiplus_ui:${CIRCLE_TAG}
             fi
-            
+
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
 
               # Tag master as latest
@@ -78,7 +77,7 @@ jobs:
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-            
+
               # Tag develop as develop anyhow
               docker tag apiplus_ui factominc/apiplus_ui:develop
               docker push factominc/apiplus_ui:develop
@@ -92,13 +91,13 @@ jobs:
             # Login to AWS ECR
             login="$(aws ecr get-login  --no-include-email --region $AWS_REGION)"
             ${login}
-            
+
             # If there is a tag, use it
             if [ "$CIRCLE_TAG" != "" ]; then
               docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:${CIRCLE_TAG}
               docker push ${AWS_REPO_BASE_URI}/apiplus_ui:${CIRCLE_TAG}
             fi
-            
+
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
 
               # Tag master as latest
@@ -107,7 +106,7 @@ jobs:
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
-            
+
               # Tag develop as develop anyhow
               docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:develop
               docker push ${AWS_REPO_BASE_URI}/apiplus_ui:develop

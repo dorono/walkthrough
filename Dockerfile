@@ -17,9 +17,11 @@ COPY .babelrc .eslintrc .gitignore .stylelintrc postcss.config.js webpack.config
 # Grab the URLs that are needed for the build
 ARG api_url
 ARG api_token
+ARG version
 
 ENV API_URL $api_url
 ENV API_TOKEN $api_token
+ENV VERSION $version
 
 RUN npm run build
 

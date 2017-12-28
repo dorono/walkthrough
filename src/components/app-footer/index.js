@@ -5,7 +5,8 @@ export default class AppFooter extends Component {
     render() {
         return (
             <footer className={styles.root}>
-                © {new Date().getFullYear()} Factom, Inc.
+                <span>© {new Date().getFullYear()} Factom, Inc.</span>
+                <span>{CONFIG.version} ({CONFIG.buildTimestamp})</span>
             </footer>
         );
     }
