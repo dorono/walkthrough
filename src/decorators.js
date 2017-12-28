@@ -3,7 +3,7 @@ import {request} from 'api';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 
-export const load = target => Component => {
+export const load = (target, options = {}) => Component => {
     class Loader extends React.Component {
         state = {};
 
@@ -12,8 +12,10 @@ export const load = target => Component => {
         }
 
         componentWillReceiveProps(nextProps) {
-            this.setState({data: undefined, error: undefined});
-            this.load(nextProps);
+            if (!options.ignoreQueryString || this.props.location.pathname !== nextProps.location.pathname) {
+                this.setState({data: undefined, error: undefined});
+                this.load(nextProps);
+            }
         }
 
         async load(props) {

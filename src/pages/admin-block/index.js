@@ -5,10 +5,23 @@ import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import Monospaced from 'components/monospaced';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@load(({match}) => `/ablocks/${match.params.hash}`)
+@load(({match}) => `/ablocks/${match.params.hash}`, {ignoreQueryString: true})
 export default class AdminBlock extends Component {
+    renderEntryContent(row) {
+        return (
+            <div>
+                <strong>IdentityAdminChainID</strong>: <Monospaced>{row.content.identityadminchainid}</Monospaced>
+                <br />
+                <strong>Pub</strong>: <Monospaced>{row.content.prevdbsig.pub}</Monospaced>
+                <br />
+                <strong>Sig</strong>: <Monospaced>{row.content.prevdbsig.sig}</Monospaced>
+            </div>
+        );
+    }
+
     render() {
         return (
             <div>
@@ -24,7 +37,12 @@ export default class AdminBlock extends Component {
                         </Box>
                     </Vertical>
                 </Container>
-                <EntriesTable entries={this.props.data.entries} />
+                <EntriesTable
+                    entriesUrl={`/ablocks/${this.props.data.hash}/entries?stages=factom,bitcoin`}
+                    pageParams={this.props.location.search}
+                    contentColumnName='CONTENT'
+                    renderContent={this.renderEntryContent}
+                />
             </div>
         );
     }

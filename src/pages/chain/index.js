@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
-import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import ExternlIds from 'components/external-ids';
-import Wrapped from 'components/wrapped';
 
-@load(({match}) => `/chains/${match.params.hash}?stages=factom,bitcoin`)
+@load(({match}) => `/chains/${match.params.hash}?stages=factom,bitcoin`, {ignoreQueryString: true})
 export default class Chain extends Component {
     render() {
         return (
@@ -24,17 +22,17 @@ export default class Chain extends Component {
                             <Label>EXTERNAL IDS</Label>
                             <ExternlIds>{this.props.data.external_ids.map(window.atob)}</ExternlIds>
                         </Box>
-                        <Box>
-                            <Label>CREATED ({currentTimezone()})</Label>
-                            {formatDateLong(this.props.data.entries[0].created_at)}
-                        </Box>
-                        <Box>
-                            <Label>CONTENT</Label>
-                            <Wrapped>{window.atob(this.props.data.content)}</Wrapped>
-                        </Box>
                     </Vertical>
                 </Container>
-                <EntriesTable entries={this.props.data.entries} hashExtraArgs={{chain: this.props.data.chain_id}} />
+                <EntriesTable
+                    entriesUrl={`/chains/${this.props.data.chain_id}/entries?stages=factom,bitcoin`}
+                    pageParams={this.props.location.search}
+                    renderContent={row => (
+                        <Hash type='entry' extraArgs={{chain: this.props.data.chain_id}}>
+                            {row.entry_hash}
+                        </Hash>
+                    )}
+                />
             </div>
         );
     }

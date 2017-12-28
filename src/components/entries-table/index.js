@@ -1,42 +1,53 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {addPaginationParams} from 'api';
+import {load} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import Sortable, {sortOptions} from 'components/sortable';
+import Pagination from 'components/pagination';
 import Table from 'components/table';
-import Hash from 'components/hash';
 
+@load(({entriesUrl, pageParams}) => addPaginationParams(entriesUrl, pageParams))
 export default class EntriesTable extends Component {
     static propTypes = {
-        entries: PropTypes.arrayOf(PropTypes.shape({
-            created_at: PropTypes.string.isRequired,
-            hash: PropTypes.string.isRequired,
-        })).isRequired,
-        hashExtraArgs: PropTypes.object,
+        renderContent: PropTypes.func.isRequired,
+        contentColumnName: PropTypes.string,
+    };
+
+    static defaultProps = {
+        contentColumnName: 'HASH',
     };
 
     render() {
         return (
             <Sortable
-                items={this.props.entries}
+                items={this.props.data}
                 sortOptions={[
                     sortOptions.newestFirst,
                     sortOptions.oldestFirst,
                 ]}>
                 {(items, sortDropdown) => (
-                    <Container title='Entries' count={items.length} actions={sortDropdown}>
+                    <Container title='Entries' count={this.props.count} actions={sortDropdown}>
                         <Table
-                            columns={[`CREATED (${currentTimezone()})`, 'HASH']}
+                            columns={[`CREATED (${currentTimezone()})`, this.props.contentColumnName]}
                             rows={items}
                             ellipsis={1}
                             type='secondary'>
                             {row => (
-                                <tr key={row.hash}>
+                                <tr key={row.created_at}>
                                     <td>{formatDate(row.created_at)}</td>
-                                    <td><Hash type='entry' extraArgs={this.props.hashExtraArgs}>{row.hash}</Hash></td>
+                                    <td>{this.props.renderContent(row)}</td>
                                 </tr>
                             )}
                         </Table>
+                        {this.props.count > this.props.limit && (
+                            <Pagination
+                                count={this.props.count}
+                                limit={this.props.limit}
+                                offset={this.props.offset}
+                            />
+                        )}
                     </Container>
                 )}
             </Sortable>

@@ -39,8 +39,4 @@
     &.outline {
         border: 1px solid var(--gray-stroke-light);
     }
-
-    & > * + * {
-        margin-top: 0.25rem;
-    }
 }

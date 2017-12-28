@@ -1,7 +1,10 @@
 @import 'styles/variables.css';
 
 .root {
+    display: block;
     font-family: var(--monospace-font);
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 a.root {

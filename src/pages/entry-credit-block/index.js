@@ -5,9 +5,10 @@ import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import Monospaced from 'components/monospaced';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@load(({match}) => `/ecblocks/${match.params.hash}`)
+@load(({match}) => `/ecblocks/${match.params.hash}`, {ignoreQueryString: true})
 export default class EntryCreditBlock extends Component {
     render() {
         return (
@@ -24,7 +25,11 @@ export default class EntryCreditBlock extends Component {
                         </Box>
                     </Vertical>
                 </Container>
-                <EntriesTable entries={this.props.data.entries} />
+                <EntriesTable
+                    entriesUrl={`/ecblocks/${this.props.data.hash}/entries?stages=factom,bitcoin`}
+                    pageParams={this.props.location.search}
+                    renderContent={row => <Monospaced>{row.hash}</Monospaced>}
+                />
             </div>
         );
     }

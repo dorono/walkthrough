@@ -28,6 +28,10 @@ a {
     transition: all 150ms ease-out-cubic;
 }
 
+strong {
+    font-weight: 600;
+}
+
 input,
 button,
 select {

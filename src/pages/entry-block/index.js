@@ -8,7 +8,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@load(({match}) => `/eblocks/${match.params.hash}`)
+@load(({match}) => `/eblocks/${match.params.hash}`, {ignoreQueryString: true})
 export default class EntryBlock extends Component {
     render() {
         return (
@@ -42,8 +42,13 @@ export default class EntryBlock extends Component {
                     </Vertical>
                 </Container>
                 <EntriesTable
-                    entries={this.props.data.entries}
-                    hashExtraArgs={{chain: this.props.data.chain.chain_id}}
+                    entriesUrl={`/eblocks/${this.props.data.keymr}/entries?stages=factom,bitcoin`}
+                    pageParams={this.props.location.search}
+                    renderContent={row => (
+                        <Hash type='entry' extraArgs={{chain: this.props.data.chain.chain_id}}>
+                            {row.entry_hash}
+                        </Hash>
+                    )}
                 />
             </div>
         );
