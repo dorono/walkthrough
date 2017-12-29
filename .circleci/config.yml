@@ -18,7 +18,7 @@ jobs:
 
       - run: npm install
 
-      - run: VERSION=$CIRCLE_SHA1 npm run build
+      - run: VERSION=$CIRCLE_TAG npm run build
 
       - save_cache:
           paths:
@@ -54,7 +54,7 @@ jobs:
       - run:
           name: Build the container
           command: |
-            docker build --build-arg "version=$CIRCLE_SHA1" -t apiplus_ui .
+            docker build --build-arg "version=$CIRCLE_TAG" -t apiplus_ui .
 
       - run:
           name: Push images to DockerHub
