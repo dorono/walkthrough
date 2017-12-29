@@ -29,6 +29,7 @@ export default class EntryCreditBlock extends Component {
                     entriesUrl={`/ecblocks/${this.props.data.hash}/entries?stages=factom,bitcoin`}
                     pageParams={this.props.location.search}
                     renderContent={row => <Monospaced>{row.hash}</Monospaced>}
+                    hasLink={false}
                 />
             </div>
         );

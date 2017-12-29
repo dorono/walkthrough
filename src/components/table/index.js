@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {autobind} from 'core-decorators';
+import classNames from 'classnames';
 import styles from './styles.css';
 
 @withRouter
@@ -12,11 +13,13 @@ export default class Table extends Component {
         children: PropTypes.func.isRequired,
         ellipsis: PropTypes.number,
         centerAlign: PropTypes.number,
+        interactive: PropTypes.bool,
         type: PropTypes.oneOf(['primary', 'secondary']),
     };
 
     static defaultProps = {
         type: 'primary',
+        interactive: true,
     };
 
     handleClick(event) {
@@ -41,7 +44,9 @@ export default class Table extends Component {
         if (this.props.rows.length === 0) return null;
 
         return (
-            <table className={styles[this.props.type]} onClick={this.handleClick}>
+            <table
+                onClick={this.handleClick}
+                className={classNames(styles[this.props.type], {[styles.interactive]: this.props.interactive})}>
                 <thead>
                     <tr>
                         {this.props.columns.map((header, index) => {

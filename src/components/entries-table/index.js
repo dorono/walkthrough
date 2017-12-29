@@ -12,10 +12,12 @@ export default class EntriesTable extends Component {
     static propTypes = {
         renderContent: PropTypes.func.isRequired,
         contentColumnName: PropTypes.string,
+        hasLink: PropTypes.bool,
     };
 
     static defaultProps = {
         contentColumnName: 'HASH',
+        hasLink: true,
     };
 
     render() {
@@ -25,7 +27,8 @@ export default class EntriesTable extends Component {
                     columns={[`CREATED (${currentTimezone()})`, this.props.contentColumnName]}
                     rows={this.props.data}
                     ellipsis={1}
-                    type='secondary'>
+                    type='secondary'
+                    interactive={this.props.hasLink}>
                     {(row, index) => (
                         <tr key={index}>
                             <td>{formatDate(row.created_at)}</td>

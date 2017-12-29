@@ -64,6 +64,7 @@ export default class AdminBlock extends Component {
                     pageParams={this.props.location.search}
                     contentColumnName='CONTENT'
                     renderContent={this.renderEntryContent}
+                    hasLink={false}
                 />
             </div>
         );

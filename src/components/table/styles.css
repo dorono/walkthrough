@@ -11,6 +11,14 @@
         & td {
             color: var(--gray);
             border-bottom: 1px solid var(--gray-stroke-light);
+        }
+    }
+}
+
+.interactive {
+    & > tbody {
+        & th,
+        & td {
             cursor: pointer;
         }
 
