@@ -33,6 +33,16 @@ strong {
     font-weight: 600;
 }
 
+ul {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+
+    & ul {
+        padding-left: 1rem;
+    }
+}
+
 input,
 button,
 select {

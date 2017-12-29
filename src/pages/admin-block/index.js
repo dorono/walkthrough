@@ -11,14 +11,36 @@ import DirectoryBlockLink from 'components/directory-block-link';
 @load(({match}) => `/ablocks/${match.params.hash}`, {ignoreQueryString: true})
 export default class AdminBlock extends Component {
     renderEntryContent(row) {
+        const renderItems = items => (
+            <ul>
+                {Object.entries(items).map(([key, value]) => renderItem(key, value))}
+            </ul>
+        );
+
+        const renderItem = (key, value) => {
+            if (value.constructor === Object) {
+                return (
+                    <li key={key}>
+                        <strong>{key}</strong>: {renderItems(value)}
+                    </li>
+                );
+            }
+
+            if (value.constructor === Array) {
+                return (
+                    <li key={key}>
+                        <strong>{key}</strong>: {renderItems(value.reduce((o, v, i) => ({...o, [i]: v}), {}))}
+                    </li>
+                );
+            }
+
+            return <li key={key}><strong>{key}</strong>: {value}</li>;
+        };
+
         return (
-            <div>
-                <strong>IdentityAdminChainID</strong>: <Monospaced>{row.content.identityadminchainid}</Monospaced>
-                <br />
-                <strong>Pub</strong>: <Monospaced>{row.content.prevdbsig.pub}</Monospaced>
-                <br />
-                <strong>Sig</strong>: <Monospaced>{row.content.prevdbsig.sig}</Monospaced>
-            </div>
+            <Monospaced>
+                {renderItems(row.content)}
+            </Monospaced>
         );
     }
 
