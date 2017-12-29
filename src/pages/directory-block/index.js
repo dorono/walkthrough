@@ -70,7 +70,7 @@ export default class DirectoryBlock extends Component {
                                         <Hash
                                             type='entry'
                                             extraArgs={{chain: this.props.data.btc_anchor_entry.chain.chain_id}}>
-                                            {this.props.data.btc_anchor_entry.hash}
+                                            {this.props.data.btc_anchor_entry.entry_hash}
                                         </Hash>
                                     )
                                     : <Hash />
