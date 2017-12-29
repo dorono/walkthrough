@@ -26,8 +26,8 @@ export default class EntriesTable extends Component {
                     rows={this.props.data}
                     ellipsis={1}
                     type='secondary'>
-                    {row => (
-                        <tr key={row.created_at}>
+                    {(row, index) => (
+                        <tr key={index}>
                             <td>{formatDate(row.created_at)}</td>
                             <td>{this.props.renderContent(row)}</td>
                         </tr>

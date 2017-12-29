@@ -64,8 +64,8 @@ export default class Table extends Component {
                     </tr>
                 </thead>
                 <tbody>
-                    {this.props.rows.map(row => {
-                        const tr = this.props.children(row);
+                    {this.props.rows.map((row, index) => {
+                        const tr = this.props.children(row, index);
                         return React.cloneElement(tr, {},
                             tr.props.children.map((cell, index) => {
                                 if (!cell) return null;
