@@ -1,0 +1,76 @@
+@import 'styles/variables.css';
+
+.root {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--violet-dark), 0.4);
+}
+
+.popup {
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 4px 0 rgba(#000, 0.5);
+    background: var(--white);
+    overflow: hidden;
+}
+
+.header {
+    padding: 3.5rem 4.5rem;
+    background: var(--violet-dark);
+    color: var(--white);
+    font-size: 2.2rem;
+    line-height: 1em;
+
+    & span {
+        color: var(--yellow);
+    }
+}
+
+.content {
+    padding: 3.5rem 4.5rem 0;
+    font-size: 1.4rem;
+
+    & > *:nth-child(1) {
+        font-weight: 300;
+    }
+
+    & > *:nth-child(2) {
+        font-weight: 400;
+    }
+
+    & > *:nth-child(3) {
+        margin-top: 2rem;
+        font-size: 1.2rem;
+        font-weight: 600;
+    }
+
+    & a:hover {
+        color: var(--yellow);
+    }
+}
+
+.actions {
+    padding: 0 4.5rem 3.5rem;
+    text-align: right;
+}
+
+.button {
+    padding: 1rem 2rem;
+    border: 1px solid var(--blue);
+    border-radius: var(--border-radius);
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--blue);
+    transition: all 150ms ease-out-cubic;
+
+    &:hover {
+        background: var(--blue);
+        color: var(--white);
+    }
+}

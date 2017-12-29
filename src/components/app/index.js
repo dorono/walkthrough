@@ -4,8 +4,12 @@ import {routes} from 'routes';
 import {trackPageView} from 'analytics';
 import AppHeader from 'components/app-header';
 import AppFooter from 'components/app-footer';
+import WelcomePopup from 'components/welcome-popup';
+import FeedbackLink from 'components/feedback-link';
 import ErrorPage from 'pages/error-page';
 import styles from './styles.css';
+
+const feedbackUrl = '//docs.google.com/forms/d/e/1FAIpQLSdNSt5-5Kr9kD51VjE7I28knZJcqulFN42hTVK9S-tJvVohxw/viewform';
 
 @withRouter
 export default class App extends Component {
@@ -44,6 +48,8 @@ export default class App extends Component {
                 <AppHeader />
                 {this.renderContent()}
                 <AppFooter />
+                <WelcomePopup feedbackUrl={feedbackUrl} />
+                <FeedbackLink feedbackUrl={feedbackUrl} />
             </div>
         );
     }

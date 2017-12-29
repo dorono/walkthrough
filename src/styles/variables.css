@@ -2,6 +2,7 @@
     --blue: #417BA4;
     --yellow: #E8B420;
     --violet: #7F5D93;
+    --violet-dark: #262641;
 
     --white: #FFF;
     --black: #000;
@@ -19,6 +20,7 @@
     --content-width: 95%;
     --content-max-width: 1400px;
     --border-radius: 0.4rem;
+    --feedback-link-height: 4rem;
 
     --font: 'Montserrat', sans-serif;
     --monospace-font: 'Roboto Mono', monospace;
