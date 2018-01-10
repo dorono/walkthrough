@@ -28,7 +28,7 @@ RUN npm run build
 #
 # Final image is /build in an nginx container
 #
-FROM nginx:1.13.3-alpine
+FROM nginx:1.13.8-alpine
 
 RUN mkdir -p /docs
 COPY --from=builder /srv/build/ /build/
