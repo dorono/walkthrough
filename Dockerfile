@@ -1,4 +1,4 @@
-FROM node:7.10 as builder
+FROM node:8.11.1 as builder
 
 # Setup the work dir
 RUN mkdir -p /srv
@@ -28,7 +28,7 @@ RUN npm run build
 #
 # Final image is /build in an nginx container
 #
-FROM nginx:1.13.8-alpine
+FROM nginx:1.13.12-alpine
 
 RUN mkdir -p /docs
 COPY --from=builder /srv/build/ /build/
