@@ -6,7 +6,7 @@ export const request = async (url) => {
     const headers = {
         accept: 'application/json',
         'content-type': 'application/json',
-        'x-3scale-proxy-secret-token': apiToken,
+        'factom-provider-token': apiToken,
     };
     const response = await fetch(`${apiUrl}${url}`, {headers});
     if (response.status >= 400) {
