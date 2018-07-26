@@ -16,6 +16,7 @@
 
     & > * + * {
         margin-left: 2rem;
+        min-width: 17rem;
     }
 
     & > *:nth-child(2) {

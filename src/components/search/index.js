@@ -5,6 +5,14 @@ import classNames from 'classnames';
 import {trackPageView} from 'analytics';
 import {request} from 'api';
 import {reverse} from 'routes';
+import {
+    isKey,
+    isPrivateKey,
+    isProbablyAKey,
+    PRIVATE_KEY_PREFIX_EC,
+    PUBLIC_KEY_PREFIX_EC,
+    PUBLIC_KEY_PREFIX_FC,
+} from 'utils/key';
 import styles from './styles.css';
 
 const urls = {
@@ -50,6 +58,30 @@ export default class Search extends Component {
         this.input = ref;
     }
 
+    /**
+     * Return an informative message when no results are found.
+     * @param query
+     * @returns {string}
+     */
+    getErrorMessage(query = '') {
+        const errorMessage = 'No results found.';
+        if (isPrivateKey(query)) {
+            return `${errorMessage} If you're searching for an address, never expose your private 
+                key and try again with your public key beginning with 
+                ${query.startsWith(PRIVATE_KEY_PREFIX_EC) ?
+                    PUBLIC_KEY_PREFIX_EC : PUBLIC_KEY_PREFIX_FC}.`;
+        }
+        if (isKey(query)) {
+            return `${errorMessage} If you're searching for an address, note that only addresses 
+                with a transaction history will be returned.`;
+        }
+        if (isProbablyAKey(query)) {
+            return `${errorMessage} It appears you might be searching for an address but have 
+                provided an invalid value, please check for typos.`;
+        }
+        return errorMessage;
+    }
+
     async search() {
         this.setState({searching: true});
 
@@ -69,8 +101,7 @@ export default class Search extends Component {
         } catch (error) {
             if (!this.state.searching) return;
             if (error.statusCode === 404) {
-                state.error = 'No results found';
-                if (this.state.query.length < 64) state.error += ', maybe try with the full hash';
+                state.error = this.getErrorMessage(this.state.query);
             } else {
                 state.error = 'Internal server error, please try again';
             }
