@@ -14,6 +14,12 @@ const addressTypes = {
     EC: 'Entry Credit Address',
 };
 
+const columns = [
+    'TRANSACTION ID',
+    'AMOUNT (BALANCE CHANGE)',
+    `CREATED TIME (${currentTimezone()})`,
+];
+
 @load(({match}) => `/addresses/${match.params.hash}`)
 export default class Address extends Component {
     getAmountKey() {
@@ -71,11 +77,7 @@ export default class Address extends Component {
                             count={items.length}
                             actions={sortDropdown}>
                             <Table
-                                columns={[
-                                    'TRANSACTION ID',
-                                    'AMOUNT (BALANCE CHANGE)',
-                                    `CREATED TIME (${currentTimezone()})`,
-                                ]}
+                                columns={columns}
                                 rows={items}
                                 ellipsis={0}
                                 type='secondary'>
