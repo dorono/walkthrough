@@ -11,6 +11,13 @@
     "env": {
         "development": {
             "plugins": ["react-hot-loader/babel"]
+        },
+        "test": {
+            "presets": [["es2015"], "stage-0", "react"],
+            "plugins": [
+                "transform-decorators-legacy",
+                "transform-runtime"
+            ]
         }
     }
 }
