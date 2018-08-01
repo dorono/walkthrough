@@ -29,6 +29,7 @@
     height: 2.4rem;
     border-radius: 1.2rem;
     border: 1px solid var(--gray-stroke-light);
+    background: #FFF;
 
     &:not(:first-child) {
         margin-right: 1rem;
