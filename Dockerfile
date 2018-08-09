@@ -6,6 +6,7 @@ WORKDIR /srv
 
 # Copy in the list of dependencies
 COPY package.json .
+COPY package-lock.json .
 
 # Install dependencies
 RUN npm install
