@@ -1,0 +1,31 @@
+@import 'styles/variables.css';
+
+.root {
+    display: inline-flex;
+}
+
+.tab {
+    color: var(--blue);
+    padding: 3px 10px;
+    border: 1px solid transparent;
+    border-radius: 12px;
+    user-select: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+
+    &:hover:not(.selected) {
+        border: 1px solid var(--gray-stroke-light);
+        cursor: pointer;
+    }
+
+    &:not(:last-child) {
+        margin-right: 10px;
+    }
+}
+
+.selected {
+    background: var(--yellow);
+    color: var(--white);
+}

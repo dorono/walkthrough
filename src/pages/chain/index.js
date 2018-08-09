@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
+
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import ExternlIds from 'components/external-ids';
+import ExternalIdList from 'components/external-id-list';
 
 @load(({match}) => `/chains/${match.params.hash}?stages=factom,bitcoin`, {ignoreQueryString: true})
 export default class Chain extends Component {
@@ -20,7 +21,7 @@ export default class Chain extends Component {
                         </Box>
                         <Box>
                             <Label>EXTERNAL IDS</Label>
-                            <ExternlIds>{this.props.data.external_ids.map(window.atob)}</ExternlIds>
+                            <ExternalIdList externalIds={this.props.data.external_ids} />
                         </Box>
                     </Vertical>
                 </Container>
