@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="5px" viewBox="0 0 11 5" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 51.2 (57519) - http://www.bohemiancoding.com/sketch -->
+    <title>id-down-arrow</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Content-field-data-(realistic)" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Entry-data----real-content---ID-base64" transform="translate(-129.000000, -380.000000)" fill-rule="nonzero">
+            <g id="External-IDs" transform="translate(65.000000, 292.000000)">
+                <g id="id-1---raw" transform="translate(0.000000, 58.500000)">
+                    <g id="encrypted-dropdown" transform="translate(15.000000, 24.000000)">
+                        <g id="id-down-arrow" transform="translate(47.000000, 0.000000)">
+                            <rect id="Rectangle-3" x="0" y="0" width="16" height="16"></rect>
+                            <path d="M11.9493926,6.0446015 C11.8819277,5.98688722 11.7726445,5.98688722 11.7051797,6.0446015 L7.50008789,9.64201504 L3.29480273,6.0446015 C3.22733789,5.98688722 3.11805469,5.98688722 3.05058984,6.0446015 C2.983125,6.10231579 2.983125,6.19580451 3.05058984,6.2535188 L7.37797266,9.9553985 C7.41035156,9.98309774 7.45420898,9.99867669 7.50008789,9.99867669 C7.5459668,9.99867669 7.58980664,9.98309774 7.62218555,9.9553985 L11.9493926,6.2535188 C12.0168574,6.19580451 12.0168574,6.10231579 11.9493926,6.0446015 Z" id="Shape" stroke="#417BA4" stroke-width="0.550000012" fill="#FFFFFF"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,50 @@
+@import '../../styles/variables.css';
+
+.root {
+    padding: 0 10px;
+    display: flex;
+    max-width: 100%;
+    overflow-y: auto;
+    max-height: 500px;
+    overflow-x: hidden;
+    font-family: var(--monospace-font);
+    font-size: 13px;
+
+    & > code {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 10px;
+    }
+}
+
+.byte {
+    margin: 0 5px;
+    font-family: monospace;
+}
+
+.key {
+    color: #7F5D93;
+    line-height: 20px;
+}
+
+.line {
+    position: relative;
+    margin-left: 50px;
+    white-space: pre-wrap;
+    display: inline-block;
+    padding-left: 10px;
+    line-height: 21px;
+
+    &::before {
+        position: absolute;
+        left: -50px;
+        width: 50px;
+        height: 100%;
+        counter-increment: line;
+        content: counter(line);
+        user-select: none;
+        border-right: 1px solid var(--gray-stroke-light);
+        display: flex;
+        justify-content: center;
+    }
+}

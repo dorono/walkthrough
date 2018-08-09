@@ -1,4 +1,4 @@
-import {base58check} from 'utils/encoder';
+import {base58check} from 'utils/encoding';
 
 /**
  * Decode a given value from base58check.

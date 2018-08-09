@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {autobind} from 'core-decorators';
-import Dropdown from 'components/dropdown';
+import Select from 'components/select';
 
 @autobind
 export default class Sortable extends Component {
@@ -38,7 +38,7 @@ export default class Sortable extends Component {
         const items = this.props.items.map((item, index) => ({...item, index})).sort(sort.func);
 
         const sortDropdown = (
-            <Dropdown
+            <Select
                 placeholder='Sort'
                 options={this.getSortOptions()}
                 value={this.state.currentSort}

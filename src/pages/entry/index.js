@@ -5,8 +5,10 @@ import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import ExternlIds from 'components/external-ids';
-import Wrapped from 'components/wrapped';
+import ExternalIdList from 'components/external-id-list';
+import EntryContent from 'components/entry-content/index';
+
+import styles from './styles.css';
 
 @load(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}?stages=factom,bitcoin`)
 export default class Entry extends Component {
@@ -25,16 +27,16 @@ export default class Entry extends Component {
                         <Hash type='chain'>{this.props.data.chain.chain_id}</Hash>
                     </Box>
                     <Box>
-                        <Label>EXTERNAL IDS</Label>
-                        <ExternlIds>{this.props.data.external_ids.map(window.atob)}</ExternlIds>
-                    </Box>
-                    <Box>
                         <Label>CREATED ({currentTimezone()})</Label>
                         {formatDateLong(this.props.data.created_at)}
                     </Box>
                     <Box>
-                        <Label>CONTENT</Label>
-                        <Wrapped>{window.atob(this.props.data.content)}</Wrapped>
+                        <Label>EXTERNAL IDS</Label>
+                        <ExternalIdList externalIds={this.props.data.external_ids} />
+                    </Box>
+                    <Box>
+                        <Label className={styles.contentTitle}>CONTENT</Label>
+                        <EntryContent data={this.props.data.content} />
                     </Box>
                 </Vertical>
             </Container>

@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {load} from 'decorators';
 import {addPaginationParams} from 'api';
+
 import Container from 'components/container';
 import Table from 'components/table';
 import Pagination from 'components/pagination';
 import Hash from 'components/hash';
-import ExternlIds from 'components/external-ids';
+import ExternalIdList from 'components/external-id-list';
 
 @load(({location}) => addPaginationParams('/chains?stages=factom,bitcoin', location.search))
 export default class ChainList extends Component {
@@ -19,7 +20,7 @@ export default class ChainList extends Component {
                     {row => (
                         <tr key={row.chain_id}>
                             <td><Hash type='chain'>{row.chain_id}</Hash></td>
-                            <td><ExternlIds fadeOut>{row.external_ids.map(window.atob)}</ExternlIds></td>
+                            <td><ExternalIdList externalIds={row.external_ids} showDefaultEncoding fadeOut /></td>
                         </tr>
                     )}
                 </Table>
