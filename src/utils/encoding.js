@@ -27,7 +27,7 @@ export const toHex = str => {
         const hexByte = str.charCodeAt(i).toString(16);
         hexString += (hexByte.length === 2 ? hexByte : `0${hexByte}`);
     }
-    return hexString.toUpperCase();
+    return hexString;
 };
 
 export const base58 = createEncoder(58);
