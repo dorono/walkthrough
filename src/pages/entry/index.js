@@ -6,6 +6,7 @@ import {Vertical, Box} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import ExternalIdList from 'components/external-id-list';
+import EntryBlockLink from 'components/entry-block-link';
 import EntryContent from 'components/entry-content/index';
 
 import styles from './styles.css';
@@ -25,6 +26,10 @@ export default class Entry extends Component {
                     <Box type='fill'>
                         <Label>CHAIN</Label>
                         <Hash type='chain'>{this.props.data.chain.chain_id}</Hash>
+                    </Box>
+                    <Box type='fill'>
+                        <Label>PARENT ENTRY BLOCK</Label>
+                        <EntryBlockLink>{this.props.data.eblock}</EntryBlockLink>
                     </Box>
                     <Box>
                         <Label>CREATED ({currentTimezone()})</Label>
