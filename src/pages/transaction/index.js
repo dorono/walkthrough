@@ -7,6 +7,7 @@ import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
+import FactoidBlockLink from 'components/factoid-block-link';
 import Amount from 'components/amount';
 
 @load(({match}) => `/transactions/${match.params.hash}`)
@@ -83,7 +84,7 @@ export default class Transaction extends Component {
                             </Box>
                             <Box type='fill'>
                                 <Label>PARENT FACTOID BLOCK</Label>
-                                <Hash type='fblock'>{this.props.data.fblock.hash}</Hash>
+                                <FactoidBlockLink>{this.props.data.fblock}</FactoidBlockLink>
                             </Box>
                             <Box type='fill'>
                                 <Label>PARENT DIRECTORY BLOCK</Label>
