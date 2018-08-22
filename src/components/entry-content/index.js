@@ -59,7 +59,7 @@ class EntryContent extends Component {
 
     @autobind
     changeSelection(item) {
-        this.setState({selected: item, expanded: false});
+        this.setState({selected: item});
     }
 
     @autobind
@@ -146,7 +146,8 @@ class EntryContent extends Component {
                             style={!this.state.expanded && {overflow: 'hidden'}}
                           />
                         : this.renderDefaultViewer(selected.value)}
-                </ExpansibleContainer></Collapse>
+                </ExpansibleContainer>
+            </Collapse>
         );
     }
 
