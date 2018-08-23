@@ -16,6 +16,7 @@
     "stylelint"
   ],
   "devDependencies": {
+    "ajv": "^6.5.3",
     "babel-core": "6.23.1",
     "babel-eslint": "7.1.1",
     "babel-loader": "6.3.2",
@@ -37,9 +38,11 @@
     "eslint-plugin-jsx-a11y": "5.0.3",
     "eslint-plugin-react": "7.1.0",
     "extract-text-webpack-plugin": "2.0.0",
+    "file-loader": "^2.0.0",
     "html-webpack-plugin": "2.29.0",
     "identity-obj-proxy": "3.0.0",
-    "image-webpack-loader": "3.2.0",
+    "imagemin-svgo": "^7.0.0",
+    "imagemin-webpack": "^3.0.0",
     "jest": "23.4.1",
     "jest-enzyme": "6.0.2",
     "json-loader": "0.5.4",
@@ -58,7 +61,7 @@
     "stylelint": "7.9.0",
     "stylelint-config-standard": "16.0.0",
     "uglify-js": "2.8.1",
-    "url-loader": "0.5.8",
+    "url-loader": "^0.6.2",
     "webpack": "2.2.1",
     "webpack-dev-server": "2.4.1"
   },
@@ -68,7 +71,7 @@
     "classnames": "2.2.5",
     "core-decorators": "0.18.0",
     "lodash": "4.17.10",
-    "moment": "2.17.1",
+    "moment": "^2.22.2",
     "prop-types": "15.5.8",
     "query-string": "5.0.0",
     "react": "16.4.2",
