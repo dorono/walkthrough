@@ -1,5 +1,15 @@
 ## Changelog
 
+### 3.0.0-rc3
+- Minor changes to fix component testing support.
+- [EX-107] Fixed security vulnerabilities
+- Delete post-cssnext and include postcss-preset-env and others.
+- Install babel-preset-env to replace babel-es-2015.
+- [EX-108] Keep entry viewer collapsed/expanded state when switching tabs
+- Reduce duplication by generalizing in a Block Link component.
+- [EX-66] Add "Parent Block" to Entries and Tx's
+- Change HEX Strings to lowercase
+
 ### 3.0.0-rc2
 - Copy package-lock.json in Dockerfile
 - [EX-52] Handle different data encodings for entries content and external ids
