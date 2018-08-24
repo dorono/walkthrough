@@ -70,16 +70,10 @@ class EntryContent extends Component {
     @autobind
     handleViewerSize(size) {
         // TODO Refactor this and manage gradient inside ExpansibleContainer
-        if (size.height === VIEWER_COLLAPSED_HEIGHT) {
-            return this.setState({showViewerGradient: true, showExpandButton: true});
+        if (size.height >= VIEWER_COLLAPSED_HEIGHT) {
+            return this.setState({showViewerGradient: !this.state.expanded, showExpandButton: true});
         }
-        if (size.height < VIEWER_COLLAPSED_HEIGHT) {
-            return this.setState({showViewerGradient: false, showExpandButton: false});
-        }
-        if (!this.state.expanded) {
-            return this.setState({showExpandButton: true, showViewerGradient: true});
-        }
-        return this.setState({showViewerGradient: false});
+        return this.setState({showViewerGradient: false, showExpandButton: false});
     }
 
     renderTabs() {
