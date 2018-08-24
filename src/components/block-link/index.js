@@ -21,13 +21,12 @@ export default class BlockLink extends Component {
             <div className={styles.root}>
                 {
                     type === 'dblock' &&
-                        <span className={styles.label}>HEIGHT:</span>
-                }
-                {
-                    type === 'dblock' &&
-                        <Link className={styles.link} to={reverse(type, {hash: block.keymr})}>
-                            {block.height}
-                        </Link>
+                        [
+                            <span className={styles.label}>HEIGHT:</span>,
+                            <Link className={styles.link} to={reverse(type, {hash: block.keymr})}>
+                                {block.height}
+                            </Link>,
+                        ]
                 }
                 <span className={styles.label}>KEYMR:</span>
                 <span className={styles.hash}><Hash type={type}>{block.keymr}</Hash></span>
