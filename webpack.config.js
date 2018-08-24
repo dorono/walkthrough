@@ -6,6 +6,9 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const {imageminLoader} = require('imagemin-webpack');
+const imageminSvgo = require('imagemin-svgo');
+
 const resolve = dest => path.resolve(__dirname, dest);
 const isDev = process.env.NODE_ENV !== 'production';
 const version = isDev ? 'DEV' : process.env.VERSION;
@@ -70,20 +73,19 @@ module.exports = {
                 test: /\.(jpg|gif|png|svg)$/,
                 use: [
                     {
-                        loader: 'url-loader',
+                        loader: 'file-loader',
                         options: {
-                            limit: 10000,
                             name: 'assets/[name].[hash].[ext]',
                         },
                     },
                     {
-                        loader: 'image-webpack-loader',
-                        query: {
-                            bypassOnDebug: isDev,
-                            mozjpeg: {progressive: true},
-                            gifsicle: {interlaced: true},
-                            optipng: {optimizationLevel: 7},
-                            pngquant: {quality: '75-90', speed: 3},
+                        loader: imageminLoader,
+                        options: {
+                            cache: false,
+                            bail: false, // Ignore errors on corrupted images
+                            imageminOptions: {
+                                plugins: [imageminSvgo()],
+                            },
                         },
                     },
                 ],
