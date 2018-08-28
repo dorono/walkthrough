@@ -37,7 +37,7 @@ export default class FactoidBlock extends Component {
                         </Vertical>
                         <Vertical>
                             <Box type='outline'>
-                                <Label>HASH</Label>
+                                <Label>KEYMR</Label>
                                 <Hash type='fblock'>{this.props.data.keymr}</Hash>
                             </Box>
                             <Box type='fill'>
