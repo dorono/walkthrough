@@ -1,5 +1,9 @@
 ## Changelog
 
+### 3.0.0-rc4
+- Fix bug in Collapse/Expand button for Entry Content
+- Removes @nest (css next feat.)
+
 ### 3.0.0-rc3
 - Minor changes to fix component testing support.
 - [EX-107] Fixed security vulnerabilities
