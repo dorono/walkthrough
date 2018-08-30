@@ -1,5 +1,8 @@
 ## Changelog
 
+### 3.0.0
+- Change HASH by KEYMR on factoid block page.
+
 ### 3.0.0-rc4
 - Fix bug in Collapse/Expand button for Entry Content
 - Removes @nest (css next feat.)
