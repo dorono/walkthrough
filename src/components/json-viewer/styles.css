@@ -29,7 +29,7 @@
 
     &::before {
         position: absolute;
-        left: -50px;
+        left: -70px;
         width: 50px;
         height: 100%;
         counter-increment: line;
@@ -37,6 +37,7 @@
         user-select: none;
         border-right: 1px solid var(--gray-stroke-light);
         display: flex;
-        justify-content: center;
+        justify-content: flex-end;
+        padding-right: 10px;
     }
 }
