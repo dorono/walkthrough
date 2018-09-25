@@ -18,7 +18,13 @@
     <body>
         <div id="root"></div>
         <script>
-            var RUNTIME_CONFIG = {apiUrl: '$API_URL', apiToken: '$API_TOKEN'};
+            var RUNTIME_CONFIG = {
+                appId: '$API_APP_ID',
+                apiKey: '$API_TOKEN',
+                apiUrls: {
+                    mainnet: '$API_URL_MAINNET',
+                    sharedSandbox: '$API_URL_SHARED_SANDBOX',
+                }};
         </script>
     </body>
 </html>

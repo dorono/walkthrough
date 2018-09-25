@@ -3,6 +3,7 @@
     --yellow: #E8B420;
     --violet: #7F5D93;
     --violet-dark: #262641;
+    --red: #940F08;
 
     --white: #FFF;
     --black: #000;
@@ -13,6 +14,9 @@
     --gray-stroke-dark: #C3C3C3;
     --gray-light: #7B7B7B;
     --gray: #4A4A4A;
+
+    --gray-50: color(#000 lightness(50%));
+    --gray-60: color(#000 lightness(60%));
 
     --app-bg: #FAFAFA;
     --app-header-bg: linear-gradient(90deg, #111135 0%, #343454 100%);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';
@@ -8,7 +8,7 @@ import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@load(({match}) => `/ablocks/${match.params.hash}`, {ignoreQueryString: true})
+@dataLoader(({match}) => `/ablocks/${match.params.hash}`, {ignoreQueryString: true})
 export default class AdminBlock extends Component {
     renderEntryContent(row) {
         const renderItems = items => (

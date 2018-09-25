@@ -13,7 +13,7 @@ export default class AppFooter extends Component {
     }
 
     async loadAPIVersion() {
-        const data = await request('/');
+        const data = await request('/', this.props.apiConfig);
         this.setState({apiVersion: `v${data.version}`});
     }
 

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
@@ -8,7 +8,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@load(({match}) => `/eblocks/${match.params.hash}`, {ignoreQueryString: true})
+@dataLoader(({match}) => `/eblocks/${match.params.hash}`, {ignoreQueryString: true})
 export default class EntryBlock extends Component {
     render() {
         return (

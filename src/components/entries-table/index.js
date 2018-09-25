@@ -1,13 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {addPaginationParams} from 'api';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import Pagination from 'components/pagination';
 import Table from 'components/table';
 
-@load(({entriesUrl, pageParams}) => addPaginationParams(entriesUrl, pageParams))
+@dataLoader(({entriesUrl, pageParams}) => addPaginationParams(entriesUrl, pageParams))
 export default class EntriesTable extends Component {
     static propTypes = {
         renderContent: PropTypes.func.isRequired,

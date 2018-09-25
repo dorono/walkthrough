@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {addPaginationParams} from 'api';
 
 import Container from 'components/container';
@@ -8,7 +8,7 @@ import Pagination from 'components/pagination';
 import Hash from 'components/hash';
 import ExternalIdList from 'components/external-id-list';
 
-@load(({location}) => addPaginationParams('/chains?stages=factom,bitcoin', location.search))
+@dataLoader(({location}) => addPaginationParams('/chains?stages=factom,bitcoin', location.search))
 export default class ChainList extends Component {
     render() {
         return (

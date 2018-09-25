@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import Sortable, {sortOptions} from 'components/sortable';
@@ -20,7 +20,7 @@ const columns = [
     `CREATED TIME (${currentTimezone()})`,
 ];
 
-@load(({match}) => `/addresses/${match.params.hash}`)
+@dataLoader(({match}) => `/addresses/${match.params.hash}`)
 export default class Address extends Component {
     getAmountKey() {
         return this.props.data.type === 'FA' ? 'fct_amount' : 'ec_amount';

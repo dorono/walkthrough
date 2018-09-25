@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
@@ -11,7 +11,7 @@ import EntryContent from 'components/entry-content/index';
 
 import styles from './styles.css';
 
-@load(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}?stages=factom,bitcoin`)
+@dataLoader(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}?stages=factom,bitcoin`)
 export default class Entry extends Component {
     render() {
         return (

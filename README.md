@@ -34,7 +34,9 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ```
 $ export API_URL=https://apiplus-dev.factom.com/v2
+$ export API_URL_MAINNET=https://apiplus-dev.factom.com/v2
 $ export API_TOKEN=XXXXXXXX
+$ export API_APP_ID=XXXXXXX
 $ export GA_ID=XXXXXXXX
 $ npm run build
 ```

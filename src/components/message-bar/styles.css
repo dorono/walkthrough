@@ -1,0 +1,16 @@
+@import 'styles/variables.css';
+
+.bar {
+    padding: 1rem;
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--white);
+    min-height: 4.3rem;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.error {
+    background-color: var(--red);
+}

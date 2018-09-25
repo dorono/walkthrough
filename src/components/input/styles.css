@@ -1,0 +1,17 @@
+@import 'styles/variables.css';
+
+.root {
+    font-size: 90%;
+    border: 1px solid var(--black);
+    padding: 0.2rem;
+}
+
+.error {
+    border-color: var(--red) !important;
+}
+
+.error-text {
+    padding-top: 0.5rem;
+    font-size: 1.1rem;
+    color: var(--red);
+}

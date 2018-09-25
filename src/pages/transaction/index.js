@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
@@ -10,7 +10,7 @@ import DirectoryBlockLink from 'components/directory-block-link';
 import FactoidBlockLink from 'components/factoid-block-link';
 import Amount from 'components/amount';
 
-@load(({match}) => `/transactions/${match.params.hash}`)
+@dataLoader(({match}) => `/transactions/${match.params.hash}`)
 export default class Transaction extends Component {
     getTransactionAmount(transaction) {
         let amount;

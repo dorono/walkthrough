@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
+import {Modal, ModalBody, ModalFooter, ModalHeader} from 'components/modal';
 import styles from './styles.css';
 
 const storageKey = 'factom.explorer.welcome';
@@ -20,24 +21,22 @@ export default class WelcomePopup extends Component {
         const {feedbackUrl} = this.props;
 
         return (
-            <div className={styles.root}>
-                <div className={styles.popup}>
-                    <div className={styles.header}>
-                        Welcome to the <span className={styles.new}>NEW</span><br />
-                        FACTOM BLOCKCHAIN EXPLORER!
-                    </div>
-                    <div className={styles.content}>
-                        <div>We are currently in beta and will be rolling out updates over the coming weeks.</div>
-                        <div>Your <a href={feedbackUrl} target='_blank'>FEEDBACK</a> is welcome and appreciated!</div>
-                        <div>THE FACTOM TEAM</div>
-                    </div>
-                    <div className={styles.actions}>
-                        <button className={styles.button} onClick={this.handleClose}>
-                            GOT IT!
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <Modal show={this.state.visible}>
+                <ModalHeader className={styles.modalHeader}>
+                    Welcome to the <span className={styles.new}>NEW</span><br />
+                    FACTOM BLOCKCHAIN EXPLORER!
+                </ModalHeader>
+                <ModalBody className={styles.modalBody}>
+                    <div>We are currently in beta and will be rolling out updates over the coming weeks.</div>
+                    <div>Your <a href={feedbackUrl} target='_blank'>FEEDBACK</a> is welcome and appreciated!</div>
+                    <div>THE FACTOM TEAM</div>
+                </ModalBody>
+                <ModalFooter className={styles.modalFooter}>
+                    <button className={styles.button} onClick={this.handleClose}>
+                        GOT IT!
+                    </button>
+                </ModalFooter>
+            </Modal>
         );
     }
 }

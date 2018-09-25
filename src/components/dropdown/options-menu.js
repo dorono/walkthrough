@@ -28,6 +28,8 @@ class OptionsMenu extends React.Component {
         selected: PropTypes.shape({
             label: PropTypes.string,
         }).isRequired,
+        // Class to be applied to the selected option
+        selectedClassName: PropTypes.string,
     };
 
     isSelected(option) {
@@ -35,12 +37,14 @@ class OptionsMenu extends React.Component {
     }
 
     renderList() {
-        const {options, position, isOpen} = this.props;
+        const {className, options, position, isOpen} = this.props;
 
         if (options.length === 0) return null;
 
         return (
-            <div className={classNames(styles.options, {[styles.open]: isOpen})} style={position}>
+            <div
+                className={classNames(styles.options, className, {[styles.open]: isOpen})}
+                style={position}>
                 {options.map(this.renderItem)}
             </div>
         );
@@ -52,7 +56,10 @@ class OptionsMenu extends React.Component {
             <div
                 key={option.label}
                 onClick={() => this.props.onOptionClick(option)}
-                className={classNames({[styles.selected]: this.isSelected(option)})}>
+                className={classNames({
+                    [styles.selected]: this.isSelected(option),
+                    [this.props.selectedClassName]: this.isSelected(option),
+                })}>
                 {option.label}
             </div>
         );

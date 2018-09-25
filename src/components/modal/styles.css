@@ -1,0 +1,21 @@
+@import 'styles/variables.css';
+
+.root {
+    position: fixed;
+    z-index: 1000;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(var(--violet-dark), 0.4);
+}
+
+.popup {
+    border-radius: var(--border-radius);
+    box-shadow: 0 0 4px 0 rgba(#000, 0.5);
+    background: var(--white);
+    overflow: hidden;
+}

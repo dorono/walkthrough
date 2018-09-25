@@ -1,9 +1,19 @@
 import React from 'react';
 import {request} from 'api';
+import {APIConfigurationConsumer} from 'api-context';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 
-export const load = (target, options = {}) => Component => {
+/**
+ * HOC that fetches data using the request function.
+ * Shows errors and loader ny default.
+ * @param target
+ * @param options
+ * @param showLoader
+ * @param showErrors
+ * @returns {function(*): Loader}
+ */
+const load = (target, options = {}, showLoader = true, showErrors = true) => Component => {
     class Loader extends React.Component {
         state = {};
 
@@ -21,7 +31,7 @@ export const load = (target, options = {}) => Component => {
         async load(props) {
             const url = typeof target === 'function' ? target(props) : target;
             try {
-                const data = await request(url);
+                const data = await request(url, props.apiConfig);
                 this.setState({data});
             } catch (error) {
                 this.setState({error: error.statusCode || error.message});
@@ -29,11 +39,26 @@ export const load = (target, options = {}) => Component => {
         }
 
         render() {
-            if (this.state.error === 404) return <ErrorPage status={404} />;
-            if (this.state.error) return <ErrorPage status={500} />;
-            if (!this.state.data) return <Spinner />;
+            if (this.state.error === 404 && showErrors) return <ErrorPage status={404} />;
+            if (this.state.error && showErrors) return <ErrorPage status={500} />;
+            if (!this.state.data && showLoader) return <Spinner />;
             return <Component {...this.props} {...this.state.data} />;
         }
     }
     return Loader;
+};
+
+/**
+ * dataLoader is a wrapper for loader that is provided by APIConfigProvider.
+ * @param target
+ * @param options
+ * @returns {function(*=): function(*): *}
+ */
+export const dataLoader = (target, options = {}, showLoader = true, showErrors = true) => Component => {
+    const Loader = load(target, options, showLoader, showErrors)(Component);
+    return props => (<APIConfigurationConsumer>
+        {
+            ({apiConfig}) => <Loader apiConfig={apiConfig} {...props} />
+        }
+    </APIConfigurationConsumer>);
 };

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {addPaginationParams} from 'api';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
@@ -7,7 +7,7 @@ import Table from 'components/table';
 import Pagination from 'components/pagination';
 import Hash from 'components/hash';
 
-@load(({location}) => addPaginationParams('/dblocks', location.search))
+@dataLoader(({location}) => addPaginationParams('/dblocks', location.search))
 export default class DirectoryBlockList extends Component {
     render() {
         const adminEntries = this.props.data.map(row => row.admin_entries).filter(value => value !== null);
