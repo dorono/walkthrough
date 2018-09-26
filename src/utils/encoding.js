@@ -30,8 +30,5 @@ export const toHex = str => {
     return hexString;
 };
 
-export const base58 = createEncoder(58);
 export const base64 = createEncoder(64);
 export const base58check = bs58check;
-
-export default createEncoder;

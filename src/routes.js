@@ -10,6 +10,10 @@ import Chain from 'pages/chain';
 import Transaction from 'pages/transaction';
 import Address from 'pages/address';
 
+/**
+ * Array of available routes.
+ * @type {Array}
+ */
 export const routes = [
     {name: 'dblocks', path: '/', exact: true, menuItem: 0, component: DirectoryBlockList},
     {name: 'dblock', path: '/dblocks/:hash', exact: true, menuItem: 0, component: DirectoryBlock},
@@ -24,6 +28,17 @@ export const routes = [
     {name: 'address', path: '/addresses/:hash', exact: true, component: Address},
 ];
 
+/**
+ * reverse searches the available routes using the name param.
+ *
+ * @example
+ * // returns '/'
+ * reverse('dblocks');
+ *
+ * @param {string} name - the name of the route
+ * @param {Object} params - the params for the query string
+ * @returns {string}
+ */
 export const reverse = (name, params = {}) => {
     const route = routes.find(route => route.name === name);
     if (!route) throw new Error(`Invalid route name: ${name}`);

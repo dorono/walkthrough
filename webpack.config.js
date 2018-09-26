@@ -15,6 +15,7 @@ const version = isDev ? 'DEV' : process.env.VERSION;
 const banner = `Factom Explorer\n${version}`;
 const apiUrl = process.env.API_URL || 'https://apiplus-api-dev-mainnet.factom.com/v2';
 const apiToken = process.env.API_TOKEN;
+const googleAnalyticsId = process.env.GA_ID || '';
 
 process.noDeprecation = true;
 
@@ -107,6 +108,7 @@ module.exports = {
             inject: true,
             minify: {collapseWhitespace: !isDev},
             banner,
+            googleAnalyticsId,
         }),
         new ExtractTextPlugin({
             filename: '[name].[hash].css',

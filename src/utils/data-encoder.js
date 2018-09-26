@@ -25,10 +25,10 @@ const rawToHex = rawData => handleEncodingErrors(toHex)(rawData);
 const isValidUTF8 = string => handleEncodingErrors(utf8.decode)(string) !== null;
 
 /**
- * This function returns diferent encoding formats for a given data
+ * This function returns different encoding formats for a given data object.
  *
  * @param base64EncodedData The base64 data to encode
- * @returns Object An object where each key is encoding type and value the encoded data
+ * @returns {Object} An object where each key is encoding type and value the encoded data
  */
 const getMultipleEncodings = base64EncodedData => {
     // Decode the data received in base64

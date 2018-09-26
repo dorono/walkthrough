@@ -1,8 +1,6 @@
 import PropTypes from 'prop-types';
 import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
-import {presets} from 'react-motion';
-import {Collapse} from 'react-collapse';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import classNames from 'classnames';
 import withDataEncoding from 'hocs/with-data-encoding';
@@ -25,7 +23,6 @@ const VIEWERS = {
 
 const VIEWER_COLLAPSED_HEIGHT = 200;
 
-// TODO Some of the render methods in this component should be componentized
 @withDataEncoding
 class EntryContent extends Component {
     static propTypes = {
@@ -69,11 +66,10 @@ class EntryContent extends Component {
 
     @autobind
     handleViewerSize(size) {
-        // TODO Refactor this and manage gradient inside ExpansibleContainer
         if (size.height >= VIEWER_COLLAPSED_HEIGHT) {
-            return this.setState({showViewerGradient: !this.state.expanded, showExpandButton: true});
+            return this.setState({showExpandButton: true});
         }
-        return this.setState({showViewerGradient: false, showExpandButton: false});
+        return this.setState({showExpandButton: false});
     }
 
     renderTabs() {
@@ -122,26 +118,21 @@ class EntryContent extends Component {
     }
 
     renderViewer() {
-        const {selected, expanded, showViewerGradient} = this.state;
+        const {selected, expanded} = this.state;
         const Viewer = VIEWERS[this.state.selected.label];
         return (
-            <Collapse
-                isOpened
-                springConfig={presets.noWobble}>
-                <ExpansibleContainer
-                    expand={expanded}
-                    collapsedSize={VIEWER_COLLAPSED_HEIGHT}
-                    withGradient={showViewerGradient}
-                    className={styles.viewerContainer}
-                    onSize={this.handleViewerSize}>
-                    {Viewer
+            <ExpansibleContainer
+                expand={expanded}
+                collapsedSize={VIEWER_COLLAPSED_HEIGHT}
+                className={styles.viewerContainer}
+                onSize={this.handleViewerSize}>
+                {Viewer
                         ? <Viewer
                             data={selected.value}
                             style={!this.state.expanded && {overflow: 'hidden'}}
                           />
                         : this.renderDefaultViewer(selected.value)}
-                </ExpansibleContainer>
-            </Collapse>
+            </ExpansibleContainer>
         );
     }
 

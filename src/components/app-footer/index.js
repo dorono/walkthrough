@@ -20,7 +20,7 @@ export default class AppFooter extends Component {
     render() {
         return (
             <footer className={styles.root}>
-                <span>© {new Date().getFullYear()} Factom, Inc.</span>
+                <span>&copy; {new Date().getFullYear()} Factom, Inc.</span>
                 <Monospaced>UI: {CONFIG.version} / API: {this.state.apiVersion || 'Loading'}</Monospaced>
             </footer>
         );

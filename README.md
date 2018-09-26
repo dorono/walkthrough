@@ -7,9 +7,19 @@ Install [Node Version Manager](https://github.com/creationix/nvm) and then:
 
 ```
 $ git clone git@github.com:FactomProject/explorer_gui.git
-$ cd explorer_gui
+$ cd explorer-v3
 $ nvm install
 $ npm install
+```
+
+This project uses [dotenv](https://www.npmjs.com/package/dotenv) to load
+environment variables. You can define a .env file on the root directory to
+configure the application. For example:
+
+```
+API_URL=https://apiplus-api-dev-testnet.factom.com/v2
+API_TOKEN=YOUR_TOKEN
+GA_ID=YOUR_GOOGLE_ANALYTICS_ID
 ```
 
 To run the development server:
@@ -25,6 +35,7 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 ```
 $ export API_URL=https://apiplus-dev.factom.com/v2
 $ export API_TOKEN=XXXXXXXX
+$ export GA_ID=XXXXXXXX
 $ npm run build
 ```
 

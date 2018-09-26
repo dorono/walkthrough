@@ -22,8 +22,11 @@ export default class BlockLink extends Component {
                 {
                     type === 'dblock' &&
                         [
-                            <span className={styles.label}>HEIGHT:</span>,
-                            <Link className={styles.link} to={reverse(type, {hash: block.keymr})}>
+                            <span key='blockHeight' className={styles.label}>HEIGHT:</span>,
+                            <Link
+                                key='blockLink'
+                                className={styles.link}
+                                to={reverse(type, {hash: block.keymr})}>
                                 {block.height}
                             </Link>,
                         ]

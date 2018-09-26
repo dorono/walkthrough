@@ -9,7 +9,7 @@ import Dropdown from 'components/dropdown/index';
 
 import styles from './styles.css';
 
-@withDataEncodings({excludedFormats: ['json']})
+@withDataEncodings({formats: ['raw', 'hex', 'base64']})
 class ExternalId extends Component {
     static propTypes = {
         // An object with the different encodings for an external Id

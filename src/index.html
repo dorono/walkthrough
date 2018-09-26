@@ -11,7 +11,7 @@
         <meta name="description" content="Factom Explorer. Search the Factom blockchain.">
         <script>
             window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
-            ga('create', 'UA-102235183-1', 'auto');
+            ga('create',<%= JSON.stringify(htmlWebpackPlugin.options.googleAnalyticsId) %>, 'auto');
         </script>
         <script async src='https://www.google-analytics.com/analytics.js'></script>
     </head>
