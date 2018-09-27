@@ -18,7 +18,6 @@ export class FormGroup extends Component {
 }
 
 export class Form extends Component {
-    state = {};
 
     render() {
         return (

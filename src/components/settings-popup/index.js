@@ -41,12 +41,15 @@ export default class SettingsPopup extends Component {
     constructor(props) {
         super(props);
         const configuredByDefault = isEqual(props.apiConfig, props.defaultApiConfig);
+        const apiConfigProps = this.extractApiConfigProps(props.apiConfig);
+        const enableCredentialsCheckbox = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.MAINNET);
         this.state = {
-            ...this.extractApiConfigProps(props.apiConfig),
+            ...apiConfigProps,
+            enableCredentialsCheckbox,
             blockchains: [...BLOCKCHAIN_OPTIONS],
             useCredentials: !configuredByDefault || false,
-            enableCredentialsCheckbox: configuredByDefault || false,
             error: false,
+            verifyingConnection: false,
         };
     }
 
@@ -128,17 +131,21 @@ export default class SettingsPopup extends Component {
     }
 
     @autobind
-    async handleSubmit() {
-        const apiConfig = this.getApiConfig();
-        try {
-            const data = await request('/', apiConfig);
-            if (data.version) {
-                if (!isEqual(apiConfig, this.props.defaultApiConfig)) trackSuccessfulConnection();
-                this.props.onSubmit(apiConfig);
+    handleSubmit() {
+        // Inner function to verify credentials and URL.
+        const verifyConnection = async (apiConfig) => {
+            try {
+                const data = await request('/', apiConfig);
+                if (data.version) {
+                    if (!isEqual(apiConfig, this.props.defaultApiConfig)) trackSuccessfulConnection();
+                    this.props.onSubmit(apiConfig);
+                }
+            } catch (e) {
+                this.setState({error: true, verifyingConnection: false});
             }
-        } catch (e) {
-            this.setState({error: true});
-        }
+        };
+        const apiConfig = this.getApiConfig();
+        this.setState({verifyingConnection: true}, () => verifyConnection(apiConfig));
     }
 
     render() {
@@ -159,7 +166,8 @@ export default class SettingsPopup extends Component {
                                 <A
                                     className={styles.errorLink}
                                     to={applicationsListLink}
-                                    text={'application\'s details'} />.
+                                    text={'application\'s details'}
+                                />.
                             </span>
                         }
                         type='error'
@@ -215,6 +223,7 @@ export default class SettingsPopup extends Component {
                                     <Input
                                         type='url'
                                         name='privateUrl'
+                                        error={this.state.error}
                                         value={this.state.privateUrl}
                                         placeholder='Enter the Connect API URL'
                                         handleChange={this.handleChange}
@@ -260,11 +269,13 @@ export default class SettingsPopup extends Component {
                 </ModalBody>
                 <ModalFooter className={styles.modalFooter}>
                     <Button
+                        disabled={this.state.verifyingConnection}
                         title='CANCEL'
                         className={classNames(styles.button, styles.cancel)}
                         onClick={this.handleClose}
                     />
                     <Button
+                        disabled={this.state.verifyingConnection}
                         title='SUBMIT'
                         className={styles.button}
                         onClick={this.handleSubmit}

@@ -21,7 +21,7 @@ const apiUrls = {
 };
 const apiKey = process.env.API_TOKEN;
 const appId = process.env.API_APP_ID;
-const applicationsListLink = process.env.APPS_LIST_LINK || 'http://factom.com';
+const applicationsListLink = process.env.DEV_PORTAL_URL || 'https://apiplus-dev.3scale.net/';
 
 process.noDeprecation = true;
 

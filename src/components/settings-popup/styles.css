@@ -84,6 +84,12 @@
     &.cancel {
         border: 0;
         margin-right: 0.8rem;
+
+        &:hover {
+            border: 0;
+            color: var(--blue);
+            background: transparent;
+        }
     }
 }
 

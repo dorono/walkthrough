@@ -1,9 +1,10 @@
 import get from 'lodash/get';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
 
-const getConfigurationFor = (configProp, valueToIgnore) =>
-    get(RUNTIME_CONFIG, configProp, valueToIgnore) !== valueToIgnore ?
+const getConfigurationFor = (configProp, valueToIgnore) => {
+    return get(RUNTIME_CONFIG, configProp, valueToIgnore) !== valueToIgnore ?
         get(RUNTIME_CONFIG, configProp) : get(CONFIG, configProp);
+};
 
 /**
  * APIConfig represents an API configuration containing
@@ -33,6 +34,7 @@ export default class APIConfig {
     }
 
     isValid() {
-        return (this.apiUrl && this.apiKey && this.apiUrl.length > 0 && this.apiKey.length > 0);
+        return (this.apiUrl && this.apiKey && this.appId &&
+            this.apiUrl.length > 0 && this.apiKey.length > 0 && this.appId.length > 0);
     }
 }

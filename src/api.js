@@ -8,8 +8,8 @@ export const request = async (url, apiConfig = null) => {
     };
     // Setup auth headers.
     if (appId) {
-        headers['app-id'] = appId;
-        headers['api-key'] = apiKey;
+        headers.app_id = appId;
+        headers.app_key = apiKey;
     } else {
         headers['factom-provider-token'] = apiKey;
     }
