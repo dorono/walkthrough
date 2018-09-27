@@ -8,9 +8,10 @@ describe('Input Component', () => {
     const wrapperApiConfig = shallow(
         <SettingsPopup
             show={false}
+            defaultApiConfig={new APIConfig()}
+            apiConfig={new APIConfig()}
             onSubmit={jest.fn}
             onClose={jest.fn}
-            apiConfig={new APIConfig()}
         />);
     const handleChangeSpy = jest.spyOn(wrapperApiConfig.instance(), 'handleChange');
     it('should render without errors', () => {

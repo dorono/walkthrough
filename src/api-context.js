@@ -1,5 +1,6 @@
 import React from 'react';
 import {autobind} from 'core-decorators';
+import set from 'lodash/set';
 import APIConfig from 'utils/api-config';
 import {watch} from 'utils/watch';
 import {setSessionItem, getSessionItem} from 'utils/session-storage';
@@ -83,9 +84,10 @@ export class APIConfigurationProvider extends React.Component {
     @autobind
     runtimeChangeHandler(prop, newValue, oldValue) {
         if (oldValue !== newValue) {
-            const newApiConfig = {...this.state.apiConfig};
-            newApiConfig[prop] = newValue;
-            this.setState({apiConfig: newApiConfig});
+            let newApiConfig = {...this.state.apiConfig};
+            set(newApiConfig, prop, newValue);
+            newApiConfig = APIConfig.create(newApiConfig);
+            if (newApiConfig.isValid()) this.setApiConfig(newApiConfig);
         }
     }
 

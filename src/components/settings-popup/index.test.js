@@ -1,5 +1,5 @@
 import React from 'react';
-import {shallow, mount} from 'enzyme';
+import {shallow} from 'enzyme';
 import APIConfig from 'utils/api-config';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
 import SettingsPopup from './index';
@@ -9,13 +9,20 @@ describe('SettingsPopup Component', () => {
     const apiConfig = new APIConfig();
     it('should render without errors', () => {
         shallow(
-            <SettingsPopup show onClose={noOp} onSubmit={noOp} apiConfig={apiConfig} />,
+            <SettingsPopup
+                show
+                onClose={noOp}
+                onSubmit={noOp}
+                defaultApiConfig={apiConfig}
+                apiConfig={apiConfig}
+            />,
         );
     });
     it('should render the popup', () => {
         const wrapper = shallow((
             <SettingsPopup
                 show
+                defaultApiConfig={apiConfig}
                 onClose={noOp}
                 onSubmit={noOp}
                 apiConfig={apiConfig}
@@ -28,6 +35,7 @@ describe('SettingsPopup Component', () => {
         const wrapper = shallow((
             <SettingsPopup
                 show={false}
+                defaultApiConfig={apiConfig}
                 onClose={noOp}
                 onSubmit={noOp}
                 apiConfig={apiConfig}
@@ -36,15 +44,16 @@ describe('SettingsPopup Component', () => {
         expect(wrapper.find('Form').length).toBe(1);
     });
     it('checkbox should be disabled and set to true after selecting something different to Mainnet', () => {
-        const wrapper = mount((
+        const wrapper = shallow((
             <SettingsPopup
                 show
+                defaultApiConfig={apiConfig}
                 onClose={noOp}
                 onSubmit={noOp}
                 apiConfig={apiConfig}
             />
         ));
-        wrapper.setState({selectedBlockchain: AVAILABLE_BLOCKCHAINS.SHARED});
+        wrapper.instance().handleDropdownChange(AVAILABLE_BLOCKCHAINS.SHARED);
         expect(wrapper.state('enableCredentialsCheckbox')).toBe(false);
         expect(wrapper.state('useCredentials')).toBe(true);
     });

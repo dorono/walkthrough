@@ -1,9 +1,22 @@
 import get from 'lodash/get';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
 
-const getConfigurationFor = (configProp, valueToIgnore) => {
-    return get(RUNTIME_CONFIG, configProp, valueToIgnore) !== valueToIgnore ?
-        get(RUNTIME_CONFIG, configProp) : get(CONFIG, configProp);
+/**
+ * Read configuration property "prop" from global variables.
+ * IF RUNTIME_CONFIG[prop] is defined, return it.
+ * ELSE IF valueToReturn is specified, return it.
+ * DEFAULTS to CONFIG[prop].
+ * @param configProp
+ * @param valueToIgnore
+ * @param valueToReturn
+ * @returns {*}
+ */
+const getConfigurationFor = (configProp, valueToIgnore, valueToReturn = null) => {
+    if (get(RUNTIME_CONFIG, configProp, valueToIgnore) !== valueToIgnore) {
+        return get(RUNTIME_CONFIG, configProp);
+    }
+    if (valueToReturn) return valueToReturn;
+    return get(CONFIG, configProp);
 };
 
 /**
@@ -11,10 +24,10 @@ const getConfigurationFor = (configProp, valueToIgnore) => {
  * apiUrl, apiKey, appId and the current blockchain.
  */
 export default class APIConfig {
-    apiUrl = getConfigurationFor('apiUrls.mainnet', '$API_URL_MAINNET');
+    apiUrl = getConfigurationFor('apiUrl', '$API_URL', CONFIG.apiUrls.mainnet);
     apiKey = getConfigurationFor('apiKey', '$API_TOKEN');
     appId = getConfigurationFor('appId', '$API_APP_ID');
-    blockchain = AVAILABLE_BLOCKCHAINS.MAINNET.label;
+    blockchain = getConfigurationFor('blockchain', '$BLOCKCHAIN_LABEL', AVAILABLE_BLOCKCHAINS.MAINNET.label);
 
     /**
      * Create an instance of APIConfig.
@@ -31,6 +44,10 @@ export default class APIConfig {
         apiConfig.apiKey = apiKey;
         apiConfig.blockchain = blockchain;
         return apiConfig;
+    }
+
+    sharesCredentialsWith(anotherApiConfig = {}) {
+        return this.apiKey === anotherApiConfig.apiKey && this.appId === anotherApiConfig.appId;
     }
 
     isValid() {

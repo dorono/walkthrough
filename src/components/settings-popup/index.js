@@ -31,8 +31,8 @@ const getInitialBlockchainbyName = (name) =>
 
 export default class SettingsPopup extends Component {
     static propTypes = {
-        apiConfig: PropTypes.shape(),
-        defaultApiConfig: PropTypes.shape(),
+        apiConfig: PropTypes.shape().isRequired,
+        defaultApiConfig: PropTypes.shape().isRequired,
         onClose: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
         show: PropTypes.bool.isRequired,
@@ -40,7 +40,7 @@ export default class SettingsPopup extends Component {
 
     constructor(props) {
         super(props);
-        const configuredByDefault = isEqual(props.apiConfig, props.defaultApiConfig);
+        const configuredByDefault = props.defaultApiConfig.sharesCredentialsWith(props.apiConfig);
         const apiConfigProps = this.extractApiConfigProps(props.apiConfig);
         const enableCredentialsCheckbox = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.MAINNET);
         this.state = {
