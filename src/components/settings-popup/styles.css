@@ -88,7 +88,7 @@
         &:hover {
             border: 0;
             color: var(--blue);
-            background: transparent;
+            background: var(--gray-bg-light);
         }
     }
 }

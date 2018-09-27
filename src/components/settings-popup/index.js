@@ -17,6 +17,7 @@ import APIConfig from 'utils/api-config';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
 import {trackAccessConnectLandingPage, trackSuccessfulConnection} from 'analytics';
 import styles from './styles.css';
+import {CredentialsErrorMessage, GenericErrorMessage, NetworkErrorMessage} from './messages';
 
 const BLOCKCHAIN_OPTIONS = [
     AVAILABLE_BLOCKCHAINS.MAINNET,
@@ -24,10 +25,10 @@ const BLOCKCHAIN_OPTIONS = [
     AVAILABLE_BLOCKCHAINS.PRIVATE,
 ];
 
-const {applicationsListLink} = CONFIG;
-
 const getInitialBlockchainbyName = (name) =>
     BLOCKCHAIN_OPTIONS.find(blockchain => blockchain.label === name) || BLOCKCHAIN_OPTIONS[0];
+
+const getDefaultErrors = () => ({credentials: false, network: false, other: false});
 
 export default class SettingsPopup extends Component {
     static propTypes = {
@@ -40,15 +41,17 @@ export default class SettingsPopup extends Component {
 
     constructor(props) {
         super(props);
-        const configuredByDefault = props.defaultApiConfig.sharesCredentialsWith(props.apiConfig);
         const apiConfigProps = this.extractApiConfigProps(props.apiConfig);
-        const enableCredentialsCheckbox = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.MAINNET);
+        const onMainnet = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.MAINNET);
+        const enableCredentialsCheckbox = onMainnet;
+        const configuredByDefault = onMainnet && props.defaultApiConfig.sharesCredentialsWith(props.apiConfig);
+
         this.state = {
             ...apiConfigProps,
             enableCredentialsCheckbox,
             blockchains: [...BLOCKCHAIN_OPTIONS],
             useCredentials: !configuredByDefault || false,
-            error: false,
+            errors: getDefaultErrors(),
             verifyingConnection: false,
         };
     }
@@ -80,6 +83,12 @@ export default class SettingsPopup extends Component {
             privateUrl : selectedBlockchain.url;
         const blockchain = selectedBlockchain.label;
         return APIConfig.create({apiUrl, appId, apiKey, blockchain});
+    }
+
+    @autobind
+    hasError() {
+        const {credentials, network, other} = this.state.errors;
+        return credentials || network || other;
     }
 
     @autobind
@@ -121,7 +130,7 @@ export default class SettingsPopup extends Component {
             appId: '',
             apiKey: '',
             privateUrl: '',
-            error: false,
+            errors: getDefaultErrors(),
         });
     }
 
@@ -141,11 +150,38 @@ export default class SettingsPopup extends Component {
                     this.props.onSubmit(apiConfig);
                 }
             } catch (e) {
-                this.setState({error: true, verifyingConnection: false});
+                const errorUpdate = {
+                    errors: getDefaultErrors(),
+                    verifyingConnection: false,
+                };
+                if (e.statusCode === 404 || e instanceof TypeError) {
+                    errorUpdate.errors.network = true;
+                } else if (e.statusCode === 403) {
+                    errorUpdate.errors.credentials = true;
+                } else {
+                    errorUpdate.errors.other = true;
+                }
+                return this.setState(errorUpdate);
             }
         };
         const apiConfig = this.getApiConfig();
-        this.setState({verifyingConnection: true}, () => verifyConnection(apiConfig));
+        this.setState({verifyingConnection: true, errors: getDefaultErrors()},
+            () => verifyConnection(apiConfig));
+    }
+
+    @autobind
+    renderErrorMessage() {
+        const {credentials, network, other} = this.state.errors;
+        if (credentials) {
+            return <CredentialsErrorMessage />;
+        }
+        if (network) {
+            return <NetworkErrorMessage />;
+        }
+        if (other) {
+            return <GenericErrorMessage />;
+        }
+        return null;
     }
 
     render() {
@@ -159,19 +195,9 @@ export default class SettingsPopup extends Component {
                 <ModalBody className={styles.modalBody}>
                     <MessageBar
                         className={styles.messageBar}
-                        message={
-                            <span>
-                                <span className={styles.errorTitle}>Error:</span>
-                                Please double check the values below against your
-                                <A
-                                    className={styles.errorLink}
-                                    to={applicationsListLink}
-                                    text={'application\'s details'}
-                                />.
-                            </span>
-                        }
+                        message={this.renderErrorMessage()}
                         type='error'
-                        show={this.state.error}
+                        show={this.hasError()}
                     />
                     <Form className={styles.form}>
                         <FormGroup
@@ -223,7 +249,7 @@ export default class SettingsPopup extends Component {
                                     <Input
                                         type='url'
                                         name='privateUrl'
-                                        error={this.state.error}
+                                        error={this.state.errors.network || this.state.errors.other}
                                         value={this.state.privateUrl}
                                         placeholder='Enter the Connect API URL'
                                         handleChange={this.handleChange}
@@ -239,7 +265,7 @@ export default class SettingsPopup extends Component {
                                             Connect Application ID
                                         </Label>
                                             <Input
-                                                error={this.state.error}
+                                                error={this.state.errors.credentials || this.state.errors.other}
                                                 type='text'
                                                 name='appId'
                                                 value={this.state.appId}
@@ -253,7 +279,7 @@ export default class SettingsPopup extends Component {
                                             Connect Application Key
                                         </Label>
                                             <Input
-                                                error={this.state.error}
+                                                error={this.state.errors.credentials || this.state.errors.other}
                                                 type='password'
                                                 name='apiKey'
                                                 value={this.state.apiKey}
