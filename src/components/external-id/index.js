@@ -45,6 +45,7 @@ class ExternalId extends Component {
         return (
             <Dropdown
                 options={data}
+                optionsClassName={styles.dropdownOptions}
                 onOptionClick={this.handleChangeSelection}
                 selected={this.state.selected}
                 className={styles.dropdown}

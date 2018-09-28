@@ -1,0 +1,43 @@
+@import 'styles/variables.css';
+
+.container {
+    position: relative;
+    color: var(--gray-60);
+    width: 1.7rem;
+    height: 1.7rem;
+    border: 1px solid var(--gray-stroke-light);
+    border-radius: 1px;
+    margin-right: 0.5rem;
+    padding: 0.1rem;
+
+    & input {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        z-index: 1;
+        cursor: pointer;
+    }
+
+    &:hover {
+        color: var(--gray-50);
+    }
+
+    &.disabled {
+        opacity: 0.5;
+    }
+
+    &.no-checked {
+        background-color: #FFF;
+        transition: background-color 0.5s ease;
+    }
+
+    &.checked {
+        background-color: var(--blue);
+        border-color: var(--blue);
+        background-image: url('./assets/check.svg');
+        transition: background-color 0.5s ease;
+    }
+}

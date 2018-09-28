@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Horizontal, Vertical, Box} from 'components/layout';
@@ -10,7 +10,7 @@ import DirectoryBlockLink from 'components/directory-block-link';
 import BlockHeight from 'components/block-height';
 import styles from './styles.css';
 
-@load(({match}) => `/dblocks/${match.params.hash}`)
+@dataLoader(({match}) => `/dblocks/${match.params.hash}`)
 export default class DirectoryBlock extends Component {
     getBlocks() {
         const {ablock, ecblock, fblock, eblocks} = this.props.data;

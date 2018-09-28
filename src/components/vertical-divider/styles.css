@@ -1,0 +1,5 @@
+@import 'styles/variables.css';
+
+.vertical {
+    border-left: 1px solid var(--gray-light);
+}

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
@@ -8,7 +8,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import ExternalIdList from 'components/external-id-list';
 
-@load(({match}) => `/chains/${match.params.hash}?stages=factom,bitcoin`, {ignoreQueryString: true})
+@dataLoader(({match}) => `/chains/${match.params.hash}?stages=factom,bitcoin`, {ignoreQueryString: true})
 export default class Chain extends Component {
     render() {
         return (

@@ -19,6 +19,12 @@
     }
 }
 
+@media (max-width: 767px) {
+    .question {
+        display: none;
+    }
+}
+
 .cta {
     font-size: 1.4rem;
     font-weight: 600;

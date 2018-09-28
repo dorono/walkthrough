@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {load} from 'decorators';
+import {dataLoader} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import Sortable, {sortOptions} from 'components/sortable';
@@ -10,7 +10,7 @@ import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 import Amount from 'components/amount';
 
-@load(({match}) => `/fblocks/${match.params.hash}`)
+@dataLoader(({match}) => `/fblocks/${match.params.hash}`)
 export default class FactoidBlock extends Component {
     render() {
         return (

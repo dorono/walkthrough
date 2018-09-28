@@ -3,14 +3,18 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import {AppContainer} from 'react-hot-loader';
 import App from 'components/app';
+import {APIConfigurationProvider} from 'api-context';
 
 const render = Component => (
     ReactDOM.render(
-        <AppContainer>
-            <BrowserRouter>
-                <Component />
-            </BrowserRouter>
-        </AppContainer>,
+        <APIConfigurationProvider>
+            <AppContainer>
+                <BrowserRouter>
+                    <Component />
+                </BrowserRouter>
+            </AppContainer>
+        </APIConfigurationProvider>
+        ,
         document.getElementById('root'),
     )
 );

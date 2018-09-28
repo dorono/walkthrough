@@ -1,0 +1,49 @@
+@import 'styles/variables.css';
+
+.tooltip {
+    position: absolute;
+    background: var(--blue);
+    font-weight: 600;
+    width: max-content;
+    padding: 0.5rem 1.5rem;
+    color: var(--white);
+    margin-left: auto;
+    margin-right: auto;
+    right: 0;
+    top: 6.5rem;
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0.25s linear, opacity 0.25s linear;
+}
+
+.hide-tooltip {
+    opacity: 0;
+    visibility: hidden;
+    transition: visibility 0.25s linear, opacity 0.25s linear;
+}
+
+.tooltip::after,
+.tooltip::before {
+    bottom: 100%;
+    left: 80%;
+    border: solid transparent;
+    content: '';
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+}
+
+.tooltip::after {
+    border-color: rgba(136, 183, 213, 0);
+    border-bottom-color: var(--blue);
+    border-width: 7.5px;
+    margin-left: -7.5px;
+}
+
+.tooltip::before {
+    border-color: rgba(194, 225, 245, 0);
+    border-bottom-color: var(--blue);
+    border-width: 9px;
+    margin-left: -9px;
+}

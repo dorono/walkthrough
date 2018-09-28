@@ -17,10 +17,14 @@ environment variables. You can define a .env file on the root directory to
 configure the application. For example:
 
 ```
-API_URL=https://apiplus-api-dev-testnet.factom.com/v2
+API_URL_MAINNET=https://apiplus-api-dev-testnet.factom.com/v2
+API_URL_SHARED_SANDBOX=https://apiplus-api-dev-testnet.factom.com/v2
+APP_ID=YOUR_APP_ID
 API_TOKEN=YOUR_TOKEN
 GA_ID=YOUR_GOOGLE_ANALYTICS_ID
 ```
+**Important:** API_URL_MAINNET and API_URL_SHARED_SANDBOX
+should be written without a trailing "/".
 
 To run the development server:
 
@@ -33,8 +37,10 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Production build
 
 ```
-$ export API_URL=https://apiplus-dev.factom.com/v2
+$ export API_URL_MAINNET=https://apiplus-dev-testnet.factom.com/v2
+$ export API_URL_SHARED_SANDBOX=https://apiplus-dev-testnet.factom.com/v2
 $ export API_TOKEN=XXXXXXXX
+$ export API_APP_ID=XXXXXXX
 $ export GA_ID=XXXXXXXX
 $ npm run build
 ```

@@ -1,13 +1,18 @@
 import queryString from 'query-string';
 
-export const request = async (url) => {
-    const apiUrl = RUNTIME_CONFIG.apiUrl !== '$API_URL' ? RUNTIME_CONFIG.apiUrl : CONFIG.apiUrl;
-    const apiToken = RUNTIME_CONFIG.apiToken !== '$API_TOKEN' ? RUNTIME_CONFIG.apiToken : CONFIG.apiToken;
+export const request = async (url, apiConfig = null) => {
+    const {apiUrl, apiKey, appId} = apiConfig;
     const headers = {
         accept: 'application/json',
         'content-type': 'application/json',
-        'factom-provider-token': apiToken,
     };
+    // Setup auth headers.
+    if (appId) {
+        headers.app_id = appId;
+        headers.app_key = apiKey;
+    } else {
+        headers['factom-provider-token'] = apiKey;
+    }
     const response = await fetch(`${apiUrl}${url}`, {headers});
     if (response.status >= 400) {
         const error = new Error(response.statusText);

@@ -13,10 +13,8 @@
     align-items: center;
     user-select: none;
 
-    & > span {
+    :first-child {
         padding-left: 15px;
-        width: 100%;
-        text-align: center;
     }
 }
 

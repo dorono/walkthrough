@@ -30,20 +30,24 @@ class Dropdown extends Component {
     static propTypes = {
         // The color of the arrow.
         arrowColor: PropTypes.oneOf(Object.keys(ARROWS)),
-        // Classname for the root element
+        // Class name for the root element.
         className: PropTypes.string,
-        // Classname for the dropdown header
+        // Class name for the dropdown header.
         headerClassName: PropTypes.string,
-        // Callback for a clicked option
+        // Callback for a clicked option.
         onOptionClick: PropTypes.func.isRequired,
-        // The options to display
+        // The options to display.
         options: PropTypes.arrayOf(PropTypes.shape({
             label: PropTypes.string,
         })).isRequired,
-        // The current selected option
+        // Class name for the options menu.
+        optionsClassName: PropTypes.string,
+        // The current selected option.
         selected: PropTypes.PropTypes.shape({
             label: PropTypes.string,
         }).isRequired,
+        // Class name to be applied to the selected option (for OptionsMenu component).
+        selectedClassName: PropTypes.string,
     };
 
     static defaultProps = {
@@ -139,14 +143,16 @@ class Dropdown extends Component {
     }
 
     renderOptionsMenu() {
-        const {options, selected} = this.props;
+        const {options, optionsClassName, selected, selectedClassName} = this.props;
         return (
             <OptionsMenu
+                className={optionsClassName}
                 options={options}
                 isOpen={this.state.showOptions}
                 onOptionClick={this.createOptionClickHandler()}
                 position={this.optionsMenuPosition}
                 selected={selected}
+                selectedClassName={selectedClassName}
                 portalNode={this.menuPortalNode}
             />
         );
