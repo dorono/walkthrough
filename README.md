@@ -17,13 +17,15 @@ environment variables. You can define a .env file on the root directory to
 configure the application. For example:
 
 ```
-API_URL_MAINNET=https://apiplus-api-dev-testnet.factom.com/v2
-API_URL_SHARED_SANDBOX=https://apiplus-api-dev-testnet.factom.com/v2
-APP_ID=YOUR_APP_ID
-API_TOKEN=YOUR_TOKEN
+API_URL=https://apiplus-api-dev-testnet.factom.com/v2
+API_TOKEN=some-token
+PUBLIC_NETWORK=Mainnet
+DEV_PORTAL_URL=https://harmony-dev-portal.3scale.net
+PUBLIC_NETWORK_GATEWAY=https://connect-mainnet-2445582615332.production.gw.apicast.io
+SHARED_SANDBOX_GATEWAY=https://connect-shared-sandbox-2445582615332.production.gw.apicast.io
 GA_ID=YOUR_GOOGLE_ANALYTICS_ID
 ```
-**Important:** API_URL_MAINNET and API_URL_SHARED_SANDBOX
+**Important:** PUBLIC_NETWORK_GATEWAY and SHARED_SANDBOX_GATEWAY
 should be written without a trailing "/".
 
 To run the development server:
@@ -37,10 +39,10 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Production build
 
 ```
-$ export API_URL_MAINNET=https://apiplus-dev-testnet.factom.com/v2
-$ export API_URL_SHARED_SANDBOX=https://apiplus-dev-testnet.factom.com/v2
+$ export API_URL=https://apiplus-api-dev-testnet.factom.com/v2
 $ export API_TOKEN=XXXXXXXX
-$ export API_APP_ID=XXXXXXX
+$ export PUBLIC_NETWORK_GATEWAY=https://apiplus-dev-testnet.factom.com/v2
+$ export SHARED_SANDBOX_GATEWAY=https://apiplus-dev-testnet.factom.com/v2
 $ export GA_ID=XXXXXXXX
 $ npm run build
 ```

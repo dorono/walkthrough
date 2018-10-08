@@ -1,7 +1,7 @@
 import queryString from 'query-string';
 
 export const request = async (url, apiConfig = null) => {
-    const {apiUrl, apiKey, appId} = apiConfig;
+    const {apiUrl, apiToken, appKey, appId} = apiConfig;
     const headers = {
         accept: 'application/json',
         'content-type': 'application/json',
@@ -9,9 +9,9 @@ export const request = async (url, apiConfig = null) => {
     // Setup auth headers.
     if (appId) {
         headers.app_id = appId;
-        headers.app_key = apiKey;
+        headers.app_key = appKey;
     } else {
-        headers['factom-provider-token'] = apiKey;
+        headers['factom-provider-token'] = apiToken;
     }
     const response = await fetch(`${apiUrl}${url}`, {headers});
     if (response.status >= 400) {

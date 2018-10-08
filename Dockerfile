@@ -18,10 +18,18 @@ COPY .babelrc .eslintrc .gitignore .stylelintrc postcss.config.js webpack.config
 # Grab the URLs that are needed for the build
 ARG api_url
 ARG api_token
+ARG public_network_gateway
+ARG shared_sandbox_gateway
+ARG dev_portal_url
+ARG public_network
 ARG version
 
 ENV API_URL $api_url
 ENV API_TOKEN $api_token
+ENV PUBLIC_NETWORK_GATEWAY $public_network_gateway
+ENV SHARED_SANDBOX_GATEWAY $shared_sandbox_gateway
+ENV DEV_PORTAL_URL $dev_portal_url
+ENV PUBLIC_NETWORK $public_network
 ENV VERSION $version
 
 RUN npm run build

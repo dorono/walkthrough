@@ -2,7 +2,6 @@ import React from 'react';
 import {autobind} from 'core-decorators';
 import set from 'lodash/set';
 import APIConfig from 'utils/api-config';
-import {watch} from 'utils/watch';
 import {setSessionItem, getSessionItem} from 'utils/session-storage';
 import WindowEventListener from 'components/window-event-listener';
 
@@ -18,7 +17,7 @@ export const APIConfigurationConsumer = Consumer;
 export class APIConfigurationProvider extends React.Component {
     constructor(props) {
         super(props);
-        // Load the default config (can come from RUNTIME_CONFIG or webpack's CONFIG).
+        // Load the default config.
         const defaultApiConfig = new APIConfig();
         this.state = {
             apiConfig: Object.assign(Object.create(APIConfig.prototype), defaultApiConfig),
@@ -28,8 +27,6 @@ export class APIConfigurationProvider extends React.Component {
     }
 
     componentWillMount() {
-        // Define RUNTIME_CONFIG global as a Proxy and create a watcher for it.
-        RUNTIME_CONFIG = watch(RUNTIME_CONFIG, this.runtimeChangeHandler);
         // Recover api config from the session, to recover after F5.
         const savedApiConfig = getSessionItem(storageKey);
         if (savedApiConfig) {

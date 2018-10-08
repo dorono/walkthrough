@@ -14,14 +14,17 @@ const isDev = process.env.NODE_ENV !== 'production';
 const version = isDev ? 'DEV' : process.env.VERSION;
 const banner = `Factom Explorer\n${version}`;
 // Load config from environment:
-const googleAnalyticsId = process.env.GA_ID || '';
-const apiUrls = {
-    mainnet: process.env.API_URL_MAINNET,
-    sharedSandbox: process.env.API_URL_SHARED_SANDBOX,
+const googleAnalyticsId = process.env.GA_ID || '$GA_ID';
+// Connect API values.
+const apiUrl = process.env.API_URL || '$API_URL';
+const apiToken = process.env.API_TOKEN || '$API_TOKEN';
+// API Gateway values.
+const gatewayUrls = {
+    publicNet: process.env.PUBLIC_NETWORK_GATEWAY || '$PUBLIC_NETWORK_GATEWAY',
+    sharedSandbox: process.env.SHARED_SANDBOX_GATEWAY || '$SHARED_SANDBOX_GATEWAY',
 };
-const apiKey = process.env.API_TOKEN;
-const appId = process.env.API_APP_ID;
-const applicationsListLink = process.env.DEV_PORTAL_URL || 'https://apiplus-dev.3scale.net/';
+const blockchainNetwork = process.env.PUBLIC_NETWORK || 'Mainnet';
+const applicationsListLink = process.env.DEV_PORTAL_URL || 'https://harmony-dev-portal.3scale.net/';
 
 process.noDeprecation = true;
 
@@ -103,7 +106,14 @@ module.exports = {
     plugins: [
         new webpack.DefinePlugin({
             'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
-            CONFIG: JSON.stringify({version, apiUrls, apiKey, appId, applicationsListLink}),
+            CONFIG: JSON.stringify({
+                blockchainNetwork,
+                apiUrl,
+                apiToken,
+                applicationsListLink,
+                gatewayUrls,
+                version,
+            }),
         }),
         new webpack.LoaderOptionsPlugin({
             debug: isDev,

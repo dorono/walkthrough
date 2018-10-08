@@ -18,8 +18,7 @@
         "jest": true
     },
     "globals": {
-        "CONFIG": true,
-        "RUNTIME_CONFIG": true,
+        "CONFIG": true
     },
     "rules": {
         // Overrides

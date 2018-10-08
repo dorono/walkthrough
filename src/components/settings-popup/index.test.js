@@ -43,7 +43,7 @@ describe('SettingsPopup Component', () => {
         ));
         expect(wrapper.find('Form').length).toBe(1);
     });
-    it('checkbox should be disabled and set to true after selecting something different to Mainnet', () => {
+    it('checkbox should be disabled and set to true after selecting something different to Public network', () => {
         const wrapper = shallow((
             <SettingsPopup
                 show
