@@ -2,6 +2,8 @@
 
 .modal-root {
     width: 60rem;
+    position: absolute;
+    top: 15%;
     --left-right-padding: 4.5rem;
 }
 
