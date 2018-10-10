@@ -8,7 +8,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import ExternalIdList from 'components/external-id-list';
 
-@dataLoader(({match}) => `/chains/${match.params.hash}?stages=factom,bitcoin`, {ignoreQueryString: true})
+@dataLoader(({match}) => `/chains/${match.params.hash}?stages=factom,anchored`, {ignoreQueryString: true})
 export default class Chain extends Component {
     render() {
         return (
@@ -26,7 +26,7 @@ export default class Chain extends Component {
                     </Vertical>
                 </Container>
                 <EntriesTable
-                    entriesUrl={`/chains/${this.props.data.chain_id}/entries?stages=factom,bitcoin`}
+                    entriesUrl={`/chains/${this.props.data.chain_id}/entries?stages=factom,anchored`}
                     pageParams={this.props.location.search}
                     renderContent={row => (
                         <Hash type='entry' extraArgs={{chain: this.props.data.chain_id}}>

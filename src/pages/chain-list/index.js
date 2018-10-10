@@ -8,7 +8,7 @@ import Pagination from 'components/pagination';
 import Hash from 'components/hash';
 import ExternalIdList from 'components/external-id-list';
 
-@dataLoader(({location}) => addPaginationParams('/chains?stages=factom,bitcoin', location.search))
+@dataLoader(({location}) => addPaginationParams('/chains?stages=factom,anchored', location.search))
 export default class ChainList extends Component {
     render() {
         return (

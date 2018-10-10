@@ -42,7 +42,7 @@ export default class EntryBlock extends Component {
                     </Vertical>
                 </Container>
                 <EntriesTable
-                    entriesUrl={`/eblocks/${this.props.data.keymr}/entries?stages=factom,bitcoin`}
+                    entriesUrl={`/eblocks/${this.props.data.keymr}/entries?stages=factom,anchored`}
                     pageParams={this.props.location.search}
                     renderContent={row => (
                         <Hash type='entry' extraArgs={{chain: this.props.data.chain.chain_id}}>
