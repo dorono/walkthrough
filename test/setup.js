@@ -5,16 +5,9 @@ configure({adapter: new Adapter()});
 
 // Global variables. In dev and build process, these are defined by webpack.
 window.CONFIG = {
-    apiUrls: {
-        mainnet: '',
+    gatewayUrls: {
+        publicNet: '',
         sharedSandbox: '',
-    },
-};
-
-window.RUNTIME_CONFIG = {
-    apiUrls: {
-        mainnet: '$API_URL_MAINNET',
-        sharedSandbox: '$API_URL_SHARED_SANDBOX',
     },
 };
 

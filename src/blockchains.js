@@ -1,15 +1,15 @@
 export const AVAILABLE_BLOCKCHAINS = {
-    MAINNET: {
-        label: 'Mainnet',
+    PUBLIC: {
+        label: CONFIG.blockchainNetwork,
         value: 0,
         serviceName: 'mainnet',
-        url: CONFIG.apiUrls.mainnet,
+        url: CONFIG.gatewayUrls.publicNet,
     },
     SHARED: {
         label: 'Shared Sandbox',
         value: 1,
         serviceName: 'shared',
-        url: CONFIG.apiUrls.sharedSandbox,
+        url: CONFIG.gatewayUrls.sharedSandbox,
     },
     PRIVATE: {
         label: 'Private Network',

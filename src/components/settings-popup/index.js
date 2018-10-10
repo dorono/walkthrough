@@ -20,7 +20,7 @@ import styles from './styles.css';
 import {CredentialsErrorMessage, GenericErrorMessage, NetworkErrorMessage} from './messages';
 
 const BLOCKCHAIN_OPTIONS = [
-    AVAILABLE_BLOCKCHAINS.MAINNET,
+    AVAILABLE_BLOCKCHAINS.PUBLIC,
     AVAILABLE_BLOCKCHAINS.SHARED,
     AVAILABLE_BLOCKCHAINS.PRIVATE,
 ];
@@ -42,9 +42,9 @@ export default class SettingsPopup extends Component {
     constructor(props) {
         super(props);
         const apiConfigProps = this.extractApiConfigProps(props.apiConfig);
-        const onMainnet = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.MAINNET);
-        const enableCredentialsCheckbox = onMainnet;
-        const configuredByDefault = onMainnet && props.defaultApiConfig.sharesCredentialsWith(props.apiConfig);
+        const onPublicNet = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.PUBLIC);
+        const enableCredentialsCheckbox = onPublicNet;
+        const configuredByDefault = onPublicNet && props.defaultApiConfig.sharesCredentialsWith(props.apiConfig);
 
         this.state = {
             ...apiConfigProps,
@@ -60,16 +60,18 @@ export default class SettingsPopup extends Component {
     extractApiConfigProps(apiConfig) {
         const selectedBlockchain = getInitialBlockchainbyName(apiConfig.blockchain);
         return {
+            apiUrl: apiConfig.apiUrl,
+            apiToken: apiConfig.apiToken,
             appId: apiConfig.appId,
-            apiKey: apiConfig.apiKey,
+            appKey: apiConfig.appKey,
             privateUrl: apiConfig.apiUrl,
             selectedBlockchain,
         };
     }
 
     showCredentialsInputs() {
-        return (this.state.selectedBlockchain === AVAILABLE_BLOCKCHAINS.MAINNET && this.state.useCredentials)
-            || (this.state.selectedBlockchain !== AVAILABLE_BLOCKCHAINS.MAINNET);
+        return (this.state.selectedBlockchain === AVAILABLE_BLOCKCHAINS.PUBLIC && this.state.useCredentials)
+            || (this.state.selectedBlockchain !== AVAILABLE_BLOCKCHAINS.PUBLIC);
     }
 
     showConnectUrl() {
@@ -78,11 +80,15 @@ export default class SettingsPopup extends Component {
 
     @autobind
     getApiConfig() {
-        const {appId, apiKey, privateUrl, selectedBlockchain} = this.state;
+        const {apiToken, appId, appKey, privateUrl, selectedBlockchain, useCredentials} = this.state;
+        if (!useCredentials && apiToken) {
+            // Using default credentials (apiToken) for Connect.
+            return this.props.defaultApiConfig;
+        }
         const apiUrl = selectedBlockchain === AVAILABLE_BLOCKCHAINS.PRIVATE ?
             privateUrl : selectedBlockchain.url;
         const blockchain = selectedBlockchain.label;
-        return APIConfig.create({apiUrl, appId, apiKey, blockchain});
+        return APIConfig.create({apiUrl, appId, appKey, blockchain});
     }
 
     @autobind
@@ -97,12 +103,13 @@ export default class SettingsPopup extends Component {
         newState.useCredentials = !this.state.useCredentials;
         newState.error = false;
         if (newState.useCredentials) {
-            newState.apiKey = '';
+            newState.appKey = '';
             newState.appId = '';
         } else {
             // Do not use credentials. Use the default ones.
-            newState.apiKey = this.props.defaultApiConfig.apiKey;
+            newState.apiToken = this.props.defaultApiConfig.apiToken;
             newState.appId = this.props.defaultApiConfig.appId;
+            newState.apiUrl = this.props.defaultApiConfig.apiUrl;
         }
         this.setState(newState);
     }
@@ -119,7 +126,7 @@ export default class SettingsPopup extends Component {
     handleDropdownChange(selectedBlockchain) {
         let useCredentials = this.state.useCredentials;
         let enableCredentialsCheckbox = true;
-        if (selectedBlockchain !== AVAILABLE_BLOCKCHAINS.MAINNET) {
+        if (selectedBlockchain !== AVAILABLE_BLOCKCHAINS.PUBLIC) {
             useCredentials = true;
             enableCredentialsCheckbox = false;
         }
@@ -128,7 +135,7 @@ export default class SettingsPopup extends Component {
             useCredentials,
             enableCredentialsCheckbox,
             appId: '',
-            apiKey: '',
+            appKey: '',
             privateUrl: '',
             errors: getDefaultErrors(),
         });
@@ -281,8 +288,8 @@ export default class SettingsPopup extends Component {
                                             <Input
                                                 error={this.state.errors.credentials || this.state.errors.other}
                                                 type='password'
-                                                name='apiKey'
-                                                value={this.state.apiKey}
+                                                name='appKey'
+                                                value={this.state.appKey}
                                                 placeholder='Enter your App Key'
                                                 handleChange={this.handleChange}
                                                 className={classNames(styles.input, styles.formInput)}

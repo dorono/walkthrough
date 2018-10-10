@@ -1,33 +1,16 @@
-import get from 'lodash/get';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
-
-/**
- * Read configuration property "prop" from global variables.
- * IF RUNTIME_CONFIG[prop] is defined, return it.
- * ELSE IF valueToReturn is specified, return it.
- * DEFAULTS to CONFIG[prop].
- * @param configProp
- * @param valueToIgnore
- * @param valueToReturn
- * @returns {*}
- */
-const getConfigurationFor = (configProp, valueToIgnore, valueToReturn = null) => {
-    if (get(RUNTIME_CONFIG, configProp, valueToIgnore) !== valueToIgnore) {
-        return get(RUNTIME_CONFIG, configProp);
-    }
-    if (valueToReturn) return valueToReturn;
-    return get(CONFIG, configProp);
-};
+import {stringNotNull} from 'utils/validate';
 
 /**
  * APIConfig represents an API configuration containing
- * apiUrl, apiKey, appId and the current blockchain.
+ * apiUrl & apiToken OR apiUrl & appId/appKey. Also, the current blockchain.
  */
 export default class APIConfig {
-    apiUrl = getConfigurationFor('apiUrl', '$API_URL', CONFIG.apiUrls.mainnet);
-    apiKey = getConfigurationFor('apiKey', '$API_TOKEN');
-    appId = getConfigurationFor('appId', '$API_APP_ID');
-    blockchain = getConfigurationFor('blockchain', '$BLOCKCHAIN_LABEL', AVAILABLE_BLOCKCHAINS.MAINNET.label);
+    constructor() {
+        this.apiUrl = CONFIG.apiUrl; // Hit Connect directly by default.
+        this.apiToken = CONFIG.apiToken; // Shared Token for hitting Connect directly.
+        this.blockchain = AVAILABLE_BLOCKCHAINS.PUBLIC.label;
+    }
 
     /**
      * Create an instance of APIConfig.
@@ -37,21 +20,27 @@ export default class APIConfig {
      * @param blockchain
      * @returns {APIConfig}
      */
-    static create({apiUrl, apiKey, appId, blockchain}) {
+    static create({apiUrl, apiToken, appId, appKey, blockchain}) {
         const apiConfig = new APIConfig();
         apiConfig.apiUrl = apiUrl;
+        apiConfig.apiToken = apiToken;
         apiConfig.appId = appId;
-        apiConfig.apiKey = apiKey;
+        apiConfig.appKey = appKey;
         apiConfig.blockchain = blockchain;
         return apiConfig;
     }
 
     sharesCredentialsWith(anotherApiConfig = {}) {
-        return this.apiKey === anotherApiConfig.apiKey && this.appId === anotherApiConfig.appId;
+        return this.appKey === anotherApiConfig.appKey && this.appId === anotherApiConfig.appId;
     }
 
+    /**
+     * Validate API Config.
+     * @returns {*|string|string|boolean}
+     */
     isValid() {
-        return (this.apiUrl && this.apiKey && this.appId &&
-            this.apiUrl.length > 0 && this.apiKey.length > 0 && this.appId.length > 0);
+        const throughGateway = stringNotNull(this.apiUrl) && stringNotNull(this.appId) && stringNotNull(this.appKey);
+        const directly = stringNotNull(this.apiUrl) && stringNotNull(this.apiToken);
+        return throughGateway || directly;
     }
 }
