@@ -11,7 +11,7 @@ import EntryContent from 'components/entry-content/index';
 
 import styles from './styles.css';
 
-@dataLoader(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}?stages=factom,bitcoin`)
+@dataLoader(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}?stages=factom,anchored`)
 export default class Entry extends Component {
     render() {
         return (
