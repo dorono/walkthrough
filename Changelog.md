@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2018-10-12: 3.1.0-rc3
+- Change how we do environment variable substitution during container starup.
+
 ### 2018-10-12: 3.1.0-rc2
 - Replace API URL and API TOKEN in the generated js file
 - [EX-111] Use explorer with your app id, app key, and connect url
