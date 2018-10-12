@@ -1,6 +1,10 @@
 ## Changelog
 
-### 3.1.0-rc1
+### 2018-10-12: 3.1.0-rc2
+- Replace API URL and API TOKEN in the generated js file
+- [EX-111] Use explorer with your app id, app key, and connect url
+
+### 2018-10-12: 3.1.0-rc1
 - [EX-123] Added Anchor handling
 - [EX-109] JSON fix
 - [EX-111] Added Popup for setup configuration to the API
