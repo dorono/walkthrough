@@ -1,8 +1,8 @@
 ## Changelog
 
 ### 3.1.0-rc1
-- [EX-110] Added Anchor handling
-- [EX-53] Improve the application for mobile
+- [EX-123] Added Anchor handling
+- [EX-109] JSON fix
 - [EX-111] Added Popup for setup configuration to the API
 - [EX-119] Added test files, improve some components
 
