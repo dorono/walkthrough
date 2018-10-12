@@ -17,7 +17,7 @@ environment variables. You can define a .env file on the root directory to
 configure the application. For example:
 
 ```
-API_URL=https://apiplus-api-dev-testnet.factom.com/v2
+API_URL=https://stage.harmony.factom.com/v2
 API_TOKEN=some-token
 PUBLIC_NETWORK=Mainnet
 DEV_PORTAL_URL=https://harmony-dev-portal.3scale.net
@@ -39,10 +39,10 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Production build
 
 ```
-$ export API_URL=https://apiplus-api-dev-testnet.factom.com/v2
+$ export API_URL=https://stage.harmony.factom.com/v2
 $ export API_TOKEN=XXXXXXXX
-$ export PUBLIC_NETWORK_GATEWAY=https://apiplus-dev-testnet.factom.com/v2
-$ export SHARED_SANDBOX_GATEWAY=https://apiplus-dev-testnet.factom.com/v2
+$ PUBLIC_NETWORK_GATEWAY=https://connect-mainnet-2445582615332.production.gw.apicast.io
+$ SHARED_SANDBOX_GATEWAY=https://connect-shared-sandbox-2445582615332.production.gw.apicast.io
 $ export GA_ID=XXXXXXXX
 $ npm run build
 ```

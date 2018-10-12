@@ -235,7 +235,7 @@ export default class SettingsPopup extends Component {
                                 <div className={styles.link}>
                                     <div className={styles.questionMark}>?</div>
                                     <A
-                                        to='https://factom.com?seeking=connect'
+                                        to='https://www.factom.com/products/harmony-connect'
                                         onClick={trackAccessConnectLandingPage}
                                         text='Learn more about connect'
                                     />
