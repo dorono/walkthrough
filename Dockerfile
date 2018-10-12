@@ -42,9 +42,9 @@ FROM nginx:1.14.0-alpine
 RUN mkdir -p /docs
 COPY --from=builder /srv/build/ /build/
 
-# Copy index.html so we always have an original version as a template
-RUN cp /build/index.html /build/index.template.html
+# Copy app.js so we always have an original version as a template
+RUN cp /build/app.*.js /build/app-template.js
 
 RUN apk --update add rsync
 
-CMD ["/bin/sh", "-c", "envsubst '$$API_URL $$API_TOKEN' < /build/index.template.html > /build/index.html && nginx -g 'daemon off;'"]
+CMD ["/bin/sh", "-c", "envsubst '$$API_URL $$API_TOKEN' < /build/app-template.js >  $(ls /build/app.*.js | head -1) && nginx -g 'daemon off;'"]
