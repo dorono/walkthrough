@@ -1,5 +1,4 @@
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
-import {stringNotNull} from 'utils/validate';
 
 /**
  * APIConfig represents an API configuration containing
@@ -38,9 +37,4 @@ export default class APIConfig {
      * Validate API Config.
      * @returns {*|string|string|boolean}
      */
-    isValid() {
-        const throughGateway = stringNotNull(this.apiUrl) && stringNotNull(this.appId) && stringNotNull(this.appKey);
-        const directly = stringNotNull(this.apiUrl) && stringNotNull(this.apiToken);
-        return throughGateway || directly;
-    }
 }
