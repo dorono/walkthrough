@@ -230,14 +230,14 @@ export default class SettingsPopup extends Component {
                                         value={this.state.useCredentials}
                                         onChange={this.useCredentialsToggler}
                                     />
-                                    Use my Connect credentials
+                                    Use my CONNECT credentials
                                 </div>
                                 <div className={styles.link}>
                                     <div className={styles.questionMark}>?</div>
                                     <A
                                         to='https://www.factom.com/products/harmony-connect'
                                         onClick={trackAccessConnectLandingPage}
-                                        text='Learn more about connect'
+                                        text=' What is CONNECT?'
                                     />
                                 </div>
                             </div>
