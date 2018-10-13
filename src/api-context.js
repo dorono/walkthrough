@@ -60,7 +60,10 @@ export class APIConfigurationProvider extends React.Component {
             this.setApiConfig(APIConfig.create(data), fromEvent);
         }
     }
-
+    /**
+     * Validate
+     * @returns {boolean}
+     */
     isValid = ({apiUrl, appId, appKey, apiToken}) => {
         const throughGateway = stringNotNull(apiUrl) && stringNotNull(appId) && stringNotNull(appKey);
         if (throughGateway) return true;

@@ -32,9 +32,4 @@ export default class APIConfig {
     sharesCredentialsWith(anotherApiConfig = {}) {
         return this.appKey === anotherApiConfig.appKey && this.appId === anotherApiConfig.appId;
     }
-
-    /**
-     * Validate API Config.
-     * @returns {*|string|string|boolean}
-     */
 }
