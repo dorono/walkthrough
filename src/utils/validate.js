@@ -1,1 +1,3 @@
-export const stringNotNull = value => typeof value === 'string' && value.length > 0;
+export const stringNotNull = value => {
+    return value.length > 0;
+};

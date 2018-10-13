@@ -4,6 +4,7 @@ import set from 'lodash/set';
 import APIConfig from 'utils/api-config';
 import {setSessionItem, getSessionItem} from 'utils/session-storage';
 import WindowEventListener from 'components/window-event-listener';
+import {stringNotNull} from './utils/validate';
 
 const storageKey = 'factom.explorer.api-config';
 const {Provider, Consumer} = React.createContext();
@@ -46,7 +47,7 @@ export class APIConfigurationProvider extends React.Component {
 
     @autobind()
     setApiConfig(apiConfig, fromEvent = false) {
-        if (apiConfig.isValid()) {
+        if (this.isValid(apiConfig)) {
             return this.setState({apiConfig, remoteConfig: fromEvent});
         }
     }
@@ -55,10 +56,18 @@ export class APIConfigurationProvider extends React.Component {
     messageHandler(data, fromEvent = false) {
         if (!data) return;
         const apiConfig = APIConfig.create(data);
-        if (apiConfig.isValid()) {
+        if (this.isValid(apiConfig)) {
             this.setApiConfig(APIConfig.create(data), fromEvent);
         }
     }
+
+    isValid = ({apiUrl, appId, appKey, apiToken}) => {
+        const throughGateway = stringNotNull(apiUrl) && stringNotNull(appId) && stringNotNull(appKey);
+        if (throughGateway) return true;
+        const directly = stringNotNull(apiUrl) && stringNotNull(apiToken);
+        if (directly) return true;
+        return false;
+    };
 
     @autobind
     unloadHandler() {
