@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2018-10-15: 3.1.0
+- Bump version for release to Production.
+
 ### 2018-10-13: 3.1.0-rc5
 - Fixed some css files.
 - Changed isValid method and moved from api-config to api-context.
