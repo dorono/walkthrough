@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2018-10-16: 3.1.1-rc1
+- Improve string type validation.
+
 ### 2018-10-15: 3.1.0
 - Bump version for release to Production.
 
