@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2018-10-17: 3.1.2-rc1
+- Add missing parameter for request function on Search component.
+
 ### 2018-10-15: 3.1.1
 - Bump version for release to Production.
 
