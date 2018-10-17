@@ -36,7 +36,7 @@ export default class AppHeader extends Component {
                             <span>Factom Explorer</span>
                         </h1>
                     </Link>
-                    <Search />
+                    <Search apiConfig={this.props.apiConfig} />
                     <AppMenu />
                     <VerticalDivider className={styles.divider} />
                     <div className={styles.blockchainButtonContainer}>

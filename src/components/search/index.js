@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {autobind} from 'core-decorators';
 import classNames from 'classnames';
@@ -30,6 +31,9 @@ const urls = {
 @withRouter
 @autobind
 export default class Search extends Component {
+    static propTypes = {
+        apiConfig: PropTypes.shape().isRequired,
+    };
     state = {
         query: '',
         error: '',
@@ -94,7 +98,7 @@ export default class Search extends Component {
         trackPageView(`/search?q=${query}`);
 
         try {
-            const response = await request(`/search?stages=factom,anchored&term=${query}`);
+            const response = await request(`/search?stages=factom,anchored&term=${query}`, this.props.apiConfig);
             if (!this.state.searching) return;
             const url = urls[response.type](response.data);
             this.props.history.push(url);
