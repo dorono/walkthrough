@@ -163,6 +163,8 @@ export default class SettingsPopup extends Component {
                 };
                 if (e.statusCode === 404 || e instanceof TypeError) {
                     errorUpdate.errors.network = true;
+                } else if (e.statusCode === 429) {
+                    this.handleClose();
                 } else if (e.statusCode === 403) {
                     errorUpdate.errors.credentials = true;
                 } else {

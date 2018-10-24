@@ -11,8 +11,21 @@ export default class ErrorPage extends Component {
         status: 404,
     };
 
+    errorStatusPage429Message() {
+        return (
+            <div
+                className={styles.message}>
+                <p>
+                    Your Connect application <br />
+                    <strong>Factom API APP</strong> has run out of request. <br /><br />
+                    <a href='/'>Upgrade your plan</a>  or come back tomorrow.
+                </p>
+            </div>
+        );
+    }
+
     handleClick() {
-        if (this.props.status === 404) {
+        if (this.props.status === (404 || 429)) {
             this.props.history.push('/');
         } else {
             window.location.reload();
@@ -22,10 +35,13 @@ export default class ErrorPage extends Component {
     render() {
         return (
             <Container primary>
-                <div
-                    onClick={this.handleClick}
-                    className={styles[`error-${this.props.status}`]}
-                />
+                <div className={this.props.status === 429 ? styles.containerMessage : null}>
+                    <div
+                        onClick={this.handleClick}
+                        className={styles[`error-${this.props.status}`]}
+                    />
+                    {this.props.status === 429 ? this.errorStatusPage429Message() : null}
+                </div>
             </Container>
         );
     }

@@ -1,3 +1,5 @@
+@import 'styles/variables.css';
+
 .error {
     margin: 50px auto;
     height: 400px;
@@ -11,7 +13,63 @@
     background-image: url('./assets/404.svg');
 }
 
+.error-429 {
+    height: 400px;
+    width: 55%;
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+    background-image: url('./assets/429.svg');
+}
+
 .error-500 {
     composes: error;
     background-image: url('./assets/500.svg');
 }
+
+.container-message p {
+    font-size: 16px;
+}
+
+.message {
+    margin-left: -70px;
+}
+
+.container-message a {
+    color: var(--blue);
+
+    &:hover {
+        color: var(--black);
+    }
+}
+
+.container-message {
+    margin: 50px;
+    display: flex;
+    align-items: center;
+}
+
+@media (max-width: 767px) {
+    .error-429 {
+        width: 100%;
+        height: 300px;
+        background-position: center;
+    }
+
+    .container-message {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+    }
+
+    .message {
+        text-align: center;
+        margin-left: 0;
+    }
+
+    .container-message p {
+        font-size: 12px;
+    }
+}
+
