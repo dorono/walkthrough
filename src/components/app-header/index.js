@@ -46,11 +46,13 @@ export default class AppHeader extends Component {
                             className={styles.blockchainButton}
                         />
                         {this.props.remoteConfig &&
-                            <Tooltip
-                                show>
-                                <span className={styles.spanTooltip}>You are authenticated with</span> <br />
-                                Application ID: {this.props.apiConfig.appId}
-                            </Tooltip>
+                        <Tooltip show>
+                            <span className={styles.spanTooltip}>
+                                Authenticated with your application:
+                            </span>
+                            <br />
+                            {this.props.apiConfig.appName}
+                        </Tooltip>
                         }
                     </div>
                 </div>

@@ -19,12 +19,13 @@ export default class APIConfig {
      * @param blockchain
      * @returns {APIConfig}
      */
-    static create({apiUrl, apiToken, appId, appKey, blockchain}) {
+    static create({apiUrl, apiToken, appId, appKey, appName, blockchain}) {
         const apiConfig = new APIConfig();
         apiConfig.apiUrl = apiUrl;
         apiConfig.apiToken = apiToken;
         apiConfig.appId = appId;
         apiConfig.appKey = appKey;
+        apiConfig.appName = appName;
         apiConfig.blockchain = blockchain;
         return apiConfig;
     }
