@@ -10,10 +10,12 @@ import styles from './styles.css';
 export default class ErrorPage extends Component {
     static defaultProps = {
         status: 404,
+        message: null,
     };
 
     static propTypes = {
         status: PropTypes.number.isRequired,
+        message: PropTypes.node,
     };
 
     handleClick() {
@@ -27,12 +29,12 @@ export default class ErrorPage extends Component {
     render() {
         return (
             <Container primary>
-                <div className={this.props.status === 429 && styles.containerMessage}>
+                <div className={styles[`container-error-${this.props.status}`]}>
                     <div
                         onClick={this.handleClick}
                         className={styles[`error-${this.props.status}`]}
                     />
-                    {this.props.status === 429 && this.props.message}
+                    {this.props.message}
                 </div>
             </Container>
         );
