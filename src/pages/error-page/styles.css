@@ -27,15 +27,12 @@
     background-image: url('./assets/500.svg');
 }
 
-.container-message p {
+.container-error-429 p {
     font-size: 16px;
-}
-
-.message {
     margin-left: -70px;
 }
 
-.container-message a {
+.container-error-429 a {
     color: var(--blue);
 
     &:hover {
@@ -43,7 +40,7 @@
     }
 }
 
-.container-message {
+.container-error-429 {
     margin: 50px;
     display: flex;
     align-items: center;
@@ -56,19 +53,16 @@
         background-position: center;
     }
 
-    .container-message {
+    .container-error-429 {
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
     }
 
-    .message {
+    .container-error-429 p {
         text-align: center;
         margin-left: 0;
-    }
-
-    .container-message p {
         font-size: 12px;
     }
 }

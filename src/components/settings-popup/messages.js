@@ -2,7 +2,7 @@ import React from 'react';
 import A from 'components/anchor';
 import styles from './styles.css';
 
-const {applicationsListLink} = CONFIG;
+const {devPortalBaseUrl} = CONFIG;
 
 export const GenericErrorMessage = () => {
     return (
@@ -10,7 +10,7 @@ export const GenericErrorMessage = () => {
             Please double check the values below against your
             <A
                 className={styles.errorLink}
-                to={applicationsListLink}
+                to={devPortalBaseUrl}
                 text={'application\'s details'}
             />.
         </span>);

@@ -3,6 +3,7 @@ import {request} from 'api';
 import {APIConfigurationConsumer} from 'api-context';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
+const {devPortalBaseUrl} = CONFIG;
 
 /**
  * HOC that fetches data using the request function.
@@ -38,9 +39,27 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             }
         }
 
+        errorStatusPage429Message() {
+            const linkRequestPlanChange =
+                `${devPortalBaseUrl
+                }plans?message_reason=Request_Plan_Change&regarding_app_id=${this.props.apiConfig.appId}`;
+            return (
+                <div
+                    className='message'>
+                    <p>
+                        Your Connect application <br />
+                        <strong>{this.props.apiConfig.appName}</strong> has run out of requests. <br /><br />
+                        <a href={linkRequestPlanChange}> Upgrade your plan</a> or come back tomorrow.
+                    </p>
+                </div>
+            );
+        }
+
         render() {
             if (this.state.error === 404 && showErrors) return <ErrorPage status={404} />;
-            if (this.state.error === 429 && showErrors) return <ErrorPage status={429} />;
+            if (this.state.error === 429 && showErrors) {
+                return (<ErrorPage status={429} message={this.errorStatusPage429Message()} />);
+            }
             if (this.state.error && showErrors) return <ErrorPage status={500} />;
             if (!this.state.data && showLoader) return <Spinner />;
             return <Component {...this.props} {...this.state.data} />;
