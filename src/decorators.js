@@ -40,7 +40,13 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
 
         render() {
             if (this.state.error === 404 && showErrors) return <ErrorPage status={404} />;
-            if (this.state.error === 429 && showErrors) return <ErrorPage status={429} />;
+            if (this.state.error === 429 && showErrors) {
+                return (<ErrorPage
+                    status={429}
+                    appName={this.props.apiConfig.appName}
+                    appId={this.props.apiConfig.appId}
+                        />);
+            }
             if (this.state.error && showErrors) return <ErrorPage status={500} />;
             if (!this.state.data && showLoader) return <Spinner />;
             return <Component {...this.props} {...this.state.data} />;

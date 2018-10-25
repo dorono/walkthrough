@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {autobind} from 'core-decorators';
 import {withRouter} from 'react-router-dom';
 import Container from 'components/container';
@@ -11,14 +12,23 @@ export default class ErrorPage extends Component {
         status: 404,
     };
 
+    static propTypes = {
+        status: PropTypes.number.isRequired,
+        appName: PropTypes.string,
+        appId: PropTypes.string,
+    };
+
     errorStatusPage429Message() {
+        const linkRequestPlanChange =
+            'https://account.factom.com/plans?' +
+            `message_reason=Request_Plan_Change&regarding_app_id=${this.props.appId}`;
         return (
             <div
                 className={styles.message}>
                 <p>
                     Your Connect application <br />
-                    <strong>Factom API APP</strong> has run out of request. <br /><br />
-                    <a href='/'>Upgrade your plan</a>  or come back tomorrow.
+                    <strong>{this.props.appName}</strong> has run out of request. <br /><br />
+                    <a href={linkRequestPlanChange}> Upgrade your plan</a> or come back tomorrow.
                 </p>
             </div>
         );
