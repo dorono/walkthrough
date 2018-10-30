@@ -151,8 +151,9 @@ export default class SettingsPopup extends Component {
         // Inner function to verify credentials and URL.
         const verifyConnection = async (apiConfig) => {
             try {
-                const data = await request('/', apiConfig);
-                if (data.version) {
+                const {version} = await request('', apiConfig);
+                if (version) {
+                    apiConfig.apiVersion = version;
                     if (!isEqual(apiConfig, this.props.defaultApiConfig)) trackSuccessfulConnection();
                     this.props.onSubmit(apiConfig);
                 }

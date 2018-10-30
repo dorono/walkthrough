@@ -24,7 +24,7 @@ const gatewayUrls = {
     sharedSandbox: process.env.SHARED_SANDBOX_GATEWAY || '$SHARED_SANDBOX_GATEWAY',
 };
 const blockchainNetwork = process.env.PUBLIC_NETWORK || 'Public Factom (Mainnet)';
-const devPortalBaseUrl = process.env.DEV_PORTAL_URL || 'https://harmony-dev-portal.3scale.net/';
+const devPortalBaseUrl = process.env.DEV_PORTAL_URL || 'https://account.factom.com/';
 
 process.noDeprecation = true;
 
