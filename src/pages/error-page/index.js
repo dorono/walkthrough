@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {autobind} from 'core-decorators';
 import {withRouter} from 'react-router-dom';
+import {trackPageView} from 'analytics';
 import Container from 'components/container';
 import styles from './styles.css';
 
@@ -17,6 +18,10 @@ export default class ErrorPage extends Component {
         status: PropTypes.number.isRequired,
         message: PropTypes.node,
     };
+
+    componentDidMount() {
+        trackPageView(this.props.status);
+    }
 
     handleClick() {
         if (this.props.status === (404 || 429)) {
