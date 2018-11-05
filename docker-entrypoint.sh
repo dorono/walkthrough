@@ -5,5 +5,9 @@ TARGET_APP_JS=$(ls /build/app.*.js | head -1)
 
 cat /build/app-template.js | envsubst '$$API_URL $$API_TOKEN' > $TARGET_APP_JS
 
+# Create app.*.js.gz file
+# -fk flags keep .js file and force compression even if app.*.js.gz file exists
+gzip $TARGET_APP_JS -fk
+
 # Run nginx
 exec nginx -g 'daemon off;'

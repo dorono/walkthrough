@@ -5,6 +5,7 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CompressionPlugin = require('compression-webpack-plugin');
 
 const {imageminLoader} = require('imagemin-webpack');
 const imageminSvgo = require('imagemin-svgo');
@@ -142,6 +143,7 @@ module.exports = {
         }),
         new webpack.ContextReplacementPlugin(/moment\/locale$/, /en/),
         new webpack.BannerPlugin({banner}),
+        new CompressionPlugin(),
         new webpack.NamedModulesPlugin(),
         new webpack.NoEmitOnErrorsPlugin(),
     ],
