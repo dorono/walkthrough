@@ -1,10 +1,11 @@
 import React from 'react';
 import {autobind} from 'core-decorators';
 import set from 'lodash/set';
+import {request} from 'api';
 import APIConfig from 'utils/api-config';
 import {setSessionItem, getSessionItem} from 'utils/session-storage';
 import WindowEventListener from 'components/window-event-listener';
-import {stringNotNull} from './utils/validate';
+import {stringNotNull} from 'utils/validate';
 
 const storageKey = 'factom.explorer.api-config';
 const {Provider, Consumer} = React.createContext();
@@ -28,11 +29,12 @@ export class APIConfigurationProvider extends React.Component {
     }
 
     componentWillMount() {
-        // Recover api config from the session, to recover after F5.
+        // Recover api config from the session, to maintain state after F5.
         const savedApiConfig = getSessionItem(storageKey);
         if (savedApiConfig) {
-            this.setApiConfig(APIConfig.create(savedApiConfig));
+            return this.setApiConfig(APIConfig.create(savedApiConfig));
         }
+        this.setApiConfig(Object.assign(Object.create(APIConfig.prototype), this.state.defaultApiConfig));
     }
 
     componentDidMount() {
@@ -45,9 +47,22 @@ export class APIConfigurationProvider extends React.Component {
         }
     }
 
+    async getAPIVersion(apiConfig) {
+        try {
+            const data = await request('', apiConfig);
+            return data.version;
+        } catch (e) {
+            return null;
+        }
+    }
+
     @autobind()
-    setApiConfig(apiConfig, fromEvent = false) {
+    async setApiConfig(apiConfig, fromEvent = false) {
         if (this.isValid(apiConfig)) {
+            if (!apiConfig.apiVersion) {
+                const apiVersion = await this.getAPIVersion(apiConfig);
+                apiConfig.apiVersion = apiVersion;
+            }
             return this.setState({apiConfig, remoteConfig: fromEvent});
         }
     }
