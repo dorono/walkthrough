@@ -6,6 +6,8 @@ import sizeMe from 'react-sizeme';
 import classNames from 'classnames';
 import styles from './styles.css';
 
+const HEIGHT_MEASUREMENT_ERROR = 2;
+
 @sizeMe({monitorHeight: true})
 class ExpansibleContainer extends Component {
     static propTypes = {
@@ -30,7 +32,7 @@ class ExpansibleContainer extends Component {
                 springConfig={presets.noWobble}>
                 <div
                     className={containerClassName}
-                    style={this.props.expand ? {} : {maxHeight: this.props.collapsedSize}}>
+                    style={this.props.expand ? {} : {maxHeight: this.props.collapsedSize + HEIGHT_MEASUREMENT_ERROR}}>
                     {this.props.children}
                 </div>
             </Collapse>
