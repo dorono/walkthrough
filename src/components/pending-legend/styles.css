@@ -1,0 +1,29 @@
+@import 'styles/variables.css';
+
+.pending-legend {
+    margin-bottom: 2rem;
+    padding-top: 14px;
+    padding-bottom: 8px;
+    display: flex;
+    align-items: center;
+    font-size: 10px;
+}
+
+.pending-legend.pending-legend-highlight {
+    padding-top: 8px;
+    font-size: 12px;
+    background-color: var(--yellow);
+    color: var(--black);
+}
+
+.pending-legend-icon {
+    display: inline-block;
+    margin: 0 8px;
+    font-size: 15px !important;
+    color: var(--yellow);
+}
+
+.pending-legend-highlight .pending-legend-icon {
+    color: var(--black);
+    margin-left: 0;
+}

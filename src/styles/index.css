@@ -56,3 +56,11 @@ select {
 button {
     cursor: pointer;
 }
+
+.capitalized {
+    text-transform: capitalize;
+}
+
+.disabled-text {
+    opacity: var(--disabled-opacity);
+}

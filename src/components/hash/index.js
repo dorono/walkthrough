@@ -2,6 +2,8 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 import {reverse} from 'routes';
+import {STAGE_NOT_AVAILABLE} from 'stages';
+
 import styles from './styles.css';
 
 @withRouter
@@ -30,7 +32,7 @@ export default class Hash extends Component {
         const hash = this.props.children;
 
         if (!hash) {
-            return <span className={styles.root}>Not available</span>;
+            return <span className={styles.root}>{STAGE_NOT_AVAILABLE}</span>;
         }
 
         if (Number(hash) === 0) {

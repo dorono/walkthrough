@@ -1,0 +1,21 @@
+@import 'styles/variables.css';
+
+.pending-container {
+    position: relative;
+    vertical-align: middle;
+    line-height: 1rem;
+}
+
+.chain {
+    line-height: 1rem;
+    padding-left: 0 !important;
+}
+
+.chain a {
+    display: inline-block;
+}
+
+.chain,
+.chain a {
+    vertical-align: middle;
+}

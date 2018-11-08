@@ -32,12 +32,17 @@
     padding: 1rem;
     border-radius: var(--border-radius);
 
+    &.outline {
+        border: 1px solid var(--gray-stroke-light);
+    }
+
     &.fill {
         background: var(--gray-bg-light);
     }
 
-    &.outline {
-        border: 1px solid var(--gray-stroke-light);
+    &.disabled {
+        background: var(--gray-bg-light);
+        opacity: var(--disabled-opacity);
     }
 }
 

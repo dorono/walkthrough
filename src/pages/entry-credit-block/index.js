@@ -26,7 +26,7 @@ export default class EntryCreditBlock extends Component {
                     </Vertical>
                 </Container>
                 <EntriesTable
-                    entriesUrl={`/ecblocks/${this.props.data.hash}/entries?stages=factom,anchored`}
+                    entriesUrl={`/ecblocks/${this.props.data.hash}/entries`}
                     pageParams={this.props.location.search}
                     renderContent={row => <Monospaced>{row.hash}</Monospaced>}
                     hasLink={false}

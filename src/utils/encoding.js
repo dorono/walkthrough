@@ -30,5 +30,11 @@ export const toHex = str => {
     return hexString;
 };
 
+export const decodeHtml = (html) => {
+    const txt = document.createElement('textarea');
+    txt.innerHTML = html;
+    return txt.value;
+};
+
 export const base64 = createEncoder(64);
 export const base58check = bs58check;

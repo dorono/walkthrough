@@ -47,7 +47,7 @@ export default class DirectoryBlock extends Component {
                             </div>
                         </Vertical>
                         <Vertical>
-                            <Box type='fill'>
+                            <Box type={this.props.data.next ? 'fill' : 'disabled'}>
                                 <Label>NEXT DIRECTORY BLOCK</Label>
                                 <DirectoryBlockLink>{this.props.data.next}</DirectoryBlockLink>
                             </Box>
@@ -59,11 +59,11 @@ export default class DirectoryBlock extends Component {
                                 <Label>PREVIOUS DIRECTORY BLOCK</Label>
                                 <DirectoryBlockLink>{this.props.data.prev}</DirectoryBlockLink>
                             </Box>
-                            <Box type='fill'>
+                            <Box type={this.props.data.btc_transaction ? 'fill' : 'disabled'}>
                                 <Label>BTC TRANSACTION</Label>
                                 <Hash type='btc'>{this.props.data.btc_transaction}</Hash>
                             </Box>
-                            <Box type='fill'>
+                            <Box type={this.props.data.btc_anchor_entry ? 'fill' : 'disabled'}>
                                 <Label>BTC ANCHOR ENTRY</Label>
                                 {this.props.data.btc_anchor_entry
                                     ? (

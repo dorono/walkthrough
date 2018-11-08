@@ -60,7 +60,7 @@ export default class AdminBlock extends Component {
                     </Vertical>
                 </Container>
                 <EntriesTable
-                    entriesUrl={`/ablocks/${this.props.data.hash}/entries?stages=factom,anchored`}
+                    entriesUrl={`/ablocks/${this.props.data.hash}/entries`}
                     pageParams={this.props.location.search}
                     contentColumnName='CONTENT'
                     renderContent={this.renderEntryContent}

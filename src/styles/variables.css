@@ -32,4 +32,6 @@
     @custom-media --up-to-extra-small-viewport (width <= 544px);
     @custom-media --up-to-small-viewport (width <= 768px);
     @custom-media --up-to-medium-viewport (width <= 992px);
+
+    --disabled-opacity: 0.35;
 }
