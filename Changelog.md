@@ -1,5 +1,16 @@
 ## Changelog
 
+### 2018-11-12: 3.1.3-rc1
+- [EX-129] Accesing the Explorer from DevPortal with Shared Sandbox api Key, shows Public Factom data.
+- [EX-125] Compress files on build
+- Handle users entering in the Connect API URL.
+- Fixed font size on
+- Track error pages on google analytics.
+- Fixed expand collapse functionality on entries content
+- Update API Version on footer after setting credentials.
+- Added out of requests error message.
+- Show app name instead of app Id when receiving a remote config.
+
 ### 2018-10-17: 3.1.2-rc1
 - Add missing parameter for request function on Search component.
 
