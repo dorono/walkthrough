@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 
-export const request = async (url, apiConfig = null) => {
+export const request = async (url, apiConfig = null, fetchSignal) => {
     const {apiUrl, apiToken, appKey, appId} = apiConfig;
     const headers = {
         accept: 'application/json',
@@ -13,7 +13,7 @@ export const request = async (url, apiConfig = null) => {
     } else {
         headers['factom-provider-token'] = apiToken;
     }
-    const response = await fetch(`${apiUrl}${url}`, {headers});
+    const response = await fetch(`${apiUrl}${url}`, {headers, signal: fetchSignal});
     if (response.status >= 400) {
         const error = new Error(response.statusText);
         error.statusCode = response.status;

@@ -18,6 +18,11 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
     class Loader extends React.Component {
         state = {};
 
+        constructor(props) {
+            super(props);
+            this.abortController = new window.AbortController();
+        }
+
         componentWillMount() {
             this.load(this.props);
         }
@@ -29,20 +34,27 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             }
         }
 
+        componentWillUnmount() {
+            this.abortController.abort();
+        }
+
         async load(props) {
             const url = typeof target === 'function' ? target(props) : target;
             try {
-                const data = await request(url, props.apiConfig);
+                const data = await request(url, props.apiConfig, this.abortController.signal);
                 this.setState({data});
             } catch (error) {
+                if (error instanceof DOMException) {
+                    return null;
+                }
                 this.setState({error: error.statusCode || error.message});
             }
         }
 
-        errorStatusPage429Message() {
+        renderOutOfRequestsError() {
             const linkRequestPlanChange =
-                `${devPortalBaseUrl
-                }plans?message_reason=Request_Plan_Change&regarding_app_id=${this.props.apiConfig.appId}`;
+                `${devPortalBaseUrl}
+                plans?message_reason=Request_Plan_Change&regarding_app_id=${this.props.apiConfig.appId}`;
             return (
                 <div
                     className='message'>
@@ -58,7 +70,7 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
         render() {
             if (this.state.error === 404 && showErrors) return <ErrorPage status={404} />;
             if (this.state.error === 429 && showErrors) {
-                return (<ErrorPage status={429} message={this.errorStatusPage429Message()} />);
+                return (<ErrorPage status={429} message={this.renderOutOfRequestsError()} />);
             }
             if (this.state.error && showErrors) return <ErrorPage status={500} />;
             if (!this.state.data && showLoader) return <Spinner />;
@@ -75,10 +87,16 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
  * @returns {function(*=): function(*): *}
  */
 export const dataLoader = (target, options = {}, showLoader = true, showErrors = true) => Component => {
-    const Loader = load(target, options, showLoader, showErrors)(Component);
-    return props => (<APIConfigurationConsumer>
-        {
-            ({apiConfig}) => <Loader apiConfig={apiConfig} {...props} />
+    class DataLoader extends React.Component {
+        render() {
+            const Loader = load(target, options, showLoader, showErrors)(Component);
+            return (<APIConfigurationConsumer>
+                {
+                    ({apiConfig}) => <Loader apiConfig={apiConfig} {...this.props} />
+                }
+            </APIConfigurationConsumer>);
         }
-    </APIConfigurationConsumer>);
+    }
+
+    return DataLoader;
 };
