@@ -23,6 +23,8 @@ const gatewayUrls = {
     publicNet: process.env.PUBLIC_NETWORK_GATEWAY || '$PUBLIC_NETWORK_GATEWAY',
     sharedSandbox: process.env.SHARED_SANDBOX_GATEWAY || '$SHARED_SANDBOX_GATEWAY',
 };
+
+const apiUrlVersionSuffix = process.env.API_URL_VERSION_SUFFIX || '/v1';
 const blockchainNetwork = process.env.PUBLIC_NETWORK || 'Public Factom (Mainnet)';
 const devPortalBaseUrl = process.env.DEV_PORTAL_URL || 'https://account.factom.com/';
 
@@ -110,6 +112,7 @@ module.exports = {
                 blockchainNetwork,
                 apiUrl,
                 apiToken,
+                apiUrlVersionSuffix,
                 devPortalBaseUrl,
                 gatewayUrls,
                 version,

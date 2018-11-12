@@ -5,6 +5,7 @@ configure({adapter: new Adapter()});
 
 // Global variables. In dev and build process, these are defined by webpack.
 window.CONFIG = {
+    apiUrlVersionSuffix: '/v1',
     gatewayUrls: {
         publicNet: '',
         sharedSandbox: '',
