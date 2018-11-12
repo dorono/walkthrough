@@ -67,6 +67,7 @@
 .viewer-container {
     border: 1px solid var(--gray-stroke-light);
     border-radius: 4px;
+    text-size-adjust: none !important;
 }
 
 .default-viewer {
