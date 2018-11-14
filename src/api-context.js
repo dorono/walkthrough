@@ -24,27 +24,30 @@ export class APIConfigurationProvider extends React.Component {
         this.state = {
             apiConfig: Object.assign(Object.create(APIConfig.prototype), defaultApiConfig),
             defaultApiConfig,
+            waitingConfig: false,
             remoteConfig: false,
         };
     }
 
     componentWillMount() {
-        // Recover api config from the session, to maintain state after F5.
+        /**
+         *  If I was opened from the applications list, just notify
+         *  that window that Explorer is ready to go, return and don't
+         *  recover previously saved session.
+         */
+        if (window.opener) {
+            return this.setState({waitingConfig: true}, () =>
+                window.opener.postMessage('EXPLORER_READY_TO_GO', '*'));
+        }
+
+        /**
+         * Recover api config from the session, to maintain state after F5.
+         */
         const savedApiConfig = getSessionItem(storageKey);
         if (savedApiConfig) {
             return this.setApiConfig(APIConfig.create(savedApiConfig));
         }
         this.setApiConfig(Object.assign(Object.create(APIConfig.prototype), this.state.defaultApiConfig));
-    }
-
-    componentDidMount() {
-        /**
-         *  If I was opened from the applications list, just notify
-         *  that window that Explorer is ready to go.
-         */
-        if (window.opener) {
-            window.opener.postMessage('EXPLORER_READY_TO_GO', '*');
-        }
     }
 
     async getAPIVersion(apiConfig) {
@@ -57,35 +60,38 @@ export class APIConfigurationProvider extends React.Component {
     }
 
     @autobind()
-    async setApiConfig(apiConfig, fromEvent = false) {
+    async setApiConfig(apiConfig, fromMessageEvent = false) {
         if (this.isValid(apiConfig)) {
             if (!apiConfig.apiVersion) {
                 const apiVersion = await this.getAPIVersion(apiConfig);
                 apiConfig.apiVersion = apiVersion;
             }
-            return this.setState({apiConfig, remoteConfig: fromEvent});
+            return this.setState({apiConfig, waitingConfig: false, remoteConfig: fromMessageEvent});
         }
+        // turn off waitingConfig if message is invalid.
+        return this.setState({waitingConfig: false});
     }
 
     @autobind
-    messageHandler(data, fromEvent = false) {
+    messageHandler(data, fromMessageEvent = false) {
         if (!data) return;
         const apiConfig = APIConfig.create(data);
         if (this.isValid(apiConfig)) {
-            this.setApiConfig(APIConfig.create(data), fromEvent);
+            this.setApiConfig(APIConfig.create(data), fromMessageEvent);
         }
     }
+
     /**
-     * Validate
+     * Validate APIConfig.
      * @returns {boolean}
      */
-    isValid = ({apiUrl, appId, appKey, apiToken}) => {
+    isValid({apiUrl, appId, appKey, apiToken}) {
         const throughGateway = stringNotNull(apiUrl) && stringNotNull(appId) && stringNotNull(appKey);
         if (throughGateway) return true;
         const directly = stringNotNull(apiUrl) && stringNotNull(apiToken);
         if (directly) return true;
         return false;
-    };
+    }
 
     @autobind
     unloadHandler() {
