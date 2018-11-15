@@ -27,6 +27,7 @@ export class APIConfigurationProvider extends React.Component {
             waitingConfig: false,
             remoteConfig: false,
         };
+        this.waitingConfigTimeout = null;
     }
 
     componentWillMount() {
@@ -36,8 +37,14 @@ export class APIConfigurationProvider extends React.Component {
          *  recover previously saved session.
          */
         if (window.opener) {
-            return this.setState({waitingConfig: true}, () =>
-                window.opener.postMessage('EXPLORER_READY_TO_GO', '*'));
+            return this.setState({waitingConfig: true}, () => {
+                // Wait for the remote config for up to 10 secs.
+                this.waitingConfigTimeout = setTimeout(() =>
+                    this.setState({waitingConfig: false}),
+                    10000,
+                );
+                window.opener.postMessage('EXPLORER_READY_TO_GO', '*');
+            });
         }
 
         /**
@@ -62,6 +69,10 @@ export class APIConfigurationProvider extends React.Component {
     @autobind()
     async setApiConfig(apiConfig, fromMessageEvent = false) {
         if (this.isValid(apiConfig)) {
+            // Clear the timeout started on componentWillMount
+            if (fromMessageEvent && this.state.waitingConfig) {
+                clearTimeout(this.waitingConfigTimeout);
+            }
             if (!apiConfig.apiVersion) {
                 const apiVersion = await this.getAPIVersion(apiConfig);
                 apiConfig.apiVersion = apiVersion;
