@@ -7,6 +7,7 @@ import AppHeader from 'components/app-header';
 import AppFooter from 'components/app-footer';
 import FeedbackLink from 'components/feedback-link';
 import WelcomePopup from 'components/welcome-popup';
+import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 import styles from './styles.css';
 
@@ -34,7 +35,8 @@ export default class App extends Component {
         this.setState({jsError: true});
     }
 
-    renderContent() {
+    renderContent(waitingConfig = false) {
+        if (waitingConfig) return <Spinner />;
         if (this.state.jsError) return <ErrorPage status={500} />;
         return (
             <Switch>
@@ -48,7 +50,7 @@ export default class App extends Component {
         return (
             <APIConfigurationConsumer>
                 {
-                    ({apiConfig, defaultApiConfig, configure, remoteConfig}) => (
+                    ({apiConfig, defaultApiConfig, configure, remoteConfig, waitingConfig}) => (
                         <div className={styles.root}>
                             <AppHeader
                                 defaultApiConfig={defaultApiConfig}
@@ -56,7 +58,7 @@ export default class App extends Component {
                                 onSettingsSubmit={configure}
                                 remoteConfig={remoteConfig}
                             />
-                            {this.renderContent()}
+                            {this.renderContent(waitingConfig)}
                             <AppFooter apiConfig={apiConfig} />
                             <WelcomePopup feedbackUrl={feedbackUrl} />
                             <FeedbackLink feedbackUrl={feedbackUrl} />
