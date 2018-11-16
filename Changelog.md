@@ -1,6 +1,9 @@
 ## Changelog
 
-### 2018-11-12: 3.1.3-rc2
+### 2018-11-16: 3.1.3
+- Bump version for release to Production.
+
+### 2018-11-16: 3.1.3-rc2
 - Add a waitingConfig state prop to the api context.
 - Limit time to wait for remote configuration to 10 seconds.
 
