@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2018-11-12: 3.1.3-rc2
+- Add a waitingConfig state prop to the api context.
+- Limit time to wait for remote configuration to 10 seconds.
+
 ### 2018-11-12: 3.1.3-rc1
 - [EX-129] Accesing the Explorer from DevPortal with Shared Sandbox api Key, shows Public Factom data.
 - [EX-125] Compress files on build
