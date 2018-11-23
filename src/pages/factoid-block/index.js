@@ -3,7 +3,7 @@ import {dataLoader} from 'decorators';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
 import Sortable, {sortOptions} from 'components/sortable';
-import {Horizontal, Vertical, Box} from 'components/layout';
+import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
@@ -16,7 +16,7 @@ export default class FactoidBlock extends Component {
         return (
             <div>
                 <Container primary title='Factoid block'>
-                    <Horizontal>
+                    <VerticalToHorizontal verticalUpTo='small'>
                         <Vertical>
                             <Box type='outline'>
                                 <Vertical>
@@ -45,7 +45,7 @@ export default class FactoidBlock extends Component {
                                 <DirectoryBlockLink>{this.props.data.dblock}</DirectoryBlockLink>
                             </Box>
                         </Vertical>
-                    </Horizontal>
+                    </VerticalToHorizontal>
                 </Container>
                 <Sortable
                     items={this.props.data.transactions}
@@ -75,7 +75,8 @@ export default class FactoidBlock extends Component {
                                 rows={items}
                                 ellipsis={1}
                                 fixedWidth={{start: 2, width: 110}}
-                                type='secondary'>
+                                type='secondary'
+                                responsive>
                                 {row => (
                                     <tr key={row.tx_id}>
                                         <td>{formatDate(row.created_at)}</td>
