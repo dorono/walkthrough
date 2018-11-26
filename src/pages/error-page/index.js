@@ -24,7 +24,11 @@ export default class ErrorPage extends Component {
     }
 
     handleClick() {
-        if (this.props.status === (404 || 429)) {
+        // Do nothing on "out of requests" error.
+        if (this.props.status === 429) {
+            return;
+        }
+        if (this.props.status === 404) {
             this.props.history.push('/');
         } else {
             window.location.reload();
