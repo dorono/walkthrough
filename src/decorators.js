@@ -4,6 +4,7 @@ import {APIConfigurationConsumer} from 'api-context';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 const {devPortalBaseUrl} = CONFIG;
+const requestPlanChangeParams = 'plans?message_reason=Request_Plan_Change&regarding_app_id=';
 
 /**
  * HOC that fetches data using the request function.
@@ -53,8 +54,7 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
 
         renderOutOfRequestsError() {
             const linkRequestPlanChange =
-                `${devPortalBaseUrl}
-                plans?message_reason=Request_Plan_Change&regarding_app_id=${this.props.apiConfig.appId}`;
+                `${devPortalBaseUrl}${requestPlanChangeParams}${this.props.apiConfig.appId}`;
             return (
                 <div
                     className='message'>
