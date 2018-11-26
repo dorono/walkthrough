@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {dataLoader} from 'decorators';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
-import {Horizontal, Vertical, Box} from 'components/layout';
+import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
@@ -54,7 +54,7 @@ export default class Transaction extends Component {
         return (
             <div>
                 <Container primary title='Factoid Transaction'>
-                    <Horizontal>
+                    <VerticalToHorizontal verticalUpTo='small'>
                         <Vertical>
                             <Box type='outline'>
                                 <Vertical>
@@ -95,12 +95,12 @@ export default class Transaction extends Component {
                                 {formatDateLong(this.props.data.created_at)}
                             </Box>
                         </Vertical>
-                    </Horizontal>
+                    </VerticalToHorizontal>
                 </Container>
-                <Horizontal>
+                <VerticalToHorizontal verticalUpTo='small'>
                     {this.renderTransactions('Inputs', this.props.data.inputs)}
                     {this.renderTransactions('Outputs', this.props.data.outputs)}
-                </Horizontal>
+                </VerticalToHorizontal>
             </div>
         );
     }

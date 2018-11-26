@@ -23,6 +23,20 @@ export class Vertical extends Component {
     }
 }
 
+export class VerticalToHorizontal extends Component {
+    static propTypes = {
+        verticalUpTo: PropTypes.oneOf(['small', 'medium']).isRequired,
+    };
+
+    render() {
+        return (<div className={classNames(styles.verticalToHorizontal,
+            {[styles.verticalUpToSmall]: this.props.verticalUpTo === 'small'},
+            {[styles.verticalUpToMedium]: this.props.verticalUpTo === 'medium'})}>
+            {this.props.children}
+        </div>);
+    }
+}
+
 export class Box extends Component {
     static propTypes = {
         type: PropTypes.oneOf(['fill', 'outline']),

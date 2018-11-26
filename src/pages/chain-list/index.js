@@ -16,7 +16,8 @@ export default class ChainList extends Component {
                 <Table
                     columns={['CHAIN ID', 'EXTERNAL IDS']}
                     rows={this.props.data}
-                    ellipsis={1}>
+                    ellipsis={1}
+                    responsive>
                     {row => (
                         <tr key={row.chain_id}>
                             <td><Hash type='chain'>{row.chain_id}</Hash></td>

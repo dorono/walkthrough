@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import {dataLoader} from 'decorators';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
-import {Horizontal, Vertical, Box} from 'components/layout';
+import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
@@ -36,7 +36,7 @@ export default class DirectoryBlock extends Component {
         return (
             <div>
                 <Container primary title='Directory block'>
-                    <Horizontal>
+                    <VerticalToHorizontal verticalUpTo='medium'>
                         <Vertical>
                             <BlockHeight>
                                 {this.props.data.height}
@@ -77,7 +77,7 @@ export default class DirectoryBlock extends Component {
                                 }
                             </Box>
                         </Vertical>
-                    </Horizontal>
+                    </VerticalToHorizontal>
                 </Container>
                 <Container title='Blocks' subtitle='(included in this directory block)' count={blockCount}>
                     {this.getBlocks().map(hash => (

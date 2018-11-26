@@ -40,3 +40,31 @@
         border: 1px solid var(--gray-stroke-light);
     }
 }
+
+.vertical-to-horizontal {
+    composes: horizontal;
+
+    &.vertical-up-to-medium {
+        @media (--up-to-medium-viewport) {
+            flex-direction: column;
+
+            & > * {
+                margin-top: 1rem;
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    }
+
+    &.vertical-up-to-small {
+        @media (--up-to-small-viewport) {
+            flex-direction: column;
+
+            & > * {
+                margin-top: 1rem;
+                margin-left: 0;
+                width: 100%;
+            }
+        }
+    }
+}

@@ -7,9 +7,11 @@
     --left-right-padding: 4.5rem;
 }
 
-@media (max-width: 60rem) {
+@media (--up-to-extra-small-viewport) {
     .modal-root {
         width: 100%;
+        top: 0;
+        height: 100%;
     }
 
     .dropdown-options {
@@ -171,11 +173,11 @@
 
 .transition {
     opacity: 1;
-    animation-name: slideDown;
+    animation-name: slide-down;
     animation-duration: 0.5s;
 }
 
-@keyframes slideDown {
+@keyframes slide-down {
     0% {
         transform: translateY(-30%);
     }

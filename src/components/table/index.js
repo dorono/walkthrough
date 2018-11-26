@@ -15,11 +15,13 @@ export default class Table extends Component {
         centerAlign: PropTypes.number,
         interactive: PropTypes.bool,
         type: PropTypes.oneOf(['primary', 'secondary']),
+        responsive: PropTypes.bool,
     };
 
     static defaultProps = {
         type: 'primary',
         interactive: true,
+        responsive: false,
     };
 
     handleClick(event) {
@@ -46,7 +48,10 @@ export default class Table extends Component {
         return (
             <table
                 onClick={this.handleClick}
-                className={classNames(styles[this.props.type], {[styles.interactive]: this.props.interactive})}>
+                className={classNames(styles[this.props.type], {
+                    [styles.interactive]: this.props.interactive,
+                    [styles.responsive]: this.props.responsive,
+                })}>
                 <thead>
                     <tr>
                         {this.props.columns.map((header, index) => {

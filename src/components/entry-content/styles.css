@@ -8,6 +8,13 @@
     align-items: center;
     width: 100%;
     justify-content: space-between;
+
+    @media (--up-to-medium-viewport) {
+        padding-left: 0;
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap;
+    }
 }
 
 .collapsed {
