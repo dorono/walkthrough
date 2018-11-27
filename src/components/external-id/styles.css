@@ -9,15 +9,20 @@
 }
 
 .dropdown-header {
-    background: var(--yellow);
+    background: var(--violet-dark);
     color: var(--white);
     border-radius: 12px 0 0 12px;
-    padding: 4px 10px 4px 0;
-    min-width: 88px;
+    padding: 3px 7px;
     display: inline-flex;
-    align-items: center;
     justify-content: center;
     font-size: 12px;
+    font-weight: 600;
+    min-width: 48px;
+    position: relative;
+}
+
+.dropdown-header :first-child {
+    padding-left: 0;
 }
 
 .dropdown-options {
@@ -26,8 +31,6 @@
 
 .badge {
     composes: dropdown-header;
-    padding: 4px 10px;
-    min-width: 64px;
 }
 
 .value {
@@ -38,4 +41,9 @@
     overflow: hidden;
     word-break: break-all;
     font-size: 12px;
+    font-weight: 600;
+}
+
+table .value {
+    font-weight: 400;
 }

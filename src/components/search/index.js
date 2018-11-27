@@ -14,6 +14,7 @@ import {
     PUBLIC_KEY_PREFIX_EC,
     PUBLIC_KEY_PREFIX_FC,
 } from 'utils/key';
+
 import styles from './styles.css';
 
 const urls = {
@@ -70,17 +71,17 @@ export default class Search extends Component {
     getErrorMessage(query = '') {
         const errorMessage = 'No results found.';
         if (isPrivateKey(query)) {
-            return `${errorMessage} If you're searching for an address, never expose your private 
-                key and try again with your public key beginning with 
+            return `${errorMessage} If you're searching for an address, never expose your private
+                key and try again with your public key beginning with
                 ${query.startsWith(PRIVATE_KEY_PREFIX_EC) ?
                     PUBLIC_KEY_PREFIX_EC : PUBLIC_KEY_PREFIX_FC}.`;
         }
         if (isKey(query)) {
-            return `${errorMessage} If you're searching for an address, note that only addresses 
+            return `${errorMessage} If you're searching for an address, note that only addresses
                 with a transaction history will be returned.`;
         }
         if (isProbablyAKey(query)) {
-            return `${errorMessage} It appears you might be searching for an address but have 
+            return `${errorMessage} It appears you might be searching for an address but have
                 provided an invalid value, please check for typos.`;
         }
         return errorMessage;
@@ -98,7 +99,7 @@ export default class Search extends Component {
         trackPageView(`/search?q=${query}`);
 
         try {
-            const response = await request(`/search?stages=factom,anchored&term=${query}`, this.props.apiConfig);
+            const response = await request(`/search?term=${query}`, this.props.apiConfig);
             if (!this.state.searching) return;
             const url = urls[response.type](response.data);
             this.props.history.push(url);

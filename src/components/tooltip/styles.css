@@ -14,8 +14,9 @@
     top: 6.5rem;
     visibility: visible;
     opacity: 1;
-    box-shadow: 0 1px 4px 0 rgba(21, 21, 21, 0.3);
-    border: 1px solid var(--gray-bg-light);
+    box-shadow: 1px 1px 4px 0 rgba(21, 21, 21, 0.3);
+    border: solid var(--gray-bg-light);
+    border-width: 1px 1px 1px 0;
     border-radius: 5px;
     transition: visibility 0.25s linear, opacity 0.25s linear;
 }
@@ -50,4 +51,67 @@
     border-bottom-color: var(--white);
     border-width: 9px;
     margin-left: -9px;
+    filter: drop-shadow(0 -2px 1px rgba(21, 21, 21, 0.3));
+}
+
+.pointing-up::after,
+.pointing-up::before {
+    transform: none;
+}
+
+.pointing-left::after,
+.pointing-left::before {
+    transform: rotate(270deg);
+    top: 10px;
+    left: -9px;
+}
+
+.pointing-right::after,
+.pointing-right::before {
+    transform: rotate(90deg);
+    top: 10px;
+    right: -18px;
+    left: inherit;
+}
+
+.pointing-down::after,
+.pointing-down::before {
+    transform: rotate(180deg);
+    bottom: -18px;
+}
+
+.tooltip.small {
+    font-size: 10px;
+    font-weight: 300;
+    padding: 3px;
+    line-height: 1em;
+    border-radius: 2px;
+    top: -4px;
+}
+
+.tooltip.small::after {
+    border-width: calc(7.5px * 0.42);
+    margin-left: calc(7.5px * 0.42);
+}
+
+.tooltip.small::before {
+    border-width: calc(9px * 0.42);
+    margin-left: calc(8px * 0.42);
+}
+
+.pointing-left.small::after,
+.pointing-left.small::before {
+    top: calc(18px * 0.4);
+    left: calc(-8px * 1.4);
+}
+
+.pointing-right.small::after,
+.pointing-right.small::before {
+    top: calc(10px * 0.4);
+    margin-left: calc(18px * 1.8);
+}
+
+.pointing-down::after,
+.pointing-down::before {
+    bottom: calc(-18px * 0.42);
 }

@@ -8,6 +8,7 @@ import SettingsPopup from 'components/settings-popup';
 import Search from 'components/search';
 import Tooltip from 'components/tooltip';
 import VerticalDivider from 'components/vertical-divider';
+import {decodeHtml} from 'utils/encoding';
 import styles from './styles.css';
 
 export default class AppHeader extends Component {
@@ -51,7 +52,7 @@ export default class AppHeader extends Component {
                                 Authenticated with your application:
                             </span>
                             <br />
-                            {this.props.apiConfig.appName}
+                            {decodeHtml(this.props.apiConfig.appName)}
                         </Tooltip>
                         }
                     </div>

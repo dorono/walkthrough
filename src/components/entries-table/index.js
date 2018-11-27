@@ -1,11 +1,21 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
+
 import {addPaginationParams} from 'api';
 import {dataLoader} from 'decorators';
-import {currentTimezone, formatDate} from 'utils/date';
+
+import {STAGE_PENDING_ENTRY_TEXT, STAGE_PENDING, STAGE_PENDING_DATE} from 'stages';
+
 import Container from 'components/container';
 import Pagination from 'components/pagination';
 import Table from 'components/table';
+import PendingItem from 'components/pending-item';
+import PendingLegend from 'components/pending-legend';
+
+import {currentTimezone, formatDate} from 'utils/date';
+import {displayPendingContent} from 'utils/pending-items';
+import globalStyles from 'styles/index.css';
 
 @dataLoader(({entriesUrl, pageParams}) => addPaginationParams(entriesUrl, pageParams))
 export default class EntriesTable extends Component {
@@ -29,19 +39,30 @@ export default class EntriesTable extends Component {
                     ellipsis={1}
                     type='secondary'
                     interactive={this.props.hasLink}>
-                    {(row, index) => (
-                        <tr key={index}>
-                            <td>{formatDate(row.created_at)}</td>
-                            <td>{this.props.renderContent(row)}</td>
-                        </tr>
-                    )}
+                    {(row, index) => {
+                        const isPending = row.stage === STAGE_PENDING;
+                        return (
+                            <tr key={index}>
+                                <td>
+                                    <PendingItem stage={row.stage} enableTooltip={false} />
+                                    <span
+                                        className={classNames({
+                                            [globalStyles.disabledText]: isPending,
+                                        })}>
+                                        {isPending ? STAGE_PENDING_DATE : formatDate(row.created_at)}
+                                    </span>
+                                </td>
+                                <td>{this.props.renderContent(row)}</td>
+                            </tr>
+                        );
+                    }}
                 </Table>
+                <PendingLegend
+                    show={displayPendingContent(this.props.data)}
+                    fullWidthBannerText={STAGE_PENDING_ENTRY_TEXT}
+                />
                 {this.props.count > this.props.limit && (
-                    <Pagination
-                        count={this.props.count}
-                        limit={this.props.limit}
-                        offset={this.props.offset}
-                    />
+                    <Pagination count={this.props.count} limit={this.props.limit} offset={this.props.offset} />
                 )}
             </Container>
         );

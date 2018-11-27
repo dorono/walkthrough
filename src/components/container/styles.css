@@ -53,3 +53,14 @@
     flex-grow: 1;
     text-align: right;
 }
+
+.set-full-width {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.setWithPadding,
+.set-full-width > div {
+    padding-left: 2rem;
+    padding-right: 2rem;
+}

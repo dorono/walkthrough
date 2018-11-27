@@ -39,7 +39,7 @@ export class VerticalToHorizontal extends Component {
 
 export class Box extends Component {
     static propTypes = {
-        type: PropTypes.oneOf(['fill', 'outline']),
+        type: PropTypes.oneOf(['fill', 'outline', 'disabled']),
     };
 
     render() {

@@ -67,6 +67,8 @@
     "webpack-dev-server": "2.4.1"
   },
   "dependencies": {
+    "@material-ui/core": "^3.4.0",
+    "@material-ui/icons": "^3.0.1",
     "base-x": "3.0.4",
     "bs58check": "2.1.1",
     "classnames": "2.2.5",
