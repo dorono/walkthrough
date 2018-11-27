@@ -102,7 +102,7 @@
 .pointing-left.small::after,
 .pointing-left.small::before {
     top: calc(18px * 0.4);
-    left: calc(-8px * 1.4);
+    left: calc(-7px * 1.4);
 }
 
 .pointing-right.small::after,
