@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
+
 import PropTypes from 'prop-types';
 import {autobind} from 'core-decorators';
 
@@ -33,9 +35,8 @@ export default class Container extends Component {
     }
 
     render() {
-        const ContentType = this.props.primary ? 'main' : 'section';
         return (
-            <ContentType className={this.setFullwidth(styles.root, true)}>
+            <div className={classNames(this.setFullwidth(styles.root), this.props.primary ? 'main' : 'section')}>
                 <header className={this.setFullwidth(styles.header)}>
                     {this.props.title && (
                         <h1 className={styles.title}>
@@ -64,7 +65,7 @@ export default class Container extends Component {
                     fullWidthBannerText={this.props.fullWidthBannerText}
                 />
                 {this.props.children}
-            </ContentType>
+            </div>
         );
     }
 }

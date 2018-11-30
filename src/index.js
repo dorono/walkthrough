@@ -1,4 +1,3 @@
-import 'abortcontroller-polyfill/dist/polyfill-patch-fetch';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
