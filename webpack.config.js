@@ -36,7 +36,10 @@ module.exports = {
 
     entry: {
         app: [
+            '@babel/polyfill',
+            'element-closest',
             'whatwg-fetch',
+            'abortcontroller-polyfill',
             'react-hot-loader/patch',
             './styles/index.css',
             './index.js',

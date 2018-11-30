@@ -2,9 +2,8 @@
 
 .modal-root {
     width: 60rem;
-    position: absolute;
-    top: 15%;
-    --left-right-padding: 4.5rem;
+    position: relative;
+    top: 0;
 }
 
 @media (--up-to-extra-small-viewport) {
@@ -49,7 +48,7 @@
 }
 
 .modal-header {
-    padding: 3.5rem var(--left-right-padding);
+    padding: 3.5rem 4.5rem;
     background: var(--violet-dark);
     color: var(--white);
     font-size: 2.2rem;
@@ -62,12 +61,12 @@
 }
 
 .modal-footer {
-    padding: 0 var(--left-right-padding) 3.5rem;
+    padding: 0 4.5rem 3.5rem;
     text-align: right;
 }
 
 .form {
-    padding: 0 var(--left-right-padding);
+    padding: 0 4.5rem;
 }
 
 .button {
@@ -153,7 +152,7 @@
 }
 
 .message-bar {
-    padding-left: var(--left-right-padding);
+    padding-left: 4.5rem;
     font-size: 1.3rem;
 }
 
