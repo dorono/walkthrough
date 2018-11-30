@@ -21,6 +21,7 @@ class OptionsMenu extends React.Component {
         // The options to display
         options: PropTypes.arrayOf(PropTypes.shape({
             label: PropTypes.string,
+            disabled: PropTypes.bool,
         })).isRequired,
         // A DOM element to create a portal to it
         portalNode: PropTypes.instanceOf(Element).isRequired,
@@ -59,6 +60,7 @@ class OptionsMenu extends React.Component {
                 className={classNames({
                     [styles.selected]: this.isSelected(option),
                     [this.props.selectedClassName]: this.isSelected(option),
+                    [styles.disabled]: !!option.disabled,
                 })}>
                 {option.label}
             </div>

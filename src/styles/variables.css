@@ -1,15 +1,17 @@
 :root {
-    --blue: #417BA4;
+    --blue: #388FC9;
+    --blue-hover: #3E9AD8;
     --yellow: #E8B420;
     --violet: #7F5D93;
-    --violet-dark: #262641;
+    --violet-dark: #142C3C;
     --red: #940F08;
 
     --white: #FFF;
     --black: #000;
+    --black-disabled: #A2A2A2;
 
     --gray-bg-light: #F5F5F5;
-    --gray-bg-dark: #E8E8E8;
+    --gray-bg-dark: #F4F4F4;
     --gray-stroke-light: #E9E9E9;
     --gray-stroke-dark: #C3C3C3;
     --gray-light: #7B7B7B;
@@ -19,7 +21,7 @@
     --gray-60: color(#000 lightness(60%));
 
     --app-bg: #FAFAFA;
-    --app-header-bg: linear-gradient(90deg, #111135 0%, #343454 100%);
+    --app-header-bg: var(--violet-dark);
 
     --content-width: 95%;
     --content-max-width: 1400px;

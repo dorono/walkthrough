@@ -7,6 +7,7 @@ import withDataEncodings from 'hocs/with-data-encoding';
 
 import Dropdown from 'components/dropdown/index';
 
+import globalStyles from 'styles/index.css';
 import styles from './styles.css';
 
 @withDataEncodings({formats: ['raw', 'hex', 'base64']})
@@ -50,6 +51,7 @@ class ExternalId extends Component {
                 selected={this.state.selected}
                 className={styles.dropdown}
                 headerClassName={styles.dropdownHeader}
+                selectedClassName={globalStyles.selectedOption}
                 arrowColor='white'
             />
         );
