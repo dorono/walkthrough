@@ -1,4 +1,5 @@
 import queryString from 'query-string';
+import {stringNotUndefined} from 'utils/validate';
 
 export const request = async (url, apiConfig = null, fetchSignal) => {
     const {apiUrl, apiToken, appKey, appId} = apiConfig;
@@ -7,7 +8,7 @@ export const request = async (url, apiConfig = null, fetchSignal) => {
         'content-type': 'application/json',
     };
     // Setup auth headers.
-    if (appId) {
+    if (stringNotUndefined(appId)) {
         headers.app_id = appId;
         headers.app_key = appKey;
     } else {
