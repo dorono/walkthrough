@@ -35,15 +35,6 @@
     & > div {
         color: var(--blue);
         font-size: 1.2rem;
-        font-weight: 500;
-    }
-}
-
-.selected-option {
-    background-color: var(--gray-stroke-light);
-
-    &:hover {
-        background-color: var(--gray-stroke-light);
     }
 }
 

@@ -15,7 +15,8 @@
     cursor: pointer;
 
     &:hover {
-        background: color(var(--blue) lightness(+10%));
+        transition: background 0.25s linear;
+        background: var(--blue-hover);
     }
 }
 

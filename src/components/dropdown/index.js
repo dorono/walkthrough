@@ -52,6 +52,7 @@ class Dropdown extends Component {
 
     static defaultProps = {
         arrowColor: DEFAULT_ARROW_COLOR,
+        selectedClassName: styles.selected,
     };
 
     state = {
@@ -144,6 +145,7 @@ class Dropdown extends Component {
 
     renderOptionsMenu() {
         const {options, optionsClassName, selected, selectedClassName} = this.props;
+
         return (
             <OptionsMenu
                 className={optionsClassName}

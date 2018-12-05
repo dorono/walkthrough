@@ -16,6 +16,7 @@ import {request} from 'api';
 import APIConfig from 'utils/api-config';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
 import {trackAccessConnectLandingPage, trackSuccessfulConnection} from 'analytics';
+import globalStyles from 'styles/index.css';
 import styles from './styles.css';
 import {CredentialsErrorMessage, GenericErrorMessage, NetworkErrorMessage} from './messages';
 
@@ -223,7 +224,7 @@ export default class SettingsPopup extends Component {
                                 className={styles.dropdown}
                                 headerClassName={classNames(styles.dropdownHeader, styles.formInput)}
                                 optionsClassName={styles.dropdownOptions}
-                                selectedClassName={styles.selectedOption}
+                                selectedClassName={globalStyles.selectedOption}
                                 arrowColor='blue'
                             />
                             <div className={styles.information}>
