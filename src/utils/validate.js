@@ -5,3 +5,5 @@ export const stringNotNull = value =>
 
 export const stringNotUndefined = value =>
     !isUndefined(value) && typeof value === 'string' && value.length >= 0;
+
+export const notUndefined = value => !isUndefined(value);

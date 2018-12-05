@@ -1,8 +1,29 @@
-export const trackPageView = path => window.ga('send', 'pageview', path);
+export const trackPageView = virtualPagePath => window.dataLayer.push({
+    event: 'virtual_pageview',
+    virtualPagePath,
+});
 
-export const trackEvent = (category, action) => window.ga('send', 'event', category, action);
+export const trackSuccessfulConnection = apiConfig => {
+    window.dataLayer.push({
+        targetBlockchain: apiConfig.blockchain,
+        apiUrl: apiConfig.apiUrl,
+        appId: apiConfig.appId,
+        usingOwnCredentials: !!apiConfig.appId,
+        metric4: 1,
+    });
+    trackPageView('/virtual/settings-popup/success');
+    window.dataLayer.push({
+        metric4: 0,
+    });
+};
 
-export const trackAccessConnectLandingPage = () => trackEvent('connect_landing_page', 'access');
-
-export const trackSuccessfulConnection = () => trackEvent('blockchain_settings', 'connection_success');
+export const trackNotSuccessfulConnection = (type) => {
+    window.dataLayer.push({
+        metric3: 1,
+    });
+    trackPageView(`/virtual/settings-popup/error/${type}`);
+    window.dataLayer.push({
+        metric3: 0,
+    });
+};
 

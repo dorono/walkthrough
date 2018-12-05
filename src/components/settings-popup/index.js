@@ -14,8 +14,10 @@ import Button from 'components/button';
 import MessageBar from 'components/message-bar';
 import {request} from 'api';
 import APIConfig from 'utils/api-config';
+import {notUndefined} from 'utils/validate';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
-import {trackAccessConnectLandingPage, trackSuccessfulConnection} from 'analytics';
+import {ERRORS} from 'errors';
+import {trackNotSuccessfulConnection, trackSuccessfulConnection} from 'analytics';
 import globalStyles from 'styles/index.css';
 import styles from './styles.css';
 import {CredentialsErrorMessage, GenericErrorMessage, NetworkErrorMessage} from './messages';
@@ -29,7 +31,11 @@ const BLOCKCHAIN_OPTIONS = [
 const getInitialBlockchainbyName = (name) =>
     BLOCKCHAIN_OPTIONS.find(blockchain => blockchain.label === name) || BLOCKCHAIN_OPTIONS[0];
 
-const getDefaultErrors = () => ({credentials: false, network: false, other: false});
+export const getDefaultErrors = () => {
+    const defaultErrors = {};
+    Object.keys(ERRORS).forEach(key => defaultErrors[key] = false);
+    return defaultErrors;
+};
 
 export default class SettingsPopup extends Component {
     static propTypes = {
@@ -94,8 +100,8 @@ export default class SettingsPopup extends Component {
 
     @autobind
     hasError() {
-        const {credentials, network, other} = this.state.errors;
-        return credentials || network || other;
+        return Object.values(this.state.errors)
+            .filter(error => error === true).length > 0;
     }
 
     @autobind
@@ -155,7 +161,7 @@ export default class SettingsPopup extends Component {
                 const {version} = await request('', apiConfig);
                 if (version) {
                     apiConfig.apiVersion = version;
-                    if (!isEqual(apiConfig, this.props.defaultApiConfig)) trackSuccessfulConnection();
+                    trackSuccessfulConnection(apiConfig);
                     this.props.onSubmit(apiConfig);
                 }
             } catch (e) {
@@ -163,15 +169,18 @@ export default class SettingsPopup extends Component {
                     errors: getDefaultErrors(),
                     verifyingConnection: false,
                 };
+
+                let errorType = ERRORS.OTHER;
                 if (e.statusCode === 404 || e instanceof TypeError) {
-                    errorUpdate.errors.network = true;
+                    errorType = ERRORS.NETWORK;
                 } else if (e.statusCode === 429) {
                     this.handleClose();
                 } else if (e.statusCode === 403) {
-                    errorUpdate.errors.credentials = true;
-                } else {
-                    errorUpdate.errors.other = true;
+                    errorType = ERRORS.CREDENTIALS;
                 }
+
+                errorUpdate.errors[errorType] = true;
+                trackNotSuccessfulConnection(errorType);
                 return this.setState(errorUpdate);
             }
         };
@@ -182,17 +191,26 @@ export default class SettingsPopup extends Component {
 
     @autobind
     renderErrorMessage() {
-        const {credentials, network, other} = this.state.errors;
-        if (credentials) {
-            return <CredentialsErrorMessage />;
+        const error = Object.keys(this.state.errors)
+            .filter(key => this.state.errors[key] === true)
+            .shift();
+        let message = null;
+        if (notUndefined(error)) {
+            switch (error) {
+                case ERRORS.CREDENTIALS:
+                    message = <CredentialsErrorMessage />;
+                    break;
+                case ERRORS.NETWORK:
+                    message = <NetworkErrorMessage />;
+                    break;
+                case ERRORS.OTHER:
+                    message = <GenericErrorMessage />;
+                    break;
+                default:
+                    break;
+            }
         }
-        if (network) {
-            return <NetworkErrorMessage />;
-        }
-        if (other) {
-            return <GenericErrorMessage />;
-        }
-        return null;
+        return message;
     }
 
     render() {
@@ -240,7 +258,6 @@ export default class SettingsPopup extends Component {
                                     <div className={styles.questionMark}>?</div>
                                     <A
                                         to='https://www.factom.com/products/harmony-connect'
-                                        onClick={trackAccessConnectLandingPage}
                                         text=' What is CONNECT?'
                                     />
                                 </div>
@@ -260,7 +277,10 @@ export default class SettingsPopup extends Component {
                                     <Input
                                         type='url'
                                         name='privateUrl'
-                                        error={this.state.errors.network || this.state.errors.other}
+                                        error={
+                                            this.state.errors[ERRORS.NETWORK]
+                                            || this.state.errors[ERRORS.OTHER]
+                                        }
                                         value={this.state.privateUrl}
                                         placeholder='Enter the Connect API URL'
                                         handleChange={this.handleChange}
@@ -276,7 +296,10 @@ export default class SettingsPopup extends Component {
                                             Connect Application ID
                                         </Label>
                                             <Input
-                                                error={this.state.errors.credentials || this.state.errors.other}
+                                                error={
+                                                    this.state.errors[ERRORS.CREDENTIALS]
+                                                    || this.state.errors[ERRORS.OTHER]
+                                                }
                                                 type='text'
                                                 name='appId'
                                                 value={this.state.appId}
@@ -290,7 +313,10 @@ export default class SettingsPopup extends Component {
                                             Connect Application Key
                                         </Label>
                                             <Input
-                                                error={this.state.errors.credentials || this.state.errors.other}
+                                                error={
+                                                    this.state.errors[ERRORS.CREDENTIALS]
+                                                    || this.state.errors[ERRORS.OTHER]
+                                                }
                                                 type='password'
                                                 name='appKey'
                                                 value={this.state.appKey}
@@ -306,6 +332,7 @@ export default class SettingsPopup extends Component {
                 </ModalBody>
                 <ModalFooter className={styles.modalFooter}>
                     <Button
+                        id='cancel-settings-popup'
                         disabled={this.state.verifyingConnection}
                         title='CANCEL'
                         className={classNames(styles.button, styles.cancel)}
