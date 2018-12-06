@@ -1,5 +1,14 @@
 ## Changelog
 
+### 2018-12-04: 3.1.4-rc1
+- [EX-132] Mobile improvements.
+- [EX-133] Request plan change error fix.
+- [EX-79] Implemented Pending Chains and Entries Display.
+- [EX-138] Add polyfill for abort controller.
+- [EX-142] IE 11 Support.
+- [EX-141] Wrong error message when credentials boxes are empty.
+- [EX-140] Branding updates.
+
 ### 2018-11-16: 3.1.3
 - Bump version for release to Production.
 
