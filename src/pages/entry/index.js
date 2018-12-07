@@ -14,9 +14,11 @@ import {STAGE_PENDING, STAGE_PENDING_ENTRY_TEXT, STAGE_NOT_AVAILABLE} from 'stag
 
 import globalStyles from 'styles/index.css';
 import styles from './styles.css';
+import {ENTRY_DETAIL_TYPE} from './types';
 
-@dataLoader(({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}`)
-export default class Entry extends Component {
+export class Entry extends Component {
+    static propTypes = ENTRY_DETAIL_TYPE.isRequired;
+
     render() {
         const isPending = this.props.data.stage === STAGE_PENDING;
 
@@ -43,10 +45,15 @@ export default class Entry extends Component {
                     </Box>
                     <Box type={isPending ? 'disabled' : 'fill'}>
                         <Label>PARENT ENTRY BLOCK</Label>
-                        <EntryBlockLink>{this.props.data.eblock}</EntryBlockLink>
+                        <EntryBlockLink>
+                            {this.props.data.eblock}
+                        </EntryBlockLink>
                     </Box>
                     <Box>
-                        <Label>CREATED ({currentTimezone()})</Label>
+                        <Label
+                            className={classNames({[globalStyles.disabledText]: isPending})}>
+                            CREATED ({currentTimezone()})
+                        </Label>
                         <span className={classNames({[globalStyles.disabledText]: isPending})}>
                             {isPending ? STAGE_NOT_AVAILABLE : formatDateLong(this.props.data.created_at)}
                         </span>
@@ -64,3 +71,7 @@ export default class Entry extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({match}) => `/chains/${match.params.chain}/entries/${match.params.hash}`,
+)(Entry);

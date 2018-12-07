@@ -1,0 +1,25 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Box Component should match snapshot 1`] = `
+<div
+  className="box undefined"
+/>
+`;
+
+exports[`Horizontal Component should match snapshot 1`] = `
+<div
+  className="horizontal"
+/>
+`;
+
+exports[`Vertical Component should match snapshot 1`] = `
+<div
+  className="vertical"
+/>
+`;
+
+exports[`VerticalToHorizontal Component should match snapshot 1`] = `
+<div
+  className="verticalToHorizontal verticalUpToSmall"
+/>
+`;

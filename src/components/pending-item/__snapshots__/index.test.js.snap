@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PendingItem Component should match snapshot 1`] = `
+<div
+  className="pendingContainer"
+  onMouseEnter={[Function]}
+  onMouseLeave={[Function]}
+>
+  <Icon
+    className="pendingItemIcon placeholderPadding"
+    name="Schedule"
+  />
+  <Tooltip
+    arrowDirection="left"
+    autoHide={false}
+    className="stateCallout"
+    show={false}
+    small={true}
+    timeout={5000}
+  >
+    <span>
+      PENDING
+    </span>
+  </Tooltip>
+</div>
+`;

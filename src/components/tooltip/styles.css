@@ -63,7 +63,7 @@
 .pointing-left::before {
     transform: rotate(270deg);
     top: 10px;
-    left: -9px;
+    left: -20px;
 }
 
 .pointing-right::after,
@@ -81,12 +81,12 @@
 }
 
 .tooltip.small {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 300;
-    padding: 3px;
+    padding: 6px 7px 5px;
     line-height: 1em;
-    border-radius: 2px;
-    top: -4px;
+    border-radius: 3px;
+    top: -6px;
 }
 
 .tooltip.small::after {
@@ -101,7 +101,7 @@
 
 .pointing-left.small::after,
 .pointing-left.small::before {
-    top: calc(18px * 0.4);
+    top: calc(23px * 0.4);
     left: calc(-7px * 1.4);
 }
 

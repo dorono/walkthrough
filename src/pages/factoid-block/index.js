@@ -79,7 +79,7 @@ export class FactoidBlockPage extends Component {
                                 {row => (
                                     <tr key={row.tx_id}>
                                         <td>{formatDate(row.created_at)}</td>
-                                        <td><Hash type='tx'>{row.tx_id}</Hash></td>
+                                        <td><Hash type='tx' key={row.tx_id}>{row.tx_id}</Hash></td>
                                         <td><Amount unit='FCT'>{row.fct_total_inputs}</Amount></td>
                                         <td><Amount unit='FCT'>{row.fct_total_outputs}</Amount></td>
                                         <td><Amount unit='EC'>{row.ec_created}</Amount></td>

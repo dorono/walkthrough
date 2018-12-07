@@ -9,7 +9,7 @@
 
 .state-callout {
     top: -10px;
-    left: 30px;
+    left: 28px;
     font-size: 15px;
     font-weight: normal;
     padding: 0.75rem;
@@ -19,10 +19,14 @@
     color: var(--yellow);
     font-size: 15px !important;
     display: inline-block;
-    margin: 0 8px;
+    margin: 0 var(--default-table-padding);
     line-height: 1rem;
 }
 
 .placeholder-padding {
     visibility: hidden;
+}
+
+.ie-width {
+    width: 70px;
 }

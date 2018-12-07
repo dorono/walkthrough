@@ -16,7 +16,6 @@
     display: inline-flex;
     justify-content: center;
     font-size: 12px;
-    font-weight: 600;
     min-width: 48px;
     position: relative;
 }
@@ -41,7 +40,6 @@
     overflow: hidden;
     word-break: break-all;
     font-size: 12px;
-    font-weight: 600;
 }
 
 table .value {

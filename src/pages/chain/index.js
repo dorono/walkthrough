@@ -22,17 +22,21 @@ export class ChainPage extends Component {
                     showFullWidthBanner={isPending}
                     fullWidthBannerText={STAGE_PENDING_CHAIN_TEXT}>
                     <Vertical>
-                        <Box type='outline'>
+                        <Box
+                            type='outline'
+                            key='stage'>
                             <Label>IMMUTABILITY STAGE</Label>
                             <span className={globalStyles.capitalized}>
                                 {this.props.data.stage}
                             </span>
                         </Box>
-                        <Box type='outline'>
+                        <Box
+                            type='outline'
+                            key='chain'>
                             <Label>CHAIN ID</Label>
                             <Hash type='chain'>{this.props.data.chain_id}</Hash>
                         </Box>
-                        <Box>
+                        <Box key='external_ids'>
                             <Label>EXTERNAL IDS</Label>
                             <ExternalIdList externalIds={this.props.data.external_ids} />
                         </Box>
@@ -42,7 +46,10 @@ export class ChainPage extends Component {
                     entriesUrl={`/chains/${this.props.data.chain_id}/entries`}
                     pageParams={this.props.location.search}
                     renderContent={row => (
-                        <Hash type='entry' extraArgs={{chain: this.props.data.chain_id}}>
+                        <Hash
+                            key={row.entry_hash}
+                            type='entry'
+                            extraArgs={{chain: this.props.data.chain_id}}>
                             {row.entry_hash}
                         </Hash>
                     )}

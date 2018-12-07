@@ -22,7 +22,7 @@ describe('Input Component', () => {
                 id={'test'}
                 name={'test'}
                 type={'test'}
-                value={''}
+                value={'test'}
                 handleChange={handleChangeSpy}
             />,
         );
@@ -33,7 +33,7 @@ describe('Input Component', () => {
                 id={'test'}
                 name={'test'}
                 type={'test'}
-                value={''}
+                value={'test'}
                 handleChange={handleChangeSpy}
             />
         ));
@@ -47,7 +47,7 @@ describe('Input Component', () => {
                 id={'test'}
                 name={'test'}
                 type={'test'}
-                value={''}
+                value={'test'}
                 handleChange={handleChangeSpy}
             />
         ));

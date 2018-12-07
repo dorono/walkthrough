@@ -27,6 +27,7 @@
     --content-max-width: 1400px;
     --border-radius: 0.4rem;
     --feedback-link-height: 4rem;
+    --default-table-padding: 8px;
 
     --font: 'Montserrat', sans-serif;
     --monospace-font: 'Roboto Mono', monospace;

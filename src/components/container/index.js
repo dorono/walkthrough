@@ -36,7 +36,7 @@ export default class Container extends Component {
 
     render() {
         return (
-            <div className={classNames(this.setFullwidth(styles.root), this.props.primary ? 'main' : 'section')}>
+            <div className={classNames(this.setFullwidth(styles.root, true), this.props.primary ? 'main' : 'section')}>
                 <header className={this.setFullwidth(styles.header)}>
                     {this.props.title && (
                         <h1 className={styles.title}>

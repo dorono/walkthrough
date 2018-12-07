@@ -39,7 +39,7 @@ export class TransactionPage extends Component {
                         const {amount, unit} = this.getTransactionAmount(row);
                         return (
                             <tr key={row.address + amount}>
-                                <td><Hash type='address'>{row.user_address}</Hash></td>
+                                <td><Hash type='address' key={row.user_address}>{row.user_address}</Hash></td>
                                 <td><Amount unit={unit}>{amount}</Amount></td>
                             </tr>
                         );

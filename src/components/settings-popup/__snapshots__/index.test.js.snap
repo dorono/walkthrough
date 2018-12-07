@@ -2,7 +2,8 @@
 
 exports[`SettingsPopup Component checkbox should be disabled and set to true after selecting something different to Public network 1`] = `
 <Modal
-  className="modalRoot"
+  className="modalRoot defaultPosition"
+  setModalSize={false}
   show={true}
 >
   <ModalHeader
@@ -124,6 +125,7 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
             className="input formInput"
             error={false}
             handleChange={[Function]}
+            key="appId"
             name="appId"
             placeholder="Enter your App ID"
             type="text"
@@ -143,6 +145,7 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
             className="input formInput"
             error={false}
             handleChange={[Function]}
+            key="appKey"
             name="appKey"
             placeholder="Enter your App Key"
             type="password"
@@ -159,12 +162,14 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
       className="button cancel"
       disabled={false}
       id="cancel-settings-popup"
+      key="cancel"
       onClick={[Function]}
       title="CANCEL"
     />
     <Button
       className="button"
       disabled={false}
+      key="submit"
       onClick={[Function]}
       title="SUBMIT"
     />

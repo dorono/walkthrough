@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import {autobind} from 'core-decorators';
 
 import {addPaginationParams} from 'api';
 import {dataLoader} from 'decorators';
@@ -16,9 +17,9 @@ import PendingLegend from 'components/pending-legend';
 import {currentTimezone, formatDate} from 'utils/date';
 import {displayPendingContent} from 'utils/pending-items';
 import globalStyles from 'styles/index.css';
+import styles from './styles.css';
 
-@dataLoader(({entriesUrl, pageParams}) => addPaginationParams(entriesUrl, pageParams))
-export default class EntriesTable extends Component {
+export class EntriesTable extends Component {
     static propTypes = {
         renderContent: PropTypes.func.isRequired,
         contentColumnName: PropTypes.string,
@@ -30,6 +31,36 @@ export default class EntriesTable extends Component {
         hasLink: true,
     };
 
+    static getDerivedStateFromProps(props) {
+        return {
+            hasPendingEntries: displayPendingContent(props.data),
+        };
+    }
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            hasPendingEntries: false,
+        };
+    }
+
+    @autobind
+    setClassName(isPending) {
+        // if there are one or more pending entries...
+        if (this.state.hasPendingEntries) {
+            // if this row is NOT a pending entry, then give lots of padding
+            if (!isPending) {
+                return styles.tableLeftContentPaddingIconAlign;
+            }
+
+            // if this row IS a pending entry, then no padding necessary here
+            return styles.tableLeftNoPadding;
+        }
+
+        // if there are no pending entries in this table, then use default padding
+        return styles.tableLeftContentPadding;
+    }
+
     render() {
         return (
             <Container title='Entries' count={this.props.count}>
@@ -37,18 +68,22 @@ export default class EntriesTable extends Component {
                     columns={[`CREATED (${currentTimezone()})`, this.props.contentColumnName]}
                     rows={this.props.data}
                     ellipsis={1}
+                    leftPadding={0}
                     type='secondary'
                     interactive={this.props.hasLink}>
                     {(row, index) => {
                         const isPending = row.stage === STAGE_PENDING;
                         return (
                             <tr key={index}>
-                                <td>
-                                    <PendingItem stage={row.stage} enableTooltip={false} />
-                                    <span
-                                        className={classNames({
-                                            [globalStyles.disabledText]: isPending,
-                                        })}>
+                                <td className={this.setClassName(isPending)}>
+                                    {isPending &&
+                                    <PendingItem
+                                        stage={row.stage}
+                                        enableTooltip={false}
+                                    />
+                                    }
+                                    <span className={classNames({
+                                        [globalStyles.disabledText]: isPending})}>
                                         {isPending ? STAGE_PENDING_DATE : formatDate(row.created_at)}
                                     </span>
                                 </td>
@@ -68,3 +103,7 @@ export default class EntriesTable extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({entriesUrl, pageParams}) => addPaginationParams(entriesUrl, pageParams),
+)(EntriesTable);
