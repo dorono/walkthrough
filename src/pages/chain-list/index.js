@@ -31,7 +31,13 @@ export default class ChainList extends Component {
                                 <PendingItem stage={row.stage} />
                                 <Hash type='chain'>{row.chain_id}</Hash>
                             </td>
-                            <td><ExternalIdList externalIds={row.external_ids} showDefaultEncoding fadeOut /></td>
+                            <td>
+                                <ExternalIdList
+                                    externalIds={row.external_ids}
+                                    showDefaultEncoding
+                                    className={styles.fadeOut}
+                                />
+                            </td>
                         </tr>
                     )}
                 </Table>
