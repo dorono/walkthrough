@@ -42,6 +42,7 @@ export default class AppHeader extends Component {
                     <VerticalDivider className={styles.divider} />
                     <div className={styles.blockchainButtonContainer}>
                         <Button
+                            id='open-settings-popup'
                             onClick={() => this.setState({showSettingsPopup: true})}
                             title={this.props.apiConfig.blockchain}
                             className={styles.blockchainButton}

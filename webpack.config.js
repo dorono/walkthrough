@@ -16,7 +16,9 @@ const isDev = process.env.NODE_ENV !== 'production';
 const version = isDev ? 'DEV' : process.env.VERSION;
 const banner = `Factom Explorer\n${version}`;
 // Load config from environment:
-const googleAnalyticsId = process.env.GA_ID || '$GA_ID';
+const googleTagManagerId = process.env.GTM_ID || '$GTM_ID';
+const googleTagManagerAuth = process.env.GTM_AUTH;
+const googleTagManagerEnv = process.env.GTM_ENV;
 // Connect API values.
 const apiUrl = process.env.API_URL || '$API_URL';
 const apiToken = process.env.API_TOKEN || '$API_TOKEN';
@@ -132,7 +134,9 @@ module.exports = {
             inject: true,
             minify: {collapseWhitespace: !isDev},
             banner,
-            googleAnalyticsId,
+            googleTagManagerId,
+            googleTagManagerAuth,
+            googleTagManagerEnv,
         }),
         new MiniCSSExtractPlugin({
             filename: '[name].[hash].css',

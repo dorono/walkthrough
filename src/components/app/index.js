@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import {Switch, Route, withRouter} from 'react-router-dom';
 import {routes} from 'routes';
-import {trackPageView} from 'analytics';
 import {APIConfigurationConsumer} from 'api-context';
 import AppHeader from 'components/app-header';
 import AppFooter from 'components/app-footer';
@@ -20,14 +19,9 @@ export default class App extends Component {
         showSettingsPopup: false,
     };
 
-    componentDidMount() {
-        trackPageView(this.props.location.pathname);
-    }
-
     componentWillReceiveProps(nextProps) {
         if (nextProps.location.pathname !== this.props.location.pathname) {
             this.setState({jsError: false});
-            trackPageView(this.props.location.pathname);
         }
     }
 
