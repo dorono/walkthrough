@@ -50,7 +50,8 @@ export default class APIConfig {
     }
 
     sharesCredentialsWith(anotherApiConfig = {}) {
-        return this.appKey === anotherApiConfig.appKey && this.appId === anotherApiConfig.appId;
+        return (this.appKey === anotherApiConfig.appKey && this.appId === anotherApiConfig.appId)
+            || this.apiToken === anotherApiConfig.apiToken;
     }
 
 }

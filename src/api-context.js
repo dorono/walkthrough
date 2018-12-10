@@ -66,7 +66,7 @@ export class APIConfigurationProvider extends React.Component {
         }
     }
 
-    @autobind()
+    @autobind
     async setApiConfig(apiConfig, fromMessageEvent = false) {
         if (this.isValid(apiConfig)) {
             // Clear the timeout started on componentWillMount
@@ -81,6 +81,11 @@ export class APIConfigurationProvider extends React.Component {
         }
         // turn off waitingConfig if message is invalid.
         return this.setState({waitingConfig: false});
+    }
+
+    @autobind
+    isConfiguredByDefault() {
+        return this.state.defaultApiConfig.sharesCredentialsWith(this.state.apiConfig);
     }
 
     @autobind
@@ -142,6 +147,7 @@ export class APIConfigurationProvider extends React.Component {
                         value={{
                             ...this.state,
                             configure: this.messageHandler,
+                            isConfiguredByDefault: this.isConfiguredByDefault,
                         }}>
                         {this.props.children}
                     </Provider>

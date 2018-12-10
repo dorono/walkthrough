@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Switch, Route, withRouter} from 'react-router-dom';
-import {routes} from 'routes';
+import {reverse, routes} from 'routes';
 import {APIConfigurationConsumer} from 'api-context';
 import AppHeader from 'components/app-header';
 import AppFooter from 'components/app-footer';
@@ -29,6 +29,10 @@ export default class App extends Component {
         this.setState({jsError: true});
     }
 
+    goHome() {
+        this.props.history.push(reverse('landing'));
+    }
+
     renderContent(waitingConfig = false) {
         if (waitingConfig) return <Spinner />;
         if (this.state.jsError) return <ErrorPage status={500} />;
@@ -49,7 +53,10 @@ export default class App extends Component {
                             <AppHeader
                                 defaultApiConfig={defaultApiConfig}
                                 apiConfig={apiConfig}
-                                onSettingsSubmit={configure}
+                                onSettingsSubmit={apiConfig => {
+                                    configure(apiConfig);
+                                    this.goHome();
+                                }}
                                 remoteConfig={remoteConfig}
                             />
                             {this.renderContent(waitingConfig)}

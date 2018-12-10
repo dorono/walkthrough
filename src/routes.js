@@ -9,13 +9,15 @@ import ChainList from 'pages/chain-list';
 import Chain from 'pages/chain';
 import Transaction from 'pages/transaction';
 import Address from 'pages/address';
+import Landing from 'pages/landing';
 
 /**
  * Array of available routes.
  * @type {Array}
  */
 export const routes = [
-    {name: 'dblocks', path: '/', exact: true, menuItem: 0, component: DirectoryBlockList},
+    {name: 'landing', path: '/', exact: true, menuItem: 0, component: Landing},
+    {name: 'dblocks', path: '/dblocks', exact: true, menuItem: 0, component: DirectoryBlockList},
     {name: 'dblock', path: '/dblocks/:hash', exact: true, menuItem: 0, component: DirectoryBlock},
     {name: 'ablock', path: '/ablocks/:hash', exact: true, menuItem: 0, component: AdminBlock},
     {name: 'ecblock', path: '/ecblocks/:hash', exact: true, menuItem: 0, component: EntryCreditBlock},
