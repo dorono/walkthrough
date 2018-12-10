@@ -93,6 +93,10 @@
     text-align: center;
 }
 
+.left {
+    text-align: left;
+}
+
 .responsive {
     display: block;
     overflow-x: auto;
