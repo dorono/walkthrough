@@ -52,7 +52,7 @@ export default class Table extends Component {
                     [styles.interactive]: this.props.interactive,
                     [styles.responsive]: this.props.responsive,
                 })}>
-                <thead>
+                <thead className={styles.left}>
                     <tr>
                         {this.props.columns.map((header, index) => {
                             const className = [styles.header];
