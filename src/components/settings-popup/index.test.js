@@ -68,13 +68,14 @@ describe('SettingsPopup Component', () => {
     });
 
     it('should track error type on api configuration validation', async () => {
-        const settingsPopup = shallow(<SettingsPopup
-            show
-            defaultApiConfig={apiConfig}
-            onClose={noOp}
-            onSubmit={noOp}
-            apiConfig={apiConfig}
-        />);
+        const settingsPopup = shallow(
+            <SettingsPopup
+                show
+                defaultApiConfig={apiConfig}
+                onClose={noOp}
+                onSubmit={noOp}
+                apiConfig={apiConfig}
+            />);
         const p = Promise.resolve();
         settingsPopup.instance().handleSubmit();
         await p;
@@ -83,13 +84,14 @@ describe('SettingsPopup Component', () => {
     });
 
     it('renderErrorMessage should return a valid error message', async () => {
-        const settingsPopup = shallow(<SettingsPopup
-            show
-            defaultApiConfig={apiConfig}
-            onClose={noOp}
-            onSubmit={noOp}
-            apiConfig={apiConfig}
-        />);
+        const settingsPopup = shallow(
+            <SettingsPopup
+                show
+                defaultApiConfig={apiConfig}
+                onClose={noOp}
+                onSubmit={noOp}
+                apiConfig={apiConfig}
+            />);
         let errors = getDefaultErrors();
 
         errors[ERRORS.NETWORK] = true;
