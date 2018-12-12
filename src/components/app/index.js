@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
 import {Switch, Route, withRouter} from 'react-router-dom';
 import {reverse, routes} from 'routes';
-import {APIConfigurationConsumer} from 'api-context';
+import {APIConfigurationConsumer} from 'contexts/api';
 import AppHeader from 'components/app-header';
 import AppFooter from 'components/app-footer';
 import FeedbackLink from 'components/feedback-link';
-import WelcomePopup from 'components/welcome-popup';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 import styles from './styles.css';
@@ -48,11 +47,23 @@ export default class App extends Component {
         return (
             <APIConfigurationConsumer>
                 {
-                    ({apiConfig, defaultApiConfig, configure, remoteConfig, waitingConfig}) => (
+                    ({
+                         apiConfig,
+                         allowCustomCredentials,
+                         configure,
+                         defaultApiConfig,
+                         isConfiguredByDefault,
+                         notifyRemoteConfigWasBlocked,
+                         remoteConfig,
+                         waitingConfig,
+                    }) => (
                         <div className={styles.root}>
                             <AppHeader
-                                defaultApiConfig={defaultApiConfig}
+                                allowCustomCredentials={allowCustomCredentials}
                                 apiConfig={apiConfig}
+                                defaultApiConfig={defaultApiConfig}
+                                isConfiguredByDefault={isConfiguredByDefault}
+                                notifyRemoteConfigWasBlocked={notifyRemoteConfigWasBlocked}
                                 onSettingsSubmit={apiConfig => {
                                     configure(apiConfig);
                                     this.goHome();
@@ -61,7 +72,6 @@ export default class App extends Component {
                             />
                             {this.renderContent(waitingConfig)}
                             <AppFooter apiConfig={apiConfig} />
-                            <WelcomePopup feedbackUrl={feedbackUrl} />
                             <FeedbackLink feedbackUrl={feedbackUrl} />
                         </div>
                     )

@@ -30,7 +30,10 @@ const gatewayUrls = {
 
 const apiUrlVersionSuffix = process.env.API_URL_VERSION_SUFFIX || '/v1';
 const blockchainNetwork = process.env.PUBLIC_NETWORK || 'Public Factom (Mainnet)';
-const devPortalBaseUrl = process.env.DEV_PORTAL_URL || 'https://account.factom.com/';
+const devPortalProtocol = process.env.DEV_PORTAL_PROTOCOL || 'https://';
+const devPortalHostName = process.env.DEV_PORTAL_HOST_NAME || 'account.factom.com';
+const devPortalBaseUrl = process.env.DEV_PORTAL_URL ?
+    process.env.DEV_PORTAL_URL : `${devPortalProtocol}${devPortalHostName}/`;
 
 process.noDeprecation = true;
 
@@ -121,6 +124,8 @@ module.exports = {
                 apiToken,
                 apiUrlVersionSuffix,
                 devPortalBaseUrl,
+                devPortalHostName,
+                devPortalProtocol,
                 gatewayUrls,
                 version,
             }),

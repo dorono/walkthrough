@@ -14,13 +14,29 @@ import styles from './styles.css';
 export default class AppHeader extends Component {
     static propTypes = {
         apiConfig: PropTypes.shape().isRequired,
+        allowCustomCredentials: PropTypes.bool.isRequired,
         defaultApiConfig: PropTypes.shape().isRequired,
+        notifyRemoteConfigWasBlocked: PropTypes.bool.isRequired,
         remoteConfig: PropTypes.bool.isRequired,
         onSettingsSubmit: PropTypes.func.isRequired,
     };
     state = {
         showSettingsPopup: false,
+        // If we should notify the user, set it in false at first.
+        notifiedRemoteConfigIsNotAllowed: !this.props.notifyRemoteConfigWasBlocked,
     };
+
+    @autobind
+    onSettingsClosed() {
+        const newState = {
+            showSettingsPopup: false,
+        };
+        if (!this.state.notifiedRemoteConfigIsNotAllowed) {
+            newState.notifiedRemoteConfigIsNotAllowed = true;
+        }
+
+        this.setState(newState);
+    }
 
     @autobind
     onSettingsSubmit(settings) {
@@ -29,6 +45,8 @@ export default class AppHeader extends Component {
     }
 
     render() {
+        const {showSettingsPopup, notifiedRemoteConfigIsNotAllowed} = this.state;
+        const {notifyRemoteConfigWasBlocked} = this.props;
         return (
             <header className={styles.root}>
                 <div className={styles.content}>
@@ -48,7 +66,7 @@ export default class AppHeader extends Component {
                             className={styles.blockchainButton}
                         />
                         {this.props.remoteConfig &&
-                        <Tooltip show>
+                        <Tooltip show autoHide>
                             <span className={styles.spanTooltip}>
                                 Authenticated with your application:
                             </span>
@@ -59,14 +77,19 @@ export default class AppHeader extends Component {
                     </div>
                 </div>
                 {
-                    this.state.showSettingsPopup &&
-                        <SettingsPopup
-                            show
-                            defaultApiConfig={this.props.defaultApiConfig}
-                            apiConfig={this.props.apiConfig}
-                            onSubmit={this.onSettingsSubmit}
-                            onClose={() => this.setState({showSettingsPopup: false})}
-                        />
+                    (
+                        showSettingsPopup
+                        || (!notifiedRemoteConfigIsNotAllowed && notifyRemoteConfigWasBlocked)
+                    ) &&
+                    <SettingsPopup
+                        allowCustomCredentials={this.props.allowCustomCredentials}
+                        apiConfig={this.props.apiConfig}
+                        defaultApiConfig={this.props.defaultApiConfig}
+                        isConfiguredByDefault={this.props.isConfiguredByDefault}
+                        onClose={this.onSettingsClosed}
+                        onSubmit={this.onSettingsSubmit}
+                        show
+                    />
                 }
             </header>
         );

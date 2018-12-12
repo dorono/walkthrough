@@ -32,6 +32,8 @@ class Dropdown extends Component {
         arrowColor: PropTypes.oneOf(Object.keys(ARROWS)),
         // Class name for the root element.
         className: PropTypes.string,
+        // Disable the dropdown
+        disabled: PropTypes.bool,
         // Class name for the dropdown header.
         headerClassName: PropTypes.string,
         // Callback for a clicked option.
@@ -52,6 +54,7 @@ class Dropdown extends Component {
 
     static defaultProps = {
         arrowColor: DEFAULT_ARROW_COLOR,
+        disabled: false,
         selectedClassName: styles.selected,
     };
 
@@ -127,12 +130,12 @@ class Dropdown extends Component {
     }
 
     renderHeader() {
-        const {selected, headerClassName, arrowColor = DEFAULT_ARROW_COLOR} = this.props;
+        const {selected, headerClassName, disabled, arrowColor = DEFAULT_ARROW_COLOR} = this.props;
         const {showOptions} = this.state;
         return (
             <div
                 onClick={this.handleHeaderClick}
-                className={classNames(styles.header, headerClassName)}>
+                className={classNames(styles.header, headerClassName, disabled && styles.disabled)}>
                 <span ref={this.setDropdownRef}>{selected.label}</span>
                 <img
                     src={ARROWS[arrowColor]}

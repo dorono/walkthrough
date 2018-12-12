@@ -4,7 +4,7 @@ import {shallow, mount} from 'enzyme';
 
 import Landing from './index';
 
-jest.mock('../../api-context', () => {
+jest.mock('../../contexts/api', () => {
     return {
         APIConfigurationConsumer: (props) => props.children({
             isConfiguredByDefault: () => true,
