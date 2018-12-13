@@ -1,6 +1,6 @@
 import React from 'react';
 import {request} from 'api';
-import {APIConfigurationConsumer} from 'api-context';
+import {APIConfigurationConsumer} from 'contexts/api';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 const {devPortalBaseUrl} = CONFIG;

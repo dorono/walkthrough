@@ -5,6 +5,7 @@ import styles from './styles.css';
 
 export default class Tooltip extends Component {
     static propTypes = {
+        autoHide: PropTypes.bool,
         className: PropTypes.string,
         show: PropTypes.bool,
         timeout: PropTypes.number,
@@ -14,6 +15,7 @@ export default class Tooltip extends Component {
     };
 
     static defaultProps = {
+        autoHide: false,
         timeout: 5000,
         show: true,
         arrowDirection: 'up',
@@ -21,7 +23,7 @@ export default class Tooltip extends Component {
     };
 
     static getDerivedStateFromProps(nextProps, prevState) {
-        if (nextProps.show !== prevState.showTooltip) {
+        if (!nextProps.autoHide && (nextProps.show !== prevState.showTooltip)) {
             return {
                 showTooltip: nextProps.show,
             };
@@ -31,17 +33,21 @@ export default class Tooltip extends Component {
     }
 
     state = {
-        showTooltip: false,
+        showTooltip: this.props.show,
     };
 
     componentDidMount() {
-        this.timer = setTimeout(() => {
-            this.setState({showTooltip: false});
-        }, this.props.timeout);
+        if (this.props.autoHide) {
+            this.timer = setTimeout(() => {
+                this.setState({showTooltip: false});
+            }, this.props.timeout);
+        }
     }
 
     componentWillUnmount() {
-        clearTimeout(this.timer);
+        if (this.props.autoHide) {
+            clearTimeout(this.timer);
+        }
     }
 
     render() {

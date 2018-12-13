@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {BrowserRouter} from 'react-router-dom';
 import {AppContainer} from 'react-hot-loader';
 import App from 'components/app';
-import {APIConfigurationProvider} from 'api-context';
+import {APIConfigurationProvider} from 'contexts/api';
 
 const render = Component => (
     ReactDOM.render(

@@ -20,6 +20,13 @@ export const CredentialsErrorMessage = () => {
     return <span>Authentication Error: Please check your Application ID and Key.</span>;
 };
 
+export const CustomCredentialsNotAllowedErrorMessage = () => {
+    return (<span>
+        Limitations of Internet Explorer and Microsoft Edge prevent the use of user
+        credentials. Please use another browser.
+    </span>);
+};
+
 export const NetworkErrorMessage = () => {
     return <span>Connection Error: Please check your Connect API URL.</span>;
 };

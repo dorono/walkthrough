@@ -20,7 +20,12 @@ import {ERRORS} from 'errors';
 import {trackNotSuccessfulConnection, trackSuccessfulConnection} from 'analytics';
 import globalStyles from 'styles/index.css';
 import styles from './styles.css';
-import {CredentialsErrorMessage, GenericErrorMessage, NetworkErrorMessage} from './messages';
+import {
+    CredentialsErrorMessage,
+    CustomCredentialsNotAllowedErrorMessage,
+    GenericErrorMessage,
+    NetworkErrorMessage,
+} from './messages';
 
 const BLOCKCHAIN_OPTIONS = [
     AVAILABLE_BLOCKCHAINS.PUBLIC,
@@ -31,15 +36,18 @@ const BLOCKCHAIN_OPTIONS = [
 const getInitialBlockchainbyName = (name) =>
     BLOCKCHAIN_OPTIONS.find(blockchain => blockchain.label === name) || BLOCKCHAIN_OPTIONS[0];
 
-export const getDefaultErrors = () => {
+export const getDefaultErrors = (allowCustomCredentials = true) => {
     const defaultErrors = {};
-    Object.keys(ERRORS).forEach(key => defaultErrors[key] = false);
+    Object.values(ERRORS).forEach(value => defaultErrors[value] = false);
+    defaultErrors[ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED] = !allowCustomCredentials;
     return defaultErrors;
 };
 
 export default class SettingsPopup extends Component {
     static propTypes = {
         apiConfig: PropTypes.shape().isRequired,
+        allowCustomCredentials: PropTypes.bool.isRequired,
+        isConfiguredByDefault: PropTypes.func.isRequired,
         defaultApiConfig: PropTypes.shape().isRequired,
         onClose: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
@@ -49,16 +57,17 @@ export default class SettingsPopup extends Component {
     constructor(props) {
         super(props);
         const apiConfigProps = this.extractApiConfigProps(props.apiConfig);
+        const {allowCustomCredentials, isConfiguredByDefault} = props;
         const onPublicNet = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.PUBLIC);
         const enableCredentialsCheckbox = onPublicNet;
-        const configuredByDefault = onPublicNet && props.defaultApiConfig.sharesCredentialsWith(props.apiConfig);
+        const configuredByDefault = isConfiguredByDefault();
 
         this.state = {
             ...apiConfigProps,
             enableCredentialsCheckbox,
             blockchains: [...BLOCKCHAIN_OPTIONS],
             useCredentials: !configuredByDefault || false,
-            errors: getDefaultErrors(),
+            errors: getDefaultErrors(allowCustomCredentials),
             verifyingConnection: false,
         };
     }
@@ -200,6 +209,9 @@ export default class SettingsPopup extends Component {
                 case ERRORS.CREDENTIALS:
                     message = <CredentialsErrorMessage />;
                     break;
+                case ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED:
+                    message = <CustomCredentialsNotAllowedErrorMessage />;
+                    break;
                 case ERRORS.NETWORK:
                     message = <NetworkErrorMessage />;
                     break;
@@ -214,6 +226,7 @@ export default class SettingsPopup extends Component {
     }
 
     render() {
+        const {errors} = this.state;
         return (
             <Modal
                 show={this.props.show}
@@ -231,7 +244,11 @@ export default class SettingsPopup extends Component {
                     <Form className={styles.form}>
                         <FormGroup
                             id='target-blockchain-select'
-                            className={styles.formGroup}>
+                            className={
+                                classNames(styles.formGroup,
+                                    errors[ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED]
+                                    && styles.disabled)
+                            }>
                             <Label className={styles.label}>
                                 Target blockchain
                             </Label>
@@ -244,25 +261,28 @@ export default class SettingsPopup extends Component {
                                 optionsClassName={styles.dropdownOptions}
                                 selectedClassName={globalStyles.selectedOption}
                                 arrowColor='blue'
+                                disabled={errors[ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED]}
                             />
                             <div className={styles.information}>
                                 <div className={styles.checkboxContainer}>
                                     <Checkbox
-                                        readOnly={!this.state.enableCredentialsCheckbox}
+                                        readOnly={
+                                            !this.state.enableCredentialsCheckbox
+                                            || errors[ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED]}
                                         value={this.state.useCredentials}
                                         onChange={this.useCredentialsToggler}
                                     />
                                     Use my CONNECT credentials
                                 </div>
-                                <div className={styles.link}>
-                                    <div className={styles.questionMark}>?</div>
-                                    <A
-                                        to='https://www.factom.com/products/harmony-connect'
-                                        text=' What is CONNECT?'
-                                    />
-                                </div>
                             </div>
                         </FormGroup>
+                        <div className={styles.link}>
+                            <div className={styles.questionMark}>?</div>
+                            <A
+                                to='https://www.factom.com/products/harmony-connect'
+                                text=' What is CONNECT?'
+                            />
+                        </div>
                         <div
                             className={
                                 classNames(
@@ -277,10 +297,7 @@ export default class SettingsPopup extends Component {
                                     <Input
                                         type='url'
                                         name='privateUrl'
-                                        error={
-                                            this.state.errors[ERRORS.NETWORK]
-                                            || this.state.errors[ERRORS.OTHER]
-                                        }
+                                        error={errors[ERRORS.NETWORK] || errors[ERRORS.OTHER]}
                                         value={this.state.privateUrl}
                                         placeholder='Enter the Connect API URL'
                                         handleChange={this.handleChange}
@@ -296,10 +313,7 @@ export default class SettingsPopup extends Component {
                                             Connect Application ID
                                         </Label>
                                             <Input
-                                                error={
-                                                    this.state.errors[ERRORS.CREDENTIALS]
-                                                    || this.state.errors[ERRORS.OTHER]
-                                                }
+                                                error={errors[ERRORS.CREDENTIALS] || errors[ERRORS.OTHER]}
                                                 type='text'
                                                 name='appId'
                                                 value={this.state.appId}
@@ -313,10 +327,7 @@ export default class SettingsPopup extends Component {
                                             Connect Application Key
                                         </Label>
                                             <Input
-                                                error={
-                                                    this.state.errors[ERRORS.CREDENTIALS]
-                                                    || this.state.errors[ERRORS.OTHER]
-                                                }
+                                                error={errors[ERRORS.CREDENTIALS] || errors[ERRORS.OTHER]}
                                                 type='password'
                                                 name='appKey'
                                                 value={this.state.appKey}
@@ -339,7 +350,10 @@ export default class SettingsPopup extends Component {
                         onClick={this.handleClose}
                     />
                     <Button
-                        disabled={this.state.verifyingConnection}
+                        disabled={
+                            this.state.verifyingConnection
+                            || errors[ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED]
+                        }
                         title='SUBMIT'
                         className={styles.button}
                         onClick={this.handleSubmit}

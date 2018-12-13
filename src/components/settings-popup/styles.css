@@ -22,6 +22,11 @@
     width: 100%;
 }
 
+.disabled {
+    opacity: 0.6;
+    pointer-events: none;
+}
+
 .dropdown-header {
     padding: 10px 10px 10px 0;
     display: flex;
@@ -122,6 +127,10 @@
     color: var(--blue);
     font-size: 1.1rem;
     font-weight: 600;
+    position: relative;
+    right: 0;
+    text-align: right;
+    top: -25px;
 }
 
 .question-mark {

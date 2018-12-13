@@ -12,6 +12,7 @@ describe('Input Component', () => {
             apiConfig={new APIConfig()}
             onSubmit={jest.fn}
             onClose={jest.fn}
+            isConfiguredByDefault={jest.fn}
         />);
     const handleChangeSpy = jest.spyOn(wrapperApiConfig.instance(), 'handleChange');
     it('should render without errors', () => {

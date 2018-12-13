@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {Redirect} from 'react-router';
-import {APIConfigurationConsumer} from 'api-context';
+import {APIConfigurationConsumer} from 'contexts/api';
 import {reverse} from 'routes';
 
 export default class Landing extends Component {
