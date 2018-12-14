@@ -18,6 +18,8 @@ jobs:
 
       - run: npm install
 
+      - run: npm run test
+
       - run: VERSION=$CIRCLE_TAG npm run build
 
       - save_cache:

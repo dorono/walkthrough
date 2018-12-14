@@ -1,0 +1,173 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SettingsPopup Component checkbox should be disabled and set to true after selecting something different to Public network 1`] = `
+<Modal
+  className="modalRoot"
+  show={true}
+>
+  <ModalHeader
+    className="modalHeader"
+  >
+    BLOCKCHAIN SETTINGS
+  </ModalHeader>
+  <ModalBody
+    className="modalBody"
+  >
+    <_default
+      className="messageBar"
+      message={null}
+      show={false}
+      type="error"
+    />
+    <Form
+      className="form"
+    >
+      <FormGroup
+        className="formGroup"
+        id="target-blockchain-select"
+      >
+        <Label
+          className="label"
+        >
+          Target blockchain
+        </Label>
+        <OnClickOutside(Dropdown)
+          arrowColor="blue"
+          className="dropdown"
+          disabled={false}
+          eventTypes={
+            Array [
+              "mousedown",
+              "touchstart",
+            ]
+          }
+          excludeScrollbar={false}
+          headerClassName="dropdownHeader formInput"
+          onOptionClick={[Function]}
+          options={
+            Array [
+              Object {
+                "label": undefined,
+                "serviceName": "mainnet",
+                "url": "",
+                "value": 0,
+              },
+              Object {
+                "label": "Shared Sandbox",
+                "serviceName": "shared",
+                "url": "",
+                "value": 1,
+              },
+              Object {
+                "label": "Private Network",
+                "serviceName": "private_network",
+                "url": null,
+                "value": 2,
+              },
+            ]
+          }
+          optionsClassName="dropdownOptions"
+          outsideClickIgnoreClass="ignore-react-onclickoutside"
+          preventDefault={false}
+          selected={
+            Object {
+              "label": "Shared Sandbox",
+              "serviceName": "shared",
+              "url": "",
+              "value": 1,
+            }
+          }
+          selectedClassName="selectedOption"
+          stopPropagation={false}
+        />
+        <div
+          className="information"
+        >
+          <div
+            className="checkboxContainer"
+          >
+            <Checkbox
+              onChange={[Function]}
+              readOnly={true}
+              value={true}
+            />
+            Use my CONNECT credentials
+          </div>
+        </div>
+      </FormGroup>
+      <div
+        className="link"
+      >
+        <div
+          className="questionMark"
+        >
+          ?
+        </div>
+        <_default
+          text=" What is CONNECT?"
+          to="https://www.factom.com/products/harmony-connect"
+        />
+      </div>
+      <div
+        className="transition"
+      >
+        <FormGroup
+          className="formGroup"
+          key="app-id"
+        >
+          <Label
+            className="label"
+          >
+            Connect Application ID
+          </Label>
+          <Input
+            className="input formInput"
+            error={false}
+            handleChange={[Function]}
+            name="appId"
+            placeholder="Enter your App ID"
+            type="text"
+            value=""
+          />
+        </FormGroup>
+        <FormGroup
+          className="formGroup"
+          key="app-key"
+        >
+          <Label
+            className="label"
+          >
+            Connect Application Key
+          </Label>
+          <Input
+            className="input formInput"
+            error={false}
+            handleChange={[Function]}
+            name="appKey"
+            placeholder="Enter your App Key"
+            type="password"
+            value=""
+          />
+        </FormGroup>
+      </div>
+    </Form>
+  </ModalBody>
+  <ModalFooter
+    className="modalFooter"
+  >
+    <Button
+      className="button cancel"
+      disabled={false}
+      id="cancel-settings-popup"
+      onClick={[Function]}
+      title="CANCEL"
+    />
+    <Button
+      className="button"
+      disabled={false}
+      onClick={[Function]}
+      title="SUBMIT"
+    />
+  </ModalFooter>
+</Modal>
+`;

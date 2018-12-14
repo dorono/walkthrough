@@ -1,5 +1,6 @@
 module.exports = {
     setupTestFrameworkScriptFile: './test/setup.js',
+    snapshotSerializers: ['enzyme-to-json/serializer'],
     testURL: 'http://localhost/',
     moduleDirectories: [
         'node_modules',

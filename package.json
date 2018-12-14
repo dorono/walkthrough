@@ -9,7 +9,10 @@
     "eslint": "eslint src/",
     "stylelint": "stylelint 'src/**/*.css'",
     "lint": "npm run eslint && npm run stylelint",
-    "test": "NODE_ENV=test jest --verbose"
+    "test": "NODE_ENV=test jest",
+    "test:coverage": "npm run test -- --coverage",
+    "test:verbose": "npm run test -- --verbose",
+    "test:watch": "npm run test -- --watch"
   },
   "precommit": [
     "eslint",
@@ -35,6 +38,7 @@
     "dotenv": "4.0.0",
     "enzyme": "3.6.0",
     "enzyme-adapter-react-16": "1.5.0",
+    "enzyme-to-json": "3.3.5",
     "eslint": "3.19.0",
     "eslint-config-airbnb": "15.0.1",
     "eslint-import-resolver-webpack": "0.10.1",

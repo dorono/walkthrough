@@ -11,6 +11,7 @@ const defaultProps = {
     notifyRemoteConfigWasBlocked: false,
     defaultApiConfig: apiConfig,
     allowCustomCredentials: false,
+    isConfiguredByDefault: jest.fn,
     remoteConfig: false,
     onSettingsSubmit: jest.fn,
 };
@@ -23,5 +24,6 @@ describe('App Header Component', () => {
     it('should display the Settings Popup if notifyRemoteConfigWasBlocked is true', () => {
         const appHeader = shallow(<AppHeader {...defaultProps} notifyRemoteConfigWasBlocked />);
         expect(appHeader.find('SettingsPopup').length).toBe(1);
+        expect(appHeader).toMatchSnapshot();
     });
 });
