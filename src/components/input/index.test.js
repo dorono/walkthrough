@@ -7,8 +7,8 @@ import Input from './index';
 describe('Input Component', () => {
     const wrapperApiConfig = shallow(
         <SettingsPopup
-            show={false}
             allowCustomCredentials
+            show={false}
             defaultApiConfig={new APIConfig()}
             apiConfig={new APIConfig()}
             onSubmit={jest.fn}

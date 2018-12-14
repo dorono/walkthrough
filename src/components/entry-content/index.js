@@ -6,9 +6,9 @@ import classNames from 'classnames';
 import withDataEncoding from 'hocs/with-data-encoding';
 
 import ExpansibleContainer from 'components/expansible-container';
-import JsonViewer from 'components/json-viewer/';
-import HexViewer from 'components/hex-viewer/';
-import Tabs from 'components/tabs/';
+import JsonViewer from 'components/json-viewer';
+import HexViewer from 'components/hex-viewer';
+import Tabs from 'components/tabs';
 
 import styles from './styles.css';
 

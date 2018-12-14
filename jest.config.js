@@ -1,7 +1,6 @@
 module.exports = {
-    setupTestFrameworkScriptFile: './test/setup.js',
-    snapshotSerializers: ['enzyme-to-json/serializer'],
-    testURL: 'http://localhost/',
+    collectCoverageFrom: ['src/**'],
+    roots: ['src/'],
     moduleDirectories: [
         'node_modules',
         'src',
@@ -11,4 +10,7 @@ module.exports = {
             '<rootDir>/test/fileMock.js',
         '\\.(css|less|scss|sass)$': 'identity-obj-proxy',
     },
+    setupTestFrameworkScriptFile: './test/setup.js',
+    snapshotSerializers: ['enzyme-to-json/serializer'],
+    testURL: 'http://localhost/',
 };

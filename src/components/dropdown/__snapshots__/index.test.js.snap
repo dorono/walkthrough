@@ -1,0 +1,31 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropdown should match snapshot 1`] = `
+<div
+  className="root"
+>
+  <div
+    className="header"
+    onClick={[Function]}
+  >
+    <span />
+    <img
+      alt="Open"
+      className="arrow"
+      src="test-file-stub"
+    />
+  </div>
+  <OptionsMenu
+    isOpen={false}
+    onOptionClick={[Function]}
+    options={Array []}
+    portalNode={
+      <div
+        id="dropdown-portal-container"
+      />
+    }
+    selected={Object {}}
+    selectedClassName="selected"
+  />
+</div>
+`;

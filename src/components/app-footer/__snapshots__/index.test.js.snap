@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppFooter should match snapshot 1`] = `
+<footer
+  className="root"
+>
+  <span>
+    © 
+    2018
+     Factom, Inc.
+  </span>
+  <Monospaced>
+    UI: 
+     / API: 
+    Loading
+  </Monospaced>
+</footer>
+`;

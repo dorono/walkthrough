@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExternalId should match snapshot 1`] = `
+<ExternalId
+  data={
+    Array [
+      Object {
+        "label": "raw",
+        "value": "",
+      },
+    ]
+  }
+  showDefaultEncoding={false}
+/>
+`;
