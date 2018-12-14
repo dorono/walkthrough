@@ -1,0 +1,24 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Pagination should match snapshot 1`] = `
+<div
+  className="root"
+>
+  <Link
+    className="link"
+    key="1"
+    replace={false}
+    to="/?page=1"
+  >
+    1
+  </Link>
+  <Link
+    className="link"
+    key="NaN"
+    replace={false}
+    to="/?page=NaN"
+  >
+    NaN
+  </Link>
+</div>
+`;

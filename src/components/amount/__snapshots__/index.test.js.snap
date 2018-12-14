@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Amount should match snapshot 1`] = `
+<Monospaced>
+   
+  EC
+</Monospaced>
+`;

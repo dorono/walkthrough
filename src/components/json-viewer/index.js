@@ -1,5 +1,6 @@
-import {autobind} from 'core-decorators';
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
+import {autobind} from 'core-decorators';
 
 import styles from './styles.css';
 
@@ -7,7 +8,11 @@ const JSON_REGEX = (
     /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g
 );
 
-class JsonSintaxHighlight extends Component {
+class JsonViewer extends Component {
+
+    static propTypes = {
+        data: PropTypes.string.isRequired,
+    };
 
     getHtmlAsString() {
         return this
@@ -56,5 +61,5 @@ class JsonSintaxHighlight extends Component {
 
 }
 
-export default JsonSintaxHighlight;
+export default JsonViewer;
 

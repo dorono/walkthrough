@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Container should match snapshot 1`] = `
+<div
+  className="root section"
+>
+  <header
+    className="header"
+  />
+  <PendingLegend
+    highlightBanner={true}
+    show={false}
+  />
+</div>
+`;

@@ -1,9 +1,10 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import styles from './styles.css';
 
 const HexViewer = ({data}) => {
-    const splittedBytes = data.match(/.{1,2}/g);
+    const splittedBytes = data.match(/.{1,2}/g) || [];
 
     return (
         <pre className={styles.root}>
@@ -13,6 +14,10 @@ const HexViewer = ({data}) => {
         </pre>
 
     );
+};
+
+HexViewer.propTypes = {
+    data: PropTypes.string.isRequired,
 };
 
 export default HexViewer;

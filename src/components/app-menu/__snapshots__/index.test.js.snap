@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AppMenu should match snapshot 1`] = `
+<div
+  className="root"
+>
+  <NavLink
+    activeClassName="active"
+    ariaCurrent="true"
+    className="link"
+    isActive={[Function]}
+    to="/dblocks"
+  >
+    BLOCKS
+  </NavLink>
+  <NavLink
+    activeClassName="active"
+    ariaCurrent="true"
+    className="link"
+    isActive={[Function]}
+    to="/chains"
+  >
+    CHAINS
+  </NavLink>
+</div>
+`;

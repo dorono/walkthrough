@@ -1,0 +1,7 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FactoidBlockLink should match snapshot 1`] = `
+<BlockLink
+  type="fblock"
+/>
+`;

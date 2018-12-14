@@ -1,0 +1,14 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntryContent should match snapshot 1`] = `
+<EntryContent
+  data={
+    Array [
+      Object {
+        "label": "raw",
+        "value": "",
+      },
+    ]
+  }
+/>
+`;

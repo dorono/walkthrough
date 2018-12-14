@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ExpansibleContainer should match snapshot 1`] = `
+<SizeMeRenderer(ExpansibleContainer)
+  disablePlaceholder={false}
+  explicitRef={[Function]}
+  size={
+    Object {
+      "height": undefined,
+      "position": undefined,
+      "width": undefined,
+    }
+  }
+/>
+`;

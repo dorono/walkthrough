@@ -1,0 +1,19 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JsonViewer should match snapshot 1`] = `
+<pre
+  className="root"
+>
+  <code
+    className="json"
+    dangerouslySetInnerHTML={
+      Object {
+        "__html": "
+<span class=\\"line\\">{</span>
+<span class=\\"line\\">    <span class=\\"key\\">\\"test\\":</span> <span class=\\"string\\">\\"\\"</span></span>
+<span class=\\"line\\">}</span>",
+      }
+    }
+  />
+</pre>
+`;

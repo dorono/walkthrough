@@ -1,0 +1,20 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FeedbackLink should match snapshot 1`] = `
+<a
+  className="root"
+  target="_blank"
+>
+  <span
+    className="question"
+  >
+    Have some tips to improve the explorer?
+  </span>
+   
+  <span
+    className="cta"
+  >
+    SEND US YOUR FEEDBACK
+  </span>
+</a>
+`;

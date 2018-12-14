@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`BlockHeight should match snapshot 1`] = `
+<div>
+  <Label>
+    HEIGHT
+  </Label>
+  <div
+    className="value"
+  />
+</div>
+`;
