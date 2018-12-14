@@ -13,7 +13,7 @@ const noOp = jest.fn();
 const apiConfig = new APIConfig();
 const defaultProps = {
     show: true,
-    allowCustomCredential: false,
+    allowCustomCredentials: false,
     onClose: noOp,
     onSubmit: noOp,
     isConfiguredByDefault: noOp,
@@ -47,6 +47,7 @@ describe('SettingsPopup Component', () => {
         wrapper.instance().handleDropdownChange(AVAILABLE_BLOCKCHAINS.SHARED);
         expect(wrapper.state('enableCredentialsCheckbox')).toBe(false);
         expect(wrapper.state('useCredentials')).toBe(true);
+        expect(wrapper).toMatchSnapshot();
     });
 
     it('should track error type on api configuration validation', async () => {

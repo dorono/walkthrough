@@ -8,6 +8,7 @@ describe('Input Component', () => {
     const wrapperApiConfig = shallow(
         <SettingsPopup
             show={false}
+            allowCustomCredentials
             defaultApiConfig={new APIConfig()}
             apiConfig={new APIConfig()}
             onSubmit={jest.fn}
