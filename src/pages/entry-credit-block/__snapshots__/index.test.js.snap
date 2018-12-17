@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntryCreditBlockPage should match snapshot 1`] = `
+<div>
+  <Container
+    primary={true}
+    showFullWidthBanner={false}
+    title="Entry credit block"
+  >
+    <Vertical>
+      <Box
+        type="outline"
+      >
+        <Label>
+          HASH
+        </Label>
+        <withRouter(Hash)
+          type="ecblock"
+        />
+      </Box>
+      <Box
+        type="fill"
+      >
+        <Label>
+          PARENT DIRECTORY BLOCK
+        </Label>
+        <DirectoryBlockLink />
+      </Box>
+    </Vertical>
+  </Container>
+  <DataLoader
+    entriesUrl="/ecblocks/undefined/entries"
+    hasLink={false}
+    renderContent={[Function]}
+  />
+</div>
+`;

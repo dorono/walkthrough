@@ -10,8 +10,7 @@ import DirectoryBlockLink from 'components/directory-block-link';
 import BlockHeight from 'components/block-height';
 import styles from './styles.css';
 
-@dataLoader(({match}) => `/dblocks/${match.params.hash}`)
-export default class DirectoryBlock extends Component {
+export class DirectoryBlockPage extends Component {
     getBlocks() {
         const {ablock, ecblock, fblock, eblocks} = this.props.data;
 
@@ -91,3 +90,5 @@ export default class DirectoryBlock extends Component {
         );
     }
 }
+
+export default dataLoader(({match}) => `/dblocks/${match.params.hash}`)(DirectoryBlockPage);

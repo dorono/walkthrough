@@ -8,8 +8,7 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@dataLoader(({match}) => `/eblocks/${match.params.hash}`, {ignoreQueryString: true})
-export default class EntryBlock extends Component {
+export class EntryBlockPage extends Component {
     render() {
         return (
             <div>
@@ -54,3 +53,8 @@ export default class EntryBlock extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({match}) => `/eblocks/${match.params.hash}`,
+    {ignoreQueryString: true},
+)(EntryBlockPage);

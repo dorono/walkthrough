@@ -8,8 +8,7 @@ import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@dataLoader(({match}) => `/ablocks/${match.params.hash}`, {ignoreQueryString: true})
-export default class AdminBlock extends Component {
+export class AdminBlockPage extends Component {
     renderEntryContent(row) {
         const renderItems = items => (
             <ul>
@@ -70,3 +69,9 @@ export default class AdminBlock extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({match}) => `/ablocks/${match.params.hash}`,
+    {ignoreQueryString: true},
+)(AdminBlockPage);
+
