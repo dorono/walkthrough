@@ -1,5 +1,5 @@
 module.exports = {
-    collectCoverageFrom: ['src/**'],
+    collectCoverageFrom: ['src/**', '!src/**/*.js.snap'],
     roots: ['src/'],
     moduleDirectories: [
         'node_modules',

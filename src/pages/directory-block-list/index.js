@@ -7,8 +7,7 @@ import Table from 'components/table';
 import Pagination from 'components/pagination';
 import Hash from 'components/hash';
 
-@dataLoader(({location}) => addPaginationParams('/dblocks', location.search))
-export default class DirectoryBlockList extends Component {
+export class DirectoryBlockListPage extends Component {
     render() {
         const adminEntries = this.props.data.map(row => row.admin_entries).filter(value => value !== null);
         const ecEntries = this.props.data.map(row => row.ec_entries).filter(value => value !== null);
@@ -49,3 +48,7 @@ export default class DirectoryBlockList extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({location}) => addPaginationParams('/dblocks', location.search),
+)(DirectoryBlockListPage);

@@ -11,8 +11,7 @@ import ExternalIdList from 'components/external-id-list';
 
 import globalStyles from 'styles/index.css';
 
-@dataLoader(({match}) => `/chains/${match.params.hash}`, {ignoreQueryString: true})
-export default class Chain extends Component {
+export class ChainPage extends Component {
     render() {
         const isPending = this.props.data.stage === STAGE_PENDING;
         return (
@@ -52,3 +51,9 @@ export default class Chain extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({match}) => `/chains/${match.params.hash}`,
+    {ignoreQueryString: true},
+)(ChainPage);
+

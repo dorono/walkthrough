@@ -10,4 +10,8 @@ describe('Address Page', () => {
     it('should render without errors', () => {
         shallow(AddressElement);
     });
+
+    it('should match snapshot', () => {
+        expect(shallow(AddressElement)).toMatchSnapshot();
+    });
 });

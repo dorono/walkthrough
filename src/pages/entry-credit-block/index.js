@@ -8,8 +8,7 @@ import Hash from 'components/hash';
 import Monospaced from 'components/monospaced';
 import DirectoryBlockLink from 'components/directory-block-link';
 
-@dataLoader(({match}) => `/ecblocks/${match.params.hash}`, {ignoreQueryString: true})
-export default class EntryCreditBlock extends Component {
+export class EntryCreditBlockPage extends Component {
     render() {
         return (
             <div>
@@ -35,3 +34,8 @@ export default class EntryCreditBlock extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({match}) => `/ecblocks/${match.params.hash}`,
+    {ignoreQueryString: true},
+)(EntryCreditBlockPage);

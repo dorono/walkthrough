@@ -15,8 +15,7 @@ import {displayPendingContent} from 'utils/pending-items';
 
 import styles from './styles.css';
 
-@dataLoader(({location}) => addPaginationParams('/chains', location.search))
-export default class ChainList extends Component {
+export class ChainListPage extends Component {
     render() {
         return (
             <Container primary title='Chains'>
@@ -50,3 +49,7 @@ export default class ChainList extends Component {
         );
     }
 }
+
+export default dataLoader(
+    ({location}) => addPaginationParams('/chains', location.search),
+)(ChainListPage);

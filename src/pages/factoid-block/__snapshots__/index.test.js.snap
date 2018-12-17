@@ -1,0 +1,117 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`FactoidBlock should match snapshot 1`] = `
+<div>
+  <Container
+    primary={true}
+    showFullWidthBanner={false}
+    title="Factoid block"
+  >
+    <VerticalToHorizontal
+      verticalUpTo="small"
+    >
+      <Vertical>
+        <Box
+          type="outline"
+        >
+          <Vertical>
+            <div>
+              <Label>
+                INPUTS
+              </Label>
+              <Amount
+                unit="FCT"
+              />
+            </div>
+            <div>
+              <Label>
+                OUTPUTS
+              </Label>
+              <Amount
+                unit="FCT"
+              />
+            </div>
+            <div>
+              <Label>
+                ECS CREATED
+              </Label>
+              <Amount
+                unit="EC"
+              />
+            </div>
+          </Vertical>
+        </Box>
+      </Vertical>
+      <Vertical>
+        <Box
+          type="outline"
+        >
+          <Label>
+            KEYMR
+          </Label>
+          <withRouter(Hash)
+            type="fblock"
+          />
+        </Box>
+        <Box
+          type="fill"
+        >
+          <Label>
+            PARENT DIRECTORY BLOCK
+          </Label>
+          <DirectoryBlockLink />
+        </Box>
+      </Vertical>
+    </VerticalToHorizontal>
+  </Container>
+  <Sortable
+    items={Array []}
+    sortOptions={
+      Array [
+        Object {
+          "func": [Function],
+          "label": "Newest first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Oldest first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Highest input first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Lowest input first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Highest output first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Lowest output first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Highest ECs first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Lowest ECs first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Highest fee first",
+        },
+        Object {
+          "func": [Function],
+          "label": "Lowest fee first",
+        },
+      ]
+    }
+  >
+    <Component />
+  </Sortable>
+</div>
+`;

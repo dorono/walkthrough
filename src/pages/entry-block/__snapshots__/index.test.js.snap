@@ -1,0 +1,74 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EntryBlock should match snapshot 1`] = `
+<div>
+  <Container
+    primary={true}
+    showFullWidthBanner={false}
+    title="Entry block"
+  >
+    <Vertical>
+      <Box
+        type="fill"
+      >
+        <Label>
+          NEXT ENTRY BLOCK
+        </Label>
+        <withRouter(Hash)
+          type="eblock"
+        />
+      </Box>
+      <Box
+        type="outline"
+      >
+        <Label>
+          KEYMR
+        </Label>
+        <withRouter(Hash)
+          type="eblock"
+        />
+      </Box>
+      <Box
+        type="fill"
+      >
+        <Label>
+          PREVIOUS ENTRY BLOCK
+        </Label>
+        <withRouter(Hash)
+          type="eblock"
+        />
+      </Box>
+      <Box
+        type="fill"
+      >
+        <Label>
+          CHAIN
+        </Label>
+        <withRouter(Hash)
+          type="chain"
+        />
+      </Box>
+      <Box
+        type="fill"
+      >
+        <Label>
+          PARENT DIRECTORY BLOCK
+        </Label>
+        <DirectoryBlockLink />
+      </Box>
+      <Box>
+        <Label>
+          STARTED (
+          11/11/11
+          )
+        </Label>
+        11111111
+      </Box>
+    </Vertical>
+  </Container>
+  <DataLoader
+    entriesUrl="/eblocks/undefined/entries"
+    renderContent={[Function]}
+  />
+</div>
+`;

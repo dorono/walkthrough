@@ -1,0 +1,52 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Chain should match snapshot 1`] = `
+<div>
+  <Container
+    fullWidthBannerText="This chain has not yet been written to the Factom Blockchain."
+    primary={true}
+    showFullWidthBanner={false}
+    title="Chain"
+  >
+    <Vertical>
+      <Box
+        type="outline"
+      >
+        <Label>
+          IMMUTABILITY STAGE
+        </Label>
+        <span
+          className="capitalized"
+        />
+      </Box>
+      <Box
+        type="outline"
+      >
+        <Label>
+          CHAIN ID
+        </Label>
+        <withRouter(Hash)
+          type="chain"
+        />
+      </Box>
+      <Box>
+        <Label>
+          EXTERNAL IDS
+        </Label>
+        <ExternalIdList
+          className="multiline"
+          externalIds={
+            Array [
+              "UlNBLVNIQTUxMg==",
+            ]
+          }
+        />
+      </Box>
+    </Vertical>
+  </Container>
+  <DataLoader
+    entriesUrl="/chains/undefined/entries"
+    renderContent={[Function]}
+  />
+</div>
+`;

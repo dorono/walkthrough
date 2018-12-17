@@ -10,8 +10,7 @@ import DirectoryBlockLink from 'components/directory-block-link';
 import FactoidBlockLink from 'components/factoid-block-link';
 import Amount from 'components/amount';
 
-@dataLoader(({match}) => `/transactions/${match.params.hash}`)
-export default class Transaction extends Component {
+export class TransactionPage extends Component {
     getTransactionAmount(transaction) {
         let amount;
         let unit;
@@ -105,3 +104,5 @@ export default class Transaction extends Component {
         );
     }
 }
+
+export default dataLoader(({match}) => `/transactions/${match.params.hash}`)(TransactionPage);

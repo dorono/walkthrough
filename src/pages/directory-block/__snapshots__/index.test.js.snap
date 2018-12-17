@@ -1,0 +1,142 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`DirectoryBlock should match snapshot 1`] = `
+<div>
+  <Container
+    primary={true}
+    showFullWidthBanner={false}
+    title="Directory block"
+  >
+    <VerticalToHorizontal
+      verticalUpTo="medium"
+    >
+      <Vertical>
+        <BlockHeight />
+        <div>
+          <Label>
+            START TIME (
+            11/11/11
+            )
+          </Label>
+          11111111
+        </div>
+      </Vertical>
+      <Vertical>
+        <Box
+          type="disabled"
+        >
+          <Label>
+            NEXT DIRECTORY BLOCK
+          </Label>
+          <DirectoryBlockLink />
+        </Box>
+        <Box
+          type="outline"
+        >
+          <Label>
+            KEYMR
+          </Label>
+          <withRouter(Hash)
+            type="dblock"
+          />
+        </Box>
+        <Box
+          type="fill"
+        >
+          <Label>
+            PREVIOUS DIRECTORY BLOCK
+          </Label>
+          <DirectoryBlockLink />
+        </Box>
+        <Box
+          type="disabled"
+        >
+          <Label>
+            BTC TRANSACTION
+          </Label>
+          <withRouter(Hash)
+            type="btc"
+          />
+        </Box>
+        <Box
+          type="disabled"
+        >
+          <Label>
+            BTC ANCHOR ENTRY
+          </Label>
+          <withRouter(Hash) />
+        </Box>
+      </Vertical>
+    </VerticalToHorizontal>
+  </Container>
+  <Container
+    count={4}
+    showFullWidthBanner={false}
+    subtitle="(included in this directory block)"
+    title="Blocks"
+  >
+    <div
+      className="block"
+      key="hash1"
+    >
+      <Label>
+        ADMIN BLOCK
+      </Label>
+      <withRouter(Hash)
+        type="ablock"
+      >
+        hash1
+      </withRouter(Hash)>
+    </div>
+    <div
+      className="block"
+      key="hash2"
+    >
+      <Label>
+        ENTRY CREDIT BLOCK
+      </Label>
+      <withRouter(Hash)
+        type="ecblock"
+      >
+        hash2
+      </withRouter(Hash)>
+    </div>
+    <div
+      className="block"
+    >
+      <Label>
+        FACTOID BLOCK
+      </Label>
+      <withRouter(Hash)
+        type="fblock"
+      />
+    </div>
+    <div
+      className="block merge"
+      key="keymr"
+    >
+      <Label>
+        ENTRY BLOCK
+      </Label>
+      <withRouter(Hash)
+        type="eblock"
+      >
+        keymr
+      </withRouter(Hash)>
+    </div>
+    <div
+      className="block"
+      key="chain1"
+    >
+      <Label>
+        CHAIN
+      </Label>
+      <withRouter(Hash)
+        type="chain"
+      >
+        chain1
+      </withRouter(Hash)>
+    </div>
+  </Container>
+</div>
+`;

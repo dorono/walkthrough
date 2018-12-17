@@ -10,8 +10,7 @@ import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 import Amount from 'components/amount';
 
-@dataLoader(({match}) => `/fblocks/${match.params.hash}`)
-export default class FactoidBlock extends Component {
+export class FactoidBlockPage extends Component {
     render() {
         return (
             <div>
@@ -95,3 +94,5 @@ export default class FactoidBlock extends Component {
         );
     }
 }
+
+export default dataLoader(({match}) => `/fblocks/${match.params.hash}`)(FactoidBlockPage);
