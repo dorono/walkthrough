@@ -19,6 +19,7 @@ const defaultProps = {
     isConfiguredByDefault: noOp,
     defaultApiConfig: apiConfig,
     apiConfig,
+    value: 'test',
 };
 
 describe('SettingsPopup Component', () => {

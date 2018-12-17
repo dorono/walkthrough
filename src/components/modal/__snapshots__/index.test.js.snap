@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Modal Component should match snapshot 1`] = `""`;
+
+exports[`ModalBody Component should match snapshot 1`] = `<div />`;
+
+exports[`ModalFooter Component should match snapshot 1`] = `<div />`;
+
+exports[`ModalHeader Component should match snapshot 1`] = `<div />`;

@@ -32,7 +32,7 @@ export default class Hash extends Component {
         const hash = this.props.children;
 
         if (!hash) {
-            return <span className={styles.root}>{STAGE_NOT_AVAILABLE}</span>;
+            return <span>{STAGE_NOT_AVAILABLE}</span>;
         }
 
         if (Number(hash) === 0) {

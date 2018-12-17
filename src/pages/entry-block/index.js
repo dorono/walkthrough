@@ -44,7 +44,7 @@ export class EntryBlockPage extends Component {
                     entriesUrl={`/eblocks/${this.props.data.keymr}/entries`}
                     pageParams={this.props.location.search}
                     renderContent={row => (
-                        <Hash type='entry' extraArgs={{chain: this.props.data.chain.chain_id}}>
+                        <Hash type='entry' extraArgs={{chain: this.props.data.chain.chain_id}} key={row.entry_hash}>
                             {row.entry_hash}
                         </Hash>
                     )}

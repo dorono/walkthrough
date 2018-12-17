@@ -5,14 +5,13 @@ import {autobind} from 'core-decorators';
 import classNames from 'classnames';
 import styles from './styles.css';
 
-@withRouter
-@autobind
-export default class Table extends Component {
+export class Table extends Component {
     static propTypes = {
         columns: PropTypes.arrayOf(PropTypes.string).isRequired,
         children: PropTypes.func.isRequired,
         ellipsis: PropTypes.number,
         centerAlign: PropTypes.number,
+        leftPadding: PropTypes.number,
         interactive: PropTypes.bool,
         type: PropTypes.oneOf(['primary', 'secondary']),
         responsive: PropTypes.bool,
@@ -24,6 +23,7 @@ export default class Table extends Component {
         responsive: false,
     };
 
+    @autobind
     handleClick(event) {
         // Do not trigger link if selecting
         if (window.getSelection().toString()) return;
@@ -60,6 +60,8 @@ export default class Table extends Component {
 
                             if (index >= this.props.centerAlign) {
                                 className.push(styles.center);
+                            } else if (index === this.props.leftPadding) {
+                                className.push(styles.leftPadding);
                             }
 
                             if (this.props.fixedWidth && index >= this.props.fixedWidth.start) {
@@ -110,3 +112,5 @@ export default class Table extends Component {
         );
     }
 }
+
+export default withRouter(Table);

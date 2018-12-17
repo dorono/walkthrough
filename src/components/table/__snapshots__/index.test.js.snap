@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Table should match snapshot 1`] = `
+<table
+  className="primary interactive"
+  onClick={[Function]}
+>
+  <thead
+    className="left"
+  >
+    <tr>
+      <th
+        className="header"
+        key="col1"
+      >
+        col1
+      </th>
+      <th
+        className="header"
+        key="col2"
+      >
+        col2
+      </th>
+      <th
+        className="header"
+        key="col3"
+      >
+        col3
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      key="0"
+    >
+      <td>
+        row1_test1
+      </td>
+      <td>
+        row1_test2
+      </td>
+      <td>
+        row1_test3
+      </td>
+    </tr>
+    <tr
+      key="1"
+    >
+      <td>
+        row2_test1
+      </td>
+      <td>
+        row2_test2
+      </td>
+      <td>
+        row2_test3
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;

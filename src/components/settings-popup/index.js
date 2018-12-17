@@ -15,6 +15,7 @@ import MessageBar from 'components/message-bar';
 import {request} from 'api';
 import APIConfig from 'utils/api-config';
 import {notUndefined} from 'utils/validate';
+import {isIE} from 'utils/user-agent';
 import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
 import {ERRORS} from 'errors';
 import {trackNotSuccessfulConnection, trackSuccessfulConnection} from 'analytics';
@@ -69,6 +70,7 @@ export default class SettingsPopup extends Component {
             useCredentials: !configuredByDefault || false,
             errors: getDefaultErrors(allowCustomCredentials),
             verifyingConnection: false,
+            setModalSize: false,
         };
     }
 
@@ -92,6 +94,39 @@ export default class SettingsPopup extends Component {
 
     showConnectUrl() {
         return this.state.selectedBlockchain === AVAILABLE_BLOCKCHAINS.PRIVATE;
+    }
+
+    @autobind
+    disableSubmit() {
+        if (
+            this.state.verifyingConnection
+            || this.state.errors[ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED]
+        ) {
+            return true;
+        }
+
+        // for private, we need appId, appKey, and apiUrl
+        if (
+            this.state.selectedBlockchain === AVAILABLE_BLOCKCHAINS.PRIVATE
+            && (
+                !this.state.appId
+                || !this.state.appKey
+                || !this.state.apiUrl
+            )
+        ) {
+            return true;
+        // for public, we need appId and appKey
+        } else if (
+            this.state.selectedBlockchain === AVAILABLE_BLOCKCHAINS.PUBLIC
+            && (
+                !this.state.appId
+                || !this.state.appKey
+            )
+        ) {
+            return true;
+        }
+
+        return false;
     }
 
     @autobind
@@ -126,6 +161,7 @@ export default class SettingsPopup extends Component {
             newState.apiToken = this.props.defaultApiConfig.apiToken;
             newState.appId = this.props.defaultApiConfig.appId;
             newState.apiUrl = this.props.defaultApiConfig.apiUrl;
+            newState.setModalSize = true;
         }
         this.setState(newState);
     }
@@ -150,6 +186,7 @@ export default class SettingsPopup extends Component {
             selectedBlockchain,
             useCredentials,
             enableCredentialsCheckbox,
+            setModalSize: false,
             appId: '',
             appKey: '',
             privateUrl: '',
@@ -230,7 +267,13 @@ export default class SettingsPopup extends Component {
         return (
             <Modal
                 show={this.props.show}
-                className={styles.modalRoot}>
+                className={classNames(
+                    styles.modalRoot,
+                    {
+                        [styles.defaultPosition]: !isIE(),
+                        [styles.iePosition]: isIE(),
+                    },
+                )}>
                 <ModalHeader className={styles.modalHeader}>
                     BLOCKCHAIN SETTINGS
                 </ModalHeader>
@@ -320,6 +363,7 @@ export default class SettingsPopup extends Component {
                                                 placeholder='Enter your App ID'
                                                 handleChange={this.handleChange}
                                                 className={classNames(styles.input, styles.formInput)}
+                                                key='appId'
                                             />
                                         </FormGroup>,
                                         <FormGroup key='app-key' className={styles.formGroup}>
@@ -330,6 +374,7 @@ export default class SettingsPopup extends Component {
                                                 error={errors[ERRORS.CREDENTIALS] || errors[ERRORS.OTHER]}
                                                 type='password'
                                                 name='appKey'
+                                                key='appKey'
                                                 value={this.state.appKey}
                                                 placeholder='Enter your App Key'
                                                 handleChange={this.handleChange}
@@ -348,15 +393,14 @@ export default class SettingsPopup extends Component {
                         title='CANCEL'
                         className={classNames(styles.button, styles.cancel)}
                         onClick={this.handleClose}
+                        key='cancel'
                     />
                     <Button
-                        disabled={
-                            this.state.verifyingConnection
-                            || errors[ERRORS.CUSTOM_CREDENTIALS_NOT_ALLOWED]
-                        }
+                        disabled={this.disableSubmit()}
                         title='SUBMIT'
                         className={styles.button}
                         onClick={this.handleSubmit}
+                        key='submit'
                     />
                 </ModalFooter>
             </Modal>

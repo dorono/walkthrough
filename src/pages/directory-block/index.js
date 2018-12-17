@@ -22,8 +22,8 @@ export class DirectoryBlockPage extends Component {
 
         eblocks.forEach(eblock => {
             hashes.push(
-                {type: 'eblock', label: 'ENTRY BLOCK', value: eblock.keymr, merge: true},
-                {type: 'chain', label: 'CHAIN', value: eblock.chain.chain_id},
+                {type: 'eblock', label: 'ENTRY BLOCK', value: eblock.keymr, merge: true, key: eblock.keymr},
+                {type: 'chain', label: 'CHAIN', value: eblock.chain.chain_id, key: eblock.chain.chain_id},
             );
         });
 

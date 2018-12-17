@@ -83,7 +83,13 @@ export default class Address extends Component {
                                 type='secondary'>
                                 {(row, index) => (
                                     <tr key={index}>
-                                        <td><Hash type='tx'>{row.tx_id}</Hash></td>
+                                        <td>
+                                            <Hash
+                                                type='tx'
+                                                key={row.tx_id}>
+                                                {row.tx_id}
+                                            </Hash>
+                                        </td>
                                         <td><Amount unit={this.getAmountUnit()}>{this.getAmount(row)}</Amount></td>
                                         <td>{formatDate(row.created_at)}</td>
                                     </tr>

@@ -14,11 +14,15 @@ export class EntryCreditBlockPage extends Component {
             <div>
                 <Container primary title='Entry credit block'>
                     <Vertical>
-                        <Box type='outline'>
+                        <Box
+                            type='outline'
+                            key='outline'>
                             <Label>HASH</Label>
                             <Hash type='ecblock'>{this.props.data.hash}</Hash>
                         </Box>
-                        <Box type='fill'>
+                        <Box
+                            type='fill'
+                            key='fill'>
                             <Label>PARENT DIRECTORY BLOCK</Label>
                             <DirectoryBlockLink>{this.props.data.dblock}</DirectoryBlockLink>
                         </Box>

@@ -2,8 +2,17 @@
 
 .modal-root {
     width: 60rem;
-    position: relative;
-    top: 0;
+
+    &.default-position {
+        position: absolute;
+        top: 8%;
+        --left-right-padding: 4.5rem;
+    }
+
+    &.ie-position {
+        position: relative;
+        top: 0;
+    }
 }
 
 @media (--up-to-extra-small-viewport) {

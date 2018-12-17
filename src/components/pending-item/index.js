@@ -5,6 +5,7 @@ import {autobind} from 'core-decorators';
 
 import Icon from 'components/icon';
 import Tooltip from 'components/tooltip';
+import {isIE} from 'utils/user-agent';
 
 import {STAGE_PENDING} from 'stages';
 import styles from './styles.css';
@@ -47,8 +48,13 @@ export default class PendingItem extends Component {
                     show={this.props.enableTooltip && this.state.displayTooltip && this.props.stage === STAGE_PENDING}
                     arrowDirection='left'
                     small
-                    className={styles.stateCallout}>
-                    <span>PENDING</span>
+                    className={classNames({
+                        [styles.ieWidth]: isIE(),
+                        [styles.stateCallout]: true,
+                    })}>
+                    <span>
+                        PENDING
+                    </span>
                 </Tooltip>
             </div>
         );

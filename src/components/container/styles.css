@@ -59,7 +59,7 @@
     padding-right: 0;
 }
 
-.setWithPadding,
+.set-with-padding,
 .set-full-width > div {
     padding-left: 2rem;
     padding-right: 2rem;

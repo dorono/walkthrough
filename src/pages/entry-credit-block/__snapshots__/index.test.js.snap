@@ -9,6 +9,7 @@ exports[`EntryCreditBlockPage should match snapshot 1`] = `
   >
     <Vertical>
       <Box
+        key="outline"
         type="outline"
       >
         <Label>
@@ -19,6 +20,7 @@ exports[`EntryCreditBlockPage should match snapshot 1`] = `
         />
       </Box>
       <Box
+        key="fill"
         type="fill"
       >
         <Label>

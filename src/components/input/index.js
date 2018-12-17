@@ -9,7 +9,7 @@ export default class Input extends Component {
         className: PropTypes.string,
         name: PropTypes.string.isRequired,
         type: PropTypes.string.isRequired,
-        value: PropTypes.string.isRequired,
+        value: PropTypes.string,
         handleChange: PropTypes.func.isRequired,
         placeholder: PropTypes.string,
         error: PropTypes.bool,

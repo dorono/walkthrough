@@ -53,6 +53,7 @@
         "import/order": [2, {
             "groups": ["builtin", "external", "internal", "parent", "sibling", "index"],
         }],
+        "import/no-named-as-default": [0],
 
         // Accessibility... sorry :/
         "jsx-a11y/tabindex-no-positive": [0],

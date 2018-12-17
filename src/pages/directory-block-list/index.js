@@ -35,7 +35,7 @@ export class DirectoryBlockListPage extends Component {
                         <tr key={row.height}>
                             <td>{row.height}</td>
                             <td>{formatDate(row.started_at)}</td>
-                            <td><Hash type='dblock'>{row.keymr}</Hash></td>
+                            <td><Hash type='dblock' key={row.keymr}>{row.keymr}</Hash></td>
                             {adminEntries.length > 0 && <td>{row.admin_entries}</td>}
                             {ecEntries.length > 0 && <td>{row.ec_entries}</td>}
                             <td>{row.factoid_entries}</td>

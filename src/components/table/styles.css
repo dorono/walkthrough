@@ -6,6 +6,10 @@
     text-align: left;
     white-space: nowrap;
 
+    th {
+        text-align: left;
+    }
+
     & > tbody {
         & th,
         & td {
@@ -69,6 +73,10 @@
 
         &:not(:last-child) {
             padding-right: 1.5rem;
+        }
+
+        &.left-padding {
+            padding-left: var(--default-table-padding);
         }
     }
 

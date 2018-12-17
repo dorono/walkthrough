@@ -10,6 +10,7 @@ exports[`Chain should match snapshot 1`] = `
   >
     <Vertical>
       <Box
+        key="stage"
         type="outline"
       >
         <Label>
@@ -20,6 +21,7 @@ exports[`Chain should match snapshot 1`] = `
         />
       </Box>
       <Box
+        key="chain"
         type="outline"
       >
         <Label>
@@ -29,7 +31,9 @@ exports[`Chain should match snapshot 1`] = `
           type="chain"
         />
       </Box>
-      <Box>
+      <Box
+        key="external_ids"
+      >
         <Label>
           EXTERNAL IDS
         </Label>

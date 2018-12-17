@@ -1,0 +1,112 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Entries Table Component should NOT display the <PendingLegend /> component if there are no pending entries 1`] = `
+<Container
+  showFullWidthBanner={false}
+  title="Entries"
+>
+  <withRouter(Table)
+    columns={
+      Array [
+        "CREATED (11/11/11)",
+        "HASH",
+      ]
+    }
+    ellipsis={1}
+    interactive={true}
+    leftPadding={0}
+    rows={
+      Array [
+        Object {
+          "stage": "factom,anchored",
+        },
+        Object {
+          "stage": "factom,anchored",
+        },
+      ]
+    }
+    type="secondary"
+  >
+    <Component />
+  </withRouter(Table)>
+  <PendingLegend
+    fullWidthBannerText="This entry has not yet been written to the Factom Blockchain."
+    highlightBanner={false}
+    show={false}
+  />
+</Container>
+`;
+
+exports[`Entries Table Component should change the local state to display the <PendingLegend /> component if one or more entries are pending 1`] = `
+<Container
+  showFullWidthBanner={false}
+  title="Entries"
+>
+  <withRouter(Table)
+    columns={
+      Array [
+        "CREATED (11/11/11)",
+        "HASH",
+      ]
+    }
+    ellipsis={1}
+    interactive={true}
+    leftPadding={0}
+    rows={
+      Array [
+        Object {
+          "stage": "replicated",
+        },
+        Object {
+          "stage": "factom,anchored",
+        },
+      ]
+    }
+    type="secondary"
+  >
+    <Component />
+  </withRouter(Table)>
+  <PendingLegend
+    fullWidthBannerText="This entry has not yet been written to the Factom Blockchain."
+    highlightBanner={false}
+    show={true}
+  />
+</Container>
+`;
+
+exports[`Entries Table Component should match snapshot 1`] = `
+<Container
+  showFullWidthBanner={false}
+  title="Entries"
+>
+  <withRouter(Table)
+    columns={
+      Array [
+        "CREATED (11/11/11)",
+        "HASH",
+      ]
+    }
+    ellipsis={1}
+    interactive={true}
+    leftPadding={0}
+    rows={
+      Array [
+        Object {
+          "stage": "factom,anchored",
+        },
+        Object {
+          "stage": "factom,anchored",
+        },
+      ]
+    }
+    type="secondary"
+  >
+    <Component />
+  </withRouter(Table)>
+  <PendingLegend
+    fullWidthBannerText="This entry has not yet been written to the Factom Blockchain."
+    highlightBanner={false}
+    show={false}
+  />
+</Container>
+`;
