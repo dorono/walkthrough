@@ -1,5 +1,17 @@
 ## Changelog
 
+### 2018-12-19: 3.1.4-rc2
+- [EX-79] Miscellaneous UI Fixes + Added Tests to Components in PR
+- [EX-147] Add tests for pages.
+- [EX-146] Add missing test files for components.
+- [EX-145] Add Snapshot Testing Capability to One Component as POC.
+- [EX-143] Delete Welcome Popup + Show Error message when custom credentials are not allowed.
+- [EX-142] Fix text alignment on table header for IE11
+- [EX-128] Tracking improvements using Google Tag Manager
+- [EX-137] Improve fade on chains list.
+- [EX-131] Fix NPM Warnings
+- [EX-135] Landing Page UX improvements.
+
 ### 2018-12-04: 3.1.4-rc1
 - [EX-132] Mobile improvements.
 - [EX-133] Request plan change error fix.
