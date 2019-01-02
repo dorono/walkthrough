@@ -11,6 +11,7 @@
     --black-disabled: #A2A2A2;
 
     --gray-bg-light: #F5F5F5;
+    --gray-bg-light-hover: #FAFAFA;
     --gray-bg-dark: #F4F4F4;
     --gray-stroke-light: #E9E9E9;
     --gray-stroke-dark: #C3C3C3;
@@ -22,6 +23,7 @@
 
     --app-bg: #FAFAFA;
     --app-header-bg: var(--violet-dark);
+    --table-header-bg: #E8E8E8;
 
     --content-width: 95%;
     --content-max-width: 1400px;
@@ -32,6 +34,7 @@
     --font: 'Montserrat', sans-serif;
     --monospace-font: 'Roboto Mono', monospace;
 
+    @custom-media --up-to-extra-small-viewport-height (height <= 675px);
     @custom-media --up-to-extra-small-viewport (width <= 544px);
     @custom-media --up-to-small-viewport (width <= 768px);
     @custom-media --up-to-medium-viewport (width <= 992px);

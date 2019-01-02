@@ -27,7 +27,7 @@
         }
 
         & tr:hover > * {
-            background: var(--gray-bg-light);
+            background: var(--gray-bg-light-hover);
         }
     }
 }
@@ -45,7 +45,7 @@
     }
 
     & thead th {
-        background: var(--gray-bg-dark);
+        background: var(--table-header-bg);
 
         &:first-child {
             border-top-left-radius: var(--border-radius);
@@ -97,7 +97,8 @@
     text-overflow: ellipsis;
 }
 
-.center {
+.center,
+.root .center {
     text-align: center;
 }
 
