@@ -19,10 +19,7 @@
 
 .title {
     font-size: 3rem;
-
-    main.root & {
-        font-weight: 300;
-    }
+    font-weight: 300;
 
     section.root & {
         font-weight: 200;

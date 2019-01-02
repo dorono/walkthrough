@@ -5,7 +5,7 @@
 
     &.default-position {
         position: absolute;
-        top: 8%;
+        top: 12%;
         --left-right-padding: 4.5rem;
     }
 
@@ -24,6 +24,14 @@
 
     .dropdown-options {
         max-width: 81%;
+    }
+}
+
+@media (--up-to-extra-small-viewport-height) {
+    .modal-root {
+        &.default-position {
+            top: 2%;
+        }
     }
 }
 
@@ -58,7 +66,7 @@
     color: var(--white);
     font-size: 2.2rem;
     line-height: 1em;
-    font-weight: 600;
+    font-weight: 300;
 }
 
 .modal-body {

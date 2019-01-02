@@ -6,7 +6,7 @@ exports[`AppFooter should match snapshot 1`] = `
 >
   <span>
     © 
-    2018
+    2019
      Factom, Inc.
   </span>
   <Monospaced>
