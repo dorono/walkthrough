@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2018-12-19: 3.1.4-rc3
+- [EX-153] - Fix misc UI bugs
+
 ### 2018-12-19: 3.1.4-rc2
 - [EX-79] Miscellaneous UI Fixes + Added Tests to Components in PR
 - [EX-147] Add tests for pages.
