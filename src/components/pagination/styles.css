@@ -33,7 +33,7 @@
 
 .active {
     composes: item;
-    border: 1px solid var(--violet);
+    border: 1px solid var(--violet-dark);
 }
 
 .dots {
