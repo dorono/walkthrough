@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-01-09: 3.1.4-rc4
+- [EX-153] - Changed color of active item in pagination and updated webpack package with vulnerability
+
 ### 2018-12-19: 3.1.4-rc3
 - [EX-153] - Fix misc UI bugs
 
