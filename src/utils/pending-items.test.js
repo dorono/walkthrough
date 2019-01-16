@@ -1,4 +1,4 @@
-import {STAGE_PENDING} from 'stages';
+import {STAGE_PENDING} from 'constants/stages';
 import {displayPendingContent} from './pending-items';
 
 const mockPendingChain = [
