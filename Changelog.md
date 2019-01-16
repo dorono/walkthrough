@@ -1,5 +1,11 @@
 ## Changelog
 
+### 2019-01-15: 3.1.4-rc5
+- [EX-144] - Explorer Unit Testing Enhancements
+- [EX-149] - Add Test for Global Custom Libraries
+- [EX-148] - Add Test for Utils
+- [EX-137] - Fix chain list hover regression
+
 ### 2019-01-09: 3.1.4-rc4
 - [EX-153] - Changed color of active item in pagination and updated webpack package with vulnerability
 
