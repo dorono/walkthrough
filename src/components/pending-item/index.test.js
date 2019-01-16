@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {STAGE_PENDING} from 'stages';
+import {STAGE_PENDING} from 'constants/stages';
 
 import PendingItem from './index';
 

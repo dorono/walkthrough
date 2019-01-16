@@ -1,7 +1,7 @@
 import React from 'react';
 import {shallow, mount} from 'enzyme';
 import SettingsPopup from 'components/settings-popup';
-import APIConfig from 'utils/api-config';
+import APIConfig from 'api/api-config';
 import Input from './index';
 
 describe('Input Component', () => {

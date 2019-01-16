@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {dataLoader} from 'decorators';
+import {dataLoader} from 'hocs/data-loader';
 import {addPaginationParams} from 'api';
 
 import Container from 'components/container';
@@ -10,7 +10,7 @@ import ExternalIdList from 'components/external-id-list';
 import PendingItem from 'components/pending-item';
 import PendingLegend from 'components/pending-legend';
 
-import {STAGE_PENDING_CHAIN_TEXT} from 'stages';
+import {STAGE_PENDING_CHAIN_TEXT} from 'constants/stages';
 import {displayPendingContent} from 'utils/pending-items';
 
 import styles from './styles.css';

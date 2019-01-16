@@ -4,9 +4,9 @@ import classNames from 'classnames';
 import {autobind} from 'core-decorators';
 
 import {addPaginationParams} from 'api';
-import {dataLoader} from 'decorators';
+import {dataLoader} from 'hocs/data-loader';
 
-import {STAGE_PENDING_ENTRY_TEXT, STAGE_PENDING, STAGE_PENDING_DATE} from 'stages';
+import {STAGE_PENDING_ENTRY_TEXT, STAGE_PENDING, STAGE_PENDING_DATE} from 'constants/stages';
 
 import Container from 'components/container';
 import Pagination from 'components/pagination';

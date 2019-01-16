@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {dataLoader} from 'decorators';
+import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
 import {Vertical, Box, VerticalToHorizontal} from 'components/layout';

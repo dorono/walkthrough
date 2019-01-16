@@ -5,6 +5,7 @@ configure({adapter: new Adapter()});
 
 // Global variables. In dev and build process, these are defined by webpack.
 window.CONFIG = {
+    apiUrl: 'https://stage.harmony.factom.com',
     apiUrlVersionSuffix: '/v1',
     gatewayUrls: {
         publicNet: '',

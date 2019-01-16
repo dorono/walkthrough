@@ -1,4 +1,4 @@
-import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
+import {AVAILABLE_BLOCKCHAINS} from 'constants/blockchains';
 
 const API_URL_VERSION_SUFFIX = CONFIG.apiUrlVersionSuffix;
 

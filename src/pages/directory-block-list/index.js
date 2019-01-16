@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {dataLoader} from 'decorators';
+import {dataLoader} from 'hocs/data-loader';
 import {addPaginationParams} from 'api';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';

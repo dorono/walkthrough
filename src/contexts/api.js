@@ -3,7 +3,7 @@ import {autobind} from 'core-decorators';
 import set from 'lodash/set';
 import queryString from 'query-string';
 import {request} from 'api';
-import APIConfig from 'utils/api-config';
+import APIConfig from 'api/api-config';
 import {isIE, isEdge} from 'utils/user-agent';
 import {setSessionItem, getSessionItem} from 'utils/session-storage';
 import WindowEventListener from 'components/window-event-listener';

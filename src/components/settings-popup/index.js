@@ -13,12 +13,12 @@ import Input from 'components/input';
 import Button from 'components/button';
 import MessageBar from 'components/message-bar';
 import {request} from 'api';
-import APIConfig from 'utils/api-config';
+import APIConfig from 'api/api-config';
 import {notUndefined} from 'utils/validate';
 import {isIE} from 'utils/user-agent';
-import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
-import {ERRORS} from 'errors';
-import {trackNotSuccessfulConnection, trackSuccessfulConnection} from 'analytics';
+import {AVAILABLE_BLOCKCHAINS} from 'constants/blockchains';
+import {ERRORS} from 'constants/errors';
+import {trackNotSuccessfulConnection, trackSuccessfulConnection} from 'utils/analytics';
 import globalStyles from 'styles/index.css';
 import styles from './styles.css';
 import {
