@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 import {reverse} from 'routes';
-import {STAGE_NOT_AVAILABLE} from 'stages';
+import {STAGE_NOT_AVAILABLE} from 'constants/stages';
 
 import styles from './styles.css';
 

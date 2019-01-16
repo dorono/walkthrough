@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
-import {dataLoader} from 'decorators';
+import {dataLoader} from 'hocs/data-loader';
 
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
@@ -10,7 +10,7 @@ import Hash from 'components/hash';
 import ExternalIdList from 'components/external-id-list';
 import EntryBlockLink from 'components/entry-block-link';
 import EntryContent from 'components/entry-content/index';
-import {STAGE_PENDING, STAGE_PENDING_ENTRY_TEXT, STAGE_NOT_AVAILABLE} from 'stages';
+import {STAGE_PENDING, STAGE_PENDING_ENTRY_TEXT, STAGE_NOT_AVAILABLE} from 'constants/stages';
 
 import globalStyles from 'styles/index.css';
 import styles from './styles.css';

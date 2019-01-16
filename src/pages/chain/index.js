@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import {dataLoader} from 'decorators';
-import {STAGE_PENDING, STAGE_PENDING_CHAIN_TEXT} from 'stages';
+import {dataLoader} from 'hocs/data-loader';
+import {STAGE_PENDING, STAGE_PENDING_CHAIN_TEXT} from 'constants/stages';
 
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';

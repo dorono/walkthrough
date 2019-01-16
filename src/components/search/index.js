@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {autobind} from 'core-decorators';
 import classNames from 'classnames';
-import {trackPageView} from 'analytics';
+import {trackPageView} from 'utils/analytics';
 import {request} from 'api';
 import {reverse} from 'routes';
 import {

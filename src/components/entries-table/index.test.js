@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {STAGE_PENDING, STAGE_CONFIRMED} from 'stages';
+import {STAGE_PENDING, STAGE_CONFIRMED} from 'constants/stages';
 
 import {EntriesTable} from './index';
 

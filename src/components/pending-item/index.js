@@ -7,7 +7,7 @@ import Icon from 'components/icon';
 import Tooltip from 'components/tooltip';
 import {isIE} from 'utils/user-agent';
 
-import {STAGE_PENDING} from 'stages';
+import {STAGE_PENDING} from 'constants/stages';
 import styles from './styles.css';
 
 export default class PendingItem extends Component {

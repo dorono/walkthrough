@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {dataLoader} from 'decorators';
+import {dataLoader} from 'hocs/data-loader';
 import Container from 'components/container';
 import {Vertical, Box} from 'components/layout';
 import EntriesTable from 'components/entries-table';

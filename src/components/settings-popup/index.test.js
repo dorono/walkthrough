@@ -1,13 +1,13 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import APIConfig from 'utils/api-config';
-import {AVAILABLE_BLOCKCHAINS} from 'blockchains';
-import {ERRORS} from 'errors';
-import {trackNotSuccessfulConnection} from 'analytics';
+import APIConfig from 'api/api-config';
+import {AVAILABLE_BLOCKCHAINS} from 'constants/blockchains';
+import {ERRORS} from 'constants/errors';
+import {trackNotSuccessfulConnection} from 'utils/analytics';
 import SettingsPopup, {getDefaultErrors} from './index';
 
 // Ask Jest to mock the analytics module.
-jest.mock('../../analytics');
+jest.mock('../../utils/analytics');
 
 const noOp = jest.fn();
 const apiConfig = new APIConfig();
