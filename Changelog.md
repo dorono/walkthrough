@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-01-15: 3.1.4
+- Bump version for release to Production.
+
 ### 2019-01-15: 3.1.4-rc5
 - [EX-144] - Explorer Unit Testing Enhancements
 - [EX-149] - Add Test for Global Custom Libraries
