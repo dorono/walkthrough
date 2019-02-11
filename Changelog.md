@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2019-02-11: 3.1.5-rc1
+- [EX-134] - External ID not displaying properly
+- [EX-154] - Enable viewing hex and base64 encoded data even when valid UTF-8
+
 ### 2019-01-15: 3.1.4
 - Bump version for release to Production.
 

@@ -30,10 +30,21 @@ class ExternalId extends Component {
         selected: this.getDefaultEncoding(),
     };
 
+    isPrintable(value) {
+        // check for chars forbidden by XML 1.0 specifications, plus the unicode replacement character U+FFFD
+        const regex = /[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g;
+        return !regex.test(value);
+    }
+
     getDefaultEncoding() {
         const {data} = this.props;
         const withLabel = label => encoding => encoding.label === label;
-        return data.find(withLabel('hex')) || data.find(withLabel('raw'));
+
+        if (this.isPrintable(data.find(withLabel('raw')).value)) {
+            return data.find(withLabel('raw'));
+        }
+
+        return data.find(withLabel('hex') || withLabel('base64'));
     }
 
     @autobind

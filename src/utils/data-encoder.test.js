@@ -3,22 +3,22 @@ import getMultipleEncodings from './data-encoder';
 const mockRawBase64 = 'VGVzdA==';
 const mockRawExpectedReturn = {
     raw: 'Test',
-    json: null,
-    hex: null,
-    base64: null,
+    json: undefined,
+    hex: '54657374',
+    base64: 'VGVzdA==',
 };
 const mockJSONBase64 = 'eyJ0ZXN0TnVtYmVyIjogOTk5fQ==';
 const mockJSONExpectedReturn = {
     raw: '{"testNumber": 999}',
     json: '{"testNumber":999}',
-    hex: null,
-    base64: null,
+    hex: '7b22746573744e756d626572223a203939397d',
+    base64: 'eyJ0ZXN0TnVtYmVyIjogOTk5fQ==',
 };
 
 const mockHexBase64 = '54657374';
 const mockHexExpectedReturn = {
     raw: window.atob('54657374'),
-    json: null,
+    json: undefined,
     hex: 'e78eb9ef7ef8',
     base64: '54657374',
 };
