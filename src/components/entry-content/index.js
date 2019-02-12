@@ -10,6 +10,10 @@ import JsonViewer from 'components/json-viewer';
 import HexViewer from 'components/hex-viewer';
 import Tabs from 'components/tabs';
 
+import {ENCODINGS} from '../../constants/encodings';
+
+import {rawIsPrintable} from '../../utils/is-printable';
+
 import styles from './styles.css';
 
 import collapseIcon from './assets/icon-collapse.svg';
@@ -42,23 +46,17 @@ class EntryContent extends Component {
         showCopiedToast: false,
     };
 
-    isPrintable(value) {
-        // check for chars forbidden by XML 1.0 specifications, plus the unicode replacement character U+FFFD
-        const regex = /[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g;
-        return !regex.test(value);
-    }
-
     getDefaultEncoding() {
         const {data} = this.props;
         const withLabel = label => encoding => encoding.label === label;
 
-        if (data.find(withLabel('json'))) {
-            return data.find(withLabel('json'));
-        } else if (this.isPrintable(data.find(withLabel('raw')).value)) {
-            return data.find(withLabel('raw'));
+        if (data.find(withLabel(ENCODINGS.FORMAT.JSON))) {
+            return data.find(withLabel(ENCODINGS.FORMAT.JSON));
+        } else if (rawIsPrintable(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value)) {
+            return data.find(withLabel(ENCODINGS.FORMAT.RAW));
         }
 
-        return data.find(withLabel('hex') || withLabel('base64'));
+        return data.find(withLabel(ENCODINGS.FORMAT.HEX) || withLabel(ENCODINGS.FORMAT.BASE64));
     }
 
     @autobind

@@ -8,9 +8,13 @@ import withDataEncodings from 'hocs/with-data-encoding';
 import Dropdown from 'components/dropdown/index';
 
 import globalStyles from 'styles/index.css';
+
+import {ENCODINGS} from '../../constants/encodings';
+import {rawIsPrintable} from '../../utils/is-printable';
+
 import styles from './styles.css';
 
-@withDataEncodings({formats: ['raw', 'hex', 'base64']})
+@withDataEncodings({formats: [ENCODINGS.FORMAT.BASE64, ENCODINGS.FORMAT.HEX, ENCODINGS.FORMAT.BASE64]})
 class ExternalId extends Component {
     static propTypes = {
         // An object with the different encodings for an external Id
@@ -30,21 +34,15 @@ class ExternalId extends Component {
         selected: this.getDefaultEncoding(),
     };
 
-    isPrintable(value) {
-        // check for chars forbidden by XML 1.0 specifications, plus the unicode replacement character U+FFFD
-        const regex = /[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g;
-        return !regex.test(value);
-    }
-
     getDefaultEncoding() {
         const {data} = this.props;
         const withLabel = label => encoding => encoding.label === label;
 
-        if (this.isPrintable(data.find(withLabel('raw')).value)) {
-            return data.find(withLabel('raw'));
+        if (rawIsPrintable(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value)) {
+            return data.find(withLabel(ENCODINGS.FORMAT.RAW));
         }
 
-        return data.find(withLabel('hex') || withLabel('base64'));
+        return data.find(withLabel(ENCODINGS.FORMAT.HEX) || withLabel(ENCODINGS.FORMAT.BASE64));
     }
 
     @autobind
