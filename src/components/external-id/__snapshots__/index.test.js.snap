@@ -5,6 +5,10 @@ exports[`ExternalId should match snapshot 1`] = `
   data={
     Array [
       Object {
+        "label": "raw",
+        "value": "",
+      },
+      Object {
         "label": "hex",
         "value": "",
       },
