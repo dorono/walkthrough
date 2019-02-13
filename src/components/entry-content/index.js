@@ -10,6 +10,10 @@ import JsonViewer from 'components/json-viewer';
 import HexViewer from 'components/hex-viewer';
 import Tabs from 'components/tabs';
 
+import {ENCODINGS} from 'constants/encodings';
+
+import {rawIsPrintable} from 'utils/is-printable';
+
 import styles from './styles.css';
 
 import collapseIcon from './assets/icon-collapse.svg';
@@ -45,7 +49,14 @@ class EntryContent extends Component {
     getDefaultEncoding() {
         const {data} = this.props;
         const withLabel = label => encoding => encoding.label === label;
-        return data.find(withLabel('json')) || data.find(withLabel('hex')) || data.find(withLabel('raw'));
+
+        if (data.find(withLabel(ENCODINGS.FORMAT.JSON))) {
+            return data.find(withLabel(ENCODINGS.FORMAT.JSON));
+        } else if (rawIsPrintable(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value)) {
+            return data.find(withLabel(ENCODINGS.FORMAT.RAW));
+        }
+
+        return data.find(withLabel(ENCODINGS.FORMAT.HEX) || withLabel(ENCODINGS.FORMAT.BASE64));
     }
 
     @autobind

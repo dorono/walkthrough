@@ -5,20 +5,17 @@ import {toHex} from 'utils/encoding';
  * This wraps the execution of a encoding function in a try/catch to return null if encoding fails
  */
 const handleEncodingErrors = encodingFunction => (...args) => {
-    let result = null;
+    let result;
     try {
         result = encodingFunction(...args);
     } catch (e) {
-        return null;
+        return undefined;
     }
     return result;
 };
 
-const rawToJson = rawData => {
-    const jsonData = handleEncodingErrors(JSON.parse)(rawData);
-    // Stringify to properly handle in view
-    return jsonData != null ? JSON.stringify(jsonData) : jsonData;
-};
+// Stringify to properly handle in view
+const rawToJson = rawData => JSON.stringify(handleEncodingErrors(JSON.parse)(rawData));
 
 const rawToHex = rawData => handleEncodingErrors(toHex)(rawData);
 
@@ -38,8 +35,8 @@ const getMultipleEncodings = base64EncodedData => {
     return {
         raw: rawData,
         json: rawDataIsValidUTF8 ? rawToJson(rawData) : null,
-        hex: !rawDataIsValidUTF8 ? rawToHex(rawData) : null,
-        base64: !rawDataIsValidUTF8 ? base64EncodedData : null,
+        hex: rawDataIsValidUTF8 ? rawToHex(rawData) : null,
+        base64: rawDataIsValidUTF8 ? base64EncodedData : null,
     };
 };
 

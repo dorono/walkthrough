@@ -8,9 +8,13 @@ import withDataEncodings from 'hocs/with-data-encoding';
 import Dropdown from 'components/dropdown/index';
 
 import globalStyles from 'styles/index.css';
+
+import {ENCODINGS} from 'constants/encodings';
+import {rawIsPrintable} from 'utils/is-printable';
+
 import styles from './styles.css';
 
-@withDataEncodings({formats: ['raw', 'hex', 'base64']})
+@withDataEncodings({formats: [ENCODINGS.FORMAT.RAW, ENCODINGS.FORMAT.HEX, ENCODINGS.FORMAT.BASE64]})
 class ExternalId extends Component {
     static propTypes = {
         // An object with the different encodings for an external Id
@@ -33,7 +37,12 @@ class ExternalId extends Component {
     getDefaultEncoding() {
         const {data} = this.props;
         const withLabel = label => encoding => encoding.label === label;
-        return data.find(withLabel('hex')) || data.find(withLabel('raw'));
+
+        if (rawIsPrintable(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value)) {
+            return data.find(withLabel(ENCODINGS.FORMAT.RAW));
+        }
+
+        return data.find(withLabel(ENCODINGS.FORMAT.HEX) || withLabel(ENCODINGS.FORMAT.BASE64));
     }
 
     @autobind
