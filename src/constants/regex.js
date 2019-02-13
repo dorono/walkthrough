@@ -4,10 +4,7 @@
 */
 export const REGEX = {
     VALIDATE: {
-        HEX: null,
         RAW: /[\x00-\x08\x0E-\x1F\x7F-\uFFFF]/g,
-        BASE64: null,
-        JSON: null,
     },
 };
 
