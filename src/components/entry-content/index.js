@@ -10,9 +10,9 @@ import JsonViewer from 'components/json-viewer';
 import HexViewer from 'components/hex-viewer';
 import Tabs from 'components/tabs';
 
-import {ENCODINGS} from '../../constants/encodings';
+import {ENCODINGS} from 'constants/encodings';
 
-import {rawIsPrintable} from '../../utils/is-printable';
+import {rawIsPrintable} from 'utils/is-printable';
 
 import styles from './styles.css';
 

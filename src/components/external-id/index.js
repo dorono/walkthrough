@@ -9,12 +9,12 @@ import Dropdown from 'components/dropdown/index';
 
 import globalStyles from 'styles/index.css';
 
-import {ENCODINGS} from '../../constants/encodings';
-import {rawIsPrintable} from '../../utils/is-printable';
+import {ENCODINGS} from 'constants/encodings';
+import {rawIsPrintable} from 'utils/is-printable';
 
 import styles from './styles.css';
 
-@withDataEncodings({formats: [ENCODINGS.FORMAT.BASE64, ENCODINGS.FORMAT.HEX, ENCODINGS.FORMAT.BASE64]})
+@withDataEncodings({formats: [ENCODINGS.FORMAT.RAW, ENCODINGS.FORMAT.HEX, ENCODINGS.FORMAT.BASE64]})
 class ExternalId extends Component {
     static propTypes = {
         // An object with the different encodings for an external Id
