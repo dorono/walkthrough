@@ -22,6 +22,8 @@ const googleTagManagerEnv = process.env.GTM_ENV;
 // Connect API values.
 const apiUrl = process.env.API_URL || '$API_URL';
 const apiToken = process.env.API_TOKEN || '$API_TOKEN';
+const publicNetAppId = process.env.PUBLIC_NETWORK_GATEWAY_APP_ID || '$PUBLIC_NETWORK_GATEWAY_APP_ID';
+const publicNetAppKey = process.env.PUBLIC_NETWORK_GATEWAY_APP_KEY || '$PUBLIC_NETWORK_GATEWAY_APP_KEY';
 // API Gateway values.
 const gatewayUrls = {
     publicNet: process.env.PUBLIC_NETWORK_GATEWAY || '$PUBLIC_NETWORK_GATEWAY',
@@ -126,6 +128,8 @@ module.exports = {
                 devPortalBaseUrl,
                 devPortalHostName,
                 devPortalProtocol,
+                publicNetAppId,
+                publicNetAppKey,
                 gatewayUrls,
                 version,
             }),

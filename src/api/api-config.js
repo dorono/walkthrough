@@ -10,6 +10,8 @@ export default class APIConfig {
     constructor() {
         this.apiUrl = CONFIG.apiUrl; // Hit Connect directly by default.
         this.apiToken = CONFIG.apiToken; // Shared Token for hitting Connect directly.
+        this.publicNetAppId = CONFIG.publicNetAppId;
+        this.publicNetAppKey = CONFIG.publicNetAppKey;
         this.blockchain = AVAILABLE_BLOCKCHAINS.PUBLIC.label;
     }
 
@@ -21,7 +23,8 @@ export default class APIConfig {
      * @param blockchain
      * @returns {APIConfig}
      */
-    static create({apiUrl, apiToken, appId, appKey, appName, apiVersion, blockchain}) {
+    static create({apiUrl, apiToken, appId, appKey, appName, apiVersion,
+        blockchain, publicNetAppId, publicNetAppKey}) {
         const apiConfig = new APIConfig();
         apiConfig.apiUrl = apiUrl;
         if (apiConfig.apiUrl) {
@@ -46,6 +49,8 @@ export default class APIConfig {
         apiConfig.appName = appName;
         apiConfig.apiVersion = apiVersion;
         apiConfig.blockchain = blockchain;
+        apiConfig.publicNetAppId = publicNetAppId;
+        apiConfig.publicNetAppKey = publicNetAppKey;
         return apiConfig;
     }
 

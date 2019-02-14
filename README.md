@@ -22,6 +22,8 @@ API_TOKEN=some-token
 PUBLIC_NETWORK=Mainnet
 DEV_PORTAL_URL=https://harmony-dev-portal.3scale.net
 PUBLIC_NETWORK_GATEWAY=https://connect-mainnet-2445582615332.production.gw.apicast.io
+PUBLIC_NETWORK_GATEWAY_APP_ID=155adafb
+PUBLIC_NETWORK_GATEWAY_APP_KEY=2b3608417027eb7f57e62c3fe2df8f8b
 SHARED_SANDBOX_GATEWAY=https://connect-shared-sandbox-2445582615332.production.gw.apicast.io
 GA_ID=YOUR_GOOGLE_ANALYTICS_ID
 ```
@@ -41,8 +43,10 @@ Then open [http://localhost:3000](http://localhost:3000) in your browser.
 ```
 $ export API_URL=https://stage.harmony.factom.com/v2
 $ export API_TOKEN=XXXXXXXX
-$ PUBLIC_NETWORK_GATEWAY=https://connect-mainnet-2445582615332.production.gw.apicast.io
-$ SHARED_SANDBOX_GATEWAY=https://connect-shared-sandbox-2445582615332.production.gw.apicast.io
+$ export PUBLIC_NETWORK_GATEWAY=https://connect-mainnet-2445582615332.production.gw.apicast.io
+$ export PUBLIC_NETWORK_GATEWAY_APP_ID=155adafb
+$ export PUBLIC_NETWORK_GATEWAY_APP_KEY=2b3608417027eb7f57e62c3fe2df8f8b
+$ export SHARED_SANDBOX_GATEWAY=https://connect-shared-sandbox-2445582615332.production.gw.apicast.io
 $ export GA_ID=XXXXXXXX
 $ npm run build
 ```

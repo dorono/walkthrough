@@ -20,6 +20,8 @@ ARG api_url
 ARG api_token
 ARG public_network_gateway
 ARG shared_sandbox_gateway
+ARG public_network_gateway_app_id
+ARG public_network_gateway_app_key
 ARG dev_portal_url
 ARG public_network
 ARG ga_id
@@ -29,6 +31,8 @@ ARG version
 ENV API_URL $api_url
 ENV API_TOKEN $api_token
 ENV PUBLIC_NETWORK_GATEWAY $public_network_gateway
+ENV PUBLIC_NETWORK_GATEWAY_APP_ID $public_network_gateway_app_id
+ENV PUBLIC_NETWORK_GATEWAY_APP_KEY $public_network_gateway_app_key
 ENV SHARED_SANDBOX_GATEWAY $shared_sandbox_gateway
 ENV DEV_PORTAL_URL $dev_portal_url
 ENV PUBLIC_NETWORK $public_network

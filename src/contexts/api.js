@@ -8,6 +8,7 @@ import {isIE, isEdge} from 'utils/user-agent';
 import {setSessionItem, getSessionItem} from 'utils/session-storage';
 import WindowEventListener from 'components/window-event-listener';
 import {stringNotNull} from 'utils/validate';
+import {AVAILABLE_BLOCKCHAINS} from 'constants/blockchains';
 
 const storageKey = 'factom.explorer.api-config';
 const {Provider, Consumer} = React.createContext();
@@ -35,7 +36,7 @@ export class APIConfigurationProvider extends React.Component {
         this.waitingConfigTimeout = null;
     }
 
-    componentWillMount() {
+    async componentWillMount() {
         const {from} = queryString.parse(window.location.search);
 
         // Handle case where settings custom credentials is not allowed.
@@ -67,9 +68,24 @@ export class APIConfigurationProvider extends React.Component {
                 return this.setApiConfig(APIConfig.create(savedApiConfig));
             }
         }
-
-        // By default, call setApiConfig.
-        this.setApiConfig(Object.assign(Object.create(APIConfig.prototype), this.state.defaultApiConfig));
+        /**
+             *  First check if we can use the apiToken
+             *  that window that Explorer is ready to go, return and don't
+             *  recover previously saved session.
+             */
+        const verifyToken = await this.verifyAuthenticationToken(this.state.defaultApiConfig);
+        if (verifyToken) {
+            return this.setApiConfig(Object.assign(Object.create(APIConfig.prototype), this.state.defaultApiConfig));
+        }
+        const directlyThroughGatewayApiConfig = {
+            ...getSessionItem(storageKey),
+            apiToken: undefined,
+            publicNetAppId: this.state.apiConfig.publicNetAppId,
+            publicNetAppKey: this.state.apiConfig.publicNetAppKey,
+            apiUrl: AVAILABLE_BLOCKCHAINS.PUBLIC.url,
+            blockchain: this.state.apiConfig.blockchain,
+        };
+        return this.setApiConfig(APIConfig.create(directlyThroughGatewayApiConfig));
     }
 
     /**
@@ -84,6 +100,20 @@ export class APIConfigurationProvider extends React.Component {
         } catch (e) {
             return null;
         }
+    }
+
+    /**
+     * Verify if the token hits to the apiUrl.
+     * @param apiConfig
+     * @returns {boolean}
+     */
+    async verifyAuthenticationToken(apiConfig) {
+        try {
+            await request('', apiConfig);
+        } catch (e) {
+            return false;
+        }
+        return true;
     }
 
     @autobind
@@ -121,11 +151,14 @@ export class APIConfigurationProvider extends React.Component {
      * Validate APIConfig.
      * @returns {boolean}
      */
-    isValid({apiUrl, appId, appKey, apiToken}) {
+    isValid({apiUrl, appId, appKey, apiToken, publicNetAppId, publicNetAppKey}) {
         const throughGateway = stringNotNull(apiUrl) && stringNotNull(appId) && stringNotNull(appKey);
         if (throughGateway) return true;
         const directly = stringNotNull(apiUrl) && stringNotNull(apiToken);
         if (directly) return true;
+        const directlyThroughGateway = stringNotNull(apiUrl) && stringNotNull(publicNetAppKey)
+            && stringNotNull(publicNetAppId);
+        if (directlyThroughGateway) return true;
         return false;
     }
 
