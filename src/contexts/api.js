@@ -8,7 +8,6 @@ import {isIE, isEdge} from 'utils/user-agent';
 import {setSessionItem, getSessionItem} from 'utils/session-storage';
 import WindowEventListener from 'components/window-event-listener';
 import {stringNotNull} from 'utils/validate';
-import {AVAILABLE_BLOCKCHAINS} from 'constants/blockchains';
 
 const storageKey = 'factom.explorer.api-config';
 const {Provider, Consumer} = React.createContext();
@@ -78,11 +77,8 @@ export class APIConfigurationProvider extends React.Component {
             return this.setApiConfig(Object.assign(Object.create(APIConfig.prototype), this.state.defaultApiConfig));
         }
         const directlyThroughGatewayApiConfig = {
-            ...getSessionItem(storageKey),
+            ...this.state.defaultApiConfig,
             apiToken: undefined,
-            publicNetAppId: this.state.apiConfig.publicNetAppId,
-            publicNetAppKey: this.state.apiConfig.publicNetAppKey,
-            apiUrl: AVAILABLE_BLOCKCHAINS.PUBLIC.url,
             blockchain: this.state.apiConfig.blockchain,
         };
         return this.setApiConfig(APIConfig.create(directlyThroughGatewayApiConfig));
