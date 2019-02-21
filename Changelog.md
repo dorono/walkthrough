@@ -1,4 +1,8 @@
+
 ## Changelog
+
+### 2019-02-21: 3.1.5
+- Bump version for release to Production.
 
 ### 2019-02-11: 3.1.5-rc1
 - [EX-134] - External ID not displaying properly
