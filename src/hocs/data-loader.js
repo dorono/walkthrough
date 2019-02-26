@@ -4,7 +4,7 @@ import {APIConfigurationConsumer} from 'contexts/api';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 const {devPortalBaseUrl} = CONFIG;
-const requestPlanChangeParams = 'plans?message_reason=Request_Plan_Change&regarding_app_id=';
+const requestPlanChangeParams = '/admin/applications/new';
 
 /**
  * HOC that fetches data using the request function.
@@ -54,14 +54,14 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
 
         renderOutOfRequestsError() {
             const linkRequestPlanChange =
-                `${devPortalBaseUrl}${requestPlanChangeParams}${this.props.apiConfig.appId}`;
+                `${devPortalBaseUrl}${requestPlanChangeParams}`;
             return (
                 <div
                     className='message'>
                     <p>
                         Your Connect application <br />
                         <strong>{this.props.apiConfig.appName}</strong> has run out of requests. <br /><br />
-                        <a href={linkRequestPlanChange}> Upgrade your plan</a> or come back tomorrow.
+                        <a href={linkRequestPlanChange}>Sign up</a> for a paid plan or come back tomorrow.
                     </p>
                 </div>
             );
