@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-03-1: 3.1.6-rc1
+- [EX-160] - Upgrade your plan is pointing to a wrong url
+
 ### 2019-02-21: 3.1.5
 - Bump version for release to Production.
 
