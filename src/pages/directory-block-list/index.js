@@ -18,7 +18,7 @@ export class DirectoryBlockListPage extends Component {
             'KEYMR',
             adminEntries.length > 0 ? 'ADMIN ENTRIES' : false,
             ecEntries.length > 0 ? 'EC ENTRIES' : false,
-            'FACTOID ENTRIES',
+            'FCT TRANSACTIONS',
             'ENTRIES',
         ].filter(Boolean);
 

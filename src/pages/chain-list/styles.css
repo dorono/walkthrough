@@ -6,14 +6,14 @@
     line-height: 1rem;
 }
 
-.chainRow td {
+.chain-row td {
     line-height: 1rem;
 
     &:first-child {
         padding-left: 0 !important;
     }
 
-    &.truncatedId {
+    &.truncated-id {
         width: 78px;
         min-width: 78px;
     }
@@ -23,8 +23,8 @@
     }
 }
 
-.chainRow td,
-.chainRow td a {
+.chain-row td,
+.chain-row td a {
     vertical-align: middle;
 }
 

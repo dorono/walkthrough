@@ -19,10 +19,16 @@ import styles from './styles.css';
 
 export class ChainListPage extends Component {
     render() {
+        const columns = [
+            `CREATED (${currentTimezone()})`,
+            'CHAIN ID',
+            'EXTERNAL IDS',
+        ];
+
         return (
             <Container primary title='Chains'>
                 <Table
-                    columns={[`CREATED (${currentTimezone()})`, 'CHAIN ID', 'EXTERNAL IDS']}
+                    columns={columns}
                     rows={this.props.data}
                     ellipsis={[1, 2]}
                     responsive>
