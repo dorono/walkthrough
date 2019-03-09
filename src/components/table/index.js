@@ -84,7 +84,7 @@ export class Table extends Component {
 
                                 const className = [];
 
-                                if (this.props.ellipsis.includes(index)) {
+                                if (this.props.ellipsis && this.props.ellipsis.includes(index)) {
                                     className.push(styles.ellipsis);
                                 }
 
