@@ -9,11 +9,17 @@ exports[`ChainList should match snapshot 1`] = `
   <withRouter(Table)
     columns={
       Array [
+        "CREATED (UTC-0500)",
         "CHAIN ID",
         "EXTERNAL IDS",
       ]
     }
-    ellipsis={1}
+    ellipsis={
+      Array [
+        1,
+        2,
+      ]
+    }
     responsive={true}
     rows={
       Array [
