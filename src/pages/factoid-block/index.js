@@ -72,7 +72,7 @@ export class FactoidBlockPage extends Component {
                                     'FEE',
                                 ]}
                                 rows={items}
-                                ellipsis={1}
+                                ellipsis={[1]}
                                 fixedWidth={{start: 2, width: 110}}
                                 type='secondary'
                                 responsive>
