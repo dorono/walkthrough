@@ -33,7 +33,7 @@ export class TransactionPage extends Component {
                 <Table
                     columns={['ADDRESS', 'AMOUNT']}
                     rows={transactions}
-                    ellipsis={0}
+                    ellipsis={[0]}
                     type='secondary'>
                     {row => {
                         const {amount, unit} = this.getTransactionAmount(row);

@@ -12,7 +12,11 @@ exports[`Entries Table Component should NOT display the <PendingLegend /> compon
         "HASH",
       ]
     }
-    ellipsis={1}
+    ellipsis={
+      Array [
+        1,
+      ]
+    }
     interactive={true}
     leftPadding={0}
     rows={
@@ -49,7 +53,11 @@ exports[`Entries Table Component should change the local state to display the <P
         "HASH",
       ]
     }
-    ellipsis={1}
+    ellipsis={
+      Array [
+        1,
+      ]
+    }
     interactive={true}
     leftPadding={0}
     rows={
@@ -86,7 +94,11 @@ exports[`Entries Table Component should match snapshot 1`] = `
         "HASH",
       ]
     }
-    ellipsis={1}
+    ellipsis={
+      Array [
+        1,
+      ]
+    }
     interactive={true}
     leftPadding={0}
     rows={

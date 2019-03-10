@@ -79,7 +79,7 @@ export default class Address extends Component {
                             <Table
                                 columns={columns}
                                 rows={items}
-                                ellipsis={0}
+                                ellipsis={[0]}
                                 type='secondary'>
                                 {(row, index) => (
                                     <tr key={index}>
