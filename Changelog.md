@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-03-13: 3.1.6-rc2
+- Responsive chain list with new created column
+
 ### 2019-03-1: 3.1.6-rc1
 - [EX-160] - Upgrade your plan is pointing to a wrong url
 
