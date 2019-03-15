@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-03-15: 3.1.6
+- Bump version for release to Production.
+
 ### 2019-03-13: 3.1.6-rc2
 - Responsive chain list with new created column
 
