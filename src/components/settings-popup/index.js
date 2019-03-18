@@ -53,6 +53,7 @@ export default class SettingsPopup extends Component {
         onClose: PropTypes.func.isRequired,
         onSubmit: PropTypes.func.isRequired,
         show: PropTypes.bool.isRequired,
+        credentialsError: PropTypes.bool,
     };
 
     constructor(props) {
@@ -62,13 +63,12 @@ export default class SettingsPopup extends Component {
         const onPublicNet = isEqual(apiConfigProps.selectedBlockchain, AVAILABLE_BLOCKCHAINS.PUBLIC);
         const enableCredentialsCheckbox = onPublicNet;
         const configuredByDefault = isConfiguredByDefault();
-
         this.state = {
             ...apiConfigProps,
             enableCredentialsCheckbox,
             blockchains: [...BLOCKCHAIN_OPTIONS],
             useCredentials: !configuredByDefault || false,
-            errors: getDefaultErrors(allowCustomCredentials),
+            errors: props.credentialsError ? {credentials: true} : getDefaultErrors(allowCustomCredentials),
             verifyingConnection: false,
             setModalSize: false,
         };

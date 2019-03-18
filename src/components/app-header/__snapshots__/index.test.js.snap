@@ -1,5 +1,66 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`App Header Component should display the Settings Popup if invalid credentials are detected 1`] = `
+<header
+  className="root"
+>
+  <div
+    className="content"
+  >
+    <Link
+      className="logo"
+      replace={false}
+      to="/"
+    >
+      <h1>
+        <span>
+          Factom Explorer
+        </span>
+      </h1>
+    </Link>
+    <withRouter(Search)
+      apiConfig={
+        Object {
+          "blockchain": "Public",
+        }
+      }
+    />
+    <AppMenu />
+    <_default
+      className="divider"
+    />
+    <div
+      className="blockchainButtonContainer"
+    >
+      <Button
+        className="blockchainButton"
+        id="open-settings-popup"
+        onClick={[Function]}
+        title="Public"
+      />
+    </div>
+  </div>
+  <SettingsPopup
+    allowCustomCredentials={false}
+    apiConfig={
+      Object {
+        "blockchain": "Public",
+      }
+    }
+    credentialsError={false}
+    defaultApiConfig={
+      Object {
+        "blockchain": "Public",
+      }
+    }
+    isConfiguredByDefault={[Function]}
+    onClose={[Function]}
+    onSubmit={[Function]}
+    show={true}
+  />
+</header>
+`;
+
 exports[`App Header Component should display the Settings Popup if notifyRemoteConfigWasBlocked is true 1`] = `
 <header
   className="root"
@@ -47,6 +108,7 @@ exports[`App Header Component should display the Settings Popup if notifyRemoteC
         "blockchain": "Public",
       }
     }
+    credentialsError={false}
     defaultApiConfig={
       Object {
         "blockchain": "Public",

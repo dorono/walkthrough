@@ -1,6 +1,7 @@
 import React from 'react';
 import {request} from 'api';
 import {APIConfigurationConsumer} from 'contexts/api';
+import {executeModalTrigger} from 'utils/execute-options-modal';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 const {devPortalBaseUrl} = CONFIG;
@@ -71,6 +72,10 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             if (this.state.error === 404 && showErrors) return <ErrorPage status={404} />;
             if (this.state.error === 429 && showErrors) {
                 return (<ErrorPage status={429} message={this.renderOutOfRequestsError()} />);
+            }
+            if (this.state.error === 403 && showErrors) {
+                executeModalTrigger(403);
+                return <ErrorPage status={500} message={'Authentication failed'} />;
             }
             if (this.state.error && showErrors) return <ErrorPage status={500} />;
             if (!this.state.data && showLoader) return <Spinner />;

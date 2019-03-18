@@ -9,6 +9,7 @@ import Search from 'components/search';
 import Tooltip from 'components/tooltip';
 import VerticalDivider from 'components/vertical-divider';
 import {decodeHtml} from 'utils/encoding';
+import {setModalTrigger} from 'utils/execute-options-modal';
 import styles from './styles.css';
 
 export default class AppHeader extends Component {
@@ -24,7 +25,13 @@ export default class AppHeader extends Component {
         showSettingsPopup: false,
         // If we should notify the user, set it in false at first.
         notifiedRemoteConfigIsNotAllowed: !this.props.notifyRemoteConfigWasBlocked,
+        // If an error in the users credentials is detected
+        credentialsError: false,
     };
+
+    componentDidMount() {
+        setModalTrigger(this.showSettingsPopup);
+    }
 
     @autobind
     onSettingsClosed() {
@@ -42,6 +49,15 @@ export default class AppHeader extends Component {
     onSettingsSubmit(settings) {
         this.props.onSettingsSubmit(settings);
         this.setState({showSettingsPopup: false});
+    }
+
+    @autobind
+    showSettingsPopup(err) {
+        if (err === 403) {
+            this.setState({credentialsError: true}, () => {
+                this.setState({showSettingsPopup: true});
+            });
+        }
     }
 
     render() {
@@ -82,6 +98,7 @@ export default class AppHeader extends Component {
                         || (!notifiedRemoteConfigIsNotAllowed && notifyRemoteConfigWasBlocked)
                     ) &&
                     <SettingsPopup
+                        credentialsError={this.state.credentialsError}
                         allowCustomCredentials={this.props.allowCustomCredentials}
                         apiConfig={this.props.apiConfig}
                         defaultApiConfig={this.props.defaultApiConfig}
