@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-03-18: 3.1.6-rc3
+- [EX-163] - Explorer throws Try Again error page when the primary key of the app is deleted
+
 ### 2019-03-13: 3.1.6-rc2
 - Responsive chain list with new created column
 
