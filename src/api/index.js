@@ -2,15 +2,14 @@ import queryString from 'query-string';
 import {stringNotUndefined} from 'utils/validate';
 
 export const request = async (url, apiConfig = null, fetchSignal) => {
-    const {apiUrl, apiToken, appKey, appId, publicNetAppId, publicNetAppKey} = apiConfig;
+    const {apiUrl, appKey, appId, publicNetAppId, publicNetAppKey} = apiConfig;
     const headers = {
         accept: 'application/json',
         'content-type': 'application/json',
     };
+
     // Setup auth headers.
-    if (stringNotUndefined(apiToken)) {
-        headers['factom-provider-token'] = apiToken;
-    } else if (stringNotUndefined(appId)) {
+    if (stringNotUndefined(appId)) {
         headers.app_id = appId;
         headers.app_key = appKey;
     } else {

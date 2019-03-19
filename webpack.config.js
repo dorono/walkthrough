@@ -21,7 +21,6 @@ const googleTagManagerAuth = process.env.GTM_AUTH;
 const googleTagManagerEnv = process.env.GTM_ENV;
 // Connect API values.
 const apiUrl = process.env.API_URL || '$API_URL';
-const apiToken = process.env.API_TOKEN || '$API_TOKEN';
 const publicNetAppId = process.env.PUBLIC_NETWORK_GATEWAY_APP_ID || '$PUBLIC_NETWORK_GATEWAY_APP_ID';
 const publicNetAppKey = process.env.PUBLIC_NETWORK_GATEWAY_APP_KEY || '$PUBLIC_NETWORK_GATEWAY_APP_KEY';
 // API Gateway values.
@@ -123,7 +122,6 @@ module.exports = {
             CONFIG: JSON.stringify({
                 blockchainNetwork,
                 apiUrl,
-                apiToken,
                 apiUrlVersionSuffix,
                 devPortalBaseUrl,
                 devPortalHostName,

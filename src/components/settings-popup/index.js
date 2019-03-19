@@ -79,7 +79,6 @@ export default class SettingsPopup extends Component {
         const selectedBlockchain = getInitialBlockchainbyName(apiConfig.blockchain);
         return {
             apiUrl: apiConfig.apiUrl,
-            apiToken: apiConfig.apiToken,
             appId: apiConfig.appId,
             appKey: apiConfig.appKey,
             privateUrl: apiConfig.apiUrl,
@@ -131,9 +130,8 @@ export default class SettingsPopup extends Component {
 
     @autobind
     getApiConfig() {
-        const {apiToken, appId, appKey, privateUrl, selectedBlockchain, useCredentials} = this.state;
-        if (!useCredentials && apiToken) {
-            // Using default credentials (apiToken) for Connect.
+        const {appId, appKey, privateUrl, selectedBlockchain, useCredentials} = this.state;
+        if (!useCredentials) {
             return this.props.defaultApiConfig;
         }
         const apiUrl = selectedBlockchain === AVAILABLE_BLOCKCHAINS.PRIVATE ?
@@ -158,7 +156,6 @@ export default class SettingsPopup extends Component {
             newState.appId = '';
         } else {
             // Do not use credentials. Use the default ones.
-            newState.apiToken = this.props.defaultApiConfig.apiToken;
             newState.appId = this.props.defaultApiConfig.appId;
             newState.apiUrl = this.props.defaultApiConfig.apiUrl;
             newState.setModalSize = true;

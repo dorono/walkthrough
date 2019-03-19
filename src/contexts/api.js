@@ -72,13 +72,8 @@ export class APIConfigurationProvider extends React.Component {
              *  that window that Explorer is ready to go, return and don't
              *  recover previously saved session.
              */
-        const verifyToken = await this.verifyAuthenticationToken(this.state.defaultApiConfig);
-        if (verifyToken) {
-            return this.setApiConfig(Object.assign(Object.create(APIConfig.prototype), this.state.defaultApiConfig));
-        }
         const directlyThroughGatewayApiConfig = {
             ...this.state.defaultApiConfig,
-            apiToken: undefined,
             blockchain: this.state.apiConfig.blockchain,
         };
         return this.setApiConfig(APIConfig.create(directlyThroughGatewayApiConfig));
@@ -147,10 +142,10 @@ export class APIConfigurationProvider extends React.Component {
      * Validate APIConfig.
      * @returns {boolean}
      */
-    isValid({apiUrl, appId, appKey, apiToken, publicNetAppId, publicNetAppKey}) {
+    isValid({apiUrl, appId, appKey, publicNetAppId, publicNetAppKey}) {
         const throughGateway = stringNotNull(apiUrl) && stringNotNull(appId) && stringNotNull(appKey);
         if (throughGateway) return true;
-        const directly = stringNotNull(apiUrl) && stringNotNull(apiToken);
+        const directly = stringNotNull(apiUrl);
         if (directly) return true;
         const directlyThroughGateway = stringNotNull(apiUrl) && stringNotNull(publicNetAppKey)
             && stringNotNull(publicNetAppId);

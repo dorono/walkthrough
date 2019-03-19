@@ -4,12 +4,11 @@ const API_URL_VERSION_SUFFIX = CONFIG.apiUrlVersionSuffix;
 
 /**
  * APIConfig represents an API configuration containing
- * apiUrl & apiToken OR apiUrl & appId/appKey. Also, the current blockchain.
+ * apiUrl & appId/appKey. Also, the current blockchain.
  */
 export default class APIConfig {
     constructor() {
         this.apiUrl = CONFIG.apiUrl; // Hit Connect directly by default.
-        this.apiToken = CONFIG.apiToken; // Shared Token for hitting Connect directly.
         this.publicNetAppId = CONFIG.publicNetAppId;
         this.publicNetAppKey = CONFIG.publicNetAppKey;
         this.blockchain = AVAILABLE_BLOCKCHAINS.PUBLIC.label;
@@ -23,7 +22,7 @@ export default class APIConfig {
      * @param blockchain
      * @returns {APIConfig}
      */
-    static create({apiUrl, apiToken, appId, appKey, appName, apiVersion,
+    static create({apiUrl, appId, appKey, appName, apiVersion,
         blockchain, publicNetAppId, publicNetAppKey}) {
         const apiConfig = new APIConfig();
         apiConfig.apiUrl = apiUrl;
@@ -43,7 +42,6 @@ export default class APIConfig {
                 apiConfig.apiUrl = `${apiConfig.apiUrl}${API_URL_VERSION_SUFFIX}`;
             }
         }
-        apiConfig.apiToken = apiToken;
         apiConfig.appId = appId;
         apiConfig.appKey = appKey;
         apiConfig.appName = appName;
@@ -55,8 +53,7 @@ export default class APIConfig {
     }
 
     sharesCredentialsWith(anotherApiConfig = {}) {
-        return (this.appKey === anotherApiConfig.appKey && this.appId === anotherApiConfig.appId)
-            || this.apiToken === anotherApiConfig.apiToken;
+        return (this.appKey === anotherApiConfig.appKey && this.appId === anotherApiConfig.appId);
     }
 
 }

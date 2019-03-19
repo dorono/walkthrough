@@ -37,6 +37,7 @@ export default class AppHeader extends Component {
     onSettingsClosed() {
         const newState = {
             showSettingsPopup: false,
+            credentialsError: false,
         };
         if (!this.state.notifiedRemoteConfigIsNotAllowed) {
             newState.notifiedRemoteConfigIsNotAllowed = true;
@@ -48,7 +49,19 @@ export default class AppHeader extends Component {
     @autobind
     onSettingsSubmit(settings) {
         this.props.onSettingsSubmit(settings);
-        this.setState({showSettingsPopup: false});
+        this.setState({
+            showSettingsPopup: false,
+            credentialsError: false,
+        });
+    }
+
+    @autobind
+    showSettingsPopup(err) {
+        if (err === 403) {
+            this.setState({credentialsError: true}, () => {
+                this.setState({showSettingsPopup: true});
+            });
+        }
     }
 
     @autobind

@@ -18,7 +18,6 @@ configure the application. For example:
 
 ```
 API_URL=https://stage.harmony.factom.com/v2
-API_TOKEN=some-token
 PUBLIC_NETWORK=Mainnet
 DEV_PORTAL_URL=https://harmony-dev-portal.3scale.net
 PUBLIC_NETWORK_GATEWAY=https://connect-mainnet-2445582615332.production.gw.apicast.io
@@ -67,4 +66,42 @@ server {
         try_files $uri /index.html;
     }
 }
+```
+
+## Contributing
+
+```
+// Create a new feature branch (our naming convention prepends "feature/")
+$ git checkout -b feature/<FEATURE_NAME>
+
+// Push your completed changes
+$ git add .
+$ git commit -m "<COMMIT_MESSAGE>"
+$ git push origin feature/<FEATURE_NAME>
+
+// Rebase with develop, which is the default branch
+$ git fetch --all
+$ git rebase origin develop
+
+// Fix any conflicts that arise and force push
+$ git push origin feature/<FEATURE_NAME> -f
+// Create a pull request from feature/<FEATURE_NAME> to develop
+
+//Complete the following to release your new changes
+
+//Create a release version branch
+$ git checkout -b release/X.X.X
+
+// Update and save the version of the application in Changelog.md, package.json, and package-lock.json
+$ git add .
+$ git commit -m "Bumped version to X.X.X"
+$ git push origin release/X.X.X
+
+// Create PR online from release/X.X.X to develop, wait for the CircleCi job to complete successfully
+
+// Create a release tag
+$ git tag vX.X.X
+$ git push origin vX.X.X
+
+// Contact devops to push your newly created explorer tag
 ```
