@@ -1,11 +1,11 @@
 import React from 'react';
+
 import {request} from 'api';
 import {APIConfigurationConsumer} from 'contexts/api';
 import {executeModalTrigger} from 'utils/execute-options-modal';
 import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
-const {devPortalBaseUrl} = CONFIG;
-const requestPlanChangeParams = '/admin/applications/new';
+import {ERROR_MESSAGES} from 'constants/errors';
 
 /**
  * HOC that fetches data using the request function.
@@ -18,6 +18,37 @@ const requestPlanChangeParams = '/admin/applications/new';
  */
 const load = (target, options = {}, showLoader = true, showErrors = true) => Component => {
     class Loader extends React.Component {
+        static getDerivedStateFromProps(nextProps, prevState) {
+            let stateData = {};
+
+            if (nextProps && nextProps.location) {
+                stateData = {
+                    currentLocation: nextProps.location.pathname,
+                    currentQueryString: nextProps.location.search,
+                };
+
+                if (
+                    // first, make sure we haven't exceeded our limits
+                    // (don't want to clear out that error status)...
+                    prevState.error !== 429
+                    // if we have switched to new path, or...
+                    && (
+                        nextProps.location.pathname !== prevState.currentLocation
+                        // on same path, but listening for query string changes
+                        || (
+                            !options.ignoreQueryString
+                            && nextProps.location.pathname === prevState.currentLocation
+                            && nextProps.location.search !== prevState.currentQueryString
+                        )
+                    )
+                ) {
+                    stateData = Object.assign({}, stateData, {data: undefined, error: undefined});
+                }
+            }
+
+            return (stateData);
+        }
+
         state = {};
 
         constructor(props) {
@@ -25,15 +56,8 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             this.abortController = new window.AbortController();
         }
 
-        componentWillMount() {
+        componentDidMount() {
             this.load(this.props);
-        }
-
-        componentWillReceiveProps(nextProps) {
-            if (!options.ignoreQueryString || this.props.location.pathname !== nextProps.location.pathname) {
-                this.setState({data: undefined, error: undefined});
-                this.load(nextProps);
-            }
         }
 
         componentWillUnmount() {
@@ -53,35 +77,40 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             }
         }
 
-        renderOutOfRequestsError() {
-            const linkRequestPlanChange =
-                `${devPortalBaseUrl}${requestPlanChangeParams}`;
-            return (
-                <div
-                    className='message'>
-                    <p>
-                        Your Connect application <br />
-                        <strong>{this.props.apiConfig.appName}</strong> has run out of requests. <br /><br />
-                        <a href={linkRequestPlanChange}>Sign up</a> for a paid plan or come back tomorrow.
-                    </p>
-                </div>
-            );
-        }
-
         render() {
-            if (this.state.error === 404 && showErrors) return <ErrorPage status={404} />;
-            if (this.state.error === 429 && showErrors) {
-                return (<ErrorPage status={429} message={this.renderOutOfRequestsError()} />);
+            let error = this.state.error;
+
+            if (error && showErrors) {
+                if (error === 403) {
+                    executeModalTrigger(403);
+                    return (
+                        <ErrorPage
+                            status={500}
+                            message={ERROR_MESSAGES.AUTHENTICATION_FAILED}
+                        />
+                    );
+                }
+
+                if (error !== 404 && error !== 429) {
+                    error = 500;
+                }
+
+                return (
+                    <ErrorPage
+                        status={error}
+                        appName={this.props.apiConfig.appName}
+                    />
+                );
             }
-            if (this.state.error === 403 && showErrors) {
-                executeModalTrigger(403);
-                return <ErrorPage status={500} message={'Authentication failed'} />;
+
+            if (!this.state.data && showLoader) {
+                return <Spinner />;
             }
-            if (this.state.error && showErrors) return <ErrorPage status={500} />;
-            if (!this.state.data && showLoader) return <Spinner />;
+
             return <Component {...this.props} {...this.state.data} />;
         }
     }
+
     return Loader;
 };
 

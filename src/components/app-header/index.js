@@ -64,15 +64,6 @@ export default class AppHeader extends Component {
         }
     }
 
-    @autobind
-    showSettingsPopup(err) {
-        if (err === 403) {
-            this.setState({credentialsError: true}, () => {
-                this.setState({showSettingsPopup: true});
-            });
-        }
-    }
-
     render() {
         const {showSettingsPopup, notifiedRemoteConfigIsNotAllowed} = this.state;
         const {notifyRemoteConfigWasBlocked} = this.props;

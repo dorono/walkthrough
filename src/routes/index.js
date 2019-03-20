@@ -10,6 +10,7 @@ import Chain from 'pages/chain';
 import Transaction from 'pages/transaction';
 import Address from 'pages/address';
 import Landing from 'pages/landing';
+import ErrorPage from 'pages/error-page';
 
 /**
  * Array of available routes.
@@ -28,6 +29,7 @@ export const routes = [
     {name: 'entry', path: '/chains/:chain/entries/:hash', exact: true, menuItem: 1, component: Entry},
     {name: 'tx', path: '/transactions/:hash', exact: true, component: Transaction},
     {name: 'address', path: '/addresses/:hash', exact: true, component: Address},
+    {name: 'error', path: '/error', exact: true, component: ErrorPage},
 ];
 
 /**

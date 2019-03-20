@@ -4,10 +4,10 @@ import ErrorPage from './index';
 
 describe('ErrorPage', () => {
     it('should render without errors', () => {
-        shallow(<ErrorPage />);
+        shallow(<ErrorPage status={500} />);
     });
 
     it('should match snapshot', () => {
-        expect(shallow(<ErrorPage />)).toMatchSnapshot();
+        expect(shallow(<ErrorPage status={500} />)).toMatchSnapshot();
     });
 });

@@ -5,4 +5,8 @@ export const ERRORS = {
     OTHER: 'other',
 };
 
+export const ERROR_MESSAGES = {
+    AUTHENTICATION_FAILED: 'Authentication failed',
+};
+
 Object.freeze(ERRORS);
