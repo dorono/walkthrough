@@ -6,25 +6,17 @@
     line-height: 1rem;
 }
 
-.chain-row td {
+.chain {
     line-height: 1rem;
-
-    &:first-child {
-        padding-left: 0 !important;
-    }
-
-    &.truncated-id {
-        width: 78px;
-        min-width: 78px;
-    }
-
-    a {
-        display: inline-block;
-    }
+    padding-left: 0 !important;
 }
 
-.chain-row td,
-.chain-row td a {
+.chain a {
+    display: inline-block;
+}
+
+.chain,
+.chain a {
     vertical-align: middle;
 }
 

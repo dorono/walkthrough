@@ -74,7 +74,6 @@
 .viewer-container {
     border: 1px solid var(--gray-stroke-light);
     border-radius: 4px;
-    font-family: var(--monospace-font);
     text-size-adjust: none !important;
 }
 

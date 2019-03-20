@@ -9,7 +9,7 @@ export class Table extends Component {
     static propTypes = {
         columns: PropTypes.arrayOf(PropTypes.string).isRequired,
         children: PropTypes.func.isRequired,
-        ellipsis: PropTypes.arrayOf(PropTypes.number),
+        ellipsis: PropTypes.number,
         centerAlign: PropTypes.number,
         leftPadding: PropTypes.number,
         interactive: PropTypes.bool,
@@ -84,7 +84,7 @@ export class Table extends Component {
 
                                 const className = [];
 
-                                if (this.props.ellipsis && this.props.ellipsis.includes(index)) {
+                                if (index === this.props.ellipsis) {
                                     className.push(styles.ellipsis);
                                 }
 
@@ -97,13 +97,8 @@ export class Table extends Component {
                                 }
 
                                 if (className.length) {
-                                    let newClassName = className.join(' ');
-                                    if (cell.props.className) {
-                                        newClassName += ` ${cell.props.className}`;
-                                    }
-
                                     return React.cloneElement(cell, {
-                                        className: newClassName,
+                                        className: className.join(' '),
                                         key: index,
                                     });
                                 }

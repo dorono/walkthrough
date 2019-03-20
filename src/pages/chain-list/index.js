@@ -13,32 +13,21 @@ import PendingLegend from 'components/pending-legend';
 import {STAGE_PENDING_CHAIN_TEXT} from 'constants/stages';
 import {displayPendingContent} from 'utils/pending-items';
 
-import {currentTimezone, formatDate} from 'utils/date';
-
 import styles from './styles.css';
 
 export class ChainListPage extends Component {
     render() {
-        const columns = [
-            `CREATED (${currentTimezone()})`,
-            'CHAIN ID',
-            'EXTERNAL IDS',
-        ];
-
         return (
             <Container primary title='Chains'>
                 <Table
-                    columns={columns}
+                    columns={['CHAIN ID', 'EXTERNAL IDS']}
                     rows={this.props.data}
-                    ellipsis={[1, 2]}
+                    ellipsis={1}
                     responsive>
                     {row => (
-                        <tr key={row.chain_id} className={styles.chainRow}>
-                            <td>
+                        <tr key={row.chain_id}>
+                            <td className={styles.chain}>
                                 <PendingItem stage={row.stage} />
-                                <span>{formatDate(row.created_at)}</span>
-                            </td>
-                            <td className={styles.truncatedId}>
                                 <Hash type='chain'>{row.chain_id}</Hash>
                             </td>
                             <td>

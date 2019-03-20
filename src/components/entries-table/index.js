@@ -67,7 +67,7 @@ export class EntriesTable extends Component {
                 <Table
                     columns={[`CREATED (${currentTimezone()})`, this.props.contentColumnName]}
                     rows={this.props.data}
-                    ellipsis={[1]}
+                    ellipsis={1}
                     leftPadding={0}
                     type='secondary'
                     interactive={this.props.hasLink}>

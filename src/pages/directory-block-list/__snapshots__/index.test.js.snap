@@ -13,15 +13,11 @@ exports[`DirectoryBlockList should match snapshot 1`] = `
         "HEIGHT",
         "START TIME (11/11/11)",
         "KEYMR",
-        "FCT TRANSACTIONS",
+        "FACTOID ENTRIES",
         "ENTRIES",
       ]
     }
-    ellipsis={
-      Array [
-        2,
-      ]
-    }
+    ellipsis={2}
     fixedWidth={
       Object {
         "start": 3,

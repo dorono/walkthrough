@@ -18,7 +18,7 @@ export class DirectoryBlockListPage extends Component {
             'KEYMR',
             adminEntries.length > 0 ? 'ADMIN ENTRIES' : false,
             ecEntries.length > 0 ? 'EC ENTRIES' : false,
-            'FCT TRANSACTIONS',
+            'FACTOID ENTRIES',
             'ENTRIES',
         ].filter(Boolean);
 
@@ -27,7 +27,7 @@ export class DirectoryBlockListPage extends Component {
                 <Table
                     columns={columns}
                     rows={this.props.data}
-                    ellipsis={[2]}
+                    ellipsis={2}
                     centerAlign={3}
                     fixedWidth={{start: 3, width: 130}}
                     responsive>
