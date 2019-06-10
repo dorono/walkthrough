@@ -8,7 +8,7 @@ export const Error429 = props => {
     return (
         <div className='message'>
             <p>
-                Your Connect application <br />
+                Your Harmony application <br />
                 <strong>{props.appName}</strong> has run out of requests. <br /><br />
                 <a href={linkRequestPlanChange}>Sign up</a> for a paid plan or come back tomorrow.
             </p>

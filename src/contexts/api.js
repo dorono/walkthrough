@@ -63,12 +63,7 @@ export class APIConfigurationProvider extends React.Component {
 
             // Recover api config from the session, to maintain state after F5.
             const savedApiConfig = getSessionItem(storageKey);
-            if (savedApiConfig && (
-                this.state.apiConfig.apiUrl === savedApiConfig.apiUrl &&
-                this.state.apiConfig.blockchain === savedApiConfig.blockchain &&
-                this.state.apiConfig.publicNetAppId === savedApiConfig.publicNetAppId &&
-                this.state.apiConfig.publicNetAppKey === savedApiConfig.publicNetAppKey
-            )) {
+            if (savedApiConfig && this.state.apiConfig.latestBuildTime === savedApiConfig.latestBuildTime) {
                 return this.setApiConfig(APIConfig.create(savedApiConfig));
             }
         }

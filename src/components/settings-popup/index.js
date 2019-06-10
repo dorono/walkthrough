@@ -312,7 +312,7 @@ export default class SettingsPopup extends Component {
                                         value={this.state.useCredentials}
                                         onChange={this.useCredentialsToggler}
                                     />
-                                    Use my CONNECT credentials
+                                    Use my Harmony credentials
                                 </div>
                             </div>
                         </FormGroup>
@@ -320,7 +320,7 @@ export default class SettingsPopup extends Component {
                             <div className={styles.questionMark}>?</div>
                             <A
                                 to='https://www.factom.com/products/harmony-connect'
-                                text=' What is CONNECT?'
+                                text=' What is Harmony?'
                             />
                         </div>
                         <div
@@ -332,14 +332,14 @@ export default class SettingsPopup extends Component {
                                 this.showConnectUrl() &&
                                 <FormGroup className={styles.formGroup}>
                                     <Label className={styles.label}>
-                                        Connect API URL
+                                        Harmony API URL
                                     </Label>
                                     <Input
                                         type='url'
                                         name='privateUrl'
                                         error={errors[ERRORS.NETWORK] || errors[ERRORS.OTHER]}
                                         value={this.state.privateUrl}
-                                        placeholder='Enter the Connect API URL'
+                                        placeholder='Enter the Harmony API URL'
                                         handleChange={this.handleChange}
                                         className={classNames(styles.input, styles.formInput)}
                                     />
@@ -350,7 +350,7 @@ export default class SettingsPopup extends Component {
                                     [
                                         <FormGroup key='app-id' className={styles.formGroup}>
                                             <Label className={styles.label}>
-                                            Connect Application ID
+                                            Harmony Application ID
                                         </Label>
                                             <Input
                                                 error={errors[ERRORS.CREDENTIALS] || errors[ERRORS.OTHER]}
@@ -365,7 +365,7 @@ export default class SettingsPopup extends Component {
                                         </FormGroup>,
                                         <FormGroup key='app-key' className={styles.formGroup}>
                                             <Label className={styles.label}>
-                                            Connect Application Key
+                                            Harmony Application Key
                                         </Label>
                                             <Input
                                                 error={errors[ERRORS.CREDENTIALS] || errors[ERRORS.OTHER]}

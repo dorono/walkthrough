@@ -36,6 +36,8 @@ const devPortalHostName = process.env.DEV_PORTAL_HOST_NAME || 'account.factom.co
 const devPortalBaseUrl = process.env.DEV_PORTAL_URL ?
     process.env.DEV_PORTAL_URL : `${devPortalProtocol}${devPortalHostName}/`;
 
+const latestBuildTime = new Date();
+
 process.noDeprecation = true;
 
 module.exports = {
@@ -130,6 +132,7 @@ module.exports = {
                 publicNetAppKey,
                 gatewayUrls,
                 version,
+                latestBuildTime,
             }),
         }),
         new webpack.LoaderOptionsPlugin({

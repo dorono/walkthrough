@@ -28,5 +28,5 @@ export const CustomCredentialsNotAllowedErrorMessage = () => {
 };
 
 export const NetworkErrorMessage = () => {
-    return <span>Connection Error: Please check your Connect API URL.</span>;
+    return <span>Connection Error: Please check your Harmony API URL.</span>;
 };

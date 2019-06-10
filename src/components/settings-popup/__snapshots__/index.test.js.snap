@@ -92,7 +92,7 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
               readOnly={true}
               value={true}
             />
-            Use my CONNECT credentials
+            Use my Harmony credentials
           </div>
         </div>
       </FormGroup>
@@ -105,7 +105,7 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
           ?
         </div>
         <_default
-          text=" What is CONNECT?"
+          text=" What is Harmony?"
           to="https://www.factom.com/products/harmony-connect"
         />
       </div>
@@ -119,7 +119,7 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
           <Label
             className="label"
           >
-            Connect Application ID
+            Harmony Application ID
           </Label>
           <Input
             className="input formInput"
@@ -139,7 +139,7 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
           <Label
             className="label"
           >
-            Connect Application Key
+            Harmony Application Key
           </Label>
           <Input
             className="input formInput"

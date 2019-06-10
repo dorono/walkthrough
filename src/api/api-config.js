@@ -12,6 +12,7 @@ export default class APIConfig {
         this.publicNetAppId = CONFIG.publicNetAppId;
         this.publicNetAppKey = CONFIG.publicNetAppKey;
         this.blockchain = AVAILABLE_BLOCKCHAINS.PUBLIC.label;
+        this.latestBuildTime = CONFIG.latestBuildTime;
     }
 
     /**
