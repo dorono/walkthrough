@@ -1,11 +1,8 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
-
 import PropTypes from 'prop-types';
 import {autobind} from 'core-decorators';
-
 import PendingLegend from 'components/pending-legend';
-
 import styles from './styles.css';
 
 export default class Container extends Component {

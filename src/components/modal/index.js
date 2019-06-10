@@ -2,32 +2,22 @@ import React, {Component} from 'react';
 import classNames from 'classnames';
 import PropTypes from 'prop-types';
 import {autobind} from 'core-decorators';
-
 import styles from './styles.css';
 
-export const ModalHeader = props => {
-    return (
-        <div className={props.className}>
-            {props.children}
-        </div>
-    );
-};
+export const ModalHeader = ({className, children}) =>
+    (<div className={className}>
+        {children}
+    </div>);
 
-export const ModalBody = props => {
-    return (
-        <div className={props.className}>
-            {props.children}
-        </div>
-    );
-};
+export const ModalBody = ({className, children}) =>
+    (<div className={className}>
+        {children}
+    </div>);
 
-export const ModalFooter = props => {
-    return (
-        <div className={props.className}>
-            {props.children}
-        </div>
-    );
-};
+export const ModalFooter = ({className, children}) =>
+    (<div className={className}>
+        {children}
+    </div>);
 
 export class Modal extends Component {
     static propTypes = {
@@ -43,7 +33,6 @@ export class Modal extends Component {
 
     constructor(props) {
         super(props);
-
         this.modalContainerElement = React.createRef();
     }
 

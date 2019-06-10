@@ -8,9 +8,15 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 import BlockHeight from 'components/block-height';
+import Button from 'components/button';
+import JsonPopup from 'components/json-popup';
 import styles from './styles.css';
 
-export class DirectoryBlockPage extends Component {
+@dataLoader([({match}) => `/dblocks/${match.params.hash}`, ({match}) => `/anchors/${match.params.hash}`])
+export default class DirectoryBlockPage extends Component {
+    state = {
+        showJsonPopup: false,
+    };
     getBlocks() {
         const {ablock, ecblock, fblock, eblocks} = this.props.data;
 
@@ -31,50 +37,82 @@ export class DirectoryBlockPage extends Component {
     }
 
     render() {
-        const blockCount = this.props.data.eblocks.length + 3; // 3 == admin, entry credit, factoid blocks
+        const {data} = this.props;
+        const blockCount = data.eblocks.length + 3; // 3 == admin, entry credit, factoid blocks
         return (
             <div>
                 <Container primary title='Directory block'>
                     <VerticalToHorizontal verticalUpTo='medium'>
                         <Vertical>
                             <BlockHeight>
-                                {this.props.data.height}
+                                {data.height}
                             </BlockHeight>
                             <div>
                                 <Label>START TIME ({currentTimezone()})</Label>
-                                {formatDateLong(this.props.data.started_at)}
+                                {formatDateLong(data.started_at)}
                             </div>
                         </Vertical>
                         <Vertical>
-                            <Box type={this.props.data.next ? 'fill' : 'disabled'}>
+                            <Box type={data.next ? 'fill' : 'disabled'}>
                                 <Label>NEXT DIRECTORY BLOCK</Label>
-                                <DirectoryBlockLink>{this.props.data.next}</DirectoryBlockLink>
+                                <DirectoryBlockLink>{data.next}</DirectoryBlockLink>
                             </Box>
                             <Box type='outline'>
                                 <Label>KEYMR</Label>
-                                <Hash type='dblock'>{this.props.data.keymr}</Hash>
+                                <Hash type='dblock'>{data.keymr}</Hash>
                             </Box>
                             <Box type='fill'>
                                 <Label>PREVIOUS DIRECTORY BLOCK</Label>
-                                <DirectoryBlockLink>{this.props.data.prev}</DirectoryBlockLink>
+                                <DirectoryBlockLink>{data.prev}</DirectoryBlockLink>
                             </Box>
-                            <Box type={this.props.data.btc_transaction ? 'fill' : 'disabled'}>
-                                <Label>BTC TRANSACTION</Label>
-                                <Hash type='btc'>{this.props.data.btc_transaction}</Hash>
-                            </Box>
-                            <Box type={this.props.data.btc_anchor_entry ? 'fill' : 'disabled'}>
-                                <Label>BTC ANCHOR ENTRY</Label>
-                                {this.props.data.btc_anchor_entry
-                                    ? (
-                                        <Hash
-                                            type='entry'
-                                            extraArgs={{chain: this.props.data.btc_anchor_entry.chain.chain_id}}>
-                                            {this.props.data.btc_anchor_entry.entry_hash}
-                                        </Hash>
-                                    )
-                                    : <Hash />
-                                }
-                            </Box>
+                            <div className={styles.anchorBlock}>
+                                <Label>{(`Anchor - ${data.anchors[0].network}`).toUpperCase()}</Label>
+                                <Button
+                                    disabled={data.anchors[0].status === 'pending'}
+                                    title={'View JSON'}
+                                    className={styles.blockchainButton}
+                                    onClick={() => this.setState({showJsonPopup: true})} />
+                            </div>
+                            {
+                                data.anchors[0].network === 'factom' &&
+                                    <React.Fragment>
+                                        <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
+                                            <Label>PARENT DIRECTORY BLOCK</Label>
+                                            <DirectoryBlockLink>{data.anchors[0].dblock}</DirectoryBlockLink>
+                                        </Box>
+                                        <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
+                                            <Label>PARENT ENTRY BLOCK</Label>
+                                            <DirectoryBlockLink type='eblock'>
+                                                {data.anchors[0].eblock}
+                                            </DirectoryBlockLink>
+                                        </Box>
+                                        <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
+                                            <Label>ANCHOR</Label>
+                                            <DirectoryBlockLink type='banchor'>
+                                                {data.anchors[0].status ===
+                                                    'confirmed' ? data.anchors[0] : null
+                                                }
+                                            </DirectoryBlockLink>
+                                        </Box>
+                                    </React.Fragment>
+                            }
+                            {
+                                data.anchors[0].network === 'bitcoin' &&
+                                    <React.Fragment>
+                                        <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
+                                            <Label>BLOCK</Label>
+                                            <DirectoryBlockLink type='block'>
+                                                {data.anchors[0]}
+                                            </DirectoryBlockLink>
+                                        </Box>
+                                        <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
+                                            <Label>ANCHOR</Label>
+                                            <DirectoryBlockLink type='btc'>
+                                                {data.anchors[0]}
+                                            </DirectoryBlockLink>
+                                        </Box>
+                                    </React.Fragment>
+                            }
                         </Vertical>
                     </VerticalToHorizontal>
                 </Container>
@@ -86,9 +124,15 @@ export class DirectoryBlockPage extends Component {
                         </div>
                     ))}
                 </Container>
+                {
+                    this.state.showJsonPopup &&
+                        <JsonPopup
+                            data={JSON.stringify({data: data.anchors})}
+                            show
+                            onClose={() => this.setState({showJsonPopup: !this.state.showJsonPopup})}
+                        />
+                }
             </div>
         );
     }
 }
-
-export default dataLoader(({match}) => `/dblocks/${match.params.hash}`)(DirectoryBlockPage);

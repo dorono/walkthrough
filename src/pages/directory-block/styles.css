@@ -25,3 +25,29 @@
         }
     }
 }
+
+.anchor-block {
+    display: flex;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.blockchain-button {
+    color: var(--white);
+    font-size: 1.15rem;
+    font-weight: 700;
+    background: var(--blue);
+    min-height: 2.7rem;
+    border-radius: var(--border-radius);
+    padding: 0.3rem 1rem;
+    min-width: 9rem;
+    margin-left: 15px;
+    align-self: center;
+    opacity: 1;
+    transition: opacity 0.25s linear;
+
+    &:hover {
+        transition: background 0.25s linear;
+        background: var(--blue-hover);
+    }
+}

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 import {reverse} from 'routes';
 import {STAGE_NOT_AVAILABLE} from 'constants/stages';
-
 import styles from './styles.css';
 
 @withRouter
@@ -20,8 +19,11 @@ export default class Hash extends Component {
             'tx',
             'address',
             'btc',
+            'anchor',
         ]),
         extraArgs: PropTypes.object,
+        children: PropTypes.node,
+        location: PropTypes.object.isRequired,
     };
 
     static defaultPropTypes = {
@@ -29,7 +31,8 @@ export default class Hash extends Component {
     };
 
     render() {
-        const hash = this.props.children;
+        const {children, type, extraArgs, location} = this.props;
+        const hash = children;
 
         if (!hash) {
             return <span>{STAGE_NOT_AVAILABLE}</span>;
@@ -39,7 +42,7 @@ export default class Hash extends Component {
             return <span className={styles.root}>Not available - no previous blocks</span>;
         }
 
-        if (this.props.type === 'btc') {
+        if (type === 'btc') {
             return (
                 <a className={styles.external} href={`https://blockchain.info/tx/${hash}`} target='_blank'>
                     {hash}
@@ -47,9 +50,13 @@ export default class Hash extends Component {
             );
         }
 
-        const url = reverse(this.props.type, {hash, ...this.props.extraArgs});
+        if (type === 'anchor') {
+            return <span className={styles.root}>{hash}</span>;
+        }
 
-        if (this.props.location.pathname === url) {
+        const url = reverse(type, {hash, ...extraArgs});
+
+        if (location.pathname === url) {
             return <span className={styles.root}>{hash}</span>;
         }
 

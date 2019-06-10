@@ -63,12 +63,24 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
         componentWillUnmount() {
             this.abortController.abort();
         }
-
         async load(props) {
-            const url = typeof target === 'function' ? target(props) : target;
+            let url;
+            let secondUrl;
+            if (Array.isArray(target)) {
+                url = typeof target[0] === 'function' ? target[0](props) : target[0];
+                secondUrl = typeof target[1] === 'function' ? target[1](props) : target[1];
+            } else {
+                url = typeof target === 'function' ? target(props) : target;
+            }
             try {
-                const data = await request(url, props.apiConfig, this.abortController.signal);
-                this.setState({data});
+                let response = await request(url, props.apiConfig, this.abortController.signal);
+                if (Array.isArray(target)) {
+                    response = {...response.data,
+                        ...(await request(secondUrl, props.apiConfig, this.abortController.signal)).data};
+                    this.setState({data: {data: response}});
+                } else {
+                    this.setState({data: response});
+                }
             } catch (error) {
                 if (error instanceof DOMException) {
                     return null;

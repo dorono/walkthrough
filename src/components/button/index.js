@@ -1,32 +1,21 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.css';
 
-export default class Button extends Component {
+const Button = ({className, id, onClick, title, disabled}) =>
+    (<button
+        id={id}
+        className={classNames(className, {[styles.disabled]: disabled})}
+        onClick={onClick}>
+        {title}
+    </button>);
 
-    static propTypes = {
-        className: PropTypes.string,
-        id: PropTypes.string,
-        title: PropTypes.string.isRequired,
-        onClick: PropTypes.func.isRequired,
-    };
+Button.propTypes = {
+    className: PropTypes.string,
+    id: PropTypes.string,
+    title: PropTypes.string.isRequired,
+    onClick: PropTypes.func.isRequired,
+};
 
-    render() {
-        const {
-            className,
-            id,
-            onClick,
-            title,
-            disabled,
-        } = this.props;
-        return (
-            <button
-                id={id}
-                className={classNames(className, {[styles.disabled]: disabled})}
-                onClick={onClick}>
-                {title}
-            </button>
-        );
-    }
-}
+export default Button;

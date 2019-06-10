@@ -1,0 +1,64 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`JsonPopup should match snapshot 1`] = `
+<Modal
+  className="modalRoot defaultPosition"
+  setModalSize={false}
+  show={false}
+>
+  <ModalHeader
+    className="modalHeader"
+  >
+    Anchor
+  </ModalHeader>
+  <ModalBody
+    className="modalBody"
+  >
+    <div
+      className="actionContainer"
+    >
+      <span>
+        JSON
+      </span>
+      <CopyToClipboard
+        text="{\\"test\\":\\"\\"}"
+      >
+        <span
+          className="button buttonCopy"
+          onClick={[Function]}
+        >
+          <span
+            className="toast"
+          >
+            Copied
+          </span>
+          <img
+            alt="Copy Content"
+            src="test-file-stub"
+          />
+          Copy JSON
+        </span>
+      </CopyToClipboard>
+    </div>
+    <div
+      className="jsonContainer"
+    >
+      <JsonViewer
+        className="jsonRoot"
+        data="{\\"test\\":\\"\\"}"
+      />
+    </div>
+  </ModalBody>
+  <ModalFooter
+    className="modalFooter"
+  >
+    <Button
+      className="button cancel"
+      id="cancel-settings-popup"
+      key="cancel"
+      onClick={[Function]}
+      title="CLOSE"
+    />
+  </ModalFooter>
+</Modal>
+`;

@@ -1,36 +1,23 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
-import {autobind} from 'core-decorators';
-
+import classNames from 'classnames';
+import {REGEX} from 'constants/regex';
 import styles from './styles.css';
 
-const JSON_REGEX = (
-    /("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g
-);
+const JsonViewer = ({data, className}) => {
+    const getHtmlAsString = () =>
+        normalizeJson(data)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(REGEX.JSON, wrapMatchInStyledSpan)
+        .split('\n')
+        .map(wrapInLineSpan)
+        .join('');
 
-class JsonViewer extends Component {
+    const normalizeJson = jsonString => JSON.stringify(JSON.parse(jsonString), null, 4);
 
-    static propTypes = {
-        data: PropTypes.string.isRequired,
-    };
-
-    getHtmlAsString() {
-        return this
-            .normalizeJson(this.props.data)
-            .replace(/&/g, '&amp;')
-            .replace(/</g, '&lt;')
-            .replace(/>/g, '&gt;')
-            .replace(JSON_REGEX, this.wrapMatchInStyledSpan)
-            .split('\n')
-            .map(this.wrapInLineSpan)
-            .join('');
-    }
-
-    normalizeJson(jsonString) {
-        return JSON.stringify(JSON.parse(jsonString), null, 4);
-    }
-
-    wrapMatchInStyledSpan(match) {
+    const wrapMatchInStyledSpan = match => {
         let cls = '';
         if (/^"/.test(match)) {
             if (/:$/.test(match)) {
@@ -44,22 +31,20 @@ class JsonViewer extends Component {
             cls = styles.null;
         }
         return `<span class="${cls}">${match}</span>`;
-    }
+    };
 
-    @autobind
-    wrapInLineSpan(line) {
-        return `\n<span class="${styles.line}">${line}</span>`;
-    }
+    const wrapInLineSpan = line => `\n<span class="${styles.line}">${line}</span>`;
 
-    render() {
-        return (
-            <pre className={styles.root}>
-                <code className={styles.json} dangerouslySetInnerHTML={{__html: this.getHtmlAsString()}} />
-            </pre>
-        );
-    }
+    return (
+        <pre className={classNames(styles.root, className)}>
+            <code className={styles.json} dangerouslySetInnerHTML={{__html: getHtmlAsString()}} />
+        </pre>
+    );
+};
 
-}
+JsonViewer.propTypes = {
+    data: PropTypes.string.isRequired,
+    className: PropTypes.string,
+};
 
 export default JsonViewer;
-
