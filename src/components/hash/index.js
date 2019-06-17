@@ -20,12 +20,10 @@ export default class Hash extends Component {
             'address',
             'btc',
             'anchor',
-            'publicFactom',
         ]),
         extraArgs: PropTypes.object,
         children: PropTypes.node,
         location: PropTypes.object.isRequired,
-        chainId: PropTypes.string,
     };
 
     static defaultPropTypes = {
@@ -33,7 +31,7 @@ export default class Hash extends Component {
     };
 
     render() {
-        const { children, type, extraArgs, location, chainId } = this.props;
+        const {children, type, extraArgs, location} = this.props;
         const hash = children;
 
         if (!hash) {
@@ -47,14 +45,6 @@ export default class Hash extends Component {
         if (type === 'btc') {
             return (
                 <a className={styles.external} href={`https://blockchain.info/tx/${hash}`} target='_blank'>
-                    {hash}
-                </a>
-            );
-        }
-
-        if (type === 'publicFactom') {
-            return (
-                <a className={styles.external} href={`/chains/${chainId}/entries/${hash}`} target='_blank'>
                     {hash}
                 </a>
             );

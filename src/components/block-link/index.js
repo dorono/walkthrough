@@ -5,7 +5,7 @@ import {reverse} from 'routes';
 import Hash from 'components/hash';
 import styles from './styles.css';
 
-const BlockLink = ({type, children, isLink,}) => {
+const BlockLink = ({type, children}) => {
     const block = children;
 
     if (!block) return <Hash type={type} />;
@@ -15,31 +15,23 @@ const BlockLink = ({type, children, isLink,}) => {
         <div className={styles.root}>
             {
                 type === 'dblock' &&
-                    <React.Fragment>
-                        <span key='blockHeight' className={styles.label}>HEIGHT:</span>
-                        {isLink ?
-                            <Link
-                                key='blockLink'
-                                className={styles.link}
-                                to={reverse(type, { hash: block.keymr })}>
-                                {block.height}
-                            </Link> : 
-                            <span className={styles.link} key={type}>{block.height}</span>
-                        }
-                    </React.Fragment>
+                    [
+                        <span key='blockHeight' className={styles.label}>HEIGHT:</span>,
+                        <Link
+                            key='blockLink'
+                            className={styles.link}
+                            to={reverse(type, {hash: block.keymr})}>
+                            {block.height}
+                        </Link>,
+                    ]
             }
             {
-                type === 'anchor' &&
+                type === 'banchor' &&
                     [
                         <span className={styles.label} key='created'>CREATED:</span>,
-                        <Hash type='anchor' key={'createdHash'}>{block.created_at}</Hash>,
+                        <Hash type='anchor' key={type}>{block.created_at}</Hash>,
                         <span className={styles.label} key='entryHash'>ENTRY HASH:</span>,
-                        <Hash
-                            type='publicFactom'
-                            chainId={block.chain.chain_id}
-                            key={type}>
-                                {block.entry_hash}
-                        </Hash>,
+                        <Hash type='btc' key={type}>{block.entry_hash}</Hash>,
                     ]
             }
             {
@@ -57,23 +49,18 @@ const BlockLink = ({type, children, isLink,}) => {
                     ]
             }
             {
-                (type !== 'btc' && type !== 'block' && type !== 'anchor') &&
-                    <React.Fragment>
-                        <span className={styles.label} key='keyMr'>KEYMR:</span>
-                    {isLink ?
-                        <span className={styles.hash} key={type}><Hash type={type}>{block.keymr}</Hash></span> :
-                        <span className={styles.hash} key={type}><Hash type={'anchor'}>{block.keymr}</Hash></span>
-                    }   
-                    </React.Fragment>
-}
+                (type !== 'btc' && type !== 'block' && type !== 'banchor') &&
+                    [
+                        <span className={styles.label} key='keyMr'>KEYMR:</span>,
+                        <span className={styles.hash} key={type}><Hash type={type}>{block.keymr}</Hash></span>,
+                    ]
+            }
         </div>
     );
 };
 
 BlockLink.propTypes = {
-    type: PropTypes.oneOf(['block', 'dblock', 'fblock', 'eblock', 'btc', 'anchor']),
-    children: PropTypes.object.isRequired,
-    isLink: PropTypes.bool,
+    type: PropTypes.oneOf(['block', 'dblock', 'fblock', 'eblock', 'btc', 'banchor']),
 };
 
 export default BlockLink;
