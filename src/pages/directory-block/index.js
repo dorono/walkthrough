@@ -78,17 +78,17 @@ export default class DirectoryBlockPage extends Component {
                                     <React.Fragment>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
                                             <Label>PARENT DIRECTORY BLOCK</Label>
-                                            <DirectoryBlockLink>{data.anchors[0].dblock}</DirectoryBlockLink>
+                                            <DirectoryBlockLink isLink={false}>{data.anchors[0].dblock}</DirectoryBlockLink>
                                         </Box>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
                                             <Label>PARENT ENTRY BLOCK</Label>
-                                            <DirectoryBlockLink type='eblock'>
+                                        <DirectoryBlockLink type='eblock' isLink={false}>
                                                 {data.anchors[0].eblock}
                                             </DirectoryBlockLink>
                                         </Box>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
                                             <Label>ANCHOR</Label>
-                                            <DirectoryBlockLink type='banchor'>
+                                            <DirectoryBlockLink type='anchor'>
                                                 {data.anchors[0].status ===
                                                     'confirmed' ? data.anchors[0] : null
                                                 }
@@ -127,7 +127,7 @@ export default class DirectoryBlockPage extends Component {
                 {
                     this.state.showJsonPopup &&
                         <JsonPopup
-                            data={JSON.stringify({data: data.anchors})}
+                            data={data.anchors}
                             show
                             onClose={() => this.setState({showJsonPopup: !this.state.showJsonPopup})}
                         />

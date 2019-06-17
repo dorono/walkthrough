@@ -56,7 +56,7 @@ export default class JsonPopup extends Component {
                     },
                 )}>
                 <ModalHeader className={styles.modalHeader}>
-                    Anchor
+                    {(`Anchor - ${data[0].network}`).toUpperCase()}
                 </ModalHeader>
                 <ModalBody className={styles.modalBody}>
                     <div className={styles.actionContainer}>
@@ -64,7 +64,10 @@ export default class JsonPopup extends Component {
                         {this.renderCopyContentButton()}
                     </div>
                     <div className={styles.jsonContainer}>
-                        <JsonViewer data={data} className={styles.jsonRoot} />
+                        <JsonViewer
+                            data={JSON.stringify({ data })}
+                            className={styles.jsonRoot}
+                        />
                     </div>
                 </ModalBody>
                 <ModalFooter className={styles.modalFooter}>
