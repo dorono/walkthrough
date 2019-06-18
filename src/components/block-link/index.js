@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {Link} from 'react-router-dom';
+import classNames from 'classnames';
 import {reverse} from 'routes';
 import Hash from 'components/hash';
 import {currentTimezone, formatDate} from 'utils/date';
@@ -31,19 +32,27 @@ const BlockLink = ({type, children, isLink}) => {
             }
             {
                 type === 'anchor' &&
-                    [
-                        <span className={styles.label} key='created'>CREATED:</span>,
-                        <Hash type='anchor' key={'createdHash'}>
-                            {`${formatDate(block.created_at)} ${currentTimezone()}`}
-                        </Hash>,
-                        <span className={styles.label} key='entryHash'>ENTRY HASH:</span>,
-                        <Hash
-                            type='publicFactom'
-                            chainId={block.chain.chain_id}
-                            key={type}>
-                            {block.entry_hash}
-                        </Hash>,
-                    ]
+                    <React.Fragment>
+                        <div className={styles.block}>
+                            <span className={styles.label} key='created'>CREATED:</span>
+                            <Hash type='anchor' key={'createdHash'}>
+                                <span className={styles.date}>
+                                    {`${formatDate(block.created_at)} (${currentTimezone()})`}
+                                </span>
+                            </Hash>
+                        </div>
+                        <div className={styles.block}>
+                            <span className={classNames(styles.label, styles.labelEntry)} key='entryHash'>
+                                ENTRY HASH:
+                            </span>
+                            <Hash
+                                type='publicFactom'
+                                chainId={block.chain.chain_id}
+                                key={type}>
+                                {block.entry_hash}
+                            </Hash>
+                        </div>
+                    </React.Fragment>
             }
             {
                 type === 'block' &&

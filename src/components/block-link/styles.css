@@ -3,6 +3,7 @@
 .root {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .label {
@@ -15,6 +16,11 @@
     }
 }
 
+.date {
+    font-family: var(--font);
+    padding-right: 10px;
+}
+
 .hash {
     width: 0;
     flex-grow: 1;
@@ -24,4 +30,14 @@
 
 .link {
     composes: root from 'components/hash/styles.css';
+}
+
+.block {
+    display: flex;
+}
+
+@media (--up-to-small-viewport) {
+    .label-entry {
+        width: 18%;
+    }
 }

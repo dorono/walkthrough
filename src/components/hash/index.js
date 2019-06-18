@@ -54,7 +54,10 @@ export default class Hash extends Component {
 
         if (type === 'publicFactom') {
             return (
-                <a className={styles.external} href={`/chains/${chainId}/entries/${hash}`} target='_blank'>
+                <a
+                    className={styles.external}
+                    href={`https://explorer.factom.com/chains/${chainId}/entries/${hash}`}
+                    target='_blank'>
                     {hash}
                 </a>
             );
