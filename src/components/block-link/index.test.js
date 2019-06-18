@@ -17,7 +17,8 @@ describe('Block Link', () => {
 
     it('should render 1 Link when type prop is dblock and 0 in other case', () => {
         const blockWrapper = mount(<Router><BlockLink
-            type='dblock'>{{number: 11111}}</BlockLink></Router>);
+            type='dblock'
+            isLink>{{number: 11111}}</BlockLink></Router>);
         const factoidBlockWrapper = mount(<Router><BlockLink
             type='fblock'>{{number: 11111}}</BlockLink></Router>);
         const blockLinks = blockWrapper.find('Link');

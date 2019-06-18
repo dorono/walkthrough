@@ -39,6 +39,7 @@ export default class DirectoryBlockPage extends Component {
     render() {
         const {data} = this.props;
         const blockCount = data.eblocks.length + 3; // 3 == admin, entry credit, factoid blocks
+        const network = data.anchors[0].network === 'factom' ? 'public factom' : 'bitcoin';
         return (
             <div>
                 <Container primary title='Directory block'>
@@ -66,29 +67,32 @@ export default class DirectoryBlockPage extends Component {
                                 <DirectoryBlockLink>{data.prev}</DirectoryBlockLink>
                             </Box>
                             <div className={styles.anchorBlock}>
-                                <Label>{(`Anchor - ${data.anchors[0].network}`).toUpperCase()}</Label>
+                                <Label>{(`Anchor - ${network}`).toUpperCase()}</Label>
                                 <Button
                                     disabled={data.anchors[0].status === 'pending'}
                                     title={'View JSON'}
                                     className={styles.blockchainButton}
-                                    onClick={() => this.setState({showJsonPopup: true})} />
+                                    onClick={() => this.setState({showJsonPopup: true})}
+                                />
                             </div>
                             {
                                 data.anchors[0].network === 'factom' &&
                                     <React.Fragment>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
                                             <Label>PARENT DIRECTORY BLOCK</Label>
-                                            <DirectoryBlockLink>{data.anchors[0].dblock}</DirectoryBlockLink>
+                                            <DirectoryBlockLink isLink={false}>
+                                                {data.anchors[0].dblock}
+                                            </DirectoryBlockLink>
                                         </Box>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
                                             <Label>PARENT ENTRY BLOCK</Label>
-                                            <DirectoryBlockLink type='eblock'>
+                                            <DirectoryBlockLink type='eblock' isLink={false}>
                                                 {data.anchors[0].eblock}
                                             </DirectoryBlockLink>
                                         </Box>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
                                             <Label>ANCHOR</Label>
-                                            <DirectoryBlockLink type='banchor'>
+                                            <DirectoryBlockLink type='anchor'>
                                                 {data.anchors[0].status ===
                                                     'confirmed' ? data.anchors[0] : null
                                                 }
@@ -127,7 +131,7 @@ export default class DirectoryBlockPage extends Component {
                 {
                     this.state.showJsonPopup &&
                         <JsonPopup
-                            data={JSON.stringify({data: data.anchors})}
+                            data={data.anchors}
                             show
                             onClose={() => this.setState({showJsonPopup: !this.state.showJsonPopup})}
                         />

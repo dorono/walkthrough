@@ -9,7 +9,7 @@ exports[`JsonPopup should match snapshot 1`] = `
   <ModalHeader
     className="modalHeader"
   >
-    Anchor
+    ANCHOR - BITCOIN
   </ModalHeader>
   <ModalBody
     className="modalBody"
@@ -45,7 +45,7 @@ exports[`JsonPopup should match snapshot 1`] = `
     >
       <JsonViewer
         className="jsonRoot"
-        data="{\\"test\\":\\"\\"}"
+        data="{\\"data\\":\\"{\\\\\\"test\\\\\\":\\\\\\"\\\\\\"}\\"}"
       />
     </div>
   </ModalBody>
