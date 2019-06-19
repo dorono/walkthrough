@@ -17,16 +17,28 @@ a.root {
 
 .external {
     composes: root;
-    display: inline-flex;
+    display: block;
     align-items: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
 
     &::after {
         content: '';
-        display: block;
+        display: inline-block;
         margin-left: 0.5rem;
         width: 1.3rem;
         height: 1.3rem;
         background: url('./assets/external.svg') no-repeat center;
         background-size: contain;
+    }
+}
+
+@media (--up-to-small-viewport) {
+    .external {
+        width: 100%;
+
+        &::after {
+            display: none;
+        }
     }
 }

@@ -34,10 +34,12 @@
 
 .block {
     display: flex;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 @media (--up-to-small-viewport) {
     .label-entry {
-        width: 18%;
+        width: 135px;
     }
 }
