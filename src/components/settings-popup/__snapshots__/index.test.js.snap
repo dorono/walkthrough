@@ -106,7 +106,7 @@ exports[`SettingsPopup Component checkbox should be disabled and set to true aft
         </div>
         <_default
           text=" What is Harmony?"
-          to="https://www.factom.com/products/harmony-connect"
+          to="https://www.factom.com/products/"
         />
       </div>
       <div
