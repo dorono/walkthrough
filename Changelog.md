@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-06-19: 3.1.7
+- Bump version for release to Production.
+
 ### 2019-06-11: 3.1.7-rc1
 - [EX-172] - Improved anchor display
 
