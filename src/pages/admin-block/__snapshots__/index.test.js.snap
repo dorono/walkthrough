@@ -25,6 +25,7 @@ exports[`AdminBlock should match snapshot 1`] = `
           PARENT DIRECTORY BLOCK
         </Label>
         <DirectoryBlockLink
+          isLink={true}
           type="dblock"
         />
       </Box>
