@@ -2,6 +2,7 @@
 
 exports[`EntryBlockLink should match snapshot 1`] = `
 <BlockLink
+  isLink={true}
   type="eblock"
 />
 `;

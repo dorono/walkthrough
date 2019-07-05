@@ -21,7 +21,7 @@ exports[`JsonPopup should match snapshot 1`] = `
         JSON
       </span>
       <CopyToClipboard
-        text="{\\"test\\":\\"\\"}"
+        text="\\"{\\\\\\"test\\\\\\":\\\\\\"\\\\\\"}\\""
       >
         <span
           className="button buttonCopy"

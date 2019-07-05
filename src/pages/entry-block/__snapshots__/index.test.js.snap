@@ -54,10 +54,7 @@ exports[`EntryBlock should match snapshot 1`] = `
         <Label>
           PARENT DIRECTORY BLOCK
         </Label>
-        <DirectoryBlockLink
-          isLink={true}
-          type="dblock"
-        />
+        <DirectoryBlockLink />
       </Box>
       <Box>
         <Label>

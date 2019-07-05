@@ -1,12 +1,14 @@
-import React, {Component} from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import BlockLink from 'components/block-link';
+import {BLOCKS} from 'constants/blocks';
 
-export default class EntryBlockLink extends Component {
-    render() {
-        const eblock = this.props.children;
+const EntryBlockLink = ({children, isLink}) =>
+    <BlockLink type={BLOCKS.ENTRY} isLink={isLink}>{children}</BlockLink>;
 
-        return (
-            <BlockLink type='eblock'>{eblock}</BlockLink>
-        );
-    }
-}
+EntryBlockLink.propTypes = {
+    children: PropTypes.object.isRequired,
+    isLink: PropTypes.bool,
+};
+
+export default EntryBlockLink;

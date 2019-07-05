@@ -7,6 +7,8 @@ import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
+import EntryBlockLink from 'components/entry-block-link';
+import BlockLink from 'components/block-link';
 import BlockHeight from 'components/block-height';
 import Button from 'components/button';
 import JsonPopup from 'components/json-popup';
@@ -76,7 +78,7 @@ export default class DirectoryBlockPage extends Component {
                                 />
                             </div>
                             {
-                                data.anchors[0].network === 'factom' &&
+                                network === 'public factom' &&
                                     <React.Fragment>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
                                             <Label>PARENT DIRECTORY BLOCK</Label>
@@ -86,34 +88,34 @@ export default class DirectoryBlockPage extends Component {
                                         </Box>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
                                             <Label>PARENT ENTRY BLOCK</Label>
-                                            <DirectoryBlockLink type='eblock' isLink={false}>
+                                            <EntryBlockLink isLink={false}>
                                                 {data.anchors[0].eblock}
-                                            </DirectoryBlockLink>
+                                            </EntryBlockLink>
                                         </Box>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
                                             <Label>ANCHOR</Label>
-                                            <DirectoryBlockLink type='anchor'>
+                                            <BlockLink type='fnblock'>
                                                 {data.anchors[0].status ===
                                                     'confirmed' ? data.anchors[0] : null
                                                 }
-                                            </DirectoryBlockLink>
+                                            </BlockLink>
                                         </Box>
                                     </React.Fragment>
                             }
                             {
-                                data.anchors[0].network === 'bitcoin' &&
+                                network === 'bitcoin' &&
                                     <React.Fragment>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
                                             <Label>BLOCK</Label>
-                                            <DirectoryBlockLink type='block'>
+                                            <BlockLink type='block'>
                                                 {data.anchors[0]}
-                                            </DirectoryBlockLink>
+                                            </BlockLink>
                                         </Box>
                                         <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
                                             <Label>ANCHOR</Label>
-                                            <DirectoryBlockLink type='btc'>
+                                            <BlockLink type='cnblock'>
                                                 {data.anchors[0]}
-                                            </DirectoryBlockLink>
+                                            </BlockLink>
                                         </Box>
                                     </React.Fragment>
                             }

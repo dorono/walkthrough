@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import {reverse} from 'routes';
 import Hash from 'components/hash';
 import {currentTimezone, formatDate} from 'utils/date';
+import {BLOCKS} from 'constants/blocks';
 import styles from './styles.css';
 
 const BlockLink = ({type, children, isLink}) => {
@@ -16,7 +17,7 @@ const BlockLink = ({type, children, isLink}) => {
     return (
         <div className={styles.root}>
             {
-                type === 'dblock' &&
+                type === BLOCKS.DIRECTORY &&
                     <React.Fragment>
                         <span key='blockHeight' className={styles.label}>HEIGHT:</span>
                         {isLink ?
@@ -31,11 +32,11 @@ const BlockLink = ({type, children, isLink}) => {
                     </React.Fragment>
             }
             {
-                type === 'anchor' &&
+                type === BLOCKS.PUBLIC_NETWORK &&
                     <React.Fragment>
                         <div className={styles.block}>
                             <span className={styles.label} key='created'>CREATED:</span>
-                            <Hash type='anchor' key={'createdHash'}>
+                            <Hash type='default' key={'createdHash'}>
                                 <span className={styles.date}>
                                     {`${formatDate(block.created_at)} (${currentTimezone()})`}
                                 </span>
@@ -46,7 +47,7 @@ const BlockLink = ({type, children, isLink}) => {
                                 ENTRY HASH:
                             </span>
                             <Hash
-                                type='publicFactom'
+                                type={'publicFactom'}
                                 chainId={block.chain.chain_id}
                                 key={type}>
                                 {block.entry_hash}
@@ -55,26 +56,26 @@ const BlockLink = ({type, children, isLink}) => {
                     </React.Fragment>
             }
             {
-                type === 'block' &&
-                    [
-                        <span className={styles.label} key='hash'>HASH:</span>,
-                        <Hash type='anchor' key={type}>{block.block_hash}</Hash>,
-                    ]
-            }
-            {
-                type === 'btc' &&
+                type === BLOCKS.CRYPTO_NETWORK &&
                     [
                         <span className={styles.label} key='transactionId'>TRANSACTION ID:</span>,
-                        <Hash type='btc' key={type}>{block.tx_id}</Hash>,
+                        <Hash type={'btc'} key={type}>{block.tx_id}</Hash>,
                     ]
             }
             {
-                (type !== 'btc' && type !== 'block' && type !== 'anchor') &&
+                type === BLOCKS.DEFAULT &&
+                    [
+                        <span className={styles.label} key='hash'>HASH:</span>,
+                        <Hash type='default' key={type}>{block.block_hash}</Hash>,
+                    ]
+            }
+            {
+                (type !== BLOCKS.CRYPTO_NETWORK && type !== BLOCKS.DEFAULT && type !== BLOCKS.PUBLIC_NETWORK) &&
                     <React.Fragment>
                         <span className={styles.label} key='keyMr'>KEYMR:</span>
                         {isLink ?
                             <span className={styles.hash} key={type}><Hash type={type}>{block.keymr}</Hash></span> :
-                            <span className={styles.hash} key={type}><Hash type={'anchor'}>{block.keymr}</Hash></span>
+                            <span className={styles.hash} key={type}><Hash type={'default'}>{block.keymr}</Hash></span>
                         }
                     </React.Fragment>
 }
@@ -83,9 +84,15 @@ const BlockLink = ({type, children, isLink}) => {
 };
 
 BlockLink.propTypes = {
-    type: PropTypes.oneOf(['block', 'dblock', 'fblock', 'eblock', 'btc', 'anchor']),
+    type: PropTypes.oneOf(
+        [BLOCKS.DEFAULT, BLOCKS.DIRECTORY, BLOCKS.FACTOID, BLOCKS.ENTRY, BLOCKS.PUBLIC_NETWORK, BLOCKS.CRYPTO_NETWORK],
+        ),
     children: PropTypes.object.isRequired,
     isLink: PropTypes.bool,
+};
+
+BlockLink.defaultProps = {
+    isLink: true,
 };
 
 export default BlockLink;

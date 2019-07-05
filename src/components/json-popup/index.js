@@ -27,7 +27,7 @@ export default class JsonPopup extends Component {
     renderCopyContentButton = () => {
         const {data} = this.props;
         return (
-            <CopyToClipboard text={data}>
+            <CopyToClipboard text={JSON.stringify(data)}>
                 <span className={classNames(styles.button, styles.buttonCopy)} onClick={this.showToast}>
                     <span className={classNames(styles.toast, {[styles.showToast]: this.state.showCopiedToast})}>
                         Copied

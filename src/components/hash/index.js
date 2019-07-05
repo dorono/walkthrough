@@ -19,7 +19,7 @@ export default class Hash extends Component {
             'tx',
             'address',
             'btc',
-            'anchor',
+            'default',
             'publicFactom',
         ]),
         extraArgs: PropTypes.object,
@@ -63,7 +63,7 @@ export default class Hash extends Component {
             );
         }
 
-        if (type === 'anchor') {
+        if (type === 'default') {
             return <span className={styles.root}>{hash}</span>;
         }
 
