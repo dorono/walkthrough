@@ -7,7 +7,7 @@ const EntryBlockLink = ({children, isLink}) =>
     <BlockLink type={BLOCKS.ENTRY} isLink={isLink}>{children}</BlockLink>;
 
 EntryBlockLink.propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.object,
     isLink: PropTypes.bool,
 };
 

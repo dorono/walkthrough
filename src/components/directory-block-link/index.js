@@ -7,7 +7,7 @@ const DirectoryBlockLink = ({children, isLink}) =>
     <BlockLink type={BLOCKS.DIRECTORY} isLink={isLink}>{children}</BlockLink>;
 
 DirectoryBlockLink.propTypes = {
-    children: PropTypes.object.isRequired,
+    children: PropTypes.object,
     isLink: PropTypes.bool,
 };
 

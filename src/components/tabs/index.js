@@ -12,9 +12,13 @@ const Tabs = ({items, onItemClick, selected, className}) => {
         return (
             <div
                 key={idx}
-                className={classNames(styles.tab, {[styles.selected]: isSelectedItem})}
+                className={
+                    classNames(styles.tab,
+                        {[styles.selected]: isSelectedItem},
+                        !isSelectedItem && item.disabled ? styles.disabled : null)}
                 onClick={() => !isSelectedItem && onItemClick(item)}>
-                {item.label}</div>
+                {item.label}
+            </div>
         );
     };
 

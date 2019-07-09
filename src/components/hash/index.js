@@ -19,6 +19,7 @@ export default class Hash extends Component {
             'tx',
             'address',
             'btc',
+            'ethereum',
             'default',
             'publicFactom',
         ]),
@@ -47,6 +48,14 @@ export default class Hash extends Component {
         if (type === 'btc') {
             return (
                 <a className={styles.external} href={`https://blockchain.info/tx/${hash}`} target='_blank'>
+                    {hash}
+                </a>
+            );
+        }
+
+        if (type === 'ethereum') {
+            return (
+                <a className={styles.external} href={`https://etherscan.io/tx/${hash}`} target='_blank'>
                     {hash}
                 </a>
             );

@@ -56,10 +56,17 @@ const BlockLink = ({type, children, isLink}) => {
                     </React.Fragment>
             }
             {
-                type === BLOCKS.CRYPTO_NETWORK &&
+                type === BLOCKS.BITCOIN_NETWORK &&
                     [
                         <span className={styles.label} key='transactionId'>TRANSACTION ID:</span>,
                         <Hash type={'btc'} key={type}>{block.tx_id}</Hash>,
+                    ]
+            }
+            {
+                type === BLOCKS.ETHEREUM_NETWORK &&
+                    [
+                        <span className={styles.label} key='transactionId'>TRANSACTION ID:</span>,
+                        <Hash type={'ethereum'} key={type}>{block.tx_id}</Hash>,
                     ]
             }
             {
@@ -70,7 +77,8 @@ const BlockLink = ({type, children, isLink}) => {
                     ]
             }
             {
-                (type !== BLOCKS.CRYPTO_NETWORK && type !== BLOCKS.DEFAULT && type !== BLOCKS.PUBLIC_NETWORK) &&
+                (type !== BLOCKS.BITCOIN_NETWORK && type !== BLOCKS.ETHEREUM_NETWORK &&
+                    type !== BLOCKS.DEFAULT && type !== BLOCKS.PUBLIC_NETWORK) &&
                     <React.Fragment>
                         <span className={styles.label} key='keyMr'>KEYMR:</span>
                         {isLink ?
@@ -85,7 +93,8 @@ const BlockLink = ({type, children, isLink}) => {
 
 BlockLink.propTypes = {
     type: PropTypes.oneOf(
-        [BLOCKS.DEFAULT, BLOCKS.DIRECTORY, BLOCKS.FACTOID, BLOCKS.ENTRY, BLOCKS.PUBLIC_NETWORK, BLOCKS.CRYPTO_NETWORK],
+        [BLOCKS.DEFAULT, BLOCKS.DIRECTORY, BLOCKS.FACTOID, BLOCKS.ENTRY, BLOCKS.PUBLIC_NETWORK,
+            BLOCKS.BITCOIN_NETWORK, BLOCKS.ETHEREUM_NETWORK],
         ),
     children: PropTypes.object.isRequired,
     isLink: PropTypes.bool,

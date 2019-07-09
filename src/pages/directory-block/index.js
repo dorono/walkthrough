@@ -7,18 +7,14 @@ import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
-import EntryBlockLink from 'components/entry-block-link';
 import BlockLink from 'components/block-link';
 import BlockHeight from 'components/block-height';
-import Button from 'components/button';
-import JsonPopup from 'components/json-popup';
+import EntryBlockLink from 'components/entry-block-link';
+import DirectoryContent from 'components/directory-content';
 import styles from './styles.css';
 
 @dataLoader([({match}) => `/dblocks/${match.params.hash}`, ({match}) => `/anchors/${match.params.hash}`])
 export default class DirectoryBlockPage extends Component {
-    state = {
-        showJsonPopup: false,
-    };
     getBlocks() {
         const {ablock, ecblock, fblock, eblocks} = this.props.data;
 
@@ -34,19 +30,126 @@ export default class DirectoryBlockPage extends Component {
                 {type: 'chain', label: 'CHAIN', value: eblock.chain.chain_id, key: eblock.chain.chain_id},
             );
         });
-
+        
         return hashes;
     }
-
+    
     render() {
         const {data} = this.props;
         const blockCount = data.eblocks.length + 3; // 3 == admin, entry credit, factoid blocks
         const network = data.anchors[0].network === 'factom' ? 'public factom' : 'bitcoin';
+
+        const bitcoinValue =
+            (<React.Fragment>
+                <Box type={'fill'}>
+                    <Label>BLOCK</Label>
+                    <BlockLink type='block'>
+                        {data.anchors[0]}
+                    </BlockLink>
+                </Box>
+                <Box type={'outline'} className={styles.networkBox}>
+                    <Label>ANCHOR</Label>
+                    <BlockLink type='bnblock'>
+                        {data.anchors[0]}
+                    </BlockLink>
+                </Box>
+            </React.Fragment>);
+
+        const ethereumValue =
+            (<React.Fragment>
+                <Box type={'fill'}>
+                    <Label>BLOCK</Label>
+                    <BlockLink type='block'>
+                        {data.anchors[1]}
+                    </BlockLink>
+                </Box>
+                <Box type={'outline'} className={styles.networkBox}>
+                    <Label>ANCHOR</Label>
+                    <BlockLink type='enblock'>
+                        {data.anchors[1]}
+                    </BlockLink>
+                </Box>
+            </React.Fragment>);
+
+        const publicFactomValue =
+            (<React.Fragment>
+                <Box type={'fill'}>
+                    <Label>PARENT DIRECTORY BLOCK</Label>
+                    <DirectoryBlockLink isLink={false}>
+                        {data.anchors[0].dblock}
+                    </DirectoryBlockLink>
+                </Box>
+                <Box type={'fill'} className={styles.networkBox}>
+                    <Label>PARENT ENTRY BLOCK</Label>
+                    <EntryBlockLink isLink={false}>
+                        {data.anchors[0].eblock}
+                    </EntryBlockLink>
+                </Box>
+                <Box type={'outline'} className={styles.networkBox}>
+                    <Label>ANCHOR</Label>
+                    <BlockLink type='fnblock'>
+                        {data.anchors[0]}
+                    </BlockLink>
+                </Box>
+            </React.Fragment>);
+
+        // Build the correct json for the current Network
+        const buildNetworkData = () => {
+            if (network === 'bitcoin') {
+                return [
+                    {
+                        label: 'Bitcoin',
+                        value: bitcoinValue,
+                        disabled: data.anchors[0].status !== 'confirmed',
+                    },
+                    {
+                        label: 'Ethereum',
+                        value: ethereumValue,
+                        disabled: data.anchors[1].status !== 'confirmed',
+                    },
+                    {
+                        label: 'JSON',
+                        value: data.anchors,
+                        disabled: false,
+
+                    },
+                ];
+            }
+            return [
+                {
+                    label: 'Public Factom',
+                    value: publicFactomValue,
+                    disabled: data.anchors[0].status !== 'confirmed',
+                },
+                {
+                    label: 'JSON',
+                    value: data.anchors,
+                    disabled: false,
+
+                },
+            ];
+        };
+
+        // Assign the json Data to this variable
+        const networkData = buildNetworkData();
+
+        // If the network is disabled or perding, this should render 0 blocks,
+        // otherwise, should render the network blocks.
+        const renderNetworkBlocks = () => {
+            if (network === 'bitcoin' && networkData[0].disabled && networkData[1].disabled) {
+                return false;
+            }
+            if (network === 'public factom' && networkData[0].disabled) {
+                return false;
+            }
+            return true;
+        };
+
         return (
             <div>
                 <Container primary title='Directory block'>
                     <VerticalToHorizontal verticalUpTo='medium'>
-                        <Vertical>
+                        <Vertical className={styles.directoryVertical}>
                             <BlockHeight>
                                 {data.height}
                             </BlockHeight>
@@ -68,56 +171,17 @@ export default class DirectoryBlockPage extends Component {
                                 <Label>PREVIOUS DIRECTORY BLOCK</Label>
                                 <DirectoryBlockLink>{data.prev}</DirectoryBlockLink>
                             </Box>
-                            <div className={styles.anchorBlock}>
-                                <Label>{(`Anchor - ${network}`).toUpperCase()}</Label>
-                                <Button
-                                    disabled={data.anchors[0].status === 'pending'}
-                                    title={'View JSON'}
-                                    className={styles.blockchainButton}
-                                    onClick={() => this.setState({showJsonPopup: true})}
-                                />
-                            </div>
                             {
-                                network === 'public factom' &&
-                                    <React.Fragment>
-                                        <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
-                                            <Label>PARENT DIRECTORY BLOCK</Label>
-                                            <DirectoryBlockLink isLink={false}>
-                                                {data.anchors[0].dblock}
-                                            </DirectoryBlockLink>
-                                        </Box>
-                                        <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
-                                            <Label>PARENT ENTRY BLOCK</Label>
-                                            <EntryBlockLink isLink={false}>
-                                                {data.anchors[0].eblock}
-                                            </EntryBlockLink>
-                                        </Box>
-                                        <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
-                                            <Label>ANCHOR</Label>
-                                            <BlockLink type='fnblock'>
-                                                {data.anchors[0].status ===
-                                                    'confirmed' ? data.anchors[0] : null
-                                                }
-                                            </BlockLink>
-                                        </Box>
-                                    </React.Fragment>
-                            }
-                            {
-                                network === 'bitcoin' &&
-                                    <React.Fragment>
-                                        <Box type={data.anchors[0].status === 'confirmed' ? 'fill' : 'disabled'}>
-                                            <Label>BLOCK</Label>
-                                            <BlockLink type='block'>
-                                                {data.anchors[0]}
-                                            </BlockLink>
-                                        </Box>
-                                        <Box type={data.anchors[0].status === 'confirmed' ? 'outline' : 'disabled'}>
-                                            <Label>ANCHOR</Label>
-                                            <BlockLink type='cnblock'>
-                                                {data.anchors[0]}
-                                            </BlockLink>
-                                        </Box>
-                                    </React.Fragment>
+                                renderNetworkBlocks() ?
+                                    <div className={styles.anchorBlock}>
+                                        <Label className={styles.contentTitle}>{('ANCHOR(S)')}</Label>
+                                        <DirectoryContent data={networkData} />
+                                    </div>
+                                :
+                                    <div className={classNames(styles.anchorBlock, styles.disabled)}>
+                                        <Label>{('ANCHOR(S)')}</Label>
+                                        <span>Not yet available</span>
+                                    </div>
                             }
                         </Vertical>
                     </VerticalToHorizontal>
@@ -130,14 +194,6 @@ export default class DirectoryBlockPage extends Component {
                         </div>
                     ))}
                 </Container>
-                {
-                    this.state.showJsonPopup &&
-                        <JsonPopup
-                            data={data.anchors}
-                            show
-                            onClose={() => this.setState({showJsonPopup: !this.state.showJsonPopup})}
-                        />
-                }
             </div>
         );
     }

@@ -27,9 +27,19 @@
 }
 
 .anchor-block {
-    display: flex;
-    align-items: center;
     margin-top: 30px;
+}
+
+.content-title {
+    margin-bottom: -10px;
+}
+
+.network-box {
+    margin-top: 10px;
+}
+
+.directory-vertical {
+    min-width: 170px;
 }
 
 .blockchain-button {
@@ -50,4 +60,8 @@
         transition: background 0.25s linear;
         background: var(--blue-hover);
     }
+}
+
+.disabled {
+    opacity: 0.5;
 }

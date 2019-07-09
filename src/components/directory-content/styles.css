@@ -1,0 +1,87 @@
+@import 'styles/variables.css';
+
+.header {
+    display: inline-flex;
+    position: relative;
+    padding-left: 80px;
+    bottom: 10px;
+    align-items: center;
+    width: 100%;
+    justify-content: space-between;
+
+    @media (--up-to-medium-viewport) {
+        padding-left: 0;
+        margin-top: 25px;
+        display: flex;
+        flex-wrap: wrap;
+    }
+}
+
+.collapsed {
+    height: 30px;
+    overflow: hidden;
+}
+
+.button {
+    color: var(--blue);
+    cursor: pointer;
+    margin-right: 8px;
+    margin-left: 17px;
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+
+    & > img {
+        margin-right: 8px;
+    }
+}
+
+.button-copy {
+    position: relative;
+}
+
+.toast {
+    position: absolute;
+    background: var(--yellow);
+    height: 24px;
+    border-radius: 12px;
+    padding: 3px 10px;
+    color: var(--white);
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 80px;
+    left: 0;
+    right: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0.25s linear, opacity 0.25s linear, bottom 1s linear;
+    bottom: 0;
+}
+
+.show-toast {
+    opacity: 1;
+    visibility: visible;
+    bottom: 25px;
+    transition: visibility 0.25s linear, opacity 0.25s linear, bottom 0.2s ease-in-out;
+}
+
+.actions-container {
+    display: flex;
+    align-items: center;
+}
+
+.viewer-container {
+    border: 1px solid var(--gray-stroke-light);
+    border-radius: 4px;
+    text-size-adjust: none !important;
+}
+
+.default-viewer {
+    padding: 10px;
+    overflow-wrap: break-word;
+}
+
+.json-container {
+    word-break: break-all;
+}

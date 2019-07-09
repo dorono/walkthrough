@@ -1,52 +1,39 @@
-import React, {Component} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import styles from './styles.css';
 
-export class Horizontal extends Component {
-    render() {
-        return (
-            <div className={styles.horizontal}>
-                {this.props.children}
-            </div>
-        );
-    }
-}
+const Horizontal = ({children}) => (
+    <div className={styles.horizontal}>
+        {children}
+    </div>
+);
 
-export class Vertical extends Component {
-    render() {
-        return (
-            <div className={styles.vertical}>
-                {this.props.children}
-            </div>
-        );
-    }
-}
+const Vertical = ({className, children}) => (
+    <div className={classNames(styles.vertical, className)}>
+        {children}
+    </div>
+);
 
-export class VerticalToHorizontal extends Component {
-    static propTypes = {
-        verticalUpTo: PropTypes.oneOf(['small', 'medium']).isRequired,
-    };
+const VerticalToHorizontal = ({verticalUpTo, children}) => (
+    <div className={classNames(styles.verticalToHorizontal,
+        {[styles.verticalUpToSmall]: verticalUpTo === 'small'},
+        {[styles.verticalUpToMedium]: verticalUpTo === 'medium'})}>
+        {children}
+    </div>
+);
+VerticalToHorizontal.propTypes = {
+    verticalUpTo: PropTypes.oneOf(['small', 'medium']).isRequired,
+};
 
-    render() {
-        return (<div className={classNames(styles.verticalToHorizontal,
-            {[styles.verticalUpToSmall]: this.props.verticalUpTo === 'small'},
-            {[styles.verticalUpToMedium]: this.props.verticalUpTo === 'medium'})}>
-            {this.props.children}
-        </div>);
-    }
-}
+const Box = ({type, className, children}) => (
+    <div className={classNames(styles.box, styles[type], className)}>
+        {children}
+    </div>
+);
+Box.propTypes = {
+    type: PropTypes.oneOf(['fill', 'outline', 'disabled', 'noBg']),
+    className: PropTypes.string,
+};
 
-export class Box extends Component {
-    static propTypes = {
-        type: PropTypes.oneOf(['fill', 'outline', 'disabled', 'noBg']),
-    };
-
-    render() {
-        return (
-            <div className={classNames(styles.box, styles[this.props.type])}>
-                {this.props.children}
-            </div>
-        );
-    }
-}
+export {Horizontal, Vertical, Box, VerticalToHorizontal};
