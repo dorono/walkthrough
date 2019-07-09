@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-06-11: 3.1.8-rc1
+- [EX-174] - Add Ethereum Anchor to DBlock Page
+
 ### 2019-06-19: 3.1.7
 - Bump version for release to Production.
 
