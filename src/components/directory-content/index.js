@@ -94,7 +94,7 @@ class DirectoryContent extends Component {
     renderToggleExpandButton() {
         const {expanded} = this.state;
         const actionText = expanded ? 'Collapse' : 'Expand';
-        const buttonText = `${actionText} content`;
+        const buttonText = `${actionText} JSON`;
         return (
             <span className={styles.button} onClick={this.toggleExpanded}>
                 <img src={expanded ? collapseIcon : expandIcon} alt={actionText} />
@@ -112,7 +112,7 @@ class DirectoryContent extends Component {
                         Copied
                     </span>
                     <img src={copyIcon} alt='Copy Content' />
-                    Copy content
+                    Copy JSON
                 </span>
             </CopyToClipboard>
         );
@@ -124,20 +124,22 @@ class DirectoryContent extends Component {
         const {selected, expanded} = this.state;
         if (selected.label === 'JSON') {
             return (
-                <ExpansibleContainer
-                    expand={expanded}
-                    collapsedSize={VIEWER_COLLAPSED_HEIGHT}
-                    className={styles.viewerContainer}
-                    onSize={this.handleViewerSize}>
-                    {
-                        <div className={styles.jsonContainer}>
-                            <JsonViewer
-                                data={JSON.stringify(selected.value)}
-                                style={!this.state.expanded && {overflow: 'hidden'}}
-                            />
-                        </div>
-                     }
-                </ExpansibleContainer>
+                <div>
+                    <ExpansibleContainer
+                        expand={expanded}
+                        collapsedSize={VIEWER_COLLAPSED_HEIGHT}
+                        className={styles.viewerContainer}
+                        onSize={this.handleViewerSize}>
+                        {
+                            <div className={styles.jsonContainer}>
+                                <JsonViewer
+                                    data={JSON.stringify(selected.value)}
+                                    style={!this.state.expanded && {overflow: 'hidden'}}
+                                />
+                            </div>
+                        }
+                    </ExpansibleContainer>
+                </div>
             );
         }
         return this.renderDefaultViewer(selected.value);
