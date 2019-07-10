@@ -30,10 +30,10 @@ export default class DirectoryBlockPage extends Component {
                 {type: 'chain', label: 'CHAIN', value: eblock.chain.chain_id, key: eblock.chain.chain_id},
             );
         });
-        
+
         return hashes;
     }
-    
+
     render() {
         const {data} = this.props;
         const blockCount = data.eblocks.length + 3; // 3 == admin, entry credit, factoid blocks
