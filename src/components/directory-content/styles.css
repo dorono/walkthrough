@@ -85,3 +85,8 @@
 .json-container {
     word-break: break-all;
 }
+
+.disabled {
+    opacity: var(--disabled-opacity);
+    color: var(--black-disabled);
+}

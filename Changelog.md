@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-07-17: 3.1.9-rc1
+- [EX-175] - Content field bugs, minor adjustment, and tab text color bug
+
 ### 2019-07-10: 3.1.8
 - Bump version for release to Production.
 

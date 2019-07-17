@@ -12,6 +12,7 @@
 .json {
     margin-top: -18px;
     counter-reset: line; /* Set a counter named 'section', and its initial value is 0. */
+    word-break: break-all;
 }
 
 .key {

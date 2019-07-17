@@ -1,5 +1,15 @@
 @import 'styles/variables.css';
 
+.root {
+    font-family: var(--monospace-font);
+
+    pre {
+        overflow-x: auto;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+}
+
 .header {
     display: inline-flex;
     position: relative;

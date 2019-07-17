@@ -125,7 +125,7 @@ class EntryContent extends Component {
     }
 
     renderDefaultViewer(data) {
-        return <div className={styles.defaultViewer}>{data}</div>;
+        return <div className={styles.defaultViewer}><pre>{data}</pre></div>;
     }
 
     renderViewer() {

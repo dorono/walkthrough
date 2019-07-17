@@ -9,7 +9,7 @@ const HexViewer = ({data}) => {
     return (
         <pre className={styles.root}>
             <code>
-                {splittedBytes.map(byte => <span className={styles.byte}>{byte}</span>)}
+                {splittedBytes.map((byte, idx) => <span key={`byte_${idx}`} className={styles.byte}>{byte}</span>)}
             </code>
         </pre>
 
