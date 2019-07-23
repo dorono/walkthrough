@@ -1,3 +1,4 @@
+import {Base64} from 'js-base64';
 import getMultipleEncodings from './data-encoder';
 
 const mockRawBase64 = 'VGVzdA==';
@@ -17,7 +18,7 @@ const mockJSONExpectedReturn = {
 
 const mockHexBase64 = '54657374';
 const mockHexExpectedReturn = {
-    raw: window.atob('54657374'),
+    raw: Base64.decode('54657374'),
     json: undefined,
     hex: 'e78eb9ef7ef8',
     base64: '54657374',

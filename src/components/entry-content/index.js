@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {autobind} from 'core-decorators';
 import {CopyToClipboard} from 'react-copy-to-clipboard';
 import classNames from 'classnames';
+import {Base64} from 'js-base64';
 import withDataEncoding from 'hocs/with-data-encoding';
 
 import ExpansibleContainer from 'components/expansible-container';
@@ -52,7 +53,7 @@ class EntryContent extends Component {
 
         if (data.find(withLabel(ENCODINGS.FORMAT.JSON))) {
             return data.find(withLabel(ENCODINGS.FORMAT.JSON));
-        } else if (rawIsPrintable(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value)) {
+        } else if (rawIsPrintable(Base64.decode(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value))) {
             return data.find(withLabel(ENCODINGS.FORMAT.RAW));
         }
 

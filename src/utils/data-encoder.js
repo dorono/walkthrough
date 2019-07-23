@@ -1,3 +1,4 @@
+import {Base64} from 'js-base64';
 import utf8 from 'utf8';
 import {toHex} from 'utils/encoding';
 
@@ -33,7 +34,7 @@ const getMultipleEncodings = base64EncodedData => {
     const rawDataIsValidUTF8 = isValidUTF8(rawData);
 
     return {
-        raw: rawData,
+        raw: Base64.decode(base64EncodedData),
         json: rawDataIsValidUTF8 ? rawToJson(rawData) : null,
         hex: rawDataIsValidUTF8 ? rawToHex(rawData) : null,
         base64: rawDataIsValidUTF8 ? base64EncodedData : null,

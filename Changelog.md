@@ -1,7 +1,10 @@
 
 ## Changelog
 
-### 2019-03-21: 3.1.9
+### 2019-07-23: 3.1.10-rc1
+- [EX-176] - UTF-8 encoding not handled properly in some cases
+
+### 2019-07-17: 3.1.9
 - Bump version for release to Production.
 
 ### 2019-07-17: 3.1.9-rc1
