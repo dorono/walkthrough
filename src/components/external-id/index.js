@@ -3,7 +3,6 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Collapse} from 'react-collapse';
 import {presets} from 'react-motion';
-import {Base64} from 'js-base64';
 
 import withDataEncodings from 'hocs/with-data-encoding';
 
@@ -39,7 +38,7 @@ class ExternalId extends Component {
     getDefaultEncoding() {
         const {data} = this.props;
         const withLabel = label => encoding => encoding.label === label;
-        if (rawIsPrintable(Base64.decode(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value))) {
+        if (rawIsPrintable(data.find(withLabel(ENCODINGS.FORMAT.RAW)).value)) {
             return data.find(withLabel(ENCODINGS.FORMAT.RAW));
         }
 
