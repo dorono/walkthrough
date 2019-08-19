@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-08-19: 3.1.11-rc1
+- [EX-179] - fixed bug that prevented Explorer from defaulting to the correct printable text
+
 ### 2019-07-26: 3.1.10
 - Bump version for release to Production.
 
