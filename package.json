@@ -88,6 +88,7 @@
     "core-decorators": "0.18.0",
     "core-js": "2.5.7",
     "element-closest": "2.0.2",
+    "emoji-regex": "^8.0.0",
     "js-base64": "^2.5.1",
     "lodash": "4.17.10",
     "moment": "2.22.2",
