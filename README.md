@@ -68,6 +68,17 @@ server {
 }
 ```
 
+## External ID's and Content fields' display formats
+
+On Entry and Chain pages, users are able to select the desired display format for their External ID's and Content.
+
+* External ID's have a dropdown with 3 options: raw, hex, and base64. The default is raw, but if an unprintable character is detected it defaults to hex instead.
+* The Content box at the bottom of an Entry page (and soon to be added to the Chain page) has 3 tabs: raw, hex, and base64. The default is raw, unless:
+  * the raw content is valid JSON, then a 4th tab "JSON" appears and defaults to that instead
+  * an unprintable character is detected, it defaults to hex instead
+
+The general rule is that any non-JSON input that the user sets as an External ID or content should show up by default in the "Raw" view, which would include all emojis and characters in any language.
+
 ## Contributing
 
 ```
