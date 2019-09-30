@@ -9,7 +9,10 @@ export class Table extends Component {
     static propTypes = {
         columns: PropTypes.arrayOf(PropTypes.string).isRequired,
         children: PropTypes.func.isRequired,
-        ellipsis: PropTypes.number,
+        ellipsis: PropTypes.oneOfType([
+            PropTypes.array,
+            PropTypes.number,
+        ]),
         centerAlign: PropTypes.number,
         leftPadding: PropTypes.number,
         interactive: PropTypes.bool,
@@ -22,6 +25,25 @@ export class Table extends Component {
         interactive: true,
         responsive: false,
     };
+
+    @autobind
+    getColHeader(columnName) {
+        // this allows you to set 2 separate col names - one for the desktop view
+        // and one for the mobile view. You just need to add '|||' between each version
+        if (columnName.includes('|||')) {
+            const columnNameVersions = columnName.split('|||');
+            return (
+                <span>
+                    <span className={styles.long}>{columnNameVersions[0]}</span>
+                    <span className={styles.short}>{columnNameVersions[1]}</span>
+                </span>
+            );
+        }
+
+        return (
+            <span>{columnName}</span>
+        );
+    }
 
     @autobind
     handleClick(event) {
@@ -70,7 +92,12 @@ export class Table extends Component {
                             }
 
                             return (
-                                <th key={header} className={className.join(' ')} style={style}>{header}</th>
+                                <th
+                                    key={header}
+                                    className={className.join(' ')}
+                                    style={style}>
+                                    {this.getColHeader(header)}
+                                </th>
                             );
                         })}
                     </tr>
@@ -84,7 +111,15 @@ export class Table extends Component {
 
                                 const className = [];
 
-                                if (index === this.props.ellipsis) {
+                                // force this.props.ellipsis into an array to accept
+                                // prop as either a number or an array...
+                                const ellipsisCells = Array.isArray(this.props.ellipsis)
+                                    ? this.props.ellipsis
+                                    : [this.props.ellipsis];
+
+                                // if the index of this cell is included in the JSX,
+                                // add the ellipsis CSS
+                                if (ellipsisCells.includes(index)) {
                                     className.push(styles.ellipsis);
                                 }
 

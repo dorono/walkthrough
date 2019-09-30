@@ -6,8 +6,9 @@ const defaultProps = {
     columns: [
         'col1',
         'col2',
-        'col3',
+        'col3_short|||col3_long',
     ],
+    ellipsis: [1, 2],
     rows: [{
         field1: 'row1_test1',
         field2: 'row1_test2',
@@ -39,7 +40,16 @@ describe('Table', () => {
         );
     });
 
-    it('should match snapshot', () => {
+    it('should match snapshot with 2 cols set for ellipses', () => {
+        expect(shallow(
+            <Table {...defaultProps}>
+                {(row, index) => createTableRows(row, index)}
+            </Table>,
+        )).toMatchSnapshot();
+    });
+
+    it('should match snapshot with 1 col set for ellipses', () => {
+        defaultProps.ellipsis = 2;
         expect(shallow(
             <Table {...defaultProps}>
                 {(row, index) => createTableRows(row, index)}

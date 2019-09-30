@@ -6,18 +6,30 @@ const defaultProps = {
     data: {
         ablock: {
             hash: 'hash1',
+            entries: {
+                count: 4,
+            },
         },
         ecblock: {
             hash: 'hash2',
+            entries: {
+                count: 6,
+            },
         },
         eblocks: [{
             keymr: 'keymr',
             chain: {
                 chain_id: 'chain1',
             },
+            entries: {
+                count: 23,
+            },
         }],
         fblock: {
             hash: 'hash3',
+            transactions: {
+                count: 4,
+            },
         },
     },
     location: {},

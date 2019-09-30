@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import classNames from 'classnames';
+
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDateLong} from 'utils/date';
 import Container from 'components/container';
@@ -7,6 +8,7 @@ import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
+import Table from 'components/table';
 import BlockLink from 'components/block-link';
 import BlockHeight from 'components/block-height';
 import EntryBlockLink from 'components/entry-block-link';
@@ -17,18 +19,40 @@ import styles from './styles.css';
 export default class DirectoryBlockPage extends Component {
     getBlocks() {
         const {ablock, ecblock, fblock, eblocks} = this.props.data;
-
         const hashes = [
-            {type: 'ablock', label: 'ADMIN BLOCK', value: ablock.hash},
-            {type: 'ecblock', label: 'ENTRY CREDIT BLOCK', value: ecblock.hash},
-            {type: 'fblock', label: 'FACTOID BLOCK', value: fblock.keymr},
+            {
+                type: 'ablock',
+                label: 'ADMIN BLOCK',
+                value: ablock.hash,
+                entry_count: ablock.entries.count,
+                chain_id: 'n/a',
+            },
+            {
+                type: 'ecblock',
+                label: 'ENTRY CREDIT BLOCK',
+                value: ecblock.hash,
+                entry_count: ecblock.entries.count,
+                chain_id: 'n/a',
+            },
+            {
+                type: 'fblock',
+                label: 'FACTOID BLOCK',
+                value: fblock.keymr,
+                entry_count: fblock.transactions.count,
+                chain_id: 'n/a',
+            },
         ];
 
         eblocks.forEach(eblock => {
-            hashes.push(
-                {type: 'eblock', label: 'ENTRY BLOCK', value: eblock.keymr, merge: true, key: eblock.keymr},
-                {type: 'chain', label: 'CHAIN', value: eblock.chain.chain_id, key: eblock.chain.chain_id},
-            );
+            hashes.push({
+                type: 'eblock',
+                label: 'ENTRY BLOCK',
+                value: eblock.keymr,
+                merge: true,
+                key: eblock.keymr,
+                entry_count: eblock.entries.count,
+                chain_id: eblock.chain.chain_id,
+            });
         });
 
         return hashes;
@@ -187,12 +211,33 @@ export default class DirectoryBlockPage extends Component {
                     </VerticalToHorizontal>
                 </Container>
                 <Container title='Blocks' subtitle='(included in this directory block)' count={blockCount}>
-                    {this.getBlocks().map(hash => (
-                        <div key={hash.value} className={classNames(styles.block, {[styles.merge]: hash.merge})}>
-                            <Label>{hash.label}</Label>
-                            <Hash type={hash.type}>{hash.value}</Hash>
-                        </div>
-                    ))}
+                    <Table
+                        columns={[
+                            'TYPE',
+                            'HASH/KEYMR|||HASH',
+                            'ASSOCIATED CHAIN|||CHAIN',
+                            'ENTRIES',
+                        ]}
+                        rows={this.getBlocks()}
+                        ellipsis={[1, 2]}
+                        type='secondary'
+                        centerAlign={3}
+                        responsive>
+                        {(row) => (
+                            <tr key={row.value}>
+                                <td style={{width: '15%'}}><Label>{row.label}</Label></td>
+                                <td style={{width: '35%'}}><Hash type={row.type}>{row.value}</Hash></td>
+                                <td style={{width: '35%'}}>
+                                    {row.type === 'eblock'
+                                    ? (<Hash type='chain'>{row.chain_id}</Hash>)
+                                    : <span>{row.chain_id}</span>
+                                    }
+                                </td>
+                                <td style={{width: '5%', textAlign: 'center'}}>{row.entry_count}</td>
+                            </tr>
+                        )}
+                    </Table>
+
                 </Container>
             </div>
         );

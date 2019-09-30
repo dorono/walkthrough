@@ -8,6 +8,24 @@
 
     th {
         text-align: left;
+
+        .short {
+            display: none;
+        }
+
+        .long {
+            display: inline;
+        }
+
+        @media (--up-to-small-viewport) {
+            .short {
+                display: inline;
+            }
+
+            .long {
+                display: none;
+            }
+        }
     }
 
     & > tbody {

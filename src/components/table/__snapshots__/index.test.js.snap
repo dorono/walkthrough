@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Table should match snapshot 1`] = `
+exports[`Table should match snapshot with 1 col set for ellipses 1`] = `
 <table
   className="primary interactive"
   onClick={[Function]}
@@ -13,19 +13,34 @@ exports[`Table should match snapshot 1`] = `
         className="header"
         key="col1"
       >
-        col1
+        <span>
+          col1
+        </span>
       </th>
       <th
         className="header"
         key="col2"
       >
-        col2
+        <span>
+          col2
+        </span>
       </th>
       <th
         className="header"
-        key="col3"
+        key="col3_short|||col3_long"
       >
-        col3
+        <span>
+          <span
+            className="long"
+          >
+            col3_short
+          </span>
+          <span
+            className="short"
+          >
+            col3_long
+          </span>
+        </span>
       </th>
     </tr>
   </thead>
@@ -39,7 +54,10 @@ exports[`Table should match snapshot 1`] = `
       <td>
         row1_test2
       </td>
-      <td>
+      <td
+        className="ellipsis"
+        key="2"
+      >
         row1_test3
       </td>
     </tr>
@@ -52,7 +70,97 @@ exports[`Table should match snapshot 1`] = `
       <td>
         row2_test2
       </td>
+      <td
+        className="ellipsis"
+        key="2"
+      >
+        row2_test3
+      </td>
+    </tr>
+  </tbody>
+</table>
+`;
+
+exports[`Table should match snapshot with 2 cols set for ellipses 1`] = `
+<table
+  className="primary interactive"
+  onClick={[Function]}
+>
+  <thead
+    className="left"
+  >
+    <tr>
+      <th
+        className="header"
+        key="col1"
+      >
+        <span>
+          col1
+        </span>
+      </th>
+      <th
+        className="header"
+        key="col2"
+      >
+        <span>
+          col2
+        </span>
+      </th>
+      <th
+        className="header"
+        key="col3_short|||col3_long"
+      >
+        <span>
+          <span
+            className="long"
+          >
+            col3_short
+          </span>
+          <span
+            className="short"
+          >
+            col3_long
+          </span>
+        </span>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr
+      key="0"
+    >
       <td>
+        row1_test1
+      </td>
+      <td
+        className="ellipsis"
+        key="1"
+      >
+        row1_test2
+      </td>
+      <td
+        className="ellipsis"
+        key="2"
+      >
+        row1_test3
+      </td>
+    </tr>
+    <tr
+      key="1"
+    >
+      <td>
+        row2_test1
+      </td>
+      <td
+        className="ellipsis"
+        key="1"
+      >
+        row2_test2
+      </td>
+      <td
+        className="ellipsis"
+        key="2"
+      >
         row2_test3
       </td>
     </tr>
