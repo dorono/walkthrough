@@ -221,8 +221,7 @@ export default class DirectoryBlockPage extends Component {
                         rows={this.getBlocks()}
                         ellipsis={[1, 2]}
                         type='secondary'
-                        centerAlign={3}
-                        responsive>
+                        centerAlign={3}>
                         {(row) => (
                             <tr key={row.value}>
                                 <td style={{width: '15%'}}><Label>{row.label}</Label></td>
