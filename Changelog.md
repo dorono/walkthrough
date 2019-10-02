@@ -1,7 +1,7 @@
 
 ## Changelog
 
-### 2019-08-23: 3.2.1-rc1
+### 2019-08-23: 3.2.0-rc1
 - [HAR-1346] - Updated Directory Block detail page with re-organized "Blocks" table, adding "entries" to each row and making "Chain" a column instead of a separate row
 
 ### 2019-08-23: 3.1.11

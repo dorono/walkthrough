@@ -1,23 +1,5 @@
 @import 'styles/variables.css';
 
-.root {
-    .col1 {
-        width: 10%;
-    }
-
-    .col2 {
-        width: 40%;
-    }
-
-    .col3 {
-        width: 40%;
-    }
-
-    .col4 {
-        width: 10%;
-    }
-}
-
 .block {
     display: flex;
     align-items: center;
@@ -42,6 +24,10 @@
             border-bottom-color: var(--gray-stroke-dark);
         }
     }
+}
+
+.label-style {
+    font-weight: normal;
 }
 
 .anchor-block {

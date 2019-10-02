@@ -157,7 +157,7 @@ export default class DirectoryBlockPage extends Component {
         // Assign the json Data to this variable
         const networkData = buildNetworkData();
 
-        // If the network is disabled or perding, this should render 0 blocks,
+        // If the network is disabled or pending, this should render 0 blocks,
         // otherwise, should render the network blocks.
         const renderNetworkBlocks = () => {
             if (network === 'bitcoin' && networkData[0].disabled && networkData[1].disabled) {
@@ -215,7 +215,7 @@ export default class DirectoryBlockPage extends Component {
                         columns={[
                             'TYPE',
                             'HASH/KEYMR|||HASH',
-                            'ASSOCIATED CHAIN|||CHAIN',
+                            'CHAIN ID|||CHAIN',
                             'ENTRIES',
                         ]}
                         rows={this.getBlocks()}
@@ -224,7 +224,7 @@ export default class DirectoryBlockPage extends Component {
                         centerAlign={3}>
                         {(row) => (
                             <tr key={row.value}>
-                                <td style={{width: '15%'}}><Label>{row.label}</Label></td>
+                                <td style={{width: '15%'}}><Label className={styles.labelStyle}>{row.label}</Label></td>
                                 <td style={{width: '35%'}}><Hash type={row.type}>{row.value}</Hash></td>
                                 <td style={{width: '35%'}}>
                                     {row.type === 'eblock'
