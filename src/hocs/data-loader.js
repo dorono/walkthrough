@@ -1,6 +1,6 @@
 import React from 'react';
 
-import {request} from 'api';
+import {request, requestJSONRPC} from 'api';
 import {APIConfigurationConsumer} from 'contexts/api';
 import {executeModalTrigger} from 'utils/execute-options-modal';
 import Spinner from 'components/spinner';
@@ -75,9 +75,16 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             try {
                 let response = await request(url, props.apiConfig, this.abortController.signal);
                 if (Array.isArray(target)) {
-                    response = {...response.data,
-                        ...(await request(secondUrl, props.apiConfig, this.abortController.signal)).data};
-                    this.setState({data: {data: response}});
+                    if (typeof secondUrl !== 'string'){
+                        const {method, params} = secondUrl;
+                        response = {...response.data,
+                            jsonRPC: (await requestJSONRPC(method, params)).result};
+                        this.setState({data: {data: response}});
+                    } else {
+                        response = {...response.data,
+                            ...(await request(secondUrl, props.apiConfig, this.abortController.signal)).data};
+                        this.setState({data: {data: response}});
+                    }
                 } else {
                     this.setState({data: response});
                 }

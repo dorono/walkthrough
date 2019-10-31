@@ -7,6 +7,7 @@ import {Horizontal, Vertical, Box} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
+import Dropdown from 'components/dropdown';
 import Amount from 'components/amount';
 
 const addressTypes = {
@@ -20,8 +21,26 @@ const columns = [
     `CREATED TIME (${currentTimezone()})`,
 ];
 
-@dataLoader(({match}) => `/addresses/${match.params.hash}`)
+const buildJsonRPCData = (address) => {
+    return {
+        method: 'get-pegnet-balances',
+        params: {
+            address,
+        },
+    };
+};
+
+@dataLoader([({match}) => `/addresses/${match.params.hash}`, ({match}) => buildJsonRPCData(match.params.hash)])
 export default class Address extends Component {
+    state = {
+        selected: '',
+        assetsBalances: [],
+    };
+
+    componentWillMount() {
+        this.getAssetsBalances();
+    }
+
     getAmountKey() {
         return this.props.data.type === 'FA' ? 'fct_amount' : 'ec_amount';
     }
@@ -34,8 +53,26 @@ export default class Address extends Component {
         return row[this.getAmountKey()] * (row.type === 'output' ? 1 : -1);
     }
 
+    handleChangeSelection() {
+        return null;
+    }
+
+    getAssetsBalances = () => {
+        console.log("wtfff")
+        const assets = [];
+        for (let property in this.props.data.jsonRPC) {
+            const asset = {
+                name: property,
+                balance: this.props.data.jsonRPC[property],
+            };
+            assets.push(asset);
+        }
+        this.setState({assetsBalances: assets});
+    }
+
     render() {
         const amountKey = this.getAmountKey();
+        console.log(this.state.assetsBalances);
         return (
             <div>
                 <Container primary title='Address'>
@@ -45,7 +82,14 @@ export default class Address extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>Type</Label>
-                                        {addressTypes[this.props.data.type]}
+                                        {
+                                            /**<Dropdown
+                                            options={data}
+                                            onOptionClick={this.handleChangeSelection}
+                                            selected={this.state.selected}
+                                            arrowColor='white'
+                                        /> */
+                                        }
                                     </div>
                                     <div>
                                         <Label>Balance</Label>
