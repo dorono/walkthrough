@@ -75,7 +75,7 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             try {
                 let response = await request(url, props.apiConfig, this.abortController.signal);
                 if (Array.isArray(target)) {
-                    if (typeof secondUrl !== 'string'){
+                    if (typeof secondUrl !== 'string') {
                         const {method, params} = secondUrl;
                         response = {...response.data,
                             jsonRPC: (await requestJSONRPC(method, params)).result};

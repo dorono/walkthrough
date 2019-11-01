@@ -1,6 +1,6 @@
 import queryString from 'query-string';
 import {stringNotUndefined} from 'utils/validate';
-import JsonRPC from 'utils/jsonRPC'
+import JsonRPC from 'utils/jsonRPC';
 
 const jsonRPC = new JsonRPC('http://localhost:8070/v1');
 
@@ -29,13 +29,13 @@ export const request = async (url, apiConfig = null, fetchSignal) => {
 };
 
 export const requestJSONRPC = async (method, params) => {
-    let response = await jsonRPC.request(method, params);
+    const response = await jsonRPC.request(method, params);
     if (response.status >= 400) {
         const error = new Error(response.statusText);
         error.statusCode = response.status;
         throw error;
     }
-    return response.json();;
+    return response.json();
 };
 
 export const addPaginationParams = (url, currentQueryString) => {

@@ -9,11 +9,14 @@ import Label from 'components/label';
 import Hash from 'components/hash';
 import Dropdown from 'components/dropdown';
 import Amount from 'components/amount';
+import globalStyles from 'styles/index.css';
+import classNames from 'classnames';
+import styles from './styles.css';
 
-const addressTypes = {
+/* const addressTypes = {
     FA: 'Factoid Address',
     EC: 'Entry Credit Address',
-};
+}; */
 
 const columns = [
     'TRANSACTION ID',
@@ -29,16 +32,21 @@ const buildJsonRPCData = (address) => {
         },
     };
 };
+//TODO: Prevent rerender
 
 @dataLoader([({match}) => `/addresses/${match.params.hash}`, ({match}) => buildJsonRPCData(match.params.hash)])
 export default class Address extends Component {
     state = {
-        selected: '',
         assetsBalances: [],
     };
 
     componentWillMount() {
         this.getAssetsBalances();
+    }
+
+    handleChangeSelection = (option) => {
+        console.log(option);
+        this.setState({selected: option});
     }
 
     getAmountKey() {
@@ -53,26 +61,25 @@ export default class Address extends Component {
         return row[this.getAmountKey()] * (row.type === 'output' ? 1 : -1);
     }
 
-    handleChangeSelection() {
-        return null;
-    }
-
     getAssetsBalances = () => {
-        console.log("wtfff")
         const assets = [];
         for (let property in this.props.data.jsonRPC) {
+            const balance = this.props.data.jsonRPC[property];
             const asset = {
-                name: property,
-                balance: this.props.data.jsonRPC[property],
+                label: `${property} - ${balance}`,
+                value: balance,
             };
             assets.push(asset);
         }
-        this.setState({assetsBalances: assets});
+        this.setState({
+            assetsBalances: assets,
+            selected: assets.find(asset => asset.label.substring(0, 3) === 'PEG'),
+        });
     }
 
     render() {
         const amountKey = this.getAmountKey();
-        console.log(this.state.assetsBalances);
+        const {assetsBalances, selected} = this.state;
         return (
             <div>
                 <Container primary title='Address'>
@@ -82,18 +89,20 @@ export default class Address extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>Type</Label>
-                                        {
-                                            /**<Dropdown
-                                            options={data}
+                                        <Dropdown
+                                            options={assetsBalances}
                                             onOptionClick={this.handleChangeSelection}
-                                            selected={this.state.selected}
-                                            arrowColor='white'
-                                        /> */
-                                        }
+                                            selected={selected}
+                                            className={styles.dropdown}
+                                            headerClassName={classNames(styles.dropdownHeader, styles.formInput)}
+                                            optionsClassName={styles.dropdownOptions}
+                                            selectedClassName={globalStyles.selectedOption}
+                                            arrowColor='blue'
+                                        />
                                     </div>
                                     <div>
                                         <Label>Balance</Label>
-                                        <Amount unit={this.getAmountUnit()}>{this.props.data.balance}</Amount>
+                                        <Amount unit={this.getAmountUnit()}>{selected.value}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>
