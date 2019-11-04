@@ -41,12 +41,16 @@ class Dropdown extends Component {
         // The options to display.
         options: PropTypes.arrayOf(PropTypes.shape({
             label: PropTypes.string,
+            alias: PropTypes.string,
         })).isRequired,
+        // TODO: explain
+        optionsAlias: PropTypes.bool,
         // Class name for the options menu.
         optionsClassName: PropTypes.string,
         // The current selected option.
         selected: PropTypes.PropTypes.shape({
             label: PropTypes.string,
+            alias: PropTypes.string,
         }).isRequired,
         // Class name to be applied to the selected option (for OptionsMenu component).
         selectedClassName: PropTypes.string,
@@ -55,6 +59,7 @@ class Dropdown extends Component {
     static defaultProps = {
         arrowColor: DEFAULT_ARROW_COLOR,
         disabled: false,
+        optionsAlias: false,
         selectedClassName: styles.selected,
     };
 
@@ -130,13 +135,15 @@ class Dropdown extends Component {
     }
 
     renderHeader() {
-        const {selected, headerClassName, disabled, arrowColor = DEFAULT_ARROW_COLOR} = this.props;
+        const {selected, headerClassName, disabled, arrowColor = DEFAULT_ARROW_COLOR, optionsAlias} = this.props;
         const {showOptions} = this.state;
         return (
             <div
                 onClick={this.handleHeaderClick}
                 className={classNames(styles.header, headerClassName, disabled && styles.disabled)}>
-                <span ref={this.setDropdownRef}>{selected.label}</span>
+                <span ref={this.setDropdownRef}>
+                    {optionsAlias ? selected.alias : selected.label}
+                </span>
                 <img
                     src={ARROWS[arrowColor]}
                     className={classNames(styles.arrow, {[styles.flipped]: showOptions})}

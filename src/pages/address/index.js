@@ -22,15 +22,24 @@ const columns = [
     'TRANSACTION ID',
     'AMOUNT (BALANCE CHANGE)',
     `CREATED TIME (${currentTimezone()})`,
+    'TYPE',
 ];
 
 const buildJsonRPCData = (address) => {
-    return {
-        method: 'get-pegnet-balances',
-        params: {
-            address,
+    return [
+        {
+            method: 'get-pegnet-balances',
+            params: {
+                address,
+            },
         },
-    };
+        {
+            method: 'get-transactions',
+            params: {
+                address,
+            },
+        }
+    ];
 };
 //TODO: Prevent rerender
 
@@ -45,7 +54,6 @@ export default class Address extends Component {
     }
 
     handleChangeSelection = (option) => {
-        console.log(option);
         this.setState({selected: option});
     }
 
@@ -63,16 +71,18 @@ export default class Address extends Component {
 
     getAssetsBalances = () => {
         const assets = [];
-        for (let property in this.props.data.jsonRPC) {
+        for (const property in this.props.data.jsonRPC) {
             const balance = this.props.data.jsonRPC[property];
             const asset = {
                 label: `${property} - ${balance}`,
                 value: balance,
+                alias: property,
             };
             assets.push(asset);
         }
+        const filteredAssets = assets.sort((a, b) => b.value - a.value);
         this.setState({
-            assetsBalances: assets,
+            assetsBalances: filteredAssets,
             selected: assets.find(asset => asset.label.substring(0, 3) === 'PEG'),
         });
     }
@@ -98,11 +108,12 @@ export default class Address extends Component {
                                             optionsClassName={styles.dropdownOptions}
                                             selectedClassName={globalStyles.selectedOption}
                                             arrowColor='blue'
+                                            optionsAlias
                                         />
                                     </div>
                                     <div>
                                         <Label>Balance</Label>
-                                        <Amount unit={this.getAmountUnit()}>{selected.value}</Amount>
+                                        <Amount>{selected.value}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>
@@ -145,6 +156,7 @@ export default class Address extends Component {
                                         </td>
                                         <td><Amount unit={this.getAmountUnit()}>{this.getAmount(row)}</Amount></td>
                                         <td>{formatDate(row.created_at)}</td>
+                                        <td>{'Transfer'}</td>
                                     </tr>
                                 )}
                             </Table>

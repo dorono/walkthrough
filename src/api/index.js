@@ -2,6 +2,7 @@ import queryString from 'query-string';
 import {stringNotUndefined} from 'utils/validate';
 import JsonRPC from 'utils/jsonRPC';
 
+//TODO: move this to env variable
 const jsonRPC = new JsonRPC('http://localhost:8070/v1');
 
 export const request = async (url, apiConfig = null, fetchSignal) => {
