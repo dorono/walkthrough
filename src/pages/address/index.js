@@ -12,6 +12,7 @@ import Amount from 'components/amount';
 import globalStyles from 'styles/index.css';
 import classNames from 'classnames';
 import styles from './styles.css';
+import {TRANSACTIONS} from 'constants/transactions';
 
 /* const addressTypes = {
     FA: 'Factoid Address',
