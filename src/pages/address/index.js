@@ -38,7 +38,7 @@ const buildJsonRPCData = (address) => {
             params: {
                 address,
             },
-        }
+        },
     ];
 };
 //TODO: Prevent rerender
@@ -70,9 +70,10 @@ export default class Address extends Component {
     }
 
     getAssetsBalances = () => {
+        const assetsBalancesAPI = this.props.data.jsonRPC[0];
         const assets = [];
-        for (const property in this.props.data.jsonRPC) {
-            const balance = this.props.data.jsonRPC[property];
+        for (const property in assetsBalancesAPI) {
+            const balance = assetsBalancesAPI[property];
             const asset = {
                 label: `${property} - ${balance}`,
                 value: balance,

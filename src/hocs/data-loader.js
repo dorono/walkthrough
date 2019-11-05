@@ -74,14 +74,16 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             }
             try {
                 let response = await request(url, props.apiConfig, this.abortController.signal);
+                const jsonRPC = [];
                 if (Array.isArray(target)) {
                     if (typeof secondUrl !== 'string') {
                         for (let i = 0; i < secondUrl.length; i++) {
                             const {method, params} = secondUrl[i];
-                            response = {...response.data,
-                                jsonRPC: (await requestJSONRPC(method, params)).result};
-                            this.setState({data: {data: response}});
+                            const req = (await requestJSONRPC(method, params)).result;
+                            jsonRPC.push(req);
                         }
+                        response = {...response.data, jsonRPC};
+                        this.setState({data: {data: response}});
                     } else {
                         response = {...response.data,
                             ...(await request(secondUrl, props.apiConfig, this.abortController.signal)).data};

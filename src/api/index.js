@@ -3,7 +3,7 @@ import {stringNotUndefined} from 'utils/validate';
 import JsonRPC from 'utils/jsonRPC';
 
 //TODO: move this to env variable
-const jsonRPC = new JsonRPC('http://localhost:8070/v1');
+const jsonRPC = new JsonRPC('https://d8cff14a.ngrok.io/v1');
 
 export const request = async (url, apiConfig = null, fetchSignal) => {
     const {apiUrl, appKey, appId, publicNetAppId, publicNetAppKey} = apiConfig;
