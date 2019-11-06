@@ -11,14 +11,13 @@ import FactoidBlockLink from 'components/factoid-block-link';
 import Amount from 'components/amount';
 import Monospaced from 'components/monospaced';
 
-const buildJsonRPCData = (entryHash) => {
-    console.log('entryHash', entryHash)
+const buildJsonRPCData = (txid) => {
+    console.log('txid', txid)
     return [
         {
             method: 'get-transaction',
             params: {
-                chainId: 'cffce0f409ebba4ed236d49d89c70e4bd1f1367d86402a3363366683265a242d',
-                entryHash,
+                txid: `00-${txid}`
             },
         },
     ];
