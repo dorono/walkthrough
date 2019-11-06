@@ -18,6 +18,15 @@ export default class App extends Component {
         showSettingsPopup: false,
     };
 
+    // static getDerivedStateFromProps(props) {
+        // if (
+        //     !props.location.pathname.includes('transactions')
+        //     || !props.location.pathname.includes('addresses')
+        // ) {
+        //     window.open(`https://explorer.factom.com${props.location.pathname}`);
+        // }
+    // }
+
     componentWillReceiveProps(nextProps) {
         if (nextProps.location.pathname !== this.props.location.pathname) {
             this.setState({jsError: false});

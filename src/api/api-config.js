@@ -13,6 +13,7 @@ export default class APIConfig {
         this.publicNetAppKey = CONFIG.publicNetAppKey;
         this.blockchain = AVAILABLE_BLOCKCHAINS.PUBLIC.label;
         this.latestBuildTime = CONFIG.latestBuildTime;
+        this.pegnetApiUrl = CONFIG.pegnetApiUrl;
     }
 
     /**
@@ -24,7 +25,7 @@ export default class APIConfig {
      * @returns {APIConfig}
      */
     static create({apiUrl, appId, appKey, appName, apiVersion,
-        blockchain, publicNetAppId, publicNetAppKey}) {
+        blockchain, publicNetAppId, publicNetAppKey, pegnetApiUrl}) {
         const apiConfig = new APIConfig();
         apiConfig.apiUrl = apiUrl;
         if (apiConfig.apiUrl) {
@@ -50,6 +51,8 @@ export default class APIConfig {
         apiConfig.blockchain = blockchain;
         apiConfig.publicNetAppId = publicNetAppId;
         apiConfig.publicNetAppKey = publicNetAppKey;
+        apiConfig.pegnetApiUrl = pegnetApiUrl;
+        console.log('pegnetApiUrl', pegnetApiUrl);
         return apiConfig;
     }
 
