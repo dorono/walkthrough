@@ -1,5 +1,10 @@
 import queryString from 'query-string';
 import {stringNotUndefined} from 'utils/validate';
+import JsonRPC from 'utils/jsonRPC';
+// import APIConfig from 'api/api-config';
+
+// TODO: move this to env variable
+const jsonRPC = new JsonRPC('http://localhost:8070/v1');
 
 export const request = async (url, apiConfig = null, fetchSignal) => {
     const {apiUrl, appKey, appId, publicNetAppId, publicNetAppKey} = apiConfig;
@@ -17,6 +22,16 @@ export const request = async (url, apiConfig = null, fetchSignal) => {
         headers.app_key = publicNetAppKey;
     }
     const response = await fetch(`${apiUrl}${url}`, {headers, signal: fetchSignal});
+    if (response.status >= 400) {
+        const error = new Error(response.statusText);
+        error.statusCode = response.status;
+        throw error;
+    }
+    return response.json();
+};
+
+export const requestJSONRPC = async (method, params) => {
+    const response = await jsonRPC.request(method, params);
     if (response.status >= 400) {
         const error = new Error(response.statusText);
         error.statusCode = response.status;

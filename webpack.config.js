@@ -23,6 +23,8 @@ const googleTagManagerEnv = process.env.GTM_ENV;
 const apiUrl = process.env.API_URL || '$API_URL';
 const publicNetAppId = process.env.PUBLIC_NETWORK_GATEWAY_APP_ID || '$PUBLIC_NETWORK_GATEWAY_APP_ID';
 const publicNetAppKey = process.env.PUBLIC_NETWORK_GATEWAY_APP_KEY || '$PUBLIC_NETWORK_GATEWAY_APP_KEY';
+const pegnetApiUrl = process.env.PEGNET_API_URL || '$PEGNET_API_URL';
+
 // API Gateway values.
 const gatewayUrls = {
     publicNet: process.env.PUBLIC_NETWORK_GATEWAY || '$PUBLIC_NETWORK_GATEWAY',
@@ -126,6 +128,7 @@ module.exports = {
                 apiUrl,
                 apiUrlVersionSuffix,
                 devPortalBaseUrl,
+                pegnetApiUrl,
                 devPortalHostName,
                 devPortalProtocol,
                 publicNetAppId,

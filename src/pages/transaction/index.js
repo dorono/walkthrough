@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDateLong} from 'utils/date';
+import {getPegnetTransactionType} from 'utils/pegnet';
 import Container from 'components/container';
 import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Table from 'components/table';
@@ -9,6 +10,18 @@ import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 import FactoidBlockLink from 'components/factoid-block-link';
 import Amount from 'components/amount';
+import Monospaced from 'components/monospaced';
+
+const buildJsonRPCData = (txid) => {
+    return [
+        {
+            method: 'get-transaction',
+            params: {
+                txid: `00-${txid}`,
+            },
+        },
+    ];
+};
 
 export class TransactionPage extends Component {
     getTransactionAmount(transaction) {
@@ -52,11 +65,17 @@ export class TransactionPage extends Component {
     render() {
         return (
             <div>
-                <Container primary title='Factoid Transaction'>
+                <Container primary title='Transaction'>
                     <VerticalToHorizontal verticalUpTo='small'>
                         <Vertical>
                             <Box type='outline'>
                                 <Vertical>
+                                    <div>
+                                        <Label>TYPE</Label>
+                                        <Monospaced>
+                                            {getPegnetTransactionType(this.props.data.jsonRPC[0].actions[0].txaction)}
+                                        </Monospaced>
+                                    </div>
                                     <div>
                                         <Label>INPUTS</Label>
                                         <Amount unit='FCT'>{this.props.data.fct_total_inputs}</Amount>
@@ -64,10 +83,6 @@ export class TransactionPage extends Component {
                                     <div>
                                         <Label>OUTPUTS</Label>
                                         <Amount unit='FCT'>{this.props.data.fct_total_outputs}</Amount>
-                                    </div>
-                                    <div>
-                                        <Label>ECS CREATED</Label>
-                                        <Amount unit='EC'>{this.props.data.ec_created}</Amount>
                                     </div>
                                     <div>
                                         <Label>FEE</Label>
@@ -105,4 +120,7 @@ export class TransactionPage extends Component {
     }
 }
 
-export default dataLoader(({match}) => `/transactions/${match.params.hash}`)(TransactionPage);
+export default dataLoader([
+    ({match}) => `/transactions/${match.params.hash}`,
+    ({match}) => buildJsonRPCData(match.params.hash),
+])(TransactionPage);
