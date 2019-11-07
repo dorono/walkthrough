@@ -48,26 +48,59 @@ const buildJsonRPCData = (address) => {
 export default class Address extends Component {
     state = {
         assetsBalances: [],
+        transactions: [],
+        selectedAsset: null,
+        selectedTransaction: null,
     };
 
     componentWillMount() {
         this.getAssetsBalances();
     }
 
-    handleChangeSelection = (option) => {
-        this.setState({selected: option});
+    handleChangeSelection = option => {
+        this.setState({
+            selectedAsset: option,
+            selectedTransaction: this.handleTransactionChange(option.alias),
+        });
     }
 
     getAmountKey() {
-        return this.props.data.type === 'FA' ? 'fct_amount' : 'ec_amount';
+        return this.state.selectedAsset.alias;
     }
 
     getAmountUnit() {
-        return this.props.data.type === 'FA' ? 'FCT' : 'EC';
+        return this.state.selectedAsset.alias;
     }
 
     getAmount(row) {
-        return row[this.getAmountKey()] * (row.type === 'output' ? 1 : -1);
+        const transactionType = row.txaction;
+        // IF it's transfer, always fromamount would be an discount
+        if(transactionType === TRANSACTIONS.TYPE.TRANSFER) {
+            return row.fromamount * (-1);
+        } else if(transactionType === TRANSACTIONS.TYPE.COINBASE) {
+            return row.toamount * (1);
+        } else if(transactionType === TRANSACTIONS.TYPE.CONVERSION) {
+            if(row.toasset === this.state.selectedAsset.alias) {
+                return row.toamount * (1);
+            } else if(row.fromasset === this.state.selectedAsset.alias) {
+                return row.fromamount * (-1);
+            }
+        } else {
+            return row.toamount * (1);
+        }
+    }
+
+    getTransactionName(row) {
+        const transactionType = row.txaction;
+        if(transactionType === TRANSACTIONS.TYPE.TRANSFER) {
+            return 'Transfer';
+        } else if(transactionType === TRANSACTIONS.TYPE.COINBASE) {
+            return 'Coinbase';
+        } else if(transactionType === TRANSACTIONS.TYPE.CONVERSION) {
+            return 'Conversion';
+        } else {
+            return 'Burn';
+        }
     }
 
     getAssetsBalances = () => {
@@ -85,13 +118,20 @@ export default class Address extends Component {
         const filteredAssets = assets.sort((a, b) => b.value - a.value);
         this.setState({
             assetsBalances: filteredAssets,
-            selected: assets.find(asset => asset.label.substring(0, 3) === 'PEG'),
+            selectedAsset: assets.find(asset => asset.label.substring(0, 3) === 'PEG'),
+            selectedTransaction: this.handleTransactionChange('PEG'),
         });
     }
 
+    handleTransactionChange = (asset) => {
+        const transactionsAPI = this.props.data.jsonRPC[1];
+        return transactionsAPI.actions.filter(transaction => (transaction.txaction === 1 || transaction.txaction === 3 || transaction.txaction === 2) && transaction.fromasset === asset || transaction.toasset === asset);
+    };
+
     render() {
         const amountKey = this.getAmountKey();
-        const {assetsBalances, selected} = this.state;
+        const sortOpt = sortOptions('timestamp');
+        const {assetsBalances, selectedAsset, selectedTransaction} = this.state;
         return (
             <div>
                 <Container primary title='Address'>
@@ -104,7 +144,7 @@ export default class Address extends Component {
                                         <Dropdown
                                             options={assetsBalances}
                                             onOptionClick={this.handleChangeSelection}
-                                            selected={selected}
+                                            selected={selectedAsset}
                                             className={styles.dropdown}
                                             headerClassName={classNames(styles.dropdownHeader, styles.formInput)}
                                             optionsClassName={styles.dropdownOptions}
@@ -115,7 +155,7 @@ export default class Address extends Component {
                                     </div>
                                     <div>
                                         <Label>Balance</Label>
-                                        <Amount>{selected.value}</Amount>
+                                        <Amount>{selectedAsset.value}</Amount>
                                     </div>
                                 </Vertical>
                             </Box>
@@ -129,10 +169,10 @@ export default class Address extends Component {
                     </Horizontal>
                 </Container>
                 <Sortable
-                    items={this.props.data.transactions}
+                    items={selectedTransaction}
                     sortOptions={[
-                        sortOptions.newestFirst,
-                        sortOptions.oldestFirst,
+                        sortOpt.newestFirst,
+                        sortOpt.oldestFirst,
                         {label: 'Highest amount first', func: (a, b) => b[amountKey] - a[amountKey]},
                         {label: 'Lowest amount first', func: (a, b) => a[amountKey] - b[amountKey]},
                     ]}>
@@ -152,13 +192,13 @@ export default class Address extends Component {
                                         <td>
                                             <Hash
                                                 type='tx'
-                                                key={row.tx_id}>
-                                                {row.tx_id}
+                                                key={row.txid}>
+                                                {row.txid}
                                             </Hash>
                                         </td>
                                         <td><Amount unit={this.getAmountUnit()}>{this.getAmount(row)}</Amount></td>
-                                        <td>{formatDate(row.created_at)}</td>
-                                        <td>{'Transfer'}</td>
+                                        <td>{formatDate(row.timestamp)}</td>
+                                        <td>{this.getTransactionName(row)}</td>
                                     </tr>
                                 )}
                             </Table>
