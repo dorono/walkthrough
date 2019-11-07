@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDateLong} from 'utils/date';
+import {getPegnetTransactionType} from 'utils/pegnet';
 import Container from 'components/container';
 import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Table from 'components/table';
@@ -35,6 +36,10 @@ export class TransactionPage extends Component {
             unit = 'EC';
         }
         return {amount, unit};
+    }
+
+    getTransactionType() {
+        return PEGNET_TRANSACTION_TYPES[(this.props.data.jsonRPC[0].actions[0].txaction) - 1];
     }
 
     renderTransactions(title, transactions) {
@@ -72,7 +77,7 @@ export class TransactionPage extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>TYPE</Label>
-                                        <Monospaced>[type here]</Monospaced>
+                                        <Monospaced>{getPegnetTransactionType(this.props.data.jsonRPC[0].actions[0].txaction)}</Monospaced>
                                     </div>
                                     <div>
                                         <Label>INPUTS</Label>
