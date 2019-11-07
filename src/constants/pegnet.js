@@ -4,4 +4,4 @@ export const PEGNET_TRANSACTION_TYPES = [
     'conversion',
     'coinbase',
     'burn',
-]
+];

@@ -5,7 +5,7 @@
 .dropdown-header {
     padding: 10px 10px 10px 0;
     display: flex;
-    color: black;
+    color: #000;
 }
 
 .dropdown-options {
@@ -13,7 +13,7 @@
     overflow-y: scroll;
     height: 50rem;
     margin-top: 12px;
-    
+
     & > div {
         color: var(--blue);
         font-size: 1.2rem;

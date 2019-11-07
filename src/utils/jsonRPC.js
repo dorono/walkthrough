@@ -1,6 +1,5 @@
 class JsonRPC {
     constructor(endpoint) {
-        console.log('endpoint', endpoint)
         this.lastId = 0;
         this.endpoint = endpoint;
         this.headers = {
@@ -21,7 +20,7 @@ class JsonRPC {
                 method,
                 params,
             }),
-        }
+        };
 
         return fetch(this.endpoint, req);
     }

@@ -13,12 +13,11 @@ import Amount from 'components/amount';
 import Monospaced from 'components/monospaced';
 
 const buildJsonRPCData = (txid) => {
-    console.log('txid', txid)
     return [
         {
             method: 'get-transaction',
             params: {
-                txid: `00-${txid}`
+                txid: `00-${txid}`,
             },
         },
     ];
@@ -36,10 +35,6 @@ export class TransactionPage extends Component {
             unit = 'EC';
         }
         return {amount, unit};
-    }
-
-    getTransactionType() {
-        return PEGNET_TRANSACTION_TYPES[(this.props.data.jsonRPC[0].actions[0].txaction) - 1];
     }
 
     renderTransactions(title, transactions) {
@@ -77,7 +72,9 @@ export class TransactionPage extends Component {
                                 <Vertical>
                                     <div>
                                         <Label>TYPE</Label>
-                                        <Monospaced>{getPegnetTransactionType(this.props.data.jsonRPC[0].actions[0].txaction)}</Monospaced>
+                                        <Monospaced>
+                                            {getPegnetTransactionType(this.props.data.jsonRPC[0].actions[0].txaction)}
+                                        </Monospaced>
                                     </div>
                                     <div>
                                         <Label>INPUTS</Label>

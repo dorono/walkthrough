@@ -3,7 +3,7 @@ import {stringNotUndefined} from 'utils/validate';
 import JsonRPC from 'utils/jsonRPC';
 // import APIConfig from 'api/api-config';
 
-//TODO: move this to env variable
+// TODO: move this to env variable
 const jsonRPC = new JsonRPC('http://localhost:8070/v1');
 
 export const request = async (url, apiConfig = null, fetchSignal) => {

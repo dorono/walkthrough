@@ -52,7 +52,6 @@ export default class APIConfig {
         apiConfig.publicNetAppId = publicNetAppId;
         apiConfig.publicNetAppKey = publicNetAppKey;
         apiConfig.pegnetApiUrl = pegnetApiUrl;
-        console.log('pegnetApiUrl', pegnetApiUrl);
         return apiConfig;
     }
 

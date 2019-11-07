@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import classNames from 'classnames';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
@@ -10,9 +11,8 @@ import Hash from 'components/hash';
 import Dropdown from 'components/dropdown';
 import Amount from 'components/amount';
 import globalStyles from 'styles/index.css';
-import classNames from 'classnames';
-import styles from './styles.css';
 import {TRANSACTIONS} from 'constants/transactions';
+import styles from './styles.css';
 
 /* const addressTypes = {
     FA: 'Factoid Address',
@@ -42,7 +42,8 @@ const buildJsonRPCData = (address) => {
         },
     ];
 };
-//TODO: Prevent rerender
+// TODO: Prevent rerender
+// TODO: Explain all the methods..
 
 @dataLoader([({match}) => `/addresses/${match.params.hash}`, ({match}) => buildJsonRPCData(match.params.hash)])
 export default class Address extends Component {
@@ -57,13 +58,6 @@ export default class Address extends Component {
         this.getAssetsBalances();
     }
 
-    handleChangeSelection = option => {
-        this.setState({
-            selectedAsset: option,
-            selectedTransaction: this.handleTransactionChange(option.alias),
-        });
-    }
-
     getAmountKey() {
         return this.state.selectedAsset.alias;
     }
@@ -74,15 +68,14 @@ export default class Address extends Component {
 
     getAmount(row) {
         const transactionType = row.txaction;
-        // IF it's transfer, always fromamount would be an discount
-        if(transactionType === TRANSACTIONS.TYPE.TRANSFER) {
+        if (transactionType === TRANSACTIONS.TYPE.TRANSFER) {
             return row.fromamount * (-1);
-        } else if(transactionType === TRANSACTIONS.TYPE.COINBASE) {
+        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE) {
             return row.toamount * (1);
-        } else if(transactionType === TRANSACTIONS.TYPE.CONVERSION) {
-            if(row.toasset === this.state.selectedAsset.alias) {
+        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION) {
+            if (row.toasset === this.state.selectedAsset.alias) {
                 return row.toamount * (1);
-            } else if(row.fromasset === this.state.selectedAsset.alias) {
+            } else if (row.fromasset === this.state.selectedAsset.alias) {
                 return row.fromamount * (-1);
             }
         } else {
@@ -92,21 +85,20 @@ export default class Address extends Component {
 
     getTransactionName(row) {
         const transactionType = row.txaction;
-        if(transactionType === TRANSACTIONS.TYPE.TRANSFER) {
+        if (transactionType === TRANSACTIONS.TYPE.TRANSFER) {
             return 'Transfer';
-        } else if(transactionType === TRANSACTIONS.TYPE.COINBASE) {
+        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE) {
             return 'Coinbase';
-        } else if(transactionType === TRANSACTIONS.TYPE.CONVERSION) {
+        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION) {
             return 'Conversion';
-        } else {
-            return 'Burn';
         }
+        return 'Burn';
     }
 
     getAssetsBalances = () => {
         const assetsBalancesAPI = this.props.data.jsonRPC[0];
         const assets = [];
-        for (const property in assetsBalancesAPI) {
+        Object.keys(assetsBalancesAPI).forEach(property => {
             const balance = assetsBalancesAPI[property];
             const asset = {
                 label: `${property} - ${balance}`,
@@ -114,7 +106,7 @@ export default class Address extends Component {
                 alias: property,
             };
             assets.push(asset);
-        }
+        });
         const filteredAssets = assets.sort((a, b) => b.value - a.value);
         this.setState({
             assetsBalances: filteredAssets,
@@ -123,9 +115,17 @@ export default class Address extends Component {
         });
     }
 
+    handleChangeSelection = option => {
+        this.setState({
+            selectedAsset: option,
+            selectedTransaction: this.handleTransactionChange(option.alias),
+        });
+    }
+
     handleTransactionChange = (asset) => {
         const transactionsAPI = this.props.data.jsonRPC[1];
-        return transactionsAPI.actions.filter(transaction => (transaction.txaction === 1 || transaction.txaction === 3 || transaction.txaction === 2) && transaction.fromasset === asset || transaction.toasset === asset);
+        return transactionsAPI.actions.filter(transaction =>
+            transaction.fromasset === asset || transaction.toasset === asset);
     };
 
     render() {
