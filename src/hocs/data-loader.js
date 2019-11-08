@@ -63,45 +63,58 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
         componentWillUnmount() {
             this.abortController.abort();
         }
+
         async load(props) {
-            let url;
-            let secondUrl;
-            if (Array.isArray(target)) {
-                url = typeof target[0] === 'function' ? target[0](props) : target[0];
-                secondUrl = typeof target[1] === 'function' ? target[1](props) : target[1];
-            } else {
-                url = typeof target === 'function' ? target(props) : target;
-            }
+            const isArrayProps = Array.isArray(target);
+            let response;
             try {
-                let response = await request(url, props.apiConfig, this.abortController.signal);
-                const jsonRPC = [];
-                if (Array.isArray(target)) {
-                    const results = [];
-                    if (typeof secondUrl !== 'string') {
-                        for (let i = 0; i < secondUrl.length; i++) {
-                            const {method, params} = secondUrl[i];
-                            results.push(requestJSONRPC(method, params));
-                        }
-                        const resultPromises = await Promise.all(results);
-                        for (let i = 0; i < resultPromises.length; i++) {
-                            jsonRPC.push(resultPromises[i].result);
-                        }
-                        response = {...response.data, jsonRPC};
-                        this.setState({data: {data: response}});
-                    } else {
-                        response = {...response.data,
-                            ...(await request(secondUrl, props.apiConfig, this.abortController.signal)).data};
-                        this.setState({data: {data: response}});
-                    }
-                } else {
-                    this.setState({data: response});
+                if (!isArrayProps) {
+                    // One API Request
+                    const url = typeof target === 'function' ? target(props) : target;
+                    response = await this.handleApiMethod(url, props.apiConfig);
+                    if ('jsonRPC' in response) return this.setState({data: {data: response}});
+                    return this.setState({data: response});
                 }
+                // Two API Request
+                const firstUrl = typeof target[0] === 'function' ? target[0](props) : target[0];
+                const secondUrl = typeof target[0] === 'function' ? target[1](props) : target[1];
+                response = await this.handleApiMethod(firstUrl, props.apiConfig);
+                const jsonRPC = await this.handleApiMethod(secondUrl);
+                response = {...response.data, ...jsonRPC};
+                return this.setState({data: {data: response}});
             } catch (error) {
                 if (error instanceof DOMException) {
                     return null;
                 }
                 this.setState({error: error.statusCode || error.message});
             }
+        }
+
+        handleApiMethod = async (url, apiConfig) => {
+            let response;
+            if (typeof url === 'string') {
+                // API RESTful
+                response = await request(url, apiConfig, this.abortController.signal);
+                return response;
+            }
+            // API JSON-RPC
+            response = await this.handleJsonRPCResponse(url);
+            response = {jsonRPC: response};
+            return response;
+        }
+
+        handleJsonRPCResponse = async url => {
+            const results = [];
+            const responseJsonRPC = [];
+            for (let i = 0; i < url.length; i++) {
+                const {method, params} = url[i];
+                results.push(requestJSONRPC(method, params));
+            }
+            const resultPromises = await Promise.all(results);
+            for (let i = 0; i < resultPromises.length; i++) {
+                responseJsonRPC.push(resultPromises[i].result);
+            }
+            return responseJsonRPC;
         }
 
         render() {
