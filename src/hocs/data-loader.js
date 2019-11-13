@@ -78,9 +78,14 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
                 // Two API Request
                 const firstUrl = typeof target[0] === 'function' ? target[0](props) : target[0];
                 const secondUrl = typeof target[0] === 'function' ? target[1](props) : target[1];
-                response = await this.handleApiMethod(firstUrl, props.apiConfig);
-                const jsonRPC = await this.handleApiMethod(secondUrl);
-                response = {...response.data, ...jsonRPC};
+                let responseFirstUrl = await this.handleApiMethod(firstUrl, props.apiConfig);
+                responseFirstUrl = responseFirstUrl.data ? responseFirstUrl.data : responseFirstUrl;
+                const responseSecondUrl = await this.handleApiMethod(secondUrl, props.apiConfig);
+                if (responseSecondUrl.data) {
+                    response = {...responseFirstUrl, ...responseSecondUrl.data};
+                } else {
+                    response = {...responseFirstUrl, ...responseSecondUrl};
+                }
                 return this.setState({data: {data: response}});
             } catch (error) {
                 if (error instanceof DOMException) {

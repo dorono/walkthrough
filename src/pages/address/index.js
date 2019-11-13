@@ -9,6 +9,7 @@ import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import Dropdown from 'components/dropdown';
+import Pagination from 'components/pagination';
 import Amount from 'components/amount';
 import globalStyles from 'styles/index.css';
 import {TRANSACTIONS} from 'constants/transactions';
@@ -45,7 +46,7 @@ const buildJsonRPCData = (address) => {
 // TODO: Prevent rerender
 // TODO: Explain all the methods..
 
-@dataLoader([({match}) => `/addresses/${match.params.hash}`, ({match}) => buildJsonRPCData(match.params.hash)])
+@dataLoader(({match}) => buildJsonRPCData(match.params.hash))
 export default class Address extends Component {
     state = {
         assetsBalances: [],
@@ -62,8 +63,8 @@ export default class Address extends Component {
         return this.state.selectedAsset.alias;
     }
 
-    getAmountUnit() {
-        return this.state.selectedAsset.alias;
+    getAddress() {
+        return this.props.match.params.hash;
     }
 
     getAmount(row) {
@@ -140,7 +141,7 @@ export default class Address extends Component {
                             <Box type='outline'>
                                 <Vertical>
                                     <div>
-                                        <Label>Type</Label>
+                                        <Label>Asset</Label>
                                         <Dropdown
                                             options={assetsBalances}
                                             onOptionClick={this.handleChangeSelection}
@@ -163,7 +164,7 @@ export default class Address extends Component {
                         <Vertical>
                             <Box type='outline'>
                                 <Label>Address</Label>
-                                <Hash type='address'>{this.props.data.user_address}</Hash>
+                                <Hash type='address'>{this.getAddress()}</Hash>
                             </Box>
                         </Vertical>
                     </Horizontal>
@@ -196,12 +197,13 @@ export default class Address extends Component {
                                                 {row.txid}
                                             </Hash>
                                         </td>
-                                        <td><Amount unit={this.getAmountUnit()}>{this.getAmount(row)}</Amount></td>
+                                        <td><Amount unit={this.getAmountKey()}>{this.getAmount(row)}</Amount></td>
                                         <td>{formatDate(row.timestamp)}</td>
                                         <td>{this.getTransactionName(row)}</td>
                                     </tr>
                                 )}
                             </Table>
+                            <Pagination count={this.props.count} limit={this.props.limit} offset={this.props.offset} />
                         </Container>
                     )}
                 </Sortable>
