@@ -51,12 +51,12 @@ jobs:
           name: Load Docker image layer cache
           command: |
             set +o pipefail
-            docker load -i /images/apiplus_ui.tar | true
+            docker load -i /images/peg_explorer.tar | true
 
       - run:
           name: Build the container
           command: |
-            docker build --build-arg "public_network_gateway=$PUBLIC_NETWORK_GATEWAY" --build-arg "public_network_gateway_app_id=$PUBLIC_NETWORK_GATEWAY_APP_ID" --build-arg "public_network_gateway_app_key=$PUBLIC_NETWORK_GATEWAY_APP_KEY" --build-arg "shared_sandbox_gateway=$SHARED_SANDBOX_GATEWAY" --build-arg "dev_portal_url=$DEV_PORTAL_URL" --build-arg "public_network=$PUBLIC_NETWORK" --build-arg "ga_id=$GA_ID" --build-arg "gtm_id=$GTM_ID" --build-arg "version=$CIRCLE_TAG" -t apiplus_ui .
+            docker build --build-arg "public_network_gateway=$PUBLIC_NETWORK_GATEWAY" --build-arg "public_network_gateway_app_id=$PUBLIC_NETWORK_GATEWAY_APP_ID" --build-arg "public_network_gateway_app_key=$PUBLIC_NETWORK_GATEWAY_APP_KEY" --build-arg "shared_sandbox_gateway=$SHARED_SANDBOX_GATEWAY" --build-arg "dev_portal_url=$DEV_PORTAL_URL" --build-arg "public_network=$PUBLIC_NETWORK" --build-arg "ga_id=$GA_ID" --build-arg "gtm_id=$GTM_ID" --build-arg "version=$CIRCLE_TAG" -t peg_explorer .
 
       - run:
           name: Push images to DockerHub
@@ -67,22 +67,22 @@ jobs:
 
             # If there is a tag, use it
             if [ "$CIRCLE_TAG" != "" ]; then
-              docker tag apiplus_ui factominc/apiplus_ui:${CIRCLE_TAG}
-              docker push factominc/apiplus_ui:${CIRCLE_TAG}
+              docker tag peg_explorer factominc/peg_explorer:${CIRCLE_TAG}
+              docker push factominc/peg_explorer:${CIRCLE_TAG}
             fi
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
 
               # Tag master as latest
-              docker tag apiplus_ui factominc/apiplus_ui:latest
-              docker push factominc/apiplus_ui:latest
+              docker tag peg_explorer factominc/peg_explorer:latest
+              docker push factominc/peg_explorer:latest
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
 
               # Tag develop as develop anyhow
-              docker tag apiplus_ui factominc/apiplus_ui:develop
-              docker push factominc/apiplus_ui:develop
+              docker tag peg_explorer factominc/peg_explorer:develop
+              docker push factominc/peg_explorer:develop
             fi
 
             docker logout
@@ -96,22 +96,22 @@ jobs:
 
             # If there is a tag, use it
             if [ "$CIRCLE_TAG" != "" ]; then
-              docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:${CIRCLE_TAG}
-              docker push ${AWS_REPO_BASE_URI}/apiplus_ui:${CIRCLE_TAG}
+              docker tag peg_explorer ${AWS_REPO_BASE_URI}/peg_explorer:${CIRCLE_TAG}
+              docker push ${AWS_REPO_BASE_URI}/peg_explorer:${CIRCLE_TAG}
             fi
 
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
 
               # Tag master as latest
-              docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:latest
-              docker push ${AWS_REPO_BASE_URI}/apiplus_ui:latest
+              docker tag peg_explorer ${AWS_REPO_BASE_URI}/peg_explorer:latest
+              docker push ${AWS_REPO_BASE_URI}/peg_explorer:latest
             fi
 
             if [ "${CIRCLE_BRANCH}" == "develop" ]; then
 
               # Tag develop as develop anyhow
-              docker tag apiplus_ui ${AWS_REPO_BASE_URI}/apiplus_ui:develop
-              docker push ${AWS_REPO_BASE_URI}/apiplus_ui:develop
+              docker tag peg_explorer ${AWS_REPO_BASE_URI}/peg_explorer:develop
+              docker push ${AWS_REPO_BASE_URI}/peg_explorer:develop
             fi
 
             docker logout
