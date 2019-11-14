@@ -1,5 +1,6 @@
 import React from 'react';
 
+import queryString from 'query-string';
 import {request, requestJSONRPC} from 'api';
 import {APIConfigurationConsumer} from 'contexts/api';
 import {executeModalTrigger} from 'utils/execute-options-modal';
@@ -108,12 +109,21 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             return response;
         }
 
-        handleJsonRPCResponse = async url => {
+        handleJsonRPCResponse = async (url) => {
             const results = [];
             const responseJsonRPC = [];
+            const limit = 50;
             for (let i = 0; i < url.length; i++) {
-                const {method, params} = url[i];
-                results.push(requestJSONRPC(method, params));
+                const {method, params, pagination, location} = url[i];
+                if (pagination) {
+                    // Handle Pagination offset
+                    const {page} = queryString.parse(location);
+                    const offset = page * limit - 50;
+                    const extraParams = {...params, offset};
+                    results.push(requestJSONRPC(method, extraParams));
+                } else {
+                    results.push(requestJSONRPC(method, params));
+                }
             }
             const resultPromises = await Promise.all(results);
             for (let i = 0; i < resultPromises.length; i++) {

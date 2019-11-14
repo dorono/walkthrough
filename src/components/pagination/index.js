@@ -19,9 +19,13 @@ export default class Pagination extends Component {
     }
 
     render() {
+        const {page} = queryString.parse(window.location.search);
         const totalPages = Math.ceil(this.props.count / this.props.limit);
-        const currentPage = Math.floor(this.props.offset / this.props.limit) + 1;
-
+        let currentPage = Math.floor(this.props.offset / this.props.limit) + 1;
+        if (totalPages === Number(page) && this.props.offset === 0) {
+            // When JSON RPC reach the offset limit, it returns 0, that's why we need to handle this case.
+            currentPage = totalPages;
+        }
         const pages = [currentPage];
         let extra;
 

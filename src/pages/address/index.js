@@ -15,11 +15,6 @@ import globalStyles from 'styles/index.css';
 import {TRANSACTIONS} from 'constants/transactions';
 import styles from './styles.css';
 
-/* const addressTypes = {
-    FA: 'Factoid Address',
-    EC: 'Entry Credit Address',
-}; */
-
 const columns = [
     'TRANSACTION ID',
     'AMOUNT (BALANCE CHANGE)',
@@ -40,12 +35,11 @@ const buildJsonRPCData = (address) => {
             params: {
                 address,
             },
+            pagination: true,
+            location: location.search,
         },
     ];
 };
-// TODO: Prevent rerender
-// TODO: Explain all the methods..
-
 @dataLoader(({match}) => buildJsonRPCData(match.params.hash))
 export default class Address extends Component {
     state = {
@@ -53,10 +47,14 @@ export default class Address extends Component {
         transactions: [],
         selectedAsset: null,
         selectedTransaction: null,
+        limit: null,
+        count: null,
+        offset: null,
     };
 
     componentWillMount() {
         this.getAssetsBalances();
+        this.getPaginationData();
     }
 
     getAmountKey() {
@@ -96,6 +94,23 @@ export default class Address extends Component {
         return 'Burn';
     }
 
+    getPaginationData() {
+        const transactionsAPI = this.props.data.jsonRPC[1];
+        const {count, nextoffset} = transactionsAPI;
+        if (nextoffset === 0) {
+            return this.setState({
+                count,
+                limit: 50,
+                offset: nextoffset,
+            });
+        }
+        return this.setState({
+            count,
+            limit: 50,
+            offset: nextoffset - 50,
+        });
+    }
+
     getAssetsBalances = () => {
         const assetsBalancesAPI = this.props.data.jsonRPC[0];
         const assets = [];
@@ -132,7 +147,7 @@ export default class Address extends Component {
     render() {
         const amountKey = this.getAmountKey();
         const sortOpt = sortOptions('timestamp');
-        const {assetsBalances, selectedAsset, selectedTransaction} = this.state;
+        const {assetsBalances, selectedAsset, selectedTransaction, limit, count, offset} = this.state;
         return (
             <div>
                 <Container primary title='Address'>
@@ -203,7 +218,7 @@ export default class Address extends Component {
                                     </tr>
                                 )}
                             </Table>
-                            <Pagination count={this.props.count} limit={this.props.limit} offset={this.props.offset} />
+                            <Pagination count={count} limit={limit} offset={offset} />
                         </Container>
                     )}
                 </Sortable>
