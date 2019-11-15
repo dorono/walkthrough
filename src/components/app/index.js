@@ -1,11 +1,13 @@
 import React, {Component} from 'react';
-import {Switch, Route, withRouter} from 'react-router-dom';
+
+import {Switch, Route, Redirect, withRouter} from 'react-router-dom';
 import {reverse, routes} from 'routes';
 import {APIConfigurationConsumer} from 'contexts/api';
 import AppHeader from 'components/app-header';
 import AppFooter from 'components/app-footer';
 import FeedbackLink from 'components/feedback-link';
 import Spinner from 'components/spinner';
+import {TRANSACTIONS} from 'constants/transactions';
 import ErrorPage from 'pages/error-page';
 import styles from './styles.css';
 
@@ -46,6 +48,11 @@ export default class App extends Component {
         if (this.state.jsError) return <ErrorPage status={500} />;
         return (
             <Switch>
+                <Redirect
+                    from='/'
+                    to={`/addresses/${TRANSACTIONS.PEGNET_ADDRESS}`}
+                    exact
+                />
                 {routes.map(route => <Route key={route.path} {...route} />)}
                 <Route component={ErrorPage} />
             </Switch>

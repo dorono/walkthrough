@@ -48,7 +48,7 @@
         }
 
         &.selected {
-            color: var(--violet-dark);
+            color: var(--blue);
         }
 
         &.disabled {

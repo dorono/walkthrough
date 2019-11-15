@@ -72,17 +72,15 @@ export default class AppHeader extends Component {
                 <div className={styles.content}>
                     <Link className={styles.logo} to='/'>
                         <h1>
-                            <span>Factom Explorer</span>
+                            pExplorer
                         </h1>
                     </Link>
                     <Search apiConfig={this.props.apiConfig} />
-                    <AppMenu />
-                    <VerticalDivider className={styles.divider} />
                     <div className={styles.blockchainButtonContainer}>
                         <Button
                             id='open-settings-popup'
-                            onClick={() => this.setState({showSettingsPopup: true})}
-                            title={this.props.apiConfig.blockchain}
+                            onClick={() => false}
+                            title='PegNet MainNet'
                             className={styles.blockchainButton}
                         />
                         {this.props.remoteConfig &&

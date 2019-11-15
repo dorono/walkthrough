@@ -24,6 +24,7 @@ const apiUrl = process.env.API_URL || '$API_URL';
 const publicNetAppId = process.env.PUBLIC_NETWORK_GATEWAY_APP_ID || '$PUBLIC_NETWORK_GATEWAY_APP_ID';
 const publicNetAppKey = process.env.PUBLIC_NETWORK_GATEWAY_APP_KEY || '$PUBLIC_NETWORK_GATEWAY_APP_KEY';
 const pegnetApiUrl = process.env.PEGNET_API_URL || '$PEGNET_API_URL';
+const factomExplorerUrl = process.env.FACTOM_EXPLORER_URL || '$FACTOM_EXPLORER_URL';
 
 // API Gateway values.
 const gatewayUrls = {
@@ -129,6 +130,7 @@ module.exports = {
                 apiUrlVersionSuffix,
                 devPortalBaseUrl,
                 pegnetApiUrl,
+                factomExplorerUrl,
                 devPortalHostName,
                 devPortalProtocol,
                 publicNetAppId,

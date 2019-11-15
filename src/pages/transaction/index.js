@@ -1,43 +1,83 @@
-import React, {Component} from 'react';
-import {dataLoader} from 'hocs/data-loader';
-import {currentTimezone, formatDateLong} from 'utils/date';
-import {getPegnetTransactionType} from 'utils/pegnet';
+import React, { Component } from 'react';
+import { dataLoader } from 'hocs/data-loader';
+import { currentTimezone, formatDateLong } from 'utils/date';
+import { getPegnetTransactionType } from 'utils/pegnet';
 import Container from 'components/container';
-import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
+import { Vertical, Box, VerticalToHorizontal } from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
 import DirectoryBlockLink from 'components/directory-block-link';
 import FactoidBlockLink from 'components/factoid-block-link';
 import Amount from 'components/amount';
+import BlockLink from 'components/block-link';
 import Monospaced from 'components/monospaced';
-
-const buildJsonRPCData = (txid) => {
+import {TRANSACTIONS} from 'constants/transactions';
+const buildJsonRPCData = txid => {
     return [
         {
             method: 'get-transaction',
             params: {
-                txid: `00-${txid}`,
+                txid,
             },
+        },
+        {
+            method: 'get-sync-status',
         },
     ];
 };
 
 export class TransactionPage extends Component {
-    getTransactionAmount(transaction) {
-        let amount;
-        let unit;
-        if (transaction.fct_amount) {
-            amount = transaction.fct_amount;
-            unit = 'FCT';
-        } else if (transaction.ec_amount) {
-            amount = transaction.ec_amount;
-            unit = 'EC';
-        }
-        return {amount, unit};
+    isTransfer = (transaction) => {
+        return transaction.txaction === 1
+        && Array.isArray(transaction.outputs);
     }
 
-    renderTransactions(title, transactions) {
+    getOutputAmount = (transaction) => {
+        if (this.isTransfer(transaction)) {
+            return transaction.outputs.reduce((accumulator, outputAmt) => accumulator + outputAmt.amount, 0);
+        }
+
+        return transaction.toamount;
+    }
+
+    generateTransactionList = (title, transactionData) => {
+        // convert that data into an array for looping purposes
+        let transactions = [transactionData];
+
+        // for transfers, make sure that the list of outputs come from
+        // the "outputs" property of the transaction response
+        if (title === TRANSACTIONS.TITLE.OUTPUTS) {
+            if (this.isTransfer(transactions[0])) {
+                transactions = transactions[0].outputs
+                .map((output, idx) => {
+                    return {
+                        user_address: output.address,
+                        amount: output.amount,
+                        unit: transactions[idx].fromasset,
+                    };
+                });
+            } else {
+                transactions = [{
+                    user_address: transactions[0].toaddress || transactions[0].fromaddress,
+                    amount: transactions[0].toamount,
+                    unit: transactions[0].toasset,
+                }];
+            }
+        } else {
+            transactions = [{
+                user_address: transactions[0].fromaddress,
+                amount: transactions[0].fromamount,
+                unit: transactions[0].fromasset,
+            }];
+        }
+
+        return transactions;
+    }
+
+    renderTransactions= (title, transactionData) => {
+        const transactions = this.generateTransactionList(title, transactionData);
+
         return (
             <Container
                 title={title}
@@ -49,11 +89,16 @@ export class TransactionPage extends Component {
                     ellipsis={0}
                     type='secondary'>
                     {row => {
-                        const {amount, unit} = this.getTransactionAmount(row);
                         return (
-                            <tr key={row.address + amount}>
-                                <td><Hash type='address' key={row.user_address}>{row.user_address}</Hash></td>
-                                <td><Amount unit={unit}>{amount}</Amount></td>
+                            <tr key={row.address + row.amount}>
+                                <td>
+                                    <Monospaced type='address' key={row.user_address}>
+                                        <Hash type='address'>{row.user_address}</Hash>
+                                    </Monospaced>
+                                </td>
+                                <td>
+                                    <Amount unit={row.unit}>{row.amount}</Amount>
+                                </td>
                             </tr>
                         );
                     }}
@@ -63,6 +108,11 @@ export class TransactionPage extends Component {
     }
 
     render() {
+        const pegnetDTransactionData = {
+            ...this.props.data.jsonRPC[0].actions[0],
+            ...this.props.data.jsonRPC[1],
+        };
+
         return (
             <div>
                 <Container primary title='Transaction'>
@@ -73,20 +123,22 @@ export class TransactionPage extends Component {
                                     <div>
                                         <Label>TYPE</Label>
                                         <Monospaced>
-                                            {getPegnetTransactionType(this.props.data.jsonRPC[0].actions[0].txaction)}
+                                            {getPegnetTransactionType(pegnetDTransactionData.txaction)}
                                         </Monospaced>
                                     </div>
+                                    {pegnetDTransactionData.txaction !== 3 &&
                                     <div>
                                         <Label>INPUTS</Label>
-                                        <Amount unit='FCT'>{this.props.data.fct_total_inputs}</Amount>
+                                        <Amount unit={pegnetDTransactionData.fromasset}>
+                                            {pegnetDTransactionData.fromamount}
+                                        </Amount>
                                     </div>
+                                    }
                                     <div>
                                         <Label>OUTPUTS</Label>
-                                        <Amount unit='FCT'>{this.props.data.fct_total_outputs}</Amount>
-                                    </div>
-                                    <div>
-                                        <Label>FEE</Label>
-                                        <Amount unit='FCT'>{this.props.data.fct_fee}</Amount>
+                                        <Amount unit={pegnetDTransactionData.toasset || pegnetDTransactionData.fromasset}>
+                                            {this.getOutputAmount(pegnetDTransactionData)}
+                                        </Amount>
                                     </div>
                                 </Vertical>
                             </Box>
@@ -94,33 +146,35 @@ export class TransactionPage extends Component {
                         <Vertical>
                             <Box type='outline'>
                                 <Label>TRANSACTION ID</Label>
-                                <Hash type='tx'>{this.props.data.tx_id}</Hash>
+                                <Hash type='tx'>{pegnetDTransactionData.txid}</Hash>
                             </Box>
                             <Box type='fill'>
-                                <Label>PARENT FACTOID BLOCK</Label>
-                                <FactoidBlockLink>{this.props.data.fblock}</FactoidBlockLink>
+                                <Label>COMPLETED</Label>
+                                <BlockLink
+                                    type={TRANSACTIONS.PEGNET_COMPLETED}
+                                    isLink>
+                                    {pegnetDTransactionData}
+                                </BlockLink>
                             </Box>
                             <Box type='fill'>
-                                <Label>PARENT DIRECTORY BLOCK</Label>
-                                <DirectoryBlockLink>{this.props.data.dblock}</DirectoryBlockLink>
-                            </Box>
-                            <Box>
-                                <Label>CREATED ({currentTimezone()})</Label>
-                                {formatDateLong(this.props.data.created_at)}
+                                <Label>RECORDED</Label>
+                                <BlockLink
+                                    type={TRANSACTIONS.PEGNET_RECORDED}
+                                    isLink>
+                                    {pegnetDTransactionData}
+                                </BlockLink>
                             </Box>
                         </Vertical>
                     </VerticalToHorizontal>
                 </Container>
                 <VerticalToHorizontal verticalUpTo='small'>
-                    {this.renderTransactions('Inputs', this.props.data.inputs)}
-                    {this.renderTransactions('Outputs', this.props.data.outputs)}
+                    {this.renderTransactions(TRANSACTIONS.TITLE.INPUTS, pegnetDTransactionData)}
+                    {this.renderTransactions(
+                        TRANSACTIONS.TITLE.OUTPUTS, pegnetDTransactionData)}
                 </VerticalToHorizontal>
             </div>
         );
     }
 }
 
-export default dataLoader([
-    ({match}) => `/transactions/${match.params.hash}`,
-    ({match}) => buildJsonRPCData(match.params.hash),
-])(TransactionPage);
+export default dataLoader(({match}) => buildJsonRPCData(match.params.hash))(TransactionPage);

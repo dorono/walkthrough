@@ -26,7 +26,7 @@
 }
 
 .selected {
-    background: var(--violet-dark);
+    background: var(--blue);
     color: var(--white);
 }
 

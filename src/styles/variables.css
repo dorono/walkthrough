@@ -1,5 +1,5 @@
 :root {
-    --blue: #388FC9;
+    --blue: #6CABD5;
     --blue-hover: #3E9AD8;
     --yellow: #E8B420;
     --violet: #7F5D93;
@@ -22,7 +22,7 @@
     --gray-60: color(#000 lightness(60%));
 
     --app-bg: #FAFAFA;
-    --app-header-bg: var(--violet-dark);
+    --app-header-bg: var(--blue);
     --table-header-bg: #E8E8E8;
 
     --content-width: 95%;

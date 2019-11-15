@@ -1,23 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {BrowserRouter} from 'react-router-dom';
-import {AppContainer} from 'react-hot-loader';
-import App from 'components/app';
-import {APIConfigurationProvider} from 'contexts/api';
+import { BrowserRouter } from 'react-router-dom';
+import { AppContainer } from 'react-hot-loader';
+import { LastLocationProvider } from 'react-router-last-location';
 
-const render = Component => (
+import App from 'components/app';
+import { APIConfigurationProvider } from 'contexts/api';
+
+const render = Component =>
     ReactDOM.render(
         <APIConfigurationProvider>
             <AppContainer>
                 <BrowserRouter>
-                    <Component />
+                    <LastLocationProvider>
+                        <Component />
+                    </LastLocationProvider>
                 </BrowserRouter>
             </AppContainer>
-        </APIConfigurationProvider>
-        ,
+        </APIConfigurationProvider>,
         document.getElementById('root'),
-    )
-);
+    );
 
 render(App);
 

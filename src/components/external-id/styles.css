@@ -9,7 +9,7 @@
 }
 
 .dropdown-header {
-    background: var(--violet-dark);
+    background: var(--blue);
     color: var(--white);
     border-radius: 12px 0 0 12px;
     padding: 3px 7px;
