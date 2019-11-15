@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import Monospaced from 'components/monospaced';
+import {TRANSACTIONS} from 'constants/transactions';
 
 const FCT_CONVERSION = 100000000;
 
 export default class Amount extends Component {
     static propTypes = {
-        unit: PropTypes.oneOf(['FCT', 'EC', 'PEG', 'pFCT']),
+        unit: PropTypes.oneOf(TRANSACTIONS.PEGNET_ASSETS),
     };
 
     render() {

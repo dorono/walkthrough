@@ -3,8 +3,10 @@ import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {autobind} from 'core-decorators';
 import classNames from 'classnames';
-import {trackPageView} from 'utils/analytics';
-import {request} from 'api';
+// TODO (maybe?): set up Google Analytics for this search
+// import {trackPageView} from 'utils/analytics';
+import {REGEX} from 'constants/regex';
+import {requestJSONRPC} from 'api';
 import {reverse} from 'routes';
 import {
     isKey,
@@ -56,7 +58,7 @@ export default class Search extends Component {
     getHelpText() {
         if (this.state.searching) return 'Searching...';
         if (this.state.error) return this.state.error;
-        return 'You can search by: Block Height, Hash, KeyMR, Chain ID, Transaction ID, or Address';
+        return 'You can search by: Address or Transaction ID';
     }
 
     setInputRef(ref) {
@@ -76,10 +78,6 @@ export default class Search extends Component {
                 ${query.startsWith(PRIVATE_KEY_PREFIX_EC) ?
                     PUBLIC_KEY_PREFIX_EC : PUBLIC_KEY_PREFIX_FC}.`;
         }
-        if (isKey(query)) {
-            return `${errorMessage} If you're searching for an address, note that only addresses
-                with a transaction history will be returned.`;
-        }
         if (isProbablyAKey(query)) {
             return `${errorMessage} It appears you might be searching for an address but have
                 provided an invalid value, please check for typos.`;
@@ -96,12 +94,17 @@ export default class Search extends Component {
             error: '',
         };
 
-        trackPageView(`/search?q=${query}`);
+        // TODO (maybe?): set up Google Analytics for this search
+        // trackPageView(`/search?q=${query}`);
 
         try {
-            const response = await request(`/search?term=${query}`, this.props.apiConfig);
+            // const response = await request(`/search?term=${query}`, this.props.apiConfig);
+            const response = await this.searchPegnet(query);
+            if (response.pegnetData.error) {
+                throw response.pegnetData.error;
+            }
             if (!this.state.searching) return;
-            const url = urls[response.type](response.data);
+            const url = urls[response.searchParam](response.data);
             this.props.history.push(url);
         } catch (error) {
             if (!this.state.searching) return;
@@ -114,6 +117,37 @@ export default class Search extends Component {
 
         this.setState(state);
         if (state.error) this.input.focus();
+    }
+
+    async executeGetTransactions(query, type) {
+        const pegnetData = await requestJSONRPC('get-transactions', {
+            [type]: query,
+        });
+        return {pegnetData, ...{searchParam: type}};
+    }
+
+    async searchPegnet(query) {
+        const splitQuery = query.includes('-') ? query.split('-')[1] : undefined;
+        const requestArray = [
+            await this.executeGetTransactions(query, 'address'),
+        ];
+
+        // if it's a valid sha-256, search for entryhash first, otherwise
+        // skip this search, def not a transaction id
+        if (
+            // only validating part of TxId after the TxIndex
+            splitQuery
+            && REGEX.VALIDATE.SHA_256.test(splitQuery)
+        ) {
+            requestArray.unshift(await this.executeGetTransactions(splitQuery, 'entryhash'));
+        }
+
+        const searchResultResponse = await Promise.all(requestArray);
+        // find the first instance of a response with a result
+        const final = searchResultResponse.find(pegnetResponse => {
+            return !pegnetResponse.result;
+        });
+        return final;
     }
 
     handleChange(event) {

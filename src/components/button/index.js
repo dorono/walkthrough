@@ -7,7 +7,8 @@ const Button = ({className, id, onClick, title, disabled}) =>
     (<button
         id={id}
         className={classNames(className, {[styles.disabled]: disabled})}
-        onClick={onClick}>
+        onClick={onClick}
+        title='PegNet MainNet is the only supported network'>
         {title}
     </button>);
 

@@ -10,7 +10,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(var(--violet-dark), 0.4);
+    background: rgba(var(--blue), 0.4);
 }
 
 .popup {

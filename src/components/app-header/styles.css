@@ -13,6 +13,8 @@
     width: var(--content-width);
     max-width: var(--content-max-width);
     height: 7rem;
+    display: flex;
+    justify-content: center;
 
     & > * + * {
         margin-left: 2rem;
@@ -29,15 +31,15 @@
     width: 15rem;
 
     & h1 {
-        display: block;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
         height: 100%;
-        background: url('./assets/factom_horizontal_white.svg') no-repeat left center;
-        background-position: contain;
-    }
-
-    & span {
-        display: none;
+        color: var(--white);
+        font-size: 3rem;
+        font-weight: 300;
+        line-height: 1;
     }
 }
 
@@ -51,19 +53,15 @@
     color: var(--white);
     font-size: 1.15rem;
     font-weight: 600;
-    background: var(--blue);
+    background: var(--violet-dark);
     min-height: 2.7rem;
     border-radius: var(--border-radius);
     padding: 0.3rem 1rem;
     min-width: 9rem;
     align-self: center;
-    opacity: 1;
+    opacity: .5;
     transition: opacity 0.25s linear;
-
-    &:hover {
-        transition: background 0.25s linear;
-        background: var(--blue-hover);
-    }
+    cursor: default;
 }
 
 .divider {
