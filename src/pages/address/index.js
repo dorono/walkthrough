@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import classNames from 'classnames';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDate} from 'utils/date';
@@ -22,7 +22,9 @@ const columns = [
     'TYPE',
 ];
 
-const buildJsonRPCData = (address) => {
+const FCT_CONVERSION = 100000000;
+
+const buildJsonRPCData = address => {
     return [
         {
             method: 'get-pegnet-balances',
@@ -57,32 +59,21 @@ export default class Address extends Component {
         this.getPaginationData();
     }
 
-    getAmountKey() {
-        return this.state.selectedAsset.alias;
-    }
+    getAmountKey = () => this.state.selectedAsset.alias;
 
-    getAddress() {
-        return this.props.match.params.hash;
-    }
+    getAddress = () => this.props.match.params.hash;
 
-    getAmount(row) {
+    getAmount = row => {
         const transactionType = row.txaction;
-        if (transactionType === TRANSACTIONS.TYPE.TRANSFER) {
+        if (transactionType === TRANSACTIONS.TYPE.TRANSFER ||
+            (transactionType === TRANSACTIONS.TYPE.CONVERSION &&
+            row.fromasset === this.state.selectedAsset.alias)) {
             return row.fromamount * (-1);
-        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE) {
-            return row.toamount * (1);
-        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION) {
-            if (row.toasset === this.state.selectedAsset.alias) {
-                return row.toamount * (1);
-            } else if (row.fromasset === this.state.selectedAsset.alias) {
-                return row.fromamount * (-1);
-            }
-        } else {
-            return row.toamount * (1);
         }
+        return row.fromamount;
     }
 
-    getTransactionName(row) {
+    getTransactionName = row => {
         const transactionType = row.txaction;
         if (transactionType === TRANSACTIONS.TYPE.TRANSFER) {
             return 'Transfer';
@@ -94,20 +85,15 @@ export default class Address extends Component {
         return 'Burn';
     }
 
-    getPaginationData() {
+    getPaginationData = () => {
         const transactionsAPI = this.props.data.jsonRPC[1];
         const {count, nextoffset} = transactionsAPI;
-        if (nextoffset === 0) {
-            return this.setState({
-                count,
-                limit: 50,
-                offset: nextoffset,
-            });
-        }
+        let offset = nextoffset;
+        if (nextoffset !== 0) offset = nextoffset - 50;
         return this.setState({
             count,
             limit: 50,
-            offset: nextoffset - 50,
+            offset,
         });
     }
 
@@ -116,14 +102,16 @@ export default class Address extends Component {
         const assets = [];
         Object.keys(assetsBalancesAPI).forEach(property => {
             const balance = assetsBalancesAPI[property];
+            const value = balance / FCT_CONVERSION;
             const asset = {
-                label: `${property} - ${balance}`,
+                label: `${property} - ${value}`,
                 value: balance,
                 alias: property,
             };
             assets.push(asset);
         });
-        const filteredAssets = assets.sort((a, b) => b.value - a.value);
+        let filteredAssets = assets.sort((a, b) => a.label.localeCompare(b.label));
+        filteredAssets = filteredAssets.sort((a, b) => b.value - a.value);
         this.setState({
             assetsBalances: filteredAssets,
             selectedAsset: assets.find(asset => asset.label.substring(0, 3) === 'PEG'),
@@ -131,14 +119,13 @@ export default class Address extends Component {
         });
     }
 
-    handleChangeSelection = option => {
+    handleChangeSelection = selectedAsset =>
         this.setState({
-            selectedAsset: option,
-            selectedTransaction: this.handleTransactionChange(option.alias),
+            selectedAsset,
+            selectedTransaction: this.handleTransactionChange(selectedAsset.alias),
         });
-    }
 
-    handleTransactionChange = (asset) => {
+    handleTransactionChange = asset => {
         const transactionsAPI = this.props.data.jsonRPC[1];
         return transactionsAPI.actions.filter(transaction =>
             transaction.fromasset === asset || transaction.toasset === asset);
@@ -149,7 +136,7 @@ export default class Address extends Component {
         const sortOpt = sortOptions('timestamp');
         const {assetsBalances, selectedAsset, selectedTransaction, limit, count, offset} = this.state;
         return (
-            <div>
+            <Fragment>
                 <Container primary title='Address'>
                     <Horizontal>
                         <Vertical>
@@ -222,7 +209,7 @@ export default class Address extends Component {
                         </Container>
                     )}
                 </Sortable>
-            </div>
+            </Fragment>
         );
     }
 }
