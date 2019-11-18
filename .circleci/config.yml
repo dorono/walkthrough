@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: circleci/node:8.11.3
 
-    working_directory: ~/explorer-v3
+    working_directory: ~/pExplorer
 
     steps:
       - checkout
@@ -29,7 +29,7 @@ jobs:
 
   # Build the docker container
   docker_build:
-    working_directory: ~/explorer-v3
+    working_directory: ~/pExplorer
 
     docker:
       - image: factominc/elixir_python
