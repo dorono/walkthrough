@@ -14,6 +14,7 @@ export const TRANSACTIONS = {
     PEGNET_CHAIN_ID:
         'cffce0f409ebba4ed236d49d89c70e4bd1f1367d86402a3363366683265a242d',
     PEGNET_ASSETS: [
+        'EC',
         'PEG',
         'pADA',
         'pBNB',
@@ -43,8 +44,9 @@ export const TRANSACTIONS = {
         'pXBT',
         'pXLM',
         'pXMR',
-        'pZEC'
+        'pZEC',
     ],
+
 };
 
 Object.freeze(TRANSACTIONS);

@@ -113,9 +113,16 @@ export class TransactionPage extends Component {
             ...this.props.data.jsonRPC[1],
         };
 
+        console.log('pegnetDTransactionData', pegnetDTransactionData);
+        pegnetDTransactionData.executed = 0;
+
         return (
             <div>
-                <Container primary title='Transaction'>
+                <Container
+                    primary
+                    title='Transaction'
+                    showFullWidthBanner={pegnetDTransactionData.executed < 1}
+                    fullWidthBannerText='THIS IS AWESOME'>
                     <VerticalToHorizontal verticalUpTo='small'>
                         <Vertical>
                             <Box type='outline'>

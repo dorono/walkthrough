@@ -1,12 +1,3 @@
-import DirectoryBlockList from 'pages/directory-block-list';
-import DirectoryBlock from 'pages/directory-block';
-import AdminBlock from 'pages/admin-block';
-import EntryCreditBlock from 'pages/entry-credit-block';
-import FactoidBlock from 'pages/factoid-block';
-import EntryBlock from 'pages/entry-block';
-import Entry from 'pages/entry';
-import ChainList from 'pages/chain-list';
-import Chain from 'pages/chain';
 import Transaction from 'pages/transaction';
 import Address from 'pages/address';
 import Landing from 'pages/landing';
@@ -18,6 +9,7 @@ import RedirectToNewDomain from '../components/redirect-to-new-domain';
  * @type {Array}
  */
 export const routes = [
+    {name: 'landing', path: '/', exact: true, component: Landing},
     {name: 'tx', path: '/transactions/:hash', exact: true, component: Transaction},
     {name: 'address', path: '/addresses/:hash', exact: true, component: Address},
     {name: 'dblocks', path: '/dblocks', exact: false, menuItem: 0, component: RedirectToNewDomain},

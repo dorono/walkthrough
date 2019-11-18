@@ -7,9 +7,8 @@ import classNames from 'classnames';
 // import {trackPageView} from 'utils/analytics';
 import {REGEX} from 'constants/regex';
 import {requestJSONRPC} from 'api';
-import {reverse} from 'routes';
+
 import {
-    isKey,
     isPrivateKey,
     isProbablyAKey,
     PRIVATE_KEY_PREFIX_EC,
@@ -19,24 +18,9 @@ import {
 
 import styles from './styles.css';
 
-const urls = {
-    directory_block: data => reverse('dblock', {hash: data.keymr}),
-    admin_block: data => reverse('ablock', {hash: data.keymr}),
-    entry_credit_block: data => reverse('ecblock', {hash: data.keymr}),
-    factoid_block: data => reverse('fblock', {hash: data.keymr}),
-    entry_block: data => reverse('eblock', {hash: data.keymr}),
-    transaction: data => reverse('tx', {hash: data.tx_id}),
-    address: data => reverse('address', {hash: data.user_address}),
-    chain: data => reverse('chain', {hash: data.chain_id}),
-    entry: data => reverse('entry', {hash: data.entry_hash, chain: data.chain.chain_id}),
-};
-
 @withRouter
 @autobind
 export default class Search extends Component {
-    static propTypes = {
-        apiConfig: PropTypes.shape().isRequired,
-    };
     state = {
         query: '',
         error: '',
@@ -86,6 +70,7 @@ export default class Search extends Component {
     }
 
     async search() {
+        const noPegnetResults = 'noPegnetResults';
         this.setState({searching: true});
 
         const query = this.state.query.trim();
@@ -98,17 +83,20 @@ export default class Search extends Component {
         // trackPageView(`/search?q=${query}`);
 
         try {
-            // const response = await request(`/search?term=${query}`, this.props.apiConfig);
             const response = await this.searchPegnet(query);
-            if (response.pegnetData.error) {
-                throw response.pegnetData.error;
+            const targetPath = `/${response.parentRoute}/${query}` === this.props.location.pathname
+                ? this.props.location.pathname
+                : `/${response.parentRoute}/${query}`;
+            if (response.error) {
+                state.error = noPegnetResults;
+                throw this.getErrorMessage();
             }
-            if (!this.state.searching) return;
-            const url = urls[response.searchParam](response.data);
-            this.props.history.push(url);
+            this.props.history.push(targetPath);
         } catch (error) {
             if (!this.state.searching) return;
-            if (error.statusCode === 404) {
+            if (state.error === noPegnetResults) {
+                state.error = this.getErrorMessage();
+            } else if (error.statusCode === 404) {
                 state.error = this.getErrorMessage(this.state.query);
             } else {
                 state.error = 'Internal server error, please try again';
@@ -116,14 +104,32 @@ export default class Search extends Component {
         }
 
         this.setState(state);
-        if (state.error) this.input.focus();
+        if (state.error) {
+            this.input.focus();
+        }
     }
 
     async executeGetTransactions(query, type) {
+        let parentRoute;
         const pegnetData = await requestJSONRPC('get-transactions', {
             [type]: query,
         });
-        return {pegnetData, ...{searchParam: type}};
+
+        switch (type) {
+            case 'address':
+                parentRoute = 'addresses';
+                break;
+            default:
+                parentRoute = 'transactions';
+        }
+
+        const pegnetDataWithRouting = Object.assign({},
+            pegnetData,
+            {query},
+            {parentRoute},
+        );
+
+        return pegnetDataWithRouting;
     }
 
     async searchPegnet(query) {
@@ -144,10 +150,12 @@ export default class Search extends Component {
 
         const searchResultResponse = await Promise.all(requestArray);
         // find the first instance of a response with a result
-        const final = searchResultResponse.find(pegnetResponse => {
-            return !pegnetResponse.result;
+        const finalResult = searchResultResponse.find(pegnetResponse => {
+            return !!pegnetResponse.result;
         });
-        return final;
+        // if we didn't find a result, return the first item so
+        // at least we have the error response
+        return finalResult || searchResultResponse[0];
     }
 
     handleChange(event) {

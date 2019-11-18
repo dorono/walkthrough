@@ -1,20 +1,18 @@
 import React, {Component} from 'react';
-import {Redirect} from 'react-router';
-import {APIConfigurationConsumer} from 'contexts/api';
-import {reverse} from 'routes';
+import Container from 'components/container';
+import styles from './styles.css';
 
 export default class Landing extends Component {
     render() {
         return (
-            <APIConfigurationConsumer>
-                {
-                    ({isConfiguredByDefault}) => (
-                        isConfiguredByDefault() ?
-                            <Redirect to={reverse('dblocks')} /> :
-                            <Redirect to={reverse('chains')} />
-                    )
-                }
-            </APIConfigurationConsumer>
+            <Container primary title="pExplorer">
+                <div className={styles.root}>
+                    <h2>
+                        To get started you can search by an Address or
+                        Transaction above.
+                    </h2>
+                </div>
+            </Container>
         );
     }
 }
