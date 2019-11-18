@@ -63,14 +63,21 @@ export default class Address extends Component {
 
     getAddress = () => this.props.match.params.hash;
 
-    getAmount = row => {
+    getAmount(row) {
         const transactionType = row.txaction;
-        if (transactionType === TRANSACTIONS.TYPE.TRANSFER ||
-            (transactionType === TRANSACTIONS.TYPE.CONVERSION &&
-            row.fromasset === this.state.selectedAsset.alias)) {
+        if (transactionType === TRANSACTIONS.TYPE.TRANSFER) {
             return row.fromamount * (-1);
+        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE) {
+            return row.toamount;
+        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION) {
+            if (row.toasset === this.state.selectedAsset.alias) {
+                return row.toamount;
+            } else if (row.fromasset === this.state.selectedAsset.alias) {
+                return row.fromamount * (-1);
+            }
+        } else {
+            return row.toamount;
         }
-        return row.fromamount;
     }
 
     getTransactionName = row => {
