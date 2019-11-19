@@ -68,14 +68,8 @@ exports[`FactoidBlock should match snapshot 1`] = `
     items={Array []}
     sortOptions={
       Array [
-        Object {
-          "func": [Function],
-          "label": "Newest first",
-        },
-        Object {
-          "func": [Function],
-          "label": "Oldest first",
-        },
+        undefined,
+        undefined,
         Object {
           "func": [Function],
           "label": "Highest input first",

@@ -13,9 +13,7 @@ exports[`App Header Component should display the Settings Popup if invalid crede
       to="/"
     >
       <h1>
-        <span>
-          Factom Explorer
-        </span>
+        pExplorer
       </h1>
     </Link>
     <withRouter(Search)
@@ -25,10 +23,6 @@ exports[`App Header Component should display the Settings Popup if invalid crede
         }
       }
     />
-    <AppMenu />
-    <_default
-      className="divider"
-    />
     <div
       className="blockchainButtonContainer"
     >
@@ -36,7 +30,7 @@ exports[`App Header Component should display the Settings Popup if invalid crede
         className="blockchainButton"
         id="open-settings-popup"
         onClick={[Function]}
-        title="Public"
+        title="PegNet MainNet"
       />
     </div>
   </div>
@@ -74,9 +68,7 @@ exports[`App Header Component should display the Settings Popup if notifyRemoteC
       to="/"
     >
       <h1>
-        <span>
-          Factom Explorer
-        </span>
+        pExplorer
       </h1>
     </Link>
     <withRouter(Search)
@@ -86,10 +78,6 @@ exports[`App Header Component should display the Settings Popup if notifyRemoteC
         }
       }
     />
-    <AppMenu />
-    <_default
-      className="divider"
-    />
     <div
       className="blockchainButtonContainer"
     >
@@ -97,7 +85,7 @@ exports[`App Header Component should display the Settings Popup if notifyRemoteC
         className="blockchainButton"
         id="open-settings-popup"
         onClick={[Function]}
-        title="Public"
+        title="PegNet MainNet"
       />
     </div>
   </div>
