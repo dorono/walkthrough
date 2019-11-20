@@ -1,0 +1,11 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`alertBarLegend should match snapshot 1`] = `
+<div
+  className="root alertBarLegend pending"
+>
+  <TransactionAlerts
+    transactionType="Pending"
+  />
+</div>
+`;

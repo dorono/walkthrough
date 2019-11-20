@@ -1,17 +1,20 @@
-import React, { Component } from 'react';
-import { dataLoader } from 'hocs/data-loader';
-import { currentTimezone, formatDateLong } from 'utils/date';
-import { getPegnetTransactionType } from 'utils/pegnet';
+import React, {Component} from 'react';
+import {dataLoader} from 'hocs/data-loader';
+import {
+    getPegnetTransactionName,
+    getTransactionStatus,
+    generateTransactionList,
+    getOutputAmount,
+} from 'utils/transactions';
 import Container from 'components/container';
-import { Vertical, Box, VerticalToHorizontal } from 'components/layout';
+import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
 import Table from 'components/table';
 import Label from 'components/label';
 import Hash from 'components/hash';
-import DirectoryBlockLink from 'components/directory-block-link';
-import FactoidBlockLink from 'components/factoid-block-link';
 import Amount from 'components/amount';
 import BlockLink from 'components/block-link';
 import Monospaced from 'components/monospaced';
+import TransactionAlerts from 'components/transaction-alerts';
 import {TRANSACTIONS} from 'constants/transactions';
 const buildJsonRPCData = txid => {
     return [
@@ -28,55 +31,8 @@ const buildJsonRPCData = txid => {
 };
 
 export class TransactionPage extends Component {
-    isTransfer = (transaction) => {
-        return transaction.txaction === 1
-        && Array.isArray(transaction.outputs);
-    }
-
-    getOutputAmount = (transaction) => {
-        if (this.isTransfer(transaction)) {
-            return transaction.outputs.reduce((accumulator, outputAmt) => accumulator + outputAmt.amount, 0);
-        }
-
-        return transaction.toamount;
-    }
-
-    generateTransactionList = (title, transactionData) => {
-        // convert that data into an array for looping purposes
-        let transactions = [transactionData];
-
-        // for transfers, make sure that the list of outputs come from
-        // the "outputs" property of the transaction response
-        if (title === TRANSACTIONS.TITLE.OUTPUTS) {
-            if (this.isTransfer(transactions[0])) {
-                transactions = transactions[0].outputs
-                .map((output, idx) => {
-                    return {
-                        user_address: output.address,
-                        amount: output.amount,
-                        unit: transactions[idx].fromasset,
-                    };
-                });
-            } else {
-                transactions = [{
-                    user_address: transactions[0].toaddress || transactions[0].fromaddress,
-                    amount: transactions[0].toamount,
-                    unit: transactions[0].toasset,
-                }];
-            }
-        } else {
-            transactions = [{
-                user_address: transactions[0].fromaddress,
-                amount: transactions[0].fromamount,
-                unit: transactions[0].fromasset,
-            }];
-        }
-
-        return transactions;
-    }
-
-    renderTransactions= (title, transactionData) => {
-        const transactions = this.generateTransactionList(title, transactionData);
+    renderTransactions = (title, transactionData) => {
+        const transactions = generateTransactionList(title, transactionData);
 
         return (
             <Container
@@ -105,7 +61,7 @@ export class TransactionPage extends Component {
                 </Table>
             </Container>
         );
-    }
+    };
 
     render() {
         const pegnetDTransactionData = {
@@ -113,16 +69,15 @@ export class TransactionPage extends Component {
             ...this.props.data.jsonRPC[1],
         };
 
-        console.log('pegnetDTransactionData', pegnetDTransactionData);
-        pegnetDTransactionData.executed = 0;
+        const transactionStatus = getTransactionStatus(pegnetDTransactionData);
 
         return (
             <div>
                 <Container
                     primary
                     title='Transaction'
-                    showFullWidthBanner={pegnetDTransactionData.executed < 1}
-                    fullWidthBannerText='THIS IS AWESOME'>
+                    alertBarType={transactionStatus}
+                    alertBarComponent={<TransactionAlerts transactionType={transactionStatus} />}>
                     <VerticalToHorizontal verticalUpTo='small'>
                         <Vertical>
                             <Box type='outline'>
@@ -130,21 +85,27 @@ export class TransactionPage extends Component {
                                     <div>
                                         <Label>TYPE</Label>
                                         <Monospaced>
-                                            {getPegnetTransactionType(pegnetDTransactionData.txaction)}
+                                            {getPegnetTransactionName(
+                                                pegnetDTransactionData.txaction,
+                                            )}
                                         </Monospaced>
                                     </div>
-                                    {pegnetDTransactionData.txaction !== 3 &&
-                                    <div>
-                                        <Label>INPUTS</Label>
-                                        <Amount unit={pegnetDTransactionData.fromasset}>
-                                            {pegnetDTransactionData.fromamount}
-                                        </Amount>
-                                    </div>
-                                    }
+                                    {pegnetDTransactionData.txaction !== 3 && (
+                                        <div>
+                                            <Label>INPUTS</Label>
+                                            <Amount unit={pegnetDTransactionData.fromasset}>
+                                                {pegnetDTransactionData.fromamount}
+                                            </Amount>
+                                        </div>
+                                    )}
                                     <div>
                                         <Label>OUTPUTS</Label>
-                                        <Amount unit={pegnetDTransactionData.toasset || pegnetDTransactionData.fromasset}>
-                                            {this.getOutputAmount(pegnetDTransactionData)}
+                                        <Amount
+                                            unit={
+                                                pegnetDTransactionData.toasset ||
+                                                pegnetDTransactionData.fromasset
+                                            }>
+                                            {getOutputAmount(pegnetDTransactionData)}
                                         </Amount>
                                     </div>
                                 </Vertical>
@@ -157,17 +118,13 @@ export class TransactionPage extends Component {
                             </Box>
                             <Box type='fill'>
                                 <Label>COMPLETED</Label>
-                                <BlockLink
-                                    type={TRANSACTIONS.PEGNET_COMPLETED}
-                                    isLink>
+                                <BlockLink type={TRANSACTIONS.PEGNET_COMPLETED} isLink>
                                     {pegnetDTransactionData}
                                 </BlockLink>
                             </Box>
                             <Box type='fill'>
                                 <Label>RECORDED</Label>
-                                <BlockLink
-                                    type={TRANSACTIONS.PEGNET_RECORDED}
-                                    isLink>
+                                <BlockLink type={TRANSACTIONS.PEGNET_RECORDED} isLink>
                                     {pegnetDTransactionData}
                                 </BlockLink>
                             </Box>
@@ -176,8 +133,7 @@ export class TransactionPage extends Component {
                 </Container>
                 <VerticalToHorizontal verticalUpTo='small'>
                     {this.renderTransactions(TRANSACTIONS.TITLE.INPUTS, pegnetDTransactionData)}
-                    {this.renderTransactions(
-                        TRANSACTIONS.TITLE.OUTPUTS, pegnetDTransactionData)}
+                    {this.renderTransactions(TRANSACTIONS.TITLE.OUTPUTS, pegnetDTransactionData)}
                 </VerticalToHorizontal>
             </div>
         );

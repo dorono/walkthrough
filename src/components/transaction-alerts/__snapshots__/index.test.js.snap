@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TransactionAlerts should match snapshot for a PENDING transaction 1`] = `
+<div
+  className="root transactionAlertLegendHighlight"
+>
+  <Icon
+    className="transactionAlertLegendIcon"
+    name="Schedule"
+  />
+  <span>
+    <strong>
+      Pending
+      : 
+    </strong>
+     
+    This transaction has not yet been written to the Factom blockchain.
+  </span>
+</div>
+`;
+
+exports[`TransactionAlerts should match snapshot for a REJECTED transaction 1`] = `
+<div
+  className="root transactionAlertLegendHighlight"
+>
+  <Icon
+    className="transactionAlertLegendIcon"
+    name="ErrorOutlineIcon"
+  />
+  <span>
+    <strong>
+      Rejected
+      : 
+    </strong>
+     
+    This transaction has been rejected due to insufficient funds
+  </span>
+</div>
+`;

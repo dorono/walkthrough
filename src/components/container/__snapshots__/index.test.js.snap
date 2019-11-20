@@ -7,7 +7,7 @@ exports[`Container should match snapshot 1`] = `
   <header
     className="header"
   />
-  <PendingLegend
+  <AlertBarLegend
     highlightBanner={true}
     show={false}
   />

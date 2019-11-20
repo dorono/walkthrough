@@ -1,0 +1,23 @@
+@import 'styles/variables.css';
+
+.root {
+    &.alert-bar-legend {
+        margin-bottom: 2rem;
+        padding: 8px 2rem;
+        display: flex;
+        align-items: center;
+        font-size: 11px;
+    }
+
+    &.pending {
+        background-color: var(--yellow);
+    }
+
+    &.rejected {
+        background-color: var(--red);
+
+        * {
+            color: var(--white) !important;
+        }
+    }
+}

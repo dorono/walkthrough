@@ -1,0 +1,26 @@
+@import 'styles/variables.css';
+
+.root {
+    strong {
+        text-transform: uppercase;
+    }
+
+    &.transaction-alert-legend-highlight {
+        display: flex;
+        align-items: center;
+        font-size: 14px;
+        color: var(--black);
+
+        strong {
+            font-weight: 500;
+        }
+    }
+
+    .transaction-alert-legend-icon {
+        display: inline-block;
+        font-size: 15px !important;
+        color: var(--black);
+        margin: 0 8px 0 0;
+    }
+}
+

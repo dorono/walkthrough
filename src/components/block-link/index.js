@@ -14,8 +14,9 @@ const BlockLink = ({type, children, isLink}) => {
     const block = children;
 
     if (!block) return <Hash type={type} />;
-    if (Number(block.keymr) === 0)
+    if (Number(block.keymr) === 0) {
         return <Hash type={type}>{block.keymr}</Hash>;
+    }
 
     return (
         <div className={styles.root}>
@@ -76,7 +77,7 @@ const BlockLink = ({type, children, isLink}) => {
                 </span>,
                 <Hash type={'btc'} key={type}>
                     {block.tx_id}
-                </Hash>
+                </Hash>,
             ]}
             {type === BLOCKS.ETHEREUM_NETWORK && [
                 <span className={styles.label} key='transactionId'>
@@ -84,7 +85,7 @@ const BlockLink = ({type, children, isLink}) => {
                 </span>,
                 <Hash type={'ethereum'} key={type}>
                     {block.tx_id}
-                </Hash>
+                </Hash>,
             ]}
             {type === TRANSACTIONS.PEGNET_COMPLETED && (
                 <React.Fragment>
@@ -128,7 +129,7 @@ const BlockLink = ({type, children, isLink}) => {
                 </span>,
                 <Hash type='default' key={type}>
                     {block.block_hash}
-                </Hash>
+                </Hash>,
             ]}
             {type !== BLOCKS.BITCOIN_NETWORK &&
                 type !== BLOCKS.ETHEREUM_NETWORK &&

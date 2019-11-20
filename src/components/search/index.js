@@ -1,5 +1,4 @@
 import React, {Component} from 'react';
-import PropTypes from 'prop-types';
 import {withRouter} from 'react-router-dom';
 import {autobind} from 'core-decorators';
 import classNames from 'classnames';
@@ -15,6 +14,7 @@ import {
     PUBLIC_KEY_PREFIX_EC,
     PUBLIC_KEY_PREFIX_FC,
 } from 'utils/key';
+import {TRANSACTIONS} from '../../constants/transactions';
 
 import styles from './styles.css';
 
@@ -117,10 +117,10 @@ export default class Search extends Component {
 
         switch (type) {
             case 'address':
-                parentRoute = 'addresses';
+                parentRoute = TRANSACTIONS.PEGNET_PARENT_ROUTES.ADDRESSES;
                 break;
             default:
-                parentRoute = 'transactions';
+                parentRoute = TRANSACTIONS.PEGNET_PARENT_ROUTES.TRANSACTIONS;
         }
 
         const pegnetDataWithRouting = Object.assign({},
@@ -151,11 +151,19 @@ export default class Search extends Component {
         const searchResultResponse = await Promise.all(requestArray);
         // find the first instance of a response with a result
         const finalResult = searchResultResponse.find(pegnetResponse => {
-            return !!pegnetResponse.result;
+            return !!pegnetResponse.result && this.isMatchingTransaction(pegnetResponse, query);
         });
-        // if we didn't find a result, return the first item so
-        // at least we have the error response
-        return finalResult || searchResultResponse[0];
+        // if we didn't find a matching result, return the first item with
+        // the error response
+        return finalResult || searchResultResponse.find(pegnetResponse => !!pegnetResponse.error);
+    }
+
+    isMatchingTransaction = (pegnetResponse, query) => {
+        if (pegnetResponse.parentRoute !== TRANSACTIONS.PEGNET_PARENT_ROUTES.TRANSACTIONS) {
+            return true;
+        }
+
+        return pegnetResponse.result.actions[0].txid === query;
     }
 
     handleChange(event) {

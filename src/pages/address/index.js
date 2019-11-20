@@ -1,5 +1,6 @@
 import React, {Component, Fragment} from 'react';
 import classNames from 'classnames';
+import {getPegnetTransactionName} from 'utils/transactions';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
@@ -65,31 +66,19 @@ export default class Address extends Component {
 
     getAmount(row) {
         const transactionType = row.txaction;
-        if (transactionType === TRANSACTIONS.TYPE.TRANSFER) {
-            return row.fromamount * (-1);
-        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE) {
+        if (transactionType === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
+            return row.fromamount * -1;
+        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE.NUMBER) {
             return row.toamount;
-        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION) {
+        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION.NUMBER) {
             if (row.toasset === this.state.selectedAsset.alias) {
                 return row.toamount;
             } else if (row.fromasset === this.state.selectedAsset.alias) {
-                return row.fromamount * (-1);
+                return row.fromamount * -1;
             }
         } else {
             return row.toamount;
         }
-    }
-
-    getTransactionName = row => {
-        const transactionType = row.txaction;
-        if (transactionType === TRANSACTIONS.TYPE.TRANSFER) {
-            return 'Transfer';
-        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE) {
-            return 'Coinbase';
-        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION) {
-            return 'Conversion';
-        }
-        return 'Burn';
     }
 
     getPaginationData = () => {
@@ -102,7 +91,7 @@ export default class Address extends Component {
             limit: 50,
             offset,
         });
-    }
+    };
 
     getAssetsBalances = () => {
         const assetsBalancesAPI = this.props.data.jsonRPC[0];
@@ -124,7 +113,7 @@ export default class Address extends Component {
             selectedAsset: assets.find(asset => asset.label.substring(0, 3) === 'PEG'),
             selectedTransaction: this.handleTransactionChange('PEG'),
         });
-    }
+    };
 
     handleChangeSelection = selectedAsset =>
         this.setState({
@@ -134,14 +123,22 @@ export default class Address extends Component {
 
     handleTransactionChange = asset => {
         const transactionsAPI = this.props.data.jsonRPC[1];
-        return transactionsAPI.actions.filter(transaction =>
-            transaction.fromasset === asset || transaction.toasset === asset);
+        return transactionsAPI.actions.filter(
+            transaction => transaction.fromasset === asset || transaction.toasset === asset,
+        );
     };
 
     render() {
         const amountKey = this.getAmountKey();
         const sortOpt = sortOptions('timestamp');
-        const {assetsBalances, selectedAsset, selectedTransaction, limit, count, offset} = this.state;
+        const {
+            assetsBalances,
+            selectedAsset,
+            selectedTransaction,
+            limit,
+            count,
+            offset,
+        } = this.state;
         return (
             <Fragment>
                 <Container primary title='Address'>
@@ -156,7 +153,10 @@ export default class Address extends Component {
                                             onOptionClick={this.handleChangeSelection}
                                             selected={selectedAsset}
                                             className={styles.dropdown}
-                                            headerClassName={classNames(styles.dropdownHeader, styles.formInput)}
+                                            headerClassName={classNames(
+                                                styles.dropdownHeader,
+                                                styles.formInput,
+                                            )}
                                             optionsClassName={styles.dropdownOptions}
                                             selectedClassName={globalStyles.selectedOption}
                                             arrowColor='blue'
@@ -183,7 +183,10 @@ export default class Address extends Component {
                     sortOptions={[
                         sortOpt.newestFirst,
                         sortOpt.oldestFirst,
-                        {label: 'Highest amount first', func: (a, b) => b[amountKey] - a[amountKey]},
+                        {
+                            label: 'Highest amount first',
+                            func: (a, b) => b[amountKey] - a[amountKey],
+                        },
                         {label: 'Lowest amount first', func: (a, b) => a[amountKey] - b[amountKey]},
                     ]}>
                     {(items, sortDropdown) => (
@@ -192,23 +195,21 @@ export default class Address extends Component {
                             subtitle='(involving this address)'
                             count={items.length}
                             actions={sortDropdown}>
-                            <Table
-                                columns={columns}
-                                rows={items}
-                                ellipsis={0}
-                                type='secondary'>
+                            <Table columns={columns} rows={items} ellipsis={0} type='secondary'>
                                 {(row, index) => (
                                     <tr key={index}>
                                         <td>
-                                            <Hash
-                                                type='tx'
-                                                key={row.txid}>
+                                            <Hash type='tx' key={row.txid}>
                                                 {row.txid}
                                             </Hash>
                                         </td>
-                                        <td><Amount unit={this.getAmountKey()}>{this.getAmount(row)}</Amount></td>
+                                        <td>
+                                            <Amount unit={this.getAmountKey()}>
+                                                {this.getAmount(row)}
+                                            </Amount>
+                                        </td>
                                         <td>{formatDate(row.timestamp)}</td>
-                                        <td>{this.getTransactionName(row)}</td>
+                                        <td>{getPegnetTransactionName(row.txaction)}</td>
                                     </tr>
                                 )}
                             </Table>
