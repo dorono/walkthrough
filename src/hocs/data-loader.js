@@ -129,6 +129,7 @@ const load = (target, options = {}, showLoader = true, showErrors = true) => Com
             }
             const resultPromises = await Promise.all(results);
             for (let i = 0; i < resultPromises.length; i++) {
+                if (!resultPromises[i].result) this.setState({error: 404});
                 responseJsonRPC.push(resultPromises[i].result);
             }
             return responseJsonRPC;
