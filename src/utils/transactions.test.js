@@ -4,7 +4,8 @@ import {
     getPegnetTransactionName,
     getTransactionStatus,
     generateTransactionList,
-    // getOutputAmount,
+    getOutputAmount,
+    getPropertyLabel,
 } from './transactions';
 
 const mockTransferTransaction = {
@@ -45,12 +46,21 @@ const mockConversionTransaction = {
     factomheight: -1,
 };
 
+// adding an extra output item to test calculation of total amount
+const transferTransactionMultipleOutputs = JSON.parse(JSON.stringify(mockTransferTransaction));
+transferTransactionMultipleOutputs.outputs.push({
+    address: 'FA3mi7Qm35CMoCku1yQ3Wx2SZmBitJAJDYhPVMeX82gkfccQPZVn',
+    amount: 50000000000,
+});
+
 test('isTransfer should return true', () => {
     expect(isTransfer(mockTransferTransaction)).toEqual(true);
 });
 
 test('getPegnetTransactionName should return transfer', () => {
-    expect(getPegnetTransactionName(mockTransferTransaction.txaction)).toEqual(TRANSACTIONS.TYPE.TRANSFER.NAME);
+    expect(getPegnetTransactionName(mockTransferTransaction.txaction)).toEqual(
+        TRANSACTIONS.TYPE.TRANSFER.NAME,
+    );
 });
 
 test('getTransactionStatus should return pending', () => {
@@ -78,50 +88,18 @@ test('generateTransactionList should return the correct result object for CONVER
     ]);
 });
 
-// export const generateTransactionList = (title, transactionData) => {
-//     // convert that data into an array for looping purposes
-//     let transactions = [transactionData];
+test('getOutputAmount should return the correct output amount with only 1 output', () => {
+    expect(getOutputAmount(mockTransferTransaction)).toEqual(40000000000);
+});
 
-//     // for transfers, make sure that the list of outputs come from
-//     // the 'outputs' property of the transaction response
-//     if (title === TRANSACTIONS.TITLE.OUTPUTS) {
-//         if (isTransfer(transactions[0])) {
-//             transactions = transactions[0].outputs.map((output, idx) => {
-//                 return {
-//                     user_address: output.address,
-//                     amount: output.amount,
-//                     unit: transactions[idx].fromasset,
-//                 };
-//             });
-//         } else {
-//             transactions = [
-//                 {
-//                     user_address: transactions[0].toaddress || transactions[0].fromaddress,
-//                     amount: transactions[0].toamount,
-//                     unit: transactions[0].toasset,
-//                 },
-//             ];
-//         }
-//     } else {
-//         transactions = [
-//             {
-//                 user_address: transactions[0].fromaddress,
-//                 amount: transactions[0].fromamount,
-//                 unit: transactions[0].fromasset,
-//             },
-//         ];
-//     }
+test('getOutputAmount should return the correct output amount with multiple outputs', () => {
+    expect(getOutputAmount(transferTransactionMultipleOutputs)).toEqual(90000000000);
+});
 
-//     return transactions;
-// };
+test('getPropertyLabel should return the correct user-facing asset label when there IS an alternate label', () => {
+    expect(getPropertyLabel('pXAU')).toEqual(TRANSACTIONS.PEGNET_ASSET_LABELS.PXAU);
+});
 
-// export const getOutputAmount = transaction => {
-//     if (isTransfer(transaction)) {
-//         return transaction.outputs.reduce(
-//             (accumulator, outputAmt) => accumulator + outputAmt.amount,
-//             0,
-//         );
-//     }
-
-//     return transaction.toamount;
-// };
+test('getPropertyLabel should return the correct user-facing asset label when there is NOT an alternate label', () => {
+    expect(getPropertyLabel('pBNB')).toEqual('pBNB');
+});
