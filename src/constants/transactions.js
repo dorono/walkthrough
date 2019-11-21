@@ -33,9 +33,10 @@ export const TRANSACTIONS = {
     PEGNET_RECORDED: 'pegnetRecorded',
     PEGNET_CHAIN_ID: 'cffce0f409ebba4ed236d49d89c70e4bd1f1367d86402a3363366683265a242d',
     PEGNET_ASSET_LABELS: {
-        PXAU: 'pGold',
-        PXAG: 'pSilver',
+        PXAU: 'pGOLD',
+        PXAG: 'pSILVER',
         PXBT: 'pBTC',
+        PXBC: 'pBCH',
     },
 };
 
