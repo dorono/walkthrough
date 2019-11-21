@@ -27,6 +27,8 @@ ARG public_network
 ARG ga_id
 ARG gtm_id
 ARG version
+ARG pegnet_api_url
+ARG factom_explorer_url
 
 ENV API_URL $api_url
 ENV API_TOKEN $api_token
