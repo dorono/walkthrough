@@ -128,6 +128,8 @@ export default class Address extends Component {
         } else if (transactionType === TRANSACTIONS.TYPE.COINBASE.NUMBER) {
             return row.toamount;
         } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION.NUMBER) {
+            // Transaction failed
+            if (!row.toamount) return 0;
             if (row.toasset === this.state.selectedAsset.alias) {
                 return row.toamount;
             } else if (row.fromasset === this.state.selectedAsset.alias) {
