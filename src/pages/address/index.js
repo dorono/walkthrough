@@ -1,7 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import classNames from 'classnames';
 import queryString from 'query-string';
-import {getPegnetTransactionName, getPropertyLabel} from 'utils/transactions';
+import {getPegnetTransactionName, getPropertyLabel, getPegnetLabel} from 'utils/transactions';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
@@ -77,12 +77,13 @@ export default class Address extends Component {
              * otherwise, it will return an error key,
              * (when the asset doesn't have transactions, it will thrown an error)
              */
+
+            const assetName = selectedAsset ? selectedAsset.alias : asset;
             const pegnetData = await requestJSONRPC('get-transactions', {
                 address: this.getAddress(),
-                asset: selectedAsset ? selectedAsset.alias : asset,
+                asset: getPegnetLabel(assetName),
                 offset,
             });
-
             if (!pegnetData.error) {
                 this.getPaginationData(pegnetData.result.count, pegnetData.result.nextoffset);
                 if (selectedAsset) {
@@ -177,10 +178,13 @@ export default class Address extends Component {
     handleChangeSelection = selectedAsset =>
         this.props.history.push(`${this.props.location.pathname}?asset=${selectedAsset.alias}`);
 
-    handleTransactionChange = (asset, apiResponse) =>
-        apiResponse.filter(
-            transaction => transaction.fromasset === asset || transaction.toasset === asset,
+    handleTransactionChange = (asset, apiResponse) => {
+        return apiResponse.filter(
+            transaction =>
+                transaction.fromasset === getPegnetLabel(asset) ||
+                transaction.toasset === getPegnetLabel(asset),
         );
+    };
 
     render() {
         const sortOpt = sortOptions('timestamp');

@@ -1,6 +1,7 @@
 import {TRANSACTIONS} from 'constants/transactions';
 
-export const isTransfer = transaction => transaction.txaction === 1 && Array.isArray(transaction.outputs);
+export const isTransfer = transaction =>
+    transaction.txaction === 1 && Array.isArray(transaction.outputs);
 
 export const getPegnetTransactionName = txaction => {
     if (txaction === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
@@ -73,13 +74,20 @@ export const getOutputAmount = transaction => {
 };
 
 export const getPropertyLabel = propertyName => {
-    if (
-        propertyName
-        && TRANSACTIONS.PEGNET_ASSET_LABELS[propertyName.toUpperCase()]
-    ) {
+    if (propertyName && TRANSACTIONS.PEGNET_ASSET_LABELS[propertyName.toUpperCase()]) {
         return TRANSACTIONS.PEGNET_ASSET_LABELS[propertyName.toUpperCase()];
     }
 
     return propertyName;
 };
 
+export const getPegnetLabel = propertyName => {
+    if (Object.values(TRANSACTIONS.PEGNET_ASSET_LABELS).indexOf(propertyName) >= 0) {
+        const key = Object.keys(TRANSACTIONS.PEGNET_ASSET_LABELS).find(
+            key => TRANSACTIONS.PEGNET_ASSET_LABELS[key] === propertyName,
+        );
+        const keyWithLowerCase = key[0].toLowerCase() + key.slice(1);
+        return keyWithLowerCase;
+    }
+    return propertyName;
+};
