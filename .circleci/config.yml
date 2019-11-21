@@ -56,7 +56,7 @@ jobs:
       - run:
           name: Build the container
           command: |
-            docker build --build-arg "public_network_gateway=$PUBLIC_NETWORK_GATEWAY" --build-arg "public_network_gateway_app_id=$PUBLIC_NETWORK_GATEWAY_APP_ID" --build-arg "public_network_gateway_app_key=$PUBLIC_NETWORK_GATEWAY_APP_KEY" --build-arg "shared_sandbox_gateway=$SHARED_SANDBOX_GATEWAY" --build-arg "dev_portal_url=$DEV_PORTAL_URL" --build-arg "public_network=$PUBLIC_NETWORK" --build-arg "ga_id=$GA_ID" --build-arg "gtm_id=$GTM_ID" --build-arg "version=$CIRCLE_TAG" -t peg_explorer .
+            docker build --build-arg "public_network_gateway=$PUBLIC_NETWORK_GATEWAY" --build-arg "public_network_gateway_app_id=$PUBLIC_NETWORK_GATEWAY_APP_ID" --build-arg "public_network_gateway_app_key=$PUBLIC_NETWORK_GATEWAY_APP_KEY" --build-arg "shared_sandbox_gateway=$SHARED_SANDBOX_GATEWAY" --build-arg "dev_portal_url=$DEV_PORTAL_URL" --build-arg "public_network=$PUBLIC_NETWORK" --build-arg "ga_id=$GA_ID" --build-arg "gtm_id=$GTM_ID" --build-arg "pegnet_api_url=$PEGNET_API_URL" --build-arg "factomd_explorer_url=$FACTOMD_EXPLORER_URL" --build-arg "version=$CIRCLE_TAG" -t peg_explorer .
 
       - run:
           name: Push images to DockerHub
