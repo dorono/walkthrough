@@ -11,7 +11,6 @@ export default class Amount extends Component {
     };
 
     render() {
-        console.log('this.props.unit', this.props.unit);
         let value = this.props.children;
         if (this.props.unit !== 'EC') value /= FCT_CONVERSION;
         return (

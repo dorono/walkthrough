@@ -78,8 +78,6 @@ test('generateTransactionList should return the correct result object for CONVER
     ]);
 });
 
-
-
 // export const generateTransactionList = (title, transactionData) => {
 //     // convert that data into an array for looping purposes
 //     let transactions = [transactionData];
