@@ -124,7 +124,10 @@ export default class Address extends Component {
     getAmount = row => {
         const transactionType = row.txaction;
         if (transactionType === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
-            return row.fromamount * -1;
+            if (row.fromaddress === this.getAddress()) {
+                return row.fromamount * -1;
+            }
+            return row.fromamount * 1;
         } else if (transactionType === TRANSACTIONS.TYPE.COINBASE.NUMBER) {
             return row.toamount;
         } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION.NUMBER) {
