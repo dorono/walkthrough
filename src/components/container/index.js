@@ -40,8 +40,7 @@ export default class Container extends Component {
                 className={classNames(
                     this.setFullwidth(styles.root, true),
                     this.props.primary ? 'main' : 'section',
-                )}
-            >
+                )}>
                 <header className={this.setFullwidth(styles.header)}>
                     {this.props.title && <h1 className={styles.title}>{this.props.title}</h1>}
                     {this.props.count !== undefined && (

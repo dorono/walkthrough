@@ -27,7 +27,6 @@ const TransactionAlerts = ({transactionType}) => {
     );
 };
 
-
 TransactionAlerts.propTypes = {
     transactionType: PropTypes.string,
 };

@@ -1,6 +1,7 @@
 import React, {Component, Fragment} from 'react';
 import classNames from 'classnames';
-import {getPegnetTransactionName} from 'utils/transactions';
+import queryString from 'query-string';
+import {getPegnetTransactionName, getPropertyLabel} from 'utils/transactions';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
@@ -14,6 +15,8 @@ import Pagination from 'components/pagination';
 import Amount from 'components/amount';
 import globalStyles from 'styles/index.css';
 import {TRANSACTIONS} from 'constants/transactions';
+import {requestJSONRPC} from 'api';
+import Spinner from 'components/spinner';
 import styles from './styles.css';
 
 const columns = [
@@ -33,14 +36,6 @@ const buildJsonRPCData = address => {
                 address,
             },
         },
-        {
-            method: 'get-transactions',
-            params: {
-                address,
-            },
-            pagination: true,
-            location: location.search,
-        },
     ];
 };
 @dataLoader(({match}) => buildJsonRPCData(match.params.hash))
@@ -50,21 +45,82 @@ export default class Address extends Component {
         transactions: [],
         selectedAsset: null,
         selectedTransaction: null,
-        limit: null,
+        limit: 50,
         count: null,
         offset: null,
+        nextoffset: 0,
+        assetApiResponse: null,
+        showLoader: true,
     };
 
     componentWillMount() {
         this.getAssetsBalances();
-        this.getPaginationData();
     }
 
-    getAmountKey = () => this.state.selectedAsset.alias;
+    componentDidMount() {
+        this.getApiInfo();
+    }
+
+    // TODO: Refactor this method.
+    getApiInfo = async selectedAsset => {
+        try {
+            this.setState({showLoader: true});
+
+            // Handle Pagination offset
+            const {page} = queryString.parse(this.props.location.search);
+            const offset = page * this.state.limit - 50;
+            const asset = this.getAssetFromQueryParam();
+
+            /**
+             * Make Request to pegnetd API
+             * If it returns a result key, the request was succesfully correct
+             * otherwise, it will return an error key,
+             * (when the asset doesn't have transactions, it will thrown an error)
+             */
+            const pegnetData = await requestJSONRPC('get-transactions', {
+                address: this.getAddress(),
+                asset: selectedAsset ? selectedAsset.alias : asset,
+                offset,
+            });
+
+            if (!pegnetData.error) {
+                this.getPaginationData(pegnetData.result.count, pegnetData.result.nextoffset);
+                if (selectedAsset) {
+                    // If this method is executed by a change on the Dropdown.
+                    return this.setState({
+                        selectedAsset,
+                        assetApiResponse: pegnetData.result,
+                        showLoader: false,
+                        selectedTransaction: this.handleTransactionChange(
+                            asset,
+                            pegnetData.result.actions,
+                        ),
+                    });
+                }
+                return this.setState({
+                    assetApiResponse: pegnetData.result,
+                    showLoader: false,
+                    selectedTransaction: this.handleTransactionChange(
+                        asset,
+                        pegnetData.result.actions,
+                    ),
+                    count: pegnetData.result.count,
+                });
+            }
+            return this.setState({
+                showLoader: false,
+                selectedTransaction: this.handleTransactionChange(asset, []),
+                count: 0,
+                offset: 0,
+            });
+        } catch (error) {
+            return this.setState({showLoader: false});
+        }
+    };
 
     getAddress = () => this.props.match.params.hash;
 
-    getAmount(row) {
+    getAmount = row => {
         const transactionType = row.txaction;
         if (transactionType === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
             return row.fromamount * -1;
@@ -76,60 +132,57 @@ export default class Address extends Component {
             } else if (row.fromasset === this.state.selectedAsset.alias) {
                 return row.fromamount * -1;
             }
-        } else {
-            return row.toamount;
         }
-    }
+        return row.toamount;
+    };
 
-    getPaginationData = () => {
-        const transactionsAPI = this.props.data.jsonRPC[1];
-        const {count, nextoffset} = transactionsAPI;
+    getPaginationData = (count, nextoffset) => {
         let offset = nextoffset;
         if (nextoffset !== 0) offset = nextoffset - 50;
         return this.setState({
             count,
-            limit: 50,
             offset,
         });
     };
 
+    getAssetFromQueryParam = () => {
+        let {asset} = queryString.parse(this.props.location.search);
+        if (!asset) asset = 'PEG';
+        return asset;
+    };
+
     getAssetsBalances = () => {
         const assetsBalancesAPI = this.props.data.jsonRPC[0];
+        const asset = this.getAssetFromQueryParam();
         const assets = [];
         Object.keys(assetsBalancesAPI).forEach(property => {
+            const propertyLabel = getPropertyLabel(property);
             const balance = assetsBalancesAPI[property];
             const value = balance / FCT_CONVERSION;
-            const asset = {
-                label: `${property} - ${value}`,
+            const assetInfo = {
+                label: `${propertyLabel} - ${value}`,
                 value: balance,
-                alias: property,
+                alias: propertyLabel,
             };
-            assets.push(asset);
+            assets.push(assetInfo);
         });
         let filteredAssets = assets.sort((a, b) => a.label.localeCompare(b.label));
         filteredAssets = filteredAssets.sort((a, b) => b.value - a.value);
         this.setState({
             assetsBalances: filteredAssets,
-            selectedAsset: assets.find(asset => asset.label.substring(0, 3) === 'PEG'),
-            selectedTransaction: this.handleTransactionChange('PEG'),
+            selectedAsset: assets.find(a => a.alias === asset),
         });
     };
 
     handleChangeSelection = selectedAsset =>
-        this.setState({
-            selectedAsset,
-            selectedTransaction: this.handleTransactionChange(selectedAsset.alias),
-        });
+        this.props.history.push(`${this.props.location.pathname}?asset=${selectedAsset.alias}`);
 
-    handleTransactionChange = asset => {
-        const transactionsAPI = this.props.data.jsonRPC[1];
-        return transactionsAPI.actions.filter(
+    handleTransactionChange = (asset, apiResponse) =>
+        apiResponse.filter(
             transaction => transaction.fromasset === asset || transaction.toasset === asset,
         );
-    };
 
     render() {
-        const amountKey = this.getAmountKey();
         const sortOpt = sortOptions('timestamp');
         const {
             assetsBalances,
@@ -178,45 +231,52 @@ export default class Address extends Component {
                         </Vertical>
                     </Horizontal>
                 </Container>
-                <Sortable
-                    items={selectedTransaction}
-                    sortOptions={[
-                        sortOpt.newestFirst,
-                        sortOpt.oldestFirst,
-                        {
-                            label: 'Highest amount first',
-                            func: (a, b) => b[amountKey] - a[amountKey],
-                        },
-                        {label: 'Lowest amount first', func: (a, b) => a[amountKey] - b[amountKey]},
-                    ]}>
-                    {(items, sortDropdown) => (
-                        <Container
-                            title='Transactions'
-                            subtitle='(involving this address)'
-                            count={items.length}
-                            actions={sortDropdown}>
-                            <Table columns={columns} rows={items} ellipsis={0} type='secondary'>
-                                {(row, index) => (
-                                    <tr key={index}>
-                                        <td>
-                                            <Hash type='tx' key={row.txid}>
-                                                {row.txid}
-                                            </Hash>
-                                        </td>
-                                        <td>
-                                            <Amount unit={this.getAmountKey()}>
-                                                {this.getAmount(row)}
-                                            </Amount>
-                                        </td>
-                                        <td>{formatDate(row.timestamp)}</td>
-                                        <td>{getPegnetTransactionName(row.txaction)}</td>
-                                    </tr>
-                                )}
-                            </Table>
-                            <Pagination count={count} limit={limit} offset={offset} />
-                        </Container>
-                    )}
-                </Sortable>
+                {this.state.showLoader ? (
+                    <Spinner />
+                ) : (
+                    <Sortable
+                        items={selectedTransaction}
+                        sortOptions={[
+                            sortOpt.newestFirst,
+                            sortOpt.oldestFirst,
+                            {
+                                label: 'Highest amount first',
+                                func: (a, b) => b[selectedAsset.alias] - a[selectedAsset.alias],
+                            },
+                            {
+                                label: 'Lowest amount first',
+                                func: (a, b) => a[selectedAsset.alias] - b[selectedAsset.alias],
+                            },
+                        ]}>
+                        {(items, sortDropdown) => (
+                            <Container
+                                title='Transactions'
+                                subtitle='(involving this address)'
+                                count={items.length}
+                                actions={sortDropdown}>
+                                <Table columns={columns} rows={items} ellipsis={0} type='secondary'>
+                                    {(row, index) => (
+                                        <tr key={index}>
+                                            <td>
+                                                <Hash type='tx' key={row.txid}>
+                                                    {row.txid}
+                                                </Hash>
+                                            </td>
+                                            <td>
+                                                <Amount unit={selectedAsset.alias}>
+                                                    {this.getAmount(row)}
+                                                </Amount>
+                                            </td>
+                                            <td>{formatDate(row.timestamp)}</td>
+                                            <td>{getPegnetTransactionName(row.txaction)}</td>
+                                        </tr>
+                                    )}
+                                </Table>
+                                <Pagination count={count} limit={limit} offset={offset} />
+                            </Container>
+                        )}
+                    </Sortable>
+                )}
             </Fragment>
         );
     }

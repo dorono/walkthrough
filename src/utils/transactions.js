@@ -58,6 +58,7 @@ export const generateTransactionList = (title, transactionData) => {
         ];
     }
 
+    console.log('transactions', transactions);
     return transactions;
 };
 
@@ -71,3 +72,14 @@ export const getOutputAmount = transaction => {
 
     return transaction.toamount;
 };
+
+export const getPropertyLabel = propertyName => {
+    if (
+        propertyName
+        && TRANSACTIONS.PEGNET_ASSET_LABELS.hasOwnProperty(propertyName.toUpperCase())
+    ) {
+        return TRANSACTIONS.PEGNET_ASSET_LABELS[propertyName.toUpperCase()];
+    }
+
+    return propertyName;
+}

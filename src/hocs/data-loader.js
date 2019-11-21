@@ -8,6 +8,8 @@ import Spinner from 'components/spinner';
 import ErrorPage from 'pages/error-page';
 import {ERROR_MESSAGES} from 'constants/errors';
 
+// TODO: Refactor to HOOKS
+
 /**
  * HOC that fetches data using the request function.
  * Shows errors and loader ny default.

@@ -33,7 +33,6 @@ const buildJsonRPCData = txid => {
 export class TransactionPage extends Component {
     renderTransactions = (title, transactionData) => {
         const transactions = generateTransactionList(title, transactionData);
-
         return (
             <Container
                 title={title}
