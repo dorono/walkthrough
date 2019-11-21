@@ -39,7 +39,8 @@ ENV PUBLIC_NETWORK $public_network
 ENV GA_ID $ga_id
 ENV GTM_ID $gtm_id
 ENV VERSION $version
-
+ENV PEGNET_API_URL $pegnet_api_url
+ENV FACTOM_EXPLORER_URL $factom_explorer_url
 RUN npm run build
 
 #
