@@ -183,13 +183,12 @@ export default class Address extends Component {
     handleChangeSelection = selectedAsset =>
         this.props.history.push(`${this.props.location.pathname}?asset=${selectedAsset.alias}`);
 
-    handleTransactionChange = (asset, apiResponse) => {
-        return apiResponse.filter(
+    handleTransactionChange = (asset, apiResponse) =>
+        apiResponse.filter(
             transaction =>
                 transaction.fromasset === getPegnetLabel(asset) ||
                 transaction.toasset === getPegnetLabel(asset),
         );
-    };
 
     render() {
         const sortOpt = sortOptions('timestamp');
@@ -250,11 +249,11 @@ export default class Address extends Component {
                             sortOpt.oldestFirst,
                             {
                                 label: 'Highest amount first',
-                                func: (a, b) => b[selectedAsset.alias] - a[selectedAsset.alias],
+                                func: (a, b) => this.getAmount(b) - this.getAmount(a),
                             },
                             {
                                 label: 'Lowest amount first',
-                                func: (a, b) => a[selectedAsset.alias] - b[selectedAsset.alias],
+                                func: (a, b) => this.getAmount(a) - this.getAmount(b),
                             },
                         ]}>
                         {(items, sortDropdown) => (
