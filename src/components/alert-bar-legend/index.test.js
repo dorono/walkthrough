@@ -6,8 +6,8 @@ import AlertBarLegend from './index';
 
 const defaultProps = {
     show: true,
-    alertBarType: TRANSACTIONS.STATUSES.PENDING,
-    alertBarComponent: <TransactionAlerts transactionType={TRANSACTIONS.STATUSES.PENDING} />,
+    alertBarType: TRANSACTIONS.STATUSES.PENDING.LABEL,
+    alertBarComponent: <TransactionAlerts transactionType={TRANSACTIONS.STATUSES.PENDING.LABEL} />,
 };
 
 describe('alertBarLegend', () => {

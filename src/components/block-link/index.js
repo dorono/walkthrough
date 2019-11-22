@@ -47,25 +47,17 @@ const BlockLink = ({type, children, isLink}) => {
                         </span>
                         <Hash type='default' key={'createdHash'}>
                             <span className={styles.date}>
-                                {`${formatDate(
-                                    block.created_at,
-                                )} (${currentTimezone()})`}
+                                {`${formatDate(block.created_at)} (${currentTimezone()})`}
                             </span>
                         </Hash>
                     </div>
                     <div className={styles.block}>
                         <span
-                            className={classNames(
-                                styles.label,
-                                styles.labelEntry,
-                            )}
+                            className={classNames(styles.label, styles.labelEntry)}
                             key='entryHash'>
                             ENTRY HASH:
                         </span>
-                        <Hash
-                            type={'publicFactom'}
-                            chainId={block.chain.chain_id}
-                            key={type}>
+                        <Hash type={'publicFactom'} chainId={block.chain.chain_id} key={type}>
                             {block.entry_hash}
                         </Hash>
                     </div>
@@ -90,11 +82,13 @@ const BlockLink = ({type, children, isLink}) => {
             {type === TRANSACTIONS.PEGNET_COMPLETED && (
                 <React.Fragment>
                     <span className={styles.label}>HEIGHT:</span>
-                    <Link
-                        className={styles.link}
-                        to={`/dblocks/${block.executed}`}>
-                        {block.executed}
-                    </Link>
+                    {block.executed > TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED ? (
+                        <Link className={styles.link} to={`/dblocks/${block.executed}`}>
+                            {block.executed}
+                        </Link>
+                    ) : (
+                        <span className={styles.hash}>{block.executed}</span>
+                    )}
                     <span className={styles.label}>CONFIRMATIONS:</span>
                     <span className={styles.hash}>
                         {block.syncheight - block.executed + 1 > 10
@@ -106,21 +100,23 @@ const BlockLink = ({type, children, isLink}) => {
             {type === TRANSACTIONS.PEGNET_RECORDED && (
                 <React.Fragment>
                     <span className={styles.label}>HEIGHT:</span>
-                    <Link
-                        className={styles.link}
-                        to={`/dblocks/${block.height}`}>
+                    <Link className={styles.link} to={`/dblocks/${block.height}`}>
                         {block.height}
                     </Link>
                     <span className={styles.label}>
                         PARENT{' '}
-                        {block.txaction === TRANSACTIONS.TYPE.BURN.NUMBER ? 'FACTOID TRANSACTION' : 'ENTRY'}
+                        {block.txaction === TRANSACTIONS.TYPE.BURN.NUMBER
+                            ? 'FACTOID TRANSACTION'
+                            : 'ENTRY'}
                         :
                     </span>
                     <Link
                         className={styles.link}
-                        to={block.txaction === TRANSACTIONS.TYPE.BURN.NUMBER
-                            ? `/explorer/transactions/${block.hash}`
-                            : `/chains/${TRANSACTIONS.PEGNET_CHAIN_ID}/entries/${block.hash}`}>
+                        to={
+                            block.txaction === TRANSACTIONS.TYPE.BURN.NUMBER
+                                ? `/explorer/transactions/${block.hash}`
+                                : `/chains/${TRANSACTIONS.PEGNET_CHAIN_ID}/entries/${block.hash}`
+                        }>
                         {block.hash}
                     </Link>
                 </React.Fragment>

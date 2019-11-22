@@ -5,7 +5,7 @@ import TransactionAlerts from './index';
 
 describe('TransactionAlerts', () => {
     const defaultProps = {
-        transactionType: TRANSACTIONS.STATUSES.PENDING,
+        transactionType: TRANSACTIONS.STATUSES.PENDING.LABEL,
     };
 
     it('should render without errors', () => {
@@ -14,7 +14,7 @@ describe('TransactionAlerts', () => {
 
     it('should match snapshot for a PENDING transaction', () => {
         const defaultProps = {
-            transactionType: TRANSACTIONS.STATUSES.PENDING,
+            transactionType: TRANSACTIONS.STATUSES.PENDING.LABEL,
         };
 
         expect(shallow(<TransactionAlerts {...defaultProps} />)).toMatchSnapshot();
@@ -22,7 +22,7 @@ describe('TransactionAlerts', () => {
 
     it('should match snapshot for a REJECTED transaction', () => {
         const defaultProps = {
-            transactionType: TRANSACTIONS.STATUSES.REJECTED,
+            transactionType: TRANSACTIONS.STATUSES.REJECTED.LABEL,
         };
 
         expect(shallow(<TransactionAlerts {...defaultProps} />)).toMatchSnapshot();

@@ -43,16 +43,20 @@ export class TransactionPage extends Component {
                     rows={transactions}
                     ellipsis={0}
                     type='secondary'>
-                    {row => {
+                    {(row, idx) => {
                         return (
-                            <tr key={row.address + row.amount}>
+                            <tr key={`${row.address}-${idx}`}>
                                 <td>
-                                    <Monospaced type='address' key={row.user_address}>
-                                        <Hash type='address'>{row.user_address}</Hash>
+                                    <Monospaced type='address'>
+                                        <Hash type='address' key={`hash-${idx}`}>
+                                            {row.user_address}
+                                        </Hash>
                                     </Monospaced>
                                 </td>
                                 <td>
-                                    <Amount unit={row.unit}>{row.amount}</Amount>
+                                    <Amount unit={row.unit} key={`amt-${idx}`}>
+                                        {row.amount}
+                                    </Amount>
                                 </td>
                             </tr>
                         );
@@ -89,7 +93,8 @@ export class TransactionPage extends Component {
                                             )}
                                         </Monospaced>
                                     </div>
-                                    {pegnetDTransactionData.txaction !== 3 && (
+                                    {pegnetDTransactionData.txaction !==
+                                        TRANSACTIONS.TYPE.COINBASE.NUMBER && (
                                         <div>
                                             <Label>INPUTS</Label>
                                             <Amount unit={pegnetDTransactionData.fromasset}>

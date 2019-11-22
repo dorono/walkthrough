@@ -16,10 +16,10 @@ export const getPegnetTransactionName = txaction => {
 };
 
 export const getTransactionStatus = transactionData => {
-    if (transactionData.executed === 0) {
-        return TRANSACTIONS.STATUSES.PENDING;
-    } else if (transactionData.executed < 0) {
-        return TRANSACTIONS.STATUSES.REJECTED;
+    if (transactionData.executed === TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED) {
+        return TRANSACTIONS.STATUSES.PENDING.LABEL;
+    } else if (transactionData.executed < TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED) {
+        return TRANSACTIONS.STATUSES.REJECTED.LABEL;
     }
 
     return null;
@@ -33,11 +33,11 @@ export const generateTransactionList = (title, transactionData) => {
     // the 'outputs' property of the transaction response
     if (title === TRANSACTIONS.TITLE.OUTPUTS) {
         if (isTransfer(transactions[0])) {
-            transactions = transactions[0].outputs.map((output, idx) => {
+            transactions = transactions[0].outputs.map(output => {
                 return {
                     user_address: output.address,
                     amount: output.amount,
-                    unit: transactions[idx].fromasset,
+                    unit: transactionData.fromasset,
                 };
             });
         } else {

@@ -22,8 +22,14 @@ export const TRANSACTIONS = {
         OUTPUTS: 'Outputs',
     },
     STATUSES: {
-        PENDING: 'Pending',
-        REJECTED: 'Rejected',
+        PENDING: {
+            LABEL: 'Pending',
+            NUM_EXECUTED: 0,
+        },
+        REJECTED: {
+            LABEL: 'Rejected',
+            NUM_EXECUTED: -1,
+        },
     },
     PEGNET_PARENT_ROUTES: {
         TRANSACTIONS: 'transactions',

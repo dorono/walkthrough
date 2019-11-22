@@ -64,8 +64,8 @@ test('getPegnetTransactionName should return transfer', () => {
 });
 
 test('getTransactionStatus should return pending', () => {
-    mockTransferTransaction.executed = 0;
-    expect(getTransactionStatus(mockTransferTransaction)).toEqual(TRANSACTIONS.STATUSES.PENDING);
+    mockTransferTransaction.executed = TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED;
+    expect(getTransactionStatus(mockTransferTransaction)).toEqual(TRANSACTIONS.STATUSES.PENDING.LABEL);
 });
 
 test('generateTransactionList should return the correct result object for TRANSFER', () => {
