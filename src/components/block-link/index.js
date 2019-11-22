@@ -113,12 +113,14 @@ const BlockLink = ({type, children, isLink}) => {
                     </Link>
                     <span className={styles.label}>
                         PARENT{' '}
-                        {block.txaction === 4 ? 'FACTOID TRANSACTION' : 'ENTRY'}
+                        {block.txaction === TRANSACTIONS.TYPE.BURN.NUMBER ? 'FACTOID TRANSACTION' : 'ENTRY'}
                         :
                     </span>
                     <Link
                         className={styles.link}
-                        to={`/chains/${TRANSACTIONS.PEGNET_CHAIN_ID}/entries/${block.hash}`}>
+                        to={block.txaction === TRANSACTIONS.TYPE.BURN.NUMBER
+                            ? `/explorer/transactions/${block.hash}`
+                            : `/chains/${TRANSACTIONS.PEGNET_CHAIN_ID}/entries/${block.hash}`}>
                         {block.hash}
                     </Link>
                 </React.Fragment>
