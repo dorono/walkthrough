@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, Fragment} from 'react';
 import {dataLoader} from 'hocs/data-loader';
 import {
     getPegnetTransactionName,
@@ -16,6 +16,7 @@ import BlockLink from 'components/block-link';
 import Monospaced from 'components/monospaced';
 import TransactionAlerts from 'components/transaction-alerts';
 import {TRANSACTIONS} from 'constants/transactions';
+
 const buildJsonRPCData = txid => {
     return [
         {
@@ -55,7 +56,7 @@ export class TransactionPage extends Component {
                                 </td>
                                 <td>
                                     <Amount unit={row.unit} key={`amt-${idx}`}>
-                                        {row.amount}
+                                        {row.amount || 0}
                                     </Amount>
                                 </td>
                             </tr>
@@ -75,7 +76,7 @@ export class TransactionPage extends Component {
         const transactionStatus = getTransactionStatus(pegnetDTransactionData);
 
         return (
-            <div>
+            <Fragment>
                 <Container
                     primary
                     title='Transaction'
@@ -139,7 +140,7 @@ export class TransactionPage extends Component {
                     {this.renderTransactions(TRANSACTIONS.TITLE.INPUTS, pegnetDTransactionData)}
                     {this.renderTransactions(TRANSACTIONS.TITLE.OUTPUTS, pegnetDTransactionData)}
                 </VerticalToHorizontal>
-            </div>
+            </Fragment>
         );
     }
 }
