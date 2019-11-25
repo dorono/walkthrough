@@ -8,15 +8,21 @@ const FCT_CONVERSION = 100000000;
 export default class Amount extends Component {
     static propTypes = {
         unit: PropTypes.string,
+        children: PropTypes.node.isRequired,
+    };
+    static defaultProps = {
+        unit: null,
     };
 
+    getAmount = () => {
+        const {children, unit} = this.props;
+        let value = children;
+        if (unit !== 'EC') value = children / FCT_CONVERSION;
+        if (unit) return `${value} ${getPropertyLabel(unit)}`;
+        return value;
+    }
+
     render() {
-        let value = this.props.children;
-        if (this.props.unit !== 'EC') value /= FCT_CONVERSION;
-        return (
-            <Monospaced>
-                {value} {getPropertyLabel(this.props.unit)}
-            </Monospaced>
-        );
+        return <Monospaced>{this.getAmount()}</Monospaced>;
     }
 }

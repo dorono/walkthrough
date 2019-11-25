@@ -2,7 +2,6 @@
 
 exports[`Amount should match snapshot 1`] = `
 <Monospaced>
-   
-  EC
+  undefined EC
 </Monospaced>
 `;

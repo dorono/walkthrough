@@ -11,7 +11,7 @@
     "format": "prettier --write \"**/*.+(js|jsx|json|css|md)\"",
     "lint": "npm run eslint && npm run stylelint",
     "test": "NODE_ENV=test jest",
-    "test:coverage": "npm run test -- --coverage",
+    "test:coverage": "npm run test -- --collectCoverage",
     "test:verbose": "npm run test -- --verbose",
     "test:watch": "npm run test -- --watch"
   },

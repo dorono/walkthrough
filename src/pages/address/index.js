@@ -28,7 +28,7 @@ const columns = [
 
 const FCT_CONVERSION = 100000000;
 
-const buildJsonRPCData = address => {
+export const buildJsonRPCData = address => {
     return [
         {
             method: 'get-pegnet-balances',
@@ -38,8 +38,7 @@ const buildJsonRPCData = address => {
         },
     ];
 };
-@dataLoader(({match}) => buildJsonRPCData(match.params.hash))
-export default class Address extends Component {
+export class AddressPage extends Component {
     state = {
         assetsBalances: [],
         transactions: [],
@@ -48,7 +47,6 @@ export default class Address extends Component {
         limit: 50,
         count: null,
         offset: null,
-        nextoffset: 0,
         assetApiResponse: null,
         showLoader: true,
     };
@@ -64,8 +62,6 @@ export default class Address extends Component {
     // TODO: Refactor this method.
     getApiInfo = async selectedAsset => {
         try {
-            this.setState({showLoader: true});
-
             // Handle Pagination offset
             const {page} = queryString.parse(this.props.location.search);
             const offset = page * this.state.limit - 50;
@@ -199,6 +195,7 @@ export default class Address extends Component {
             limit,
             count,
             offset,
+            showLoader,
         } = this.state;
         return (
             <Fragment>
@@ -239,7 +236,7 @@ export default class Address extends Component {
                         </Vertical>
                     </Horizontal>
                 </Container>
-                {this.state.showLoader ? (
+                {showLoader ? (
                     <Spinner />
                 ) : (
                     <Sortable
@@ -289,3 +286,5 @@ export default class Address extends Component {
         );
     }
 }
+
+export default dataLoader(({match}) => buildJsonRPCData(match.params.hash))(AddressPage);
