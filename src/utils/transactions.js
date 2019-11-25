@@ -70,7 +70,7 @@ export const getOutputAmount = transaction => {
         );
     }
 
-    return transaction.toamount;
+    return transaction.toamount || transaction.fromamount;
 };
 
 export const getPropertyLabel = propertyName => {

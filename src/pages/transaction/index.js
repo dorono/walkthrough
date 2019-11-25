@@ -17,7 +17,7 @@ import Monospaced from 'components/monospaced';
 import TransactionAlerts from 'components/transaction-alerts';
 import {TRANSACTIONS} from 'constants/transactions';
 
-const buildJsonRPCData = txid => {
+export const buildJsonRPCData = txid => {
     return [
         {
             method: 'get-transaction',
@@ -86,7 +86,7 @@ export class TransactionPage extends Component {
                         <Vertical>
                             <Box type='outline'>
                                 <Vertical>
-                                    <div>
+                                    <div id='transaction-type'>
                                         <Label>TYPE</Label>
                                         <Monospaced>
                                             {getPegnetTransactionName(
