@@ -145,7 +145,7 @@ export default class Search extends Component {
             splitQuery
             && REGEX.VALIDATE.SHA_256.test(splitQuery)
         ) {
-            requestArray.unshift(await this.executeGetTransactions(splitQuery, 'entryhash'));
+            requestArray.unshift(await this.executeGetTransactions(query, 'txid'));
         }
 
         const searchResultResponse = await Promise.all(requestArray);
