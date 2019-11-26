@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-11-26: 0.1.0-rc5
+- [no ticket] - Fixed count / query param issue
+
 ### 2019-11-26: 0.1.0-rc4
 - [no ticket] - Made links on Inputs and Outputs dynamically link to address page with currency displayed for link
 
