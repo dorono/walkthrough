@@ -65,7 +65,7 @@ export class AddressPage extends Component {
             // Handle Pagination offset
             const {page} = queryString.parse(this.props.location.search);
             const offset = page * this.state.limit - 50;
-            const asset = this.getAssetFromQueryParam();
+            const asset = getPropertyLabel(this.getAssetFromQueryParam());
 
             /**
              * Make Request to pegnetd API
@@ -155,7 +155,7 @@ export class AddressPage extends Component {
 
     getAssetsBalances = () => {
         const assetsBalancesAPI = this.props.data.jsonRPC[0];
-        const asset = this.getAssetFromQueryParam();
+        const asset = getPropertyLabel(this.getAssetFromQueryParam());
         const assets = [];
         Object.keys(assetsBalancesAPI).forEach(property => {
             const propertyLabel = getPropertyLabel(property);
@@ -257,7 +257,7 @@ export class AddressPage extends Component {
                             <Container
                                 title='Transactions'
                                 subtitle='(involving this address)'
-                                count={items.length}
+                                count={count}
                                 actions={sortDropdown}>
                                 <Table columns={columns} rows={items} ellipsis={0} type='secondary'>
                                     {(row, index) => (
