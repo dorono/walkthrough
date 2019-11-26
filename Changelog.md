@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-11-26: 0.1.0
+- Bump version for release to Production.
+
 ### 2019-11-26: 0.1.0-rc6
 - [no ticket] - Deleted temporaly filter dropdown on Address screen
 
