@@ -49,7 +49,10 @@ export class TransactionPage extends Component {
                             <tr key={`${row.address}-${idx}`}>
                                 <td>
                                     <Monospaced type='address'>
-                                        <Hash type='address' key={`hash-${idx}`}>
+                                        <Hash
+                                            type='address'
+                                            key={`hash-${idx}`}
+                                            extraArgs={{unit: row.unit}}>
                                             {row.user_address}
                                         </Hash>
                                     </Monospaced>

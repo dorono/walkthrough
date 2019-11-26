@@ -82,6 +82,7 @@ export default class Hash extends Component {
             return <span className={styles.root}>{hash}</span>;
         }
 
-        return <Link className={styles.root} to={url}>{hash}</Link>;
+        const finalUrl = extraArgs && extraArgs.unit ? `${url}/?asset=${extraArgs.unit}` : url;
+        return <Link className={styles.root} to={finalUrl}>{hash}</Link>;
     }
 }
