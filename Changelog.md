@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-11-26: 0.1.0-rc6
+- [no ticket] - Deleted temporaly filter dropdown on Address screen
+
 ### 2019-11-26: 0.1.0-rc5
 - [no ticket] - Fixed count / query param issue
 
