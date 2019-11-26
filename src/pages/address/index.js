@@ -253,12 +253,11 @@ export class AddressPage extends Component {
                                 func: (a, b) => this.getAmount(a) - this.getAmount(b),
                             },
                         ]}>
-                        {(items, sortDropdown) => (
+                        {items => (
                             <Container
                                 title='Transactions'
                                 subtitle='(involving this address)'
-                                count={count}
-                                actions={sortDropdown}>
+                                count={count}>
                                 <Table columns={columns} rows={items} ellipsis={0} type='secondary'>
                                     {(row, index) => (
                                         <tr key={index}>
