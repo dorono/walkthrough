@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-11-26: 0.1.0-rc3
+- [no ticket] - Added favicon
+
 ### 2019-11-25: 0.1.0-rc2
 - [EX-192] - Transaction page tests + Fixed NaN Bug on Transaction Page OUTPUT Section
 
