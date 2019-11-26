@@ -1,6 +1,10 @@
 
 ## Changelog
 
+### 2019-11-26: 0.1.0
+- [EX-192] - Transaction page tests + Fixed NaN Bug on Transaction Page OUTPUT Section
+- Bump version for release to Production.
+
 ### 2019-11-26: 0.1.0-rc7
 - [no ticket] - Fixed searchbar component
 
