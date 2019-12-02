@@ -126,26 +126,6 @@ describe('Address Page', () => {
         ).toEqual(mockSelectedAsset.alias);
     });
 
-    it('should address id be equal to address box', async () => {
-        const wrapper = mount(
-            <MemoryRouter>
-                <AddressPage
-                    data={mockAssetsBalance}
-                    location={mockRouterProps.location}
-                    match={mockRouterProps.match}
-                />
-            </MemoryRouter>,
-        );
-
-        const wrapperAddress = wrapper.find(AddressPage);
-        expect(
-            wrapperAddress
-                .findWhere(node => node.props().type === 'address')
-                .find('a')
-                .text(),
-        ).toEqual(mockRouterProps.match.params.hash);
-    });
-
     it('should match snapshot', () => {
         expect(shallow(AddressElement)).toMatchSnapshot();
     });

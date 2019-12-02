@@ -20,9 +20,9 @@ import Spinner from 'components/spinner';
 import styles from './styles.css';
 
 const columns = [
+    `RECORDED (${currentTimezone()})`,
     'TRANSACTION ID',
     'AMOUNT (BALANCE CHANGE)',
-    `CREATED TIME (${currentTimezone()})`,
     'TYPE',
 ];
 
@@ -73,15 +73,17 @@ export class AddressPage extends Component {
              * otherwise, it will return an error key,
              * (when the asset doesn't have transactions, it will thrown an error)
              */
-
             const assetName = selectedAsset ? selectedAsset.alias : asset;
             const pegnetData = await requestJSONRPC('get-transactions', {
                 address: this.getAddress(),
                 asset: getPegnetLabel(assetName),
+                transfer: true,
                 offset,
             });
+            const transactionsWithOutputs = this.setTransactionOutputs(pegnetData);
             if (!pegnetData.error) {
                 this.getPaginationData(pegnetData.result.count, pegnetData.result.nextoffset);
+                // transform transfer outputs to rows
                 if (selectedAsset) {
                     // If this method is executed by a change on the Dropdown.
                     return this.setState({
@@ -90,7 +92,7 @@ export class AddressPage extends Component {
                         showLoader: false,
                         selectedTransaction: this.handleTransactionChange(
                             asset,
-                            pegnetData.result.actions,
+                            transactionsWithOutputs,
                         ),
                     });
                 }
@@ -99,7 +101,7 @@ export class AddressPage extends Component {
                     showLoader: false,
                     selectedTransaction: this.handleTransactionChange(
                         asset,
-                        pegnetData.result.actions,
+                        transactionsWithOutputs,
                     ),
                     count: pegnetData.result.count,
                 });
@@ -117,25 +119,66 @@ export class AddressPage extends Component {
 
     getAddress = () => this.props.match.params.hash;
 
-    getAmount = row => {
-        const transactionType = row.txaction;
-        if (transactionType === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
-            if (row.fromaddress === this.getAddress()) {
-                return row.fromamount * -1;
-            }
-            return row.fromamount * 1;
-        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE.NUMBER) {
-            return row.toamount;
-        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION.NUMBER) {
-            // Transaction failed
-            if (!row.toamount) return 0;
-            if (row.toasset === getPegnetLabel(this.state.selectedAsset.alias)) {
-                return row.toamount;
-            } else if (row.fromasset === getPegnetLabel(this.state.selectedAsset.alias)) {
-                return row.fromamount * -1;
+    getTransactionOutputData = transaction => {
+        // If they're the same address, all the outputs will be negative and they're related to this address,
+        // so, we don't need to filter them,
+        if (transaction.fromaddress === this.getAddress()) {
+            return transaction.outputs.map(output => {
+                return {
+                    ...transaction,
+                    fromamount: output.amount,
+                };
+            });
+        }
+        // If they're different address, we need to filter the actual address to the address
+        // that are from the outputs
+        return transaction.outputs
+            .filter(output => output.address === this.getAddress())
+            .map(filteredOutput => {
+                return {
+                    ...transaction,
+                    fromamount: filteredOutput.amount,
+                };
+            });
+    };
+
+    setTransactionOutputs = pegnetData => {
+        if (!pegnetData.result) return pegnetData;
+        const {actions} = pegnetData.result;
+        let transactionOutputs = [];
+        for (let i = 0; i < actions.length; i++) {
+            // If it's transfer, get all the outputs
+            if (actions[i].txaction === 1) {
+                transactionOutputs = [
+                    ...transactionOutputs,
+                    ...this.getTransactionOutputData(actions[i]),
+                ];
+            } else {
+                transactionOutputs = [...transactionOutputs, ...[actions[i]]];
             }
         }
-        return row.toamount;
+        return transactionOutputs;
+    };
+
+    getAmount = ({txaction, fromamount, fromaddress, toamount, toasset, fromasset}) => {
+        const transactionType = txaction;
+        if (transactionType === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
+            if (fromaddress === this.getAddress()) {
+                return fromamount * -1;
+            }
+            return fromamount * 1;
+        } else if (transactionType === TRANSACTIONS.TYPE.COINBASE.NUMBER) {
+            return toamount;
+        } else if (transactionType === TRANSACTIONS.TYPE.CONVERSION.NUMBER) {
+            // Transaction failed
+            if (!toamount) return 0;
+            if (toasset === getPegnetLabel(this.state.selectedAsset.alias)) {
+                return toamount;
+            } else if (fromasset === getPegnetLabel(this.state.selectedAsset.alias)) {
+                return fromamount * -1;
+            }
+        }
+        return toamount;
     };
 
     getPaginationData = (count, nextoffset) => {
@@ -176,8 +219,41 @@ export class AddressPage extends Component {
         });
     };
 
-    handleChangeSelection = selectedAsset =>
-        this.props.history.push(`${this.props.location.pathname}?asset=${selectedAsset.alias}`);
+    getTypeValue = ({txaction, fromasset, toasset}) => {
+        const pegnetTransactionName = getPegnetTransactionName(txaction);
+        if (pegnetTransactionName === TRANSACTIONS.TYPE.CONVERSION.NAME) {
+            if (toasset !== getPegnetLabel(this.state.selectedAsset.alias)) {
+                return (
+                    <div>
+                        {pegnetTransactionName} ({fromasset} {'-> '}
+                        <a className={styles.link} onClick={() => this.goToAssetParam(toasset)}>
+                            {getPropertyLabel(toasset)}
+                        </a>
+                        )
+                    </div>
+                );
+            }
+            return (
+                <div>
+                    {pegnetTransactionName}
+                    {' ('}
+                    <a className={styles.link} onClick={() => this.goToAssetParam(fromasset)}>
+                        {getPropertyLabel(fromasset)}
+                    </a>{' '}
+                    {'-> '}
+                    {toasset})
+                </div>
+            );
+        } else if (pegnetTransactionName === TRANSACTIONS.TYPE.BURN.NAME) {
+            return `${pegnetTransactionName} (${fromasset} -> ${toasset})`;
+        }
+        return pegnetTransactionName;
+    };
+
+    goToAssetParam = asset =>
+        this.props.history.push(`${this.props.location.pathname}?asset=${asset}`);
+
+    handleChangeSelectionDropdown = selectedAsset => this.goToAssetParam(selectedAsset.alias);
 
     handleTransactionChange = (asset, apiResponse) =>
         apiResponse.filter(
@@ -208,7 +284,7 @@ export class AddressPage extends Component {
                                         <Label>Asset</Label>
                                         <Dropdown
                                             options={assetsBalances}
-                                            onOptionClick={this.handleChangeSelection}
+                                            onOptionClick={this.handleChangeSelectionDropdown}
                                             selected={selectedAsset}
                                             className={styles.dropdown}
                                             headerClassName={classNames(
@@ -231,7 +307,7 @@ export class AddressPage extends Component {
                         <Vertical>
                             <Box type='outline'>
                                 <Label>Address</Label>
-                                <Hash type='address'>{this.getAddress()}</Hash>
+                                <Hash type='default'>{this.getAddress()}</Hash>
                             </Box>
                         </Vertical>
                     </Horizontal>
@@ -253,14 +329,20 @@ export class AddressPage extends Component {
                                 func: (a, b) => this.getAmount(a) - this.getAmount(b),
                             },
                         ]}>
-                        {items => (
+                        {(items, sortDropdown) => (
                             <Container
                                 title='Transactions'
                                 subtitle='(involving this address)'
+                                actions={sortDropdown}
                                 count={count}>
-                                <Table columns={columns} rows={items} ellipsis={0} type='secondary'>
+                                <Table columns={columns} rows={items} ellipsis={1} type='secondary'>
                                     {(row, index) => (
-                                        <tr key={index}>
+                                        <tr
+                                            key={index}
+                                            className={classNames({
+                                                [styles.noAvailable]: row.executed === -1,
+                                            })}>
+                                            <td>{formatDate(row.timestamp)}</td>
                                             <td>
                                                 <Hash type='tx' key={row.txid}>
                                                     {row.txid}
@@ -271,8 +353,7 @@ export class AddressPage extends Component {
                                                     {this.getAmount(row)}
                                                 </Amount>
                                             </td>
-                                            <td>{formatDate(row.timestamp)}</td>
-                                            <td>{getPegnetTransactionName(row.txaction)}</td>
+                                            <td>{this.getTypeValue(row)}</td>
                                         </tr>
                                     )}
                                 </Table>

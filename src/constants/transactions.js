@@ -2,19 +2,19 @@ export const TRANSACTIONS = {
     TYPE: {
         TRANSFER: {
             NUMBER: 1,
-            NAME: 'transfer',
+            NAME: 'Transfer',
         },
         CONVERSION: {
             NUMBER: 2,
-            NAME: 'conversion',
+            NAME: 'Conversion',
         },
         COINBASE: {
             NUMBER: 3,
-            NAME: 'coinbase',
+            NAME: 'Coinbase',
         },
         BURN: {
             NUMBER: 4,
-            NAME: 'burn',
+            NAME: 'Burn',
         },
     },
     TITLE: {

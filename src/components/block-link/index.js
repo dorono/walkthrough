@@ -12,11 +12,8 @@ import styles from './styles.css';
 
 const BlockLink = ({type, children, isLink}) => {
     const block = children;
-
     if (!block) return <Hash type={type} />;
-    if (Number(block.keymr) === 0) {
-        return <Hash type={type}>{block.keymr}</Hash>;
-    }
+    if (Number(block.keymr) === 0) return <Hash type={type}>{block.keymr}</Hash>;
 
     return (
         <div className={styles.root}>
@@ -87,7 +84,11 @@ const BlockLink = ({type, children, isLink}) => {
                             {block.executed}
                         </Link>
                     ) : (
-                        <span className={styles.hash}>{block.executed}</span>
+                        <span>
+                            {block.executed === TRANSACTIONS.STATUSES.REJECTED.NUM_EXECUTED
+                                ? 'N/A'
+                                : 'Not yet Available'}
+                        </span>
                     )}
                     <span className={styles.label}>CONFIRMATIONS:</span>
                     <span className={styles.hash}>

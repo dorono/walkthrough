@@ -1,6 +1,9 @@
 
 ## Changelog
 
+### 2019-12-02: 0.2.0-rc1
+- [HAR-1420] - Post deployment fixes
+
 ### 2019-11-26: 0.1.0
 - [EX-192] - Transaction page tests + Fixed NaN Bug on Transaction Page OUTPUT Section
 - Bump version for release to Production.
