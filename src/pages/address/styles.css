@@ -1,5 +1,12 @@
+@import 'styles/variables.css';
+
 .dropdown {
     width: 100%;
+}
+
+.link {
+    color: var(--blue);
+    font-weight: 600;
 }
 
 .dropdown-header {
@@ -18,17 +25,21 @@
     margin-top: 12px;
 
     & > div {
-        color: var(--blue);
+        color: #000;
         font-size: 1.2rem;
     }
 }
 
 .form-input {
-    border: 1px solid var(--gray-stroke-dark);
     color: var(--black);
     width: 100%;
     border-radius: 4px;
     font-size: 1.2rem;
+}
+
+.no-available {
+    opacity: 0.5;
+    text-decoration: line-through;
 }
 
 td {
