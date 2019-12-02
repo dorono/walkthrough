@@ -1,5 +1,7 @@
-
 ## Changelog
+
+### 2019-12-02: 0.2.0-rc2
+ - [EX-190] - Additional tests for Transaction detail page
 
 ### 2019-12-02: 0.2.0-rc1
 - [HAR-1420] - Post deployment fixes
