@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-12-02: 0.2.0
+- Bump version for release to Production.
+
 ### 2019-12-02: 0.2.0-rc2
  - [EX-190] - Additional tests for Transaction detail page
 
