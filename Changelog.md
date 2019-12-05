@@ -1,10 +1,8 @@
 ## Changelog
 
-### 2019-12-02: 0.2.0
-- Bump version for release to Production.
-
-### 2019-12-02: 0.2.0-rc2
+### 2019-12-05: 0.2.0-rc2
  - [EX-190] - Additional tests for Transaction detail page
+ - [no ticket] - Fixed bug with filter transactions
 
 ### 2019-12-02: 0.2.0-rc1
 - [HAR-1420] - Post deployment fixes

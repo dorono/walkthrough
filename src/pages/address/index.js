@@ -77,7 +77,6 @@ export class AddressPage extends Component {
             const pegnetData = await requestJSONRPC('get-transactions', {
                 address: this.getAddress(),
                 asset: getPegnetLabel(assetName),
-                transfer: true,
                 offset,
             });
             const transactionsWithOutputs = this.setTransactionOutputs(pegnetData);
