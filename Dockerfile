@@ -29,6 +29,8 @@ ARG gtm_id
 ARG version
 ARG pegnet_api_url
 ARG factom_explorer_url
+ARG debug_partial_conversion
+
 
 ENV API_URL $api_url
 ENV API_TOKEN $api_token
@@ -43,6 +45,8 @@ ENV GTM_ID $gtm_id
 ENV VERSION $version
 ENV PEGNET_API_URL $pegnet_api_url
 ENV FACTOM_EXPLORER_URL $factom_explorer_url
+ENV DEBUG_PARTIAL_CONVERSION $debug_partial_conversion
+
 RUN npm run build
 
 #
