@@ -52,7 +52,7 @@ export class TransactionPage extends Component {
                                         <Hash
                                             type='address'
                                             key={`hash-${idx}`}
-                                            extraArgs={{unit: row.unit}}>
+                                            extraArgs={{unit: row.unit, address: row.user_address}}>
                                             {row.user_address}
                                         </Hash>
                                     </Monospaced>

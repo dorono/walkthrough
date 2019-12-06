@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import PropTypes from 'prop-types';
 import {Link, withRouter} from 'react-router-dom';
 import {reverse} from 'routes';
+import A from 'components/anchor';
 import {STAGE_NOT_AVAILABLE} from 'constants/stages';
 import styles from './styles.css';
 
+// TODO: This component should be refactored to be useful for pExplorer and explorer, remove much logic
 @withRouter
 export default class Hash extends Component {
     static propTypes = {
@@ -47,7 +49,10 @@ export default class Hash extends Component {
 
         if (type === 'btc') {
             return (
-                <a className={styles.external} href={`https://blockchain.info/tx/${hash}`} target='_blank'>
+                <a
+                    className={styles.external}
+                    href={`https://blockchain.info/tx/${hash}`}
+                    target='_blank'>
                     {hash}
                 </a>
             );
@@ -55,7 +60,10 @@ export default class Hash extends Component {
 
         if (type === 'ethereum') {
             return (
-                <a className={styles.external} href={`https://etherscan.io/tx/${hash}`} target='_blank'>
+                <a
+                    className={styles.external}
+                    href={`https://etherscan.io/tx/${hash}`}
+                    target='_blank'>
                     {hash}
                 </a>
             );
@@ -82,7 +90,17 @@ export default class Hash extends Component {
             return <span className={styles.root}>{hash}</span>;
         }
 
-        const finalUrl = extraArgs && extraArgs.unit ? `${url}/?asset=${extraArgs.unit}` : url;
-        return <Link className={styles.root} to={finalUrl}>{hash}</Link>;
+        if (type === 'address' || type === 'tx') {
+            if (extraArgs && extraArgs.unit === 'FCT') {
+                const finalUrl = `${CONFIG.factomExplorerUrl}/addresses/${extraArgs.address}`;
+                return <A className={styles.root} to={finalUrl} text={hash} />;
+            }
+            const finalUrl = extraArgs && extraArgs.unit ? `${url}/?asset=${extraArgs.unit}` : url;
+            return (
+                <Link className={styles.root} to={finalUrl}>
+                    {hash}
+                </Link>
+            );
+        }
     }
 }
