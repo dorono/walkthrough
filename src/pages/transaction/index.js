@@ -1,10 +1,14 @@
 import React, {Component, Fragment} from 'react';
+import {withRouter} from 'react-router-dom';
+
+import classNames from 'classnames';
 import {dataLoader} from 'hocs/data-loader';
 import {
     getPegnetTransactionName,
     getTransactionStatus,
     generateTransactionList,
     getOutputAmount,
+    isPartialConversion,
 } from 'utils/transactions';
 import Container from 'components/container';
 import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
@@ -16,6 +20,9 @@ import BlockLink from 'components/block-link';
 import Monospaced from 'components/monospaced';
 import TransactionAlerts from 'components/transaction-alerts';
 import {TRANSACTIONS} from 'constants/transactions';
+import globalStyles from 'styles/index.css';
+import {mockPartialConversion} from './mockTransactions';
+import styles from './styles.css';
 
 export const buildJsonRPCData = txid => {
     return [
@@ -49,6 +56,16 @@ export class TransactionPage extends Component {
                             <tr key={`${row.address}-${idx}`}>
                                 <td>
                                     <Monospaced type='address'>
+                                        {row.isPartialConversion && (
+                                            <span
+                                                id='returned-difference'
+                                                className={classNames(
+                                                    globalStyles.highlightAll,
+                                                    styles.partialConversionNotice,
+                                                )}>
+                                                {TRANSACTIONS.PARTIAL_CONVERSION_DIFFERENCE_LABEL}
+                                            </span>
+                                        )}
                                         <Hash
                                             type='address'
                                             key={`hash-${idx}`}
@@ -57,7 +74,11 @@ export class TransactionPage extends Component {
                                         </Hash>
                                     </Monospaced>
                                 </td>
-                                <td>
+                                <td
+                                    id={row.isPartialConversion ? 'returned-val' : ''}
+                                    className={classNames({
+                                        [globalStyles.highlightAll]: row.isPartialConversion,
+                                    })}>
                                     <Amount unit={row.unit} key={`amt-${idx}`}>
                                         {row.amount || 0}
                                     </Amount>
@@ -71,10 +92,23 @@ export class TransactionPage extends Component {
     };
 
     render() {
-        const pegnetDTransactionData = {
-            ...this.props.data.jsonRPC[0].actions[0],
-            ...this.props.data.jsonRPC[1],
-        };
+        let pegnetDTransactionData = {};
+        // TODO: remove this condition once HAR-1437 is complete
+        // and only execute what's in the "else" block. Can also
+        // get rid of withRouter decorator
+        if (
+            CONFIG.debugPartialConversion &&
+            this.props.location.pathname.includes(
+                '0-1c39dc93c7fd058a50faded6f0932eb592b8cc6d1576b09ed8dc3672549571af',
+            )
+        ) {
+            pegnetDTransactionData = mockPartialConversion.jsonRPC[0].actions[0];
+        } else {
+            pegnetDTransactionData = {
+                ...this.props.data.jsonRPC[0].actions[0],
+                ...this.props.data.jsonRPC[1],
+            };
+        }
 
         const transactionStatus = getTransactionStatus(pegnetDTransactionData);
 
@@ -115,6 +149,16 @@ export class TransactionPage extends Component {
                                             }>
                                             {getOutputAmount(pegnetDTransactionData)}
                                         </Amount>
+                                        {isPartialConversion(
+                                            pegnetDTransactionData.txaction,
+                                            pegnetDTransactionData.outputs,
+                                        ) && (
+                                            <div id='returned-amount' className={globalStyles.highlightAll}>
+                                                <Amount unit={pegnetDTransactionData.fromasset}>
+                                                    {pegnetDTransactionData.outputs[0].amount}
+                                                </Amount>
+                                            </div>
+                                        )}
                                     </div>
                                 </Vertical>
                             </Box>
@@ -148,4 +192,6 @@ export class TransactionPage extends Component {
     }
 }
 
-export default dataLoader(({match}) => buildJsonRPCData(match.params.hash))(TransactionPage);
+export default withRouter(
+    dataLoader(({match}) => buildJsonRPCData(match.params.hash))(TransactionPage),
+);

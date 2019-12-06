@@ -57,6 +57,10 @@ test('isTransfer should return true', () => {
     expect(isTransfer(mockTransferTransaction)).toEqual(true);
 });
 
+test('isPartial should return true', () => {
+    expect(isTransfer(mockTransferTransaction)).toEqual(true);
+});
+
 test('getPegnetTransactionName should return transfer', () => {
     expect(getPegnetTransactionName(mockTransferTransaction.txaction)).toEqual(
         TRANSACTIONS.TYPE.TRANSFER.NAME,

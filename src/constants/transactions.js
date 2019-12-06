@@ -44,6 +44,7 @@ export const TRANSACTIONS = {
         PXBT: 'pBTC',
         PXBC: 'pBCH',
     },
+    PARTIAL_CONVERSION_DIFFERENCE_LABEL: '(returned)',
 };
 
 Object.freeze(TRANSACTIONS);

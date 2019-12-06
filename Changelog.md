@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-12-06: 0.3.0-rc1
+ - [HAR-1437] - Implement Ability to Properly Display Returned Values for Partial Conversions
+
 ### 2019-12-05: 0.2.0-rc2
  - [EX-190] - Additional tests for Transaction detail page
  - [no ticket] - Fixed bug with filter transactions

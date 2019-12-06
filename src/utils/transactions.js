@@ -1,7 +1,16 @@
 import {TRANSACTIONS} from 'constants/transactions';
 
-export const isTransfer = transaction =>
-    transaction.txaction === 1 && Array.isArray(transaction.outputs);
+const hasOutputsArray = outputs =>
+    Array.isArray(outputs) &&
+    outputs.length &&
+    typeof outputs[0] === 'object' &&
+    outputs[0] !== null &&
+    typeof outputs[0].amount === 'number';
+
+export const isTransfer = transaction => transaction.txaction === 1 && hasOutputsArray(transaction.outputs);
+
+export const isPartialConversion = (txaction, outputs) =>
+    txaction === 2 && hasOutputsArray(outputs);
 
 export const getPegnetTransactionName = txaction => {
     if (txaction === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
@@ -48,6 +57,15 @@ export const generateTransactionList = (title, transactionData) => {
                     unit: transactions[0].toasset,
                 },
             ];
+
+            if (isPartialConversion(transactionData.txaction, transactionData.outputs)) {
+                transactions.push({
+                    user_address: transactionData.fromaddress,
+                    amount: transactionData.outputs[0].amount,
+                    unit: transactionData.fromasset,
+                    isPartialConversion: true,
+                });
+            }
         }
     } else {
         transactions = [

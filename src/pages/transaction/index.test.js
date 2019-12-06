@@ -4,88 +4,20 @@ import {withRouter, MemoryRouter, Link} from 'react-router-dom';
 import Monospaced from 'components/monospaced';
 import * as Api from 'api';
 import {TRANSACTIONS} from 'constants/transactions';
+import {
+    mockBurnTransaction,
+    mockTransferTransaction,
+    mockTransfer,
+    mockJSONRPC,
+    mockBuildJsonRPCData,
+    mockPartialConversion,
+} from './mockTransactions';
 import {TransactionPage, buildJsonRPCData} from './index';
 
 const TransactionElement = React.createElement(withRouter(<TransactionPage />));
 
 // Stub request method
 Api.requestJSONRPC = jest.fn();
-
-const mockTransferData = {
-    hash: '22b907873fd5fa617b66a559bca721e45710a0ffbea06189782d89fd9b3a3c02',
-    txid: '0-22b907873fd5fa617b66a559bca721e45710a0ffbea06189782d89fd9b3a3c02',
-    height: 217184,
-    timestamp: '2019-11-03T12:27:00-06:00',
-    executed: 217184,
-    txindex: 0,
-    txaction: 1,
-    fromaddress: 'FA3pJdFJ5HFSZea5EG9Q76iV6dhi25SsZ1E1TEAPhXYwwCTw9utt',
-    fromasset: 'PEG',
-    fromamount: 40000000000,
-    outputs: [
-        {
-            address: 'FA3mi7Qm35CMoCku1yQ3Wx2SZmBitJAJDYhPVMeX82gkfccQPZVn',
-            amount: 40000000000,
-        },
-    ],
-    syncheight: 219616,
-    factomheight: 219616,
-};
-
-const mockBurnData = {
-    hash: '3c430496ffa0dcbbfe551e6fec4f24f9aa13aad320523db11d51b1797cf3129b',
-    txid: '0-3c430496ffa0dcbbfe551e6fec4f24f9aa13aad320523db11d51b1797cf3129b',
-    height: 216692,
-    timestamp: '2019-10-31T03:31:01-05:00',
-    executed: 216692,
-    txindex: 0,
-    txaction: 4,
-    fromaddress: 'FA2HBeH9XGgAkYapAyeD6styij39rhaJDKgCCoqr1M1L3NmUcvjL',
-    fromasset: 'FCT',
-    fromamount: 1000000000,
-    toasset: 'pFCT',
-    toamount: 1000000000,
-    syncheight: 220279,
-    factomheight: 220279,
-};
-
-const mockTransferTransaction = {
-    jsonRPC: [
-        {
-            actions: [mockTransferData],
-        },
-    ],
-};
-
-const mockBurnTransaction = {
-    jsonRPC: [
-        {
-            actions: [mockBurnData],
-        },
-    ],
-};
-
-const mockTransfer = mockTransferTransaction.jsonRPC[0].actions[0];
-
-const mockJSONRPC = {
-    result: {
-        actions: [mockTransferTransaction],
-        count: 0,
-        nextoffset: 0,
-    },
-};
-
-const mockBuildJsonRPCData = [
-    {
-        method: 'get-transaction',
-        params: {
-            txid: '0-22b907873fd5fa617b66a559bca721e45710a0ffbea06189782d89fd9b3a3c02',
-        },
-    },
-    {
-        method: 'get-sync-status',
-    },
-];
 
 const mockRouterProps = {
     location: {
@@ -164,6 +96,40 @@ describe('TransactionPage', () => {
                 .find(Link)
                 .props().to,
         ).toEqual(`/addresses/${mockTransfer.fromaddress}/?asset=${mockTransfer.fromasset}`);
+    });
+
+    it('should render the correct transaction return amounts for a PARTIAL CONVERSION', () => {
+        const wrapperForPartialConversion = mount(
+            <MemoryRouter>
+                <TransactionPage
+                    data={mockPartialConversion}
+                    location={mockRouterProps.location}
+                    match={mockRouterProps.match}
+                />
+            </MemoryRouter>,
+        );
+        const wrapperPartialConversion = wrapperForPartialConversion.find(TransactionPage);
+
+        const expectedReturnedAmount = '92.99712223 pFCT';
+
+        expect(
+            wrapperPartialConversion
+                .find('#returned-amount')
+                .find(Monospaced)
+                .text(),
+        ).toEqual(expectedReturnedAmount);
+
+        expect(
+            wrapperPartialConversion
+                .find('#returned-difference')
+                .text(),
+        ).toEqual(TRANSACTIONS.PARTIAL_CONVERSION_DIFFERENCE_LABEL);
+
+        expect(
+            wrapperPartialConversion
+                .find('#returned-val')
+                .text(),
+        ).toEqual(expectedReturnedAmount);
     });
 
     it('should match snapshot', () => {

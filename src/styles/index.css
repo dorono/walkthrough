@@ -68,3 +68,8 @@ button {
 .default-font {
     font-family: var(--font);
 }
+
+.highlight-all,
+.highlight-all * {
+    color: var(--red);
+}

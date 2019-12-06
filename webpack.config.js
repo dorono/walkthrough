@@ -25,6 +25,7 @@ const publicNetAppId = process.env.PUBLIC_NETWORK_GATEWAY_APP_ID || '$PUBLIC_NET
 const publicNetAppKey = process.env.PUBLIC_NETWORK_GATEWAY_APP_KEY || '$PUBLIC_NETWORK_GATEWAY_APP_KEY';
 const pegnetApiUrl = process.env.PEGNET_API_URL || '$PEGNET_API_URL';
 const factomExplorerUrl = process.env.FACTOM_EXPLORER_URL || '$FACTOM_EXPLORER_URL';
+const debugPartialConversion = process.env.DEBUG_PARTIAL_CONVERSION;
 
 // API Gateway values.
 const gatewayUrls = {
@@ -65,10 +66,7 @@ module.exports = {
     },
 
     resolve: {
-        modules: [
-            resolve('src'),
-            resolve('node_modules'),
-        ],
+        modules: [resolve('src'), resolve('node_modules')],
     },
 
     module: {
@@ -91,7 +89,9 @@ module.exports = {
                             camelCase: true,
                             sourceMap: true,
                             importLoaders: 1,
-                            localIdentName: isDev ? '[folder]--[local]--[hash:base64:5]' : '[hash:base64:16]',
+                            localIdentName: isDev
+                                ? '[folder]--[local]--[hash:base64:5]'
+                                : '[hash:base64:16]',
                         },
                     },
                     'postcss-loader',
@@ -138,7 +138,7 @@ module.exports = {
                 gatewayUrls,
                 version,
                 latestBuildTime,
-            }),
+                debugPartialConversion,            }),
         }),
         new webpack.LoaderOptionsPlugin({
             debug: isDev,
@@ -159,14 +159,13 @@ module.exports = {
             allChunks: true,
             ignoreOrder: true,
         }),
-        new CopyWebpackPlugin([
-            {from: 'static'},
-        ]),
-        !isDev ?
-        new UglifyPlugin({
-            parallel: true,
-            extractComments: !isDev && 'all',
-        }) : () => {},
+        new CopyWebpackPlugin([{from: 'static'}]),
+        !isDev
+            ? new UglifyPlugin({
+                  parallel: true,
+                  extractComments: !isDev && 'all',
+              })
+            : () => {},
         new webpack.ContextReplacementPlugin(/moment\/locale$/, /en/),
         new webpack.BannerPlugin({banner}),
         new CompressionPlugin(),

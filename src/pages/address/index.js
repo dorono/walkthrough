@@ -1,7 +1,12 @@
 import React, {Component, Fragment} from 'react';
 import classNames from 'classnames';
 import queryString from 'query-string';
-import {getPegnetTransactionName, getPropertyLabel, getPegnetLabel} from 'utils/transactions';
+import {
+    getPegnetTransactionName,
+    getPropertyLabel,
+    getPegnetLabel,
+    isPartialConversion,
+} from 'utils/transactions';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDate} from 'utils/date';
 import Container from 'components/container';
@@ -17,6 +22,7 @@ import globalStyles from 'styles/index.css';
 import {TRANSACTIONS} from 'constants/transactions';
 import {requestJSONRPC} from 'api';
 import Spinner from 'components/spinner';
+import {mockPartialConversion} from 'pages/transaction/mockTransactions';
 import styles from './styles.css';
 
 const columns = [
@@ -43,7 +49,7 @@ export class AddressPage extends Component {
         assetsBalances: [],
         transactions: [],
         selectedAsset: null,
-        selectedTransaction: null,
+        selectedTransactions: null,
         limit: 50,
         count: null,
         offset: null,
@@ -79,6 +85,12 @@ export class AddressPage extends Component {
                 asset: getPegnetLabel(assetName),
                 offset,
             });
+
+            // TODO: remove this condition once HAR-1437 is complete
+            if (CONFIG.debugPartialConversion) {
+                pegnetData.result.actions.push(mockPartialConversion.jsonRPC[0].actions[0]);
+            }
+
             const transactionsWithOutputs = this.setTransactionOutputs(pegnetData);
             if (!pegnetData.error) {
                 this.getPaginationData(pegnetData.result.count, pegnetData.result.nextoffset);
@@ -89,7 +101,7 @@ export class AddressPage extends Component {
                         selectedAsset,
                         assetApiResponse: pegnetData.result,
                         showLoader: false,
-                        selectedTransaction: this.handleTransactionChange(
+                        selectedTransactions: this.handleTransactionChange(
                             asset,
                             transactionsWithOutputs,
                         ),
@@ -98,7 +110,7 @@ export class AddressPage extends Component {
                 return this.setState({
                     assetApiResponse: pegnetData.result,
                     showLoader: false,
-                    selectedTransaction: this.handleTransactionChange(
+                    selectedTransactions: this.handleTransactionChange(
                         asset,
                         transactionsWithOutputs,
                     ),
@@ -107,7 +119,7 @@ export class AddressPage extends Component {
             }
             return this.setState({
                 showLoader: false,
-                selectedTransaction: this.handleTransactionChange(asset, []),
+                selectedTransactions: this.handleTransactionChange(asset, []),
                 count: 0,
                 offset: 0,
             });
@@ -159,7 +171,7 @@ export class AddressPage extends Component {
         return transactionOutputs;
     };
 
-    getAmount = ({txaction, fromamount, fromaddress, toamount, toasset, fromasset}) => {
+    getAmount = ({txaction, fromamount, fromaddress, toamount, toasset, fromasset, outputs}) => {
         const transactionType = txaction;
         if (transactionType === TRANSACTIONS.TYPE.TRANSFER.NUMBER) {
             if (fromaddress === this.getAddress()) {
@@ -174,11 +186,14 @@ export class AddressPage extends Component {
             if (toasset === getPegnetLabel(this.state.selectedAsset.alias)) {
                 return toamount;
             } else if (fromasset === getPegnetLabel(this.state.selectedAsset.alias)) {
+                if (isPartialConversion(txaction, outputs)) {
+                    return fromamount - outputs[0].amount;
+                }
                 return fromamount * -1;
             }
         }
         return toamount;
-    };
+    }
 
     getPaginationData = (count, nextoffset) => {
         let offset = nextoffset;
@@ -266,7 +281,7 @@ export class AddressPage extends Component {
         const {
             assetsBalances,
             selectedAsset,
-            selectedTransaction,
+            selectedTransactions,
             limit,
             count,
             offset,
@@ -315,7 +330,7 @@ export class AddressPage extends Component {
                     <Spinner />
                 ) : (
                     <Sortable
-                        items={selectedTransaction}
+                        items={selectedTransactions}
                         sortOptions={[
                             sortOpt.newestFirst,
                             sortOpt.oldestFirst,
@@ -349,7 +364,7 @@ export class AddressPage extends Component {
                                             </td>
                                             <td>
                                                 <Amount unit={selectedAsset.alias}>
-                                                    {this.getAmount(row)}
+                                                    {this.getAmount(row, index)}
                                                 </Amount>
                                             </td>
                                             <td>{this.getTypeValue(row)}</td>
