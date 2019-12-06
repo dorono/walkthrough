@@ -25,7 +25,7 @@ const publicNetAppId = process.env.PUBLIC_NETWORK_GATEWAY_APP_ID || '$PUBLIC_NET
 const publicNetAppKey = process.env.PUBLIC_NETWORK_GATEWAY_APP_KEY || '$PUBLIC_NETWORK_GATEWAY_APP_KEY';
 const pegnetApiUrl = process.env.PEGNET_API_URL || '$PEGNET_API_URL';
 const factomExplorerUrl = process.env.FACTOM_EXPLORER_URL || '$FACTOM_EXPLORER_URL';
-const debugPartialConversion = process.env.DEBUG_PARTIAL_CONVERSION;
+const debugPartialConversion = process.env.DEBUG_PARTIAL_CONVERSION === 'true' || process.env.DEBUG_PARTIAL_CONVERSION === '1';
 
 // API Gateway values.
 const gatewayUrls = {

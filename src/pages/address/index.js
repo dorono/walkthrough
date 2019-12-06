@@ -254,7 +254,7 @@ export class AddressPage extends Component {
                     <a className={styles.link} onClick={() => this.goToAssetParam(fromasset)}>
                         {getPropertyLabel(fromasset)}
                     </a>{' '}
-                    {'-> '}
+                    {'→ '}
                     {toasset})
                 </div>
             );

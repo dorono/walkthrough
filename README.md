@@ -1,4 +1,4 @@
-# Factom Explorer UI
+# pExplorer UI
 [![CircleCI](https://circleci.com/gh/FactomProject/explorer-v3/tree/develop.svg?style=shield&circle-token=abef98cc373611cebe2bccc2d8dd6cb251cecda3)](https://circleci.com/gh/FactomProject/explorer-v3/tree/develop)
 
 ## Development
@@ -25,6 +25,8 @@ PUBLIC_NETWORK_GATEWAY_APP_ID=155adafb
 PUBLIC_NETWORK_GATEWAY_APP_KEY=2b3608417027eb7f57e62c3fe2df8f8b
 SHARED_SANDBOX_GATEWAY=https://connect-shared-sandbox-2445582615332.production.gw.apicast.io
 GA_ID=YOUR_GOOGLE_ANALYTICS_ID
+PEGNET_API_URL=https://pegnetd.factom.com/v1
+FACTOM_EXPLORER_URL=https://explorer.factom.com
 ```
 **Important:** PUBLIC_NETWORK_GATEWAY and SHARED_SANDBOX_GATEWAY
 should be written without a trailing "/".
@@ -47,6 +49,8 @@ $ export PUBLIC_NETWORK_GATEWAY_APP_ID=155adafb
 $ export PUBLIC_NETWORK_GATEWAY_APP_KEY=2b3608417027eb7f57e62c3fe2df8f8b
 $ export SHARED_SANDBOX_GATEWAY=https://connect-shared-sandbox-2445582615332.production.gw.apicast.io
 $ export GA_ID=XXXXXXXX
+$ export PEGNET_API_URL=https://pegnetd.factom.com/v1
+$ export FACTOM_EXPLORER_URL=https://explorer.factom.com
 $ npm run build
 ```
 
@@ -67,17 +71,6 @@ server {
     }
 }
 ```
-
-## External ID's and Content fields' display formats
-
-On Entry and Chain pages, users are able to select the desired display format for their External ID's and Content.
-
-* External ID's have a dropdown with 3 options: raw, hex, and base64. The default is raw, but if an unprintable character is detected it defaults to hex instead.
-* The Content box at the bottom of an Entry page (and soon to be added to the Chain page) has 3 tabs: raw, hex, and base64. The default is raw, unless:
-  * the raw content is valid JSON, then a 4th tab "JSON" appears and defaults to that instead
-  * an unprintable character is detected, it defaults to hex instead
-
-The general rule is that any non-JSON input that the user sets as an External ID or content should show up by default in the "Raw" view, which would include all emojis and characters in any language.
 
 ## Contributing
 
