@@ -1,5 +1,9 @@
 ## Changelog
 
+### 2019-12-06: 0.3.0
+- [HAR-1437] - updated dockerfile to remove debug environment variable
+- [no ticket] - version bump
+
 ### 2019-12-06: 0.3.0-rc1
  - [HAR-1437] - Implement Ability to Properly Display Returned Values for Partial Conversions
 
