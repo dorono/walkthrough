@@ -84,6 +84,7 @@ export class AddressPage extends Component {
                 address: this.getAddress(),
                 asset: getPegnetLabel(assetName),
                 offset,
+                desc: true,
             });
 
             // TODO: remove this condition once HAR-1437 is complete
