@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-12-10: 0.3.1-rc1
+- [no ticket] - Fix sort Address Page
+
 ### 2019-12-06: 0.3.0
 - [HAR-1437] - updated dockerfile to remove debug environment variable
 - [no ticket] - version bump
