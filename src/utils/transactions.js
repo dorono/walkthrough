@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js';
 import {TRANSACTIONS} from 'constants/transactions';
 
 const hasOutputsArray = outputs =>
@@ -7,7 +8,8 @@ const hasOutputsArray = outputs =>
     outputs[0] !== null &&
     typeof outputs[0].amount === 'number';
 
-export const isTransfer = transaction => transaction.txaction === 1 && hasOutputsArray(transaction.outputs);
+export const isTransfer = transaction =>
+    transaction.txaction === 1 && hasOutputsArray(transaction.outputs);
 
 export const isPartialConversion = (txaction, outputs) =>
     txaction === 2 && hasOutputsArray(outputs);
@@ -22,16 +24,6 @@ export const getPegnetTransactionName = txaction => {
     }
 
     return TRANSACTIONS.TYPE.BURN.NAME;
-};
-
-export const getTransactionStatus = transactionData => {
-    if (transactionData.executed === TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED) {
-        return TRANSACTIONS.STATUSES.PENDING.LABEL;
-    } else if (transactionData.executed < TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED) {
-        return TRANSACTIONS.STATUSES.REJECTED.LABEL;
-    }
-
-    return null;
 };
 
 export const generateTransactionList = (title, transactionData) => {
@@ -81,6 +73,14 @@ export const generateTransactionList = (title, transactionData) => {
 };
 
 export const getOutputAmount = transaction => {
+    if (transaction.executed === TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED) {
+        return TRANSACTIONS.STATUSES.PENDING.MESSAGE;
+    }
+
+    if (transaction.executed === TRANSACTIONS.STATUSES.REJECTED.NUM_EXECUTED) {
+        return TRANSACTIONS.STATUSES.REJECTED.MESSAGE;
+    }
+
     if (isTransfer(transaction)) {
         return transaction.outputs.reduce(
             (accumulator, outputAmt) => accumulator + outputAmt.amount,
@@ -89,6 +89,55 @@ export const getOutputAmount = transaction => {
     }
 
     return transaction.toamount || transaction.fromamount;
+};
+
+export const getIndividualAmountOutputDisplay = (amount, transactionData) => {
+    if (amount === undefined) {
+        if (!transactionData) {
+            return amount;
+        }
+
+        return getOutputReplacementText(transactionData.executed).message;
+    }
+
+    return amount;
+};
+
+export const getOutputReplacementText = executedVal => {
+    let textMap = {
+        tooltip: '',
+        message: '',
+    };
+
+    switch (executedVal) {
+        case TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED:
+            textMap = {
+                tooltip: TRANSACTIONS.STATUSES.PENDING.TOOLTIP,
+                message: TRANSACTIONS.STATUSES.PENDING.MESSAGE,
+                label: TRANSACTIONS.STATUSES.PENDING.LABEL,
+            };
+            break;
+        case TRANSACTIONS.STATUSES.REJECTED.NUM_EXECUTED:
+            textMap = {
+                tooltip: TRANSACTIONS.STATUSES.REJECTED.TOOLTIP,
+                message: TRANSACTIONS.STATUSES.REJECTED.MESSAGE,
+                label: TRANSACTIONS.STATUSES.REJECTED.LABEL,
+            };
+            break;
+    }
+
+    return textMap;
+};
+
+export const getIndividualAmountTooltip = (amount, transactionData) => {
+    if (
+        (amount === undefined && transactionData) ||
+        (typeof transactionData.executed === 'number' && transactionData.executed < 1)
+    ) {
+        return getOutputReplacementText(transactionData.executed).tooltip;
+    }
+
+    return '';
 };
 
 export const getPropertyLabel = propertyName => {
@@ -108,4 +157,33 @@ export const getPegnetLabel = propertyName => {
         return keyWithLowerCase;
     }
     return propertyName;
+};
+
+export const formatAmount = (children, unit) => {
+    const fmt = {
+        prefix: '',
+        decimalSeparator: '.',
+        groupSeparator: ',',
+        groupSize: 3,
+        secondaryGroupSize: 0,
+        fractionGroupSeparator: ' ',
+        fractionGroupSize: 0,
+        suffix: '',
+    };
+    let value = children;
+    BigNumber.config({FORMAT: fmt, DECIMAL_PLACES: 8});
+    const convertedNumber = new BigNumber(value);
+
+    if (unit !== 'EC') {
+        value = convertedNumber.dividedBy(TRANSACTIONS.FCT_CONVERSION).toFixed().toString();
+    }
+
+    const formattedNumber = new BigNumber(value);
+    return formattedNumber.toFormat();
+};
+
+export const calculateConfirmations = (block) => {
+    return block.syncheight - block.executed + 1 > 10
+        ? '10+'
+        : block.syncheight - block.executed + 1;
 };

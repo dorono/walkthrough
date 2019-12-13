@@ -25,10 +25,16 @@ export const TRANSACTIONS = {
         PENDING: {
             LABEL: 'Pending',
             NUM_EXECUTED: 0,
+            ALERT_TEXT: 'This transaction has not yet been processed by PegNet.',
+            MESSAGE: 'Not yet available',
+            TOOLTIP: 'Output amount is calculated based on conversion rate at time of processing',
         },
         REJECTED: {
             LABEL: 'Rejected',
             NUM_EXECUTED: -1,
+            ALERT_TEXT: 'This transaction has been rejected due to insufficient funds.',
+            MESSAGE: '(N/A)',
+            TOOLTIP: 'This transaction has been rejected due to insufficient funds',
         },
     },
     PEGNET_PARENT_ROUTES: {
@@ -45,6 +51,7 @@ export const TRANSACTIONS = {
         PXBC: 'pBCH',
     },
     PARTIAL_CONVERSION_DIFFERENCE_LABEL: '(returned)',
+    FCT_CONVERSION: 100000000,
 };
 
 Object.freeze(TRANSACTIONS);

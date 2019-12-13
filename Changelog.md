@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-12-10: 0.3.1-rc2
+- [HAR-1445] - pExplorer UAT + QA Updates
+
 ### 2019-12-10: 0.3.1-rc1
 - [no ticket] - Fix sort Address Page
 

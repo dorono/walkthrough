@@ -14,7 +14,7 @@ exports[`TransactionAlerts should match snapshot for a PENDING transaction 1`] =
       : 
     </strong>
      
-    This transaction has not yet been written to the Factom blockchain.
+    This transaction has not yet been processed by PegNet.
   </span>
 </div>
 `;
@@ -33,7 +33,7 @@ exports[`TransactionAlerts should match snapshot for a REJECTED transaction 1`] 
       : 
     </strong>
      
-    This transaction has been rejected due to insufficient funds
+    This transaction has been rejected due to insufficient funds.
   </span>
 </div>
 `;

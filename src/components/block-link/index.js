@@ -5,6 +5,7 @@ import classNames from 'classnames';
 import {reverse} from 'routes';
 import Hash from 'components/hash';
 import {currentTimezone, formatDate} from 'utils/date';
+import {getOutputReplacementText, calculateConfirmations} from 'utils/transactions';
 import {BLOCKS} from 'constants/blocks';
 import {TRANSACTIONS} from 'constants/transactions';
 
@@ -14,7 +15,6 @@ const BlockLink = ({type, children, isLink}) => {
     const block = children;
     if (!block) return <Hash type={type} />;
     if (Number(block.keymr) === 0) return <Hash type={type}>{block.keymr}</Hash>;
-
     return (
         <div className={styles.root}>
             {type === BLOCKS.DIRECTORY && (
@@ -78,24 +78,18 @@ const BlockLink = ({type, children, isLink}) => {
             ]}
             {type === TRANSACTIONS.PEGNET_COMPLETED && (
                 <React.Fragment>
-                    <span className={styles.label}>HEIGHT:</span>
                     {block.executed > TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED ? (
-                        <Link className={styles.link} to={`/dblocks/${block.executed}`}>
-                            {block.executed}
-                        </Link>
+                        <React.Fragment>
+                            <span className={styles.label}>HEIGHT:</span>
+                            <Link className={styles.link} to={`/dblocks/${block.executed}`}>
+                                {block.executed}
+                            </Link>
+                            <span className={styles.label}>CONFIRMATIONS:</span>
+                            <span className={styles.hash}>{calculateConfirmations(block)}</span>
+                        </React.Fragment>
                     ) : (
-                        <span>
-                            {block.executed === TRANSACTIONS.STATUSES.REJECTED.NUM_EXECUTED
-                                ? 'N/A'
-                                : 'Not yet Available'}
-                        </span>
+                        <span>{getOutputReplacementText(block.executed).message}</span>
                     )}
-                    <span className={styles.label}>CONFIRMATIONS:</span>
-                    <span className={styles.hash}>
-                        {block.syncheight - block.executed + 1 > 10
-                            ? '10+'
-                            : block.syncheight - block.executed + 1}
-                    </span>
                 </React.Fragment>
             )}
             {type === TRANSACTIONS.PEGNET_RECORDED && (
@@ -104,6 +98,7 @@ const BlockLink = ({type, children, isLink}) => {
                     <Link className={styles.link} to={`/dblocks/${block.height}`}>
                         {block.height}
                     </Link>
+
                     <span className={styles.label}>
                         PARENT{' '}
                         {block.txaction === TRANSACTIONS.TYPE.BURN.NUMBER

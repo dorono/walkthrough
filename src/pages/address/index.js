@@ -6,6 +6,7 @@ import {
     getPropertyLabel,
     getPegnetLabel,
     isPartialConversion,
+    getOutputReplacementText,
 } from 'utils/transactions';
 import {dataLoader} from 'hocs/data-loader';
 import {currentTimezone, formatDate} from 'utils/date';
@@ -22,7 +23,7 @@ import globalStyles from 'styles/index.css';
 import {TRANSACTIONS} from 'constants/transactions';
 import {requestJSONRPC} from 'api';
 import Spinner from 'components/spinner';
-import {mockPartialConversion} from 'pages/transaction/mockTransactions';
+import {mockPartialConversion} from 'mocks/mockTransactions';
 import styles from './styles.css';
 
 const columns = [
@@ -31,8 +32,6 @@ const columns = [
     'AMOUNT (BALANCE CHANGE)',
     'TYPE',
 ];
-
-const FCT_CONVERSION = 100000000;
 
 export const buildJsonRPCData = address => {
     return [
@@ -218,7 +217,7 @@ export class AddressPage extends Component {
         Object.keys(assetsBalancesAPI).forEach(property => {
             const propertyLabel = getPropertyLabel(property);
             const balance = assetsBalancesAPI[property];
-            const value = balance / FCT_CONVERSION;
+            const value = balance / TRANSACTIONS.FCT_CONVERSION;
             const assetInfo = {
                 label: `${propertyLabel} - ${value}`,
                 value: balance,
@@ -364,8 +363,18 @@ export class AddressPage extends Component {
                                                 </Hash>
                                             </td>
                                             <td>
-                                                <Amount unit={selectedAsset.alias}>
-                                                    {this.getAmount(row, index)}
+                                                <Amount
+                                                    iconName='InfoOutlined'
+                                                    displayIcon={
+                                                        row.executed < 1 && row.txaction === 2
+                                                    }
+                                                    hoverText={
+                                                        getOutputReplacementText(row.executed).tooltip
+                                                    }
+                                                    unit={selectedAsset.alias}>
+                                                    {row.executed < 1 && row.txaction === 2
+                                                        ? getOutputReplacementText(row.executed).message
+                                                        : this.getAmount(row, index)}
                                                 </Amount>
                                             </td>
                                             <td>{this.getTypeValue(row)}</td>

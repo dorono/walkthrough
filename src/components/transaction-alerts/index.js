@@ -10,10 +10,10 @@ const TransactionAlerts = ({transactionType}) => {
     let alertContent = '';
     let iconName = '';
     if (transactionType === TRANSACTIONS.STATUSES.PENDING.LABEL) {
-        alertContent = 'This transaction has not yet been written to the Factom blockchain.';
+        alertContent = TRANSACTIONS.STATUSES.PENDING.ALERT_TEXT;
         iconName = 'Schedule';
     } else if (transactionType === TRANSACTIONS.STATUSES.REJECTED.LABEL) {
-        alertContent = 'This transaction has been rejected due to insufficient funds';
+        alertContent = TRANSACTIONS.STATUSES.REJECTED.ALERT_TEXT;
         iconName = 'ErrorOutlineIcon';
     }
 

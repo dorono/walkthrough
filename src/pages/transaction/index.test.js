@@ -2,6 +2,7 @@ import React from 'react';
 import {shallow, mount} from 'enzyme';
 import {withRouter, MemoryRouter, Link} from 'react-router-dom';
 import Monospaced from 'components/monospaced';
+import Amount from 'components/amount';
 import * as Api from 'api';
 import {TRANSACTIONS} from 'constants/transactions';
 import {
@@ -11,7 +12,8 @@ import {
     mockJSONRPC,
     mockBuildJsonRPCData,
     mockPartialConversion,
-} from './mockTransactions';
+    mockConversion,
+} from 'mocks/mockTransactions';
 import {TransactionPage, buildJsonRPCData} from './index';
 
 const TransactionElement = React.createElement(withRouter(<TransactionPage />));
@@ -130,6 +132,31 @@ describe('TransactionPage', () => {
                 .find('#returned-val')
                 .text(),
         ).toEqual(expectedReturnedAmount);
+    });
+
+    it('should render the correct transaction return amount for a CONVERSION', () => {
+        const mockConversionWithDecimalToamount = Object.assign({}, mockConversion, {
+            toamount: 46742677.0000002,
+        });
+        const wrapperForConversion = mount(
+            <MemoryRouter>
+                <TransactionPage
+                    data={mockConversionWithDecimalToamount}
+                    location={mockRouterProps.location}
+                    match={mockRouterProps.match}
+                />
+            </MemoryRouter>,
+        );
+        const wrapperConversion = wrapperForConversion.find(TransactionPage);
+
+        const expectedReturnedConversionAmount = '6,829.54423251 PEG';
+
+        expect(
+            wrapperConversion
+                .find('#outputs-section-top-left')
+                .find(Amount)
+                .text(),
+        ).toEqual(expectedReturnedConversionAmount);
     });
 
     it('should match snapshot', () => {

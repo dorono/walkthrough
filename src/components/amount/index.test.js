@@ -4,6 +4,7 @@ import Amount from './index';
 
 const defaultProps = {
     unit: 'EC',
+    children: 20000000000,
 };
 
 describe('Amount', () => {

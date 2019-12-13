@@ -1,7 +1,11 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Amount should match snapshot 1`] = `
-<Monospaced>
-  undefined EC
-</Monospaced>
+<div
+  className="root"
+>
+  <Monospaced>
+    20,000,000,000 EC
+  </Monospaced>
+</div>
 `;

@@ -37,7 +37,7 @@ const mockBurnData = {
 };
 
 const mockPartialConversionData = {
-    DORON: 'YES',
+    MOCK_PARTIAL: 'YES',
     executed: 131,
     fromaddress: 'FA3pJdFJ5HFSZea5EG9Q76iV6dhi25SsZ1E1TEAPhXYwwCTw9utt',
     fromamount: 10000000000,
@@ -60,6 +60,37 @@ const mockPartialConversionData = {
     factomheight: 220279,
 };
 
+const mockPendingTransactionData = {
+    hash: 'ee6964758b5595d06047cd2dd3680f9d21cb6ccf0e179b0883e28b0cbaf5f959',
+    txid: '0-ee6964758b5595d06047cd2dd3680f9d21cb6ccf0e179b0883e28b0cbaf5f959',
+    height: 222128,
+    timestamp: '2019-12-08T17:28:00Z',
+    executed: 0,
+    txindex: 0,
+    txaction: 2,
+    fromaddress: 'FA3GvuSth7b8t5KVHZ2kUnjx5C9XCw8pRvs4Ci8MCg7uLfQwnt9K',
+    fromasset: 'pFCT',
+    fromamount: 100000000000,
+    toasset: 'PEG',
+};
+
+const mockConversionData = {
+    hash: '9a1dfe1a14a74db14f181d5acb2ce41b4182881a93e3336e1744fc714e326c1a',
+    txid: '0-9a1dfe1a14a74db14f181d5acb2ce41b4182881a93e3336e1744fc714e326c1a',
+    height: 216474,
+    timestamp: '2019-10-29T15:05:00-05:00',
+    executed: 216475,
+    txindex: 0,
+    txaction: 2,
+    fromaddress: 'FA2HBeH9XGgAkYapAyeD6styij39rhaJDKgCCoqr1M1L3NmUcvjL',
+    fromasset: 'pFCT',
+    fromamount: 1000000000,
+    toasset: 'PEG',
+    toamount: 682954423251,
+    syncheight: 219653,
+    factomheight: -1,
+};
+
 export const mockTransferTransaction = {
     jsonRPC: [
         {
@@ -76,10 +107,26 @@ export const mockBurnTransaction = {
     ],
 };
 
+export const mockConversion = {
+    jsonRPC: [
+        {
+            actions: [mockConversionData],
+        },
+    ],
+};
+
 export const mockPartialConversion = {
     jsonRPC: [
         {
             actions: [mockPartialConversionData],
+        },
+    ],
+};
+
+export const mockPendingTransaction = {
+    jsonRPC: [
+        {
+            actions: [mockPendingTransactionData],
         },
     ],
 };

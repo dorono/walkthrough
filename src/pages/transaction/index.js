@@ -5,10 +5,12 @@ import classNames from 'classnames';
 import {dataLoader} from 'hocs/data-loader';
 import {
     getPegnetTransactionName,
-    getTransactionStatus,
+    getOutputReplacementText,
     generateTransactionList,
     getOutputAmount,
     isPartialConversion,
+    getIndividualAmountOutputDisplay,
+    getIndividualAmountTooltip,
 } from 'utils/transactions';
 import Container from 'components/container';
 import {Vertical, Box, VerticalToHorizontal} from 'components/layout';
@@ -21,7 +23,7 @@ import Monospaced from 'components/monospaced';
 import TransactionAlerts from 'components/transaction-alerts';
 import {TRANSACTIONS} from 'constants/transactions';
 import globalStyles from 'styles/index.css';
-import {mockPartialConversion} from './mockTransactions';
+import {mockPartialConversion} from 'mocks/mockTransactions';
 import styles from './styles.css';
 
 export const buildJsonRPCData = txid => {
@@ -79,8 +81,19 @@ export class TransactionPage extends Component {
                                     className={classNames({
                                         [globalStyles.highlightAll]: row.isPartialConversion,
                                     })}>
-                                    <Amount unit={row.unit} key={`amt-${idx}`}>
-                                        {row.amount || 0}
+                                    <Amount
+                                        iconName='InfoOutlined'
+                                        displayIcon={row.amount === undefined}
+                                        hoverText={getIndividualAmountTooltip(
+                                            row.amount,
+                                            transactionData,
+                                        )}
+                                        unit={row.unit}
+                                        key={`amt-${idx}`}>
+                                        {getIndividualAmountOutputDisplay(
+                                            row.amount,
+                                            transactionData,
+                                        )}
                                     </Amount>
                                 </td>
                             </tr>
@@ -110,8 +123,7 @@ export class TransactionPage extends Component {
             };
         }
 
-        const transactionStatus = getTransactionStatus(pegnetDTransactionData);
-
+        const transactionStatus = getOutputReplacementText(pegnetDTransactionData.executed).label || null;
         return (
             <Fragment>
                 <Container
@@ -140,20 +152,29 @@ export class TransactionPage extends Component {
                                             </Amount>
                                         </div>
                                     )}
-                                    <div>
+                                    <div id='outputs-section-top-left'>
                                         <Label>OUTPUTS</Label>
+                                        {/* TODO: We should use render props or HOC to add this icon */}
                                         <Amount
                                             unit={
                                                 pegnetDTransactionData.toasset ||
                                                 pegnetDTransactionData.fromasset
-                                            }>
+                                            }
+                                            iconName='InfoOutlined'
+                                            displayIcon={pegnetDTransactionData.executed < 1}
+                                            hoverText={getIndividualAmountTooltip(
+                                                getOutputAmount(pegnetDTransactionData),
+                                                pegnetDTransactionData,
+                                            )}>
                                             {getOutputAmount(pegnetDTransactionData)}
                                         </Amount>
                                         {isPartialConversion(
                                             pegnetDTransactionData.txaction,
                                             pegnetDTransactionData.outputs,
                                         ) && (
-                                            <div id='returned-amount' className={globalStyles.highlightAll}>
+                                            <div
+                                                id='returned-amount'
+                                                className={globalStyles.highlightAll}>
                                                 <Amount unit={pegnetDTransactionData.fromasset}>
                                                     {pegnetDTransactionData.outputs[0].amount}
                                                 </Amount>

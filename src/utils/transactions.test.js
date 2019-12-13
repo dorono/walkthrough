@@ -2,10 +2,12 @@ import {TRANSACTIONS} from 'constants/transactions';
 import {
     isTransfer,
     getPegnetTransactionName,
-    getTransactionStatus,
+    getOutputReplacementText,
     generateTransactionList,
     getOutputAmount,
     getPropertyLabel,
+    formatAmount,
+    calculateConfirmations,
 } from './transactions';
 
 const mockTransferTransaction = {
@@ -67,9 +69,13 @@ test('getPegnetTransactionName should return transfer', () => {
     );
 });
 
-test('getTransactionStatus should return pending', () => {
-    mockTransferTransaction.executed = TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED;
-    expect(getTransactionStatus(mockTransferTransaction)).toEqual(TRANSACTIONS.STATUSES.PENDING.LABEL);
+test('getOutputReplacementText should return pending', () => {
+    const mockTransferTransactionPending = Object.assign({}, mockTransferTransaction, {
+        executed: TRANSACTIONS.STATUSES.PENDING.NUM_EXECUTED,
+    });
+    expect(getOutputReplacementText(mockTransferTransactionPending.executed).label).toEqual(
+        TRANSACTIONS.STATUSES.PENDING.LABEL,
+    );
 });
 
 test('generateTransactionList should return the correct result object for TRANSFER', () => {
@@ -106,4 +112,19 @@ test('getPropertyLabel should return the correct user-facing asset label when th
 
 test('getPropertyLabel should return the correct user-facing asset label when there is NOT an alternate label', () => {
     expect(getPropertyLabel('pBNB')).toEqual('pBNB');
+});
+
+test('formatAmount should return the correct output with a decimal number, integer, or exponential', () => {
+    expect(formatAmount(8095404198915177)).toEqual('80,954,041.98915177');
+    expect(formatAmount(1)).toEqual('0.00000001');
+});
+
+test('calculateConfirmations should return the correct number of confirmations', () => {
+    expect(calculateConfirmations(mockTransferTransaction)).toEqual('10+');
+
+    const mockTransferTransactionLessConfirmations = Object.assign({}, mockTransferTransaction, {
+        syncheight: 5,
+        executed: 3,
+    });
+    expect(calculateConfirmations(mockTransferTransactionLessConfirmations)).toEqual(3);
 });

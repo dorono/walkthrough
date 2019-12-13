@@ -86,6 +86,7 @@
     "@material-ui/icons": "3.0.1",
     "abortcontroller-polyfill": "1.1.9",
     "base-x": "3.0.4",
+    "bignumber.js": "^9.0.0",
     "bs58check": "2.1.1",
     "classnames": "2.2.5",
     "core-decorators": "0.18.0",
