@@ -34,7 +34,7 @@ export const TRANSACTIONS = {
             NUM_EXECUTED: -1,
             ALERT_TEXT: 'This transaction has been rejected due to insufficient funds.',
             MESSAGE: '(N/A)',
-            TOOLTIP: 'This transaction has been rejected due to insufficient funds',
+            TOOLTIP: 'Output amount is calculated based on conversion rate at time of processing',
         },
     },
     PEGNET_PARENT_ROUTES: {
