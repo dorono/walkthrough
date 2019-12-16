@@ -1,8 +1,5 @@
 ## Changelog
 
-### 2019-12-10: 0.3.2-rc1
-- [HAR-1445] - additional fix
-
 ### 2019-12-10: 0.3.1
 - version bump
 - [HAR-1445] - pExplorer UAT + QA Updates (typo fix only)
