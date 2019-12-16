@@ -9,7 +9,6 @@ import {
     generateTransactionList,
     getOutputAmount,
     isPartialConversion,
-    getIndividualAmountOutputDisplay,
     getIndividualAmountTooltip,
 } from 'utils/transactions';
 import Container from 'components/container';
@@ -83,17 +82,26 @@ export class TransactionPage extends Component {
                                     })}>
                                     <Amount
                                         iconName='InfoOutlined'
-                                        displayIcon={row.amount === undefined}
+                                        displayIcon={
+                                            row.amount === undefined ||
+                                            (title === TRANSACTIONS.TITLE.OUTPUTS &&
+                                                transactionData.executed < 1 &&
+                                                transactionData.txaction ===
+                                                    TRANSACTIONS.TYPE.CONVERSION.NUMBER)
+                                        }
                                         hoverText={getIndividualAmountTooltip(
                                             row.amount,
                                             transactionData,
                                         )}
                                         unit={row.unit}
                                         key={`amt-${idx}`}>
-                                        {getIndividualAmountOutputDisplay(
-                                            row.amount,
-                                            transactionData,
-                                        )}
+                                        {row.amount === undefined ||
+                                        (title === TRANSACTIONS.TITLE.OUTPUTS &&
+                                            transactionData.executed < 1 &&
+                                            transactionData.txaction ===
+                                                TRANSACTIONS.TYPE.CONVERSION.NUMBER)
+                                            ? getOutputReplacementText(transactionData.executed).message
+                                            : row.amount}
                                     </Amount>
                                 </td>
                             </tr>
@@ -123,7 +131,8 @@ export class TransactionPage extends Component {
             };
         }
 
-        const transactionStatus = getOutputReplacementText(pegnetDTransactionData.executed).label || null;
+        const transactionStatus =
+            getOutputReplacementText(pegnetDTransactionData.executed).label || null;
         return (
             <Fragment>
                 <Container

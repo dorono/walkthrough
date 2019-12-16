@@ -193,7 +193,7 @@ export class AddressPage extends Component {
             }
         }
         return toamount;
-    }
+    };
 
     getPaginationData = (count, nextoffset) => {
         let offset = nextoffset;
@@ -366,14 +366,20 @@ export class AddressPage extends Component {
                                                 <Amount
                                                     iconName='InfoOutlined'
                                                     displayIcon={
-                                                        row.executed < 1 && row.txaction === 2
+                                                        row.executed < 1 &&
+                                                        row.txaction ===
+                                                            TRANSACTIONS.TYPE.CONVERSION.NUMBER
                                                     }
                                                     hoverText={
-                                                        getOutputReplacementText(row.executed).tooltip
+                                                        getOutputReplacementText(row.executed)
+                                                            .tooltip
                                                     }
                                                     unit={selectedAsset.alias}>
-                                                    {row.executed < 1 && row.txaction === 2
-                                                        ? getOutputReplacementText(row.executed).message
+                                                    {row.executed < 1 &&
+                                                    row.txaction ===
+                                                        TRANSACTIONS.TYPE.CONVERSION.NUMBER
+                                                        ? getOutputReplacementText(row.executed)
+                                                              .message
                                                         : this.getAmount(row, index)}
                                                 </Amount>
                                             </td>
