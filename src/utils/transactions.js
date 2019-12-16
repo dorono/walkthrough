@@ -45,7 +45,7 @@ export const generateTransactionList = (title, transactionData) => {
             transactions = [
                 {
                     user_address: transactions[0].toaddress || transactions[0].fromaddress,
-                    amount: transactions[0].toamount,
+                    amount: transactions[0].toamount || transactions[0].fromamount,
                     unit: transactions[0].toasset,
                 },
             ];
