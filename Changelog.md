@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-12-10: 0.3.2-rc1
+- [EX-195] - Make search case-insensitive and prevent private keys from being passed to the API
+
 ### 2019-12-10: 0.3.1
 - version bump
 - [HAR-1445] - pExplorer UAT + QA Updates (typo fix only)

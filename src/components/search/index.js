@@ -2,19 +2,25 @@ import React, {Component} from 'react';
 import {withRouter} from 'react-router-dom';
 import {autobind} from 'core-decorators';
 import classNames from 'classnames';
+import {
+    isValidPrivateAddress,
+    isValidPrivateEcAddress,
+    isValidPrivateFctAddress,
+} from 'factom/dist/factom-struct';
 // TODO (maybe?): set up Google Analytics for this search
 // import {trackPageView} from 'utils/analytics';
 import {REGEX} from 'constants/regex';
 import {requestJSONRPC} from 'api';
-
 import {
-    isPrivateKey,
+    isKey,
     isProbablyAKey,
     PRIVATE_KEY_PREFIX_EC,
     PUBLIC_KEY_PREFIX_EC,
     PUBLIC_KEY_PREFIX_FC,
 } from 'utils/key';
-import {TRANSACTIONS} from '../../constants/transactions';
+import {SEARCH} from 'constants/search';
+import {ADDRESSES} from 'constants/addresses';
+import {TRANSACTIONS} from 'constants/transactions';
 
 import styles from './styles.css';
 
@@ -39,13 +45,13 @@ export default class Search extends Component {
         }
     }
 
-    getHelpText() {
+    getHelpText = () => {
         if (this.state.searching) return 'Searching...';
         if (this.state.error) return this.state.error;
         return 'You can search by: Address or Transaction ID';
     }
 
-    setInputRef(ref) {
+    setInputRef = (ref) => {
         this.input = ref;
     }
 
@@ -54,57 +60,89 @@ export default class Search extends Component {
      * @param query
      * @returns {string}
      */
-    getErrorMessage(query = '') {
-        const errorMessage = 'No results found.';
-        if (isPrivateKey(query)) {
-            return `${errorMessage} If you're searching for an address, never expose your private
-                key and try again with your public key beginning with
-                ${query.startsWith(PRIVATE_KEY_PREFIX_EC) ?
-                    PUBLIC_KEY_PREFIX_EC : PUBLIC_KEY_PREFIX_FC}.`;
+    getErrorMessage = (errorType, query) => {
+        const errorMessage = SEARCH.ERROR_MESSAGES.NO_RESULTS_FOUND;
+        switch (errorType) {
+            case ADDRESSES.IS_PRIVATE_KEY:
+                return `${errorMessage} ${SEARCH.ERROR_MESSAGES.IS_PRIVATE_KEY}
+                ${
+                    query.startsWith(PRIVATE_KEY_PREFIX_EC)
+                        ? PUBLIC_KEY_PREFIX_EC
+                        : PUBLIC_KEY_PREFIX_FC
+                }.`;
+            case ADDRESSES.IS_PROBABLY_A_KEY:
+                return `${errorMessage} ${SEARCH.ERROR_MESSAGES.IS_PROBABLY_A_KEY}`;
+            case ADDRESSES.IS_KEY:
+                return `${errorMessage} ${SEARCH.ERROR_MESSAGES.IS_KEY}`;
+            default:
+                return errorMessage;
         }
-        if (isProbablyAKey(query)) {
-            return `${errorMessage} It appears you might be searching for an address but have
-                provided an invalid value, please check for typos.`;
+    };
+
+    isPrivateAddress = (query = '', updatedState) => {
+        if (
+            isValidPrivateAddress(query) ||
+            isValidPrivateEcAddress(query) ||
+            isValidPrivateFctAddress(query)
+        ) {
+            updatedState.errorStatus = ADDRESSES.IS_PRIVATE_KEY;
+            return true;
+        } else if (isProbablyAKey(query)) {
+            updatedState.errorStatus = ADDRESSES.IS_PROBABLY_A_KEY;
+            return true;
         }
-        return errorMessage;
-    }
+
+        return false;
+    };
 
     async search() {
-        const noPegnetResults = 'noPegnetResults';
+        const noPegnetResults = SEARCH.ERROR_MESSAGES.NO_RESULTS_FOUND;
         this.setState({searching: true});
 
         const query = this.state.query.trim();
-        const state = {
+        const updatedState = {
             searching: false,
             error: '',
+            errorStatus: false,
         };
 
         // TODO (maybe?): set up Google Analytics for this search
         // trackPageView(`/search?q=${query}`);
 
-        try {
-            const response = await this.searchPegnet(query);
-            const targetPath = `/${response.parentRoute}/${query}` === this.props.location.pathname
-                ? this.props.location.pathname
-                : `/${response.parentRoute}/${query}`;
-            if (response.error) {
-                state.error = noPegnetResults;
-                throw this.getErrorMessage();
+        // don't even try to hit the API if it's a private key
+        if (!this.isPrivateAddress(query, updatedState)) {
+            try {
+                const response = await this.searchPegnet(query);
+                const targetPath =
+                    `/${response.parentRoute}/${query}` === this.props.location.pathname
+                        ? this.props.location.pathname
+                        : `/${response.parentRoute}/${query}`;
+                if (response.error) {
+                    updatedState.error = noPegnetResults;
+                    throw this.getErrorMessage();
+                }
+                this.props.history.push(targetPath);
+            } catch (error) {
+                if (!this.state.searching) return;
+                if (updatedState.error === noPegnetResults) {
+                    updatedState.error = this.getErrorMessage();
+                } else if (error.statusCode === 404) {
+                    if (isKey(this.state.query)) {
+                        updatedState.error = this.getErrorMessage(ADDRESSES.IS_KEY, query);
+                    } else {
+                        updatedState.error = this.getErrorMessage();
+                    }
+                } else {
+                    updatedState.error = SEARCH.ERROR_MESSAGES.NO_RESULTS_FOUND;
+                }
             }
-            this.props.history.push(targetPath);
-        } catch (error) {
-            if (!this.state.searching) return;
-            if (state.error === noPegnetResults) {
-                state.error = this.getErrorMessage();
-            } else if (error.statusCode === 404) {
-                state.error = this.getErrorMessage(this.state.query);
-            } else {
-                state.error = 'Internal server error, please try again';
-            }
+        // handle the particular private key errors
+        } else {
+            updatedState.error = this.getErrorMessage(updatedState.errorStatus, query);
         }
 
-        this.setState(state);
-        if (state.error) {
+        this.setState(updatedState);
+        if (updatedState.error) {
             this.input.focus();
         }
     }
@@ -112,40 +150,39 @@ export default class Search extends Component {
     async executeGetTransactions(query, type) {
         let parentRoute;
         const pegnetData = await requestJSONRPC('get-transactions', {
-            [type]: query,
+            // if searching transactions, convert query to lower case
+            [type]: type === SEARCH.SEARCH_KEYS.TXID ? query.toLowerCase() : query,
         });
 
         switch (type) {
-            case 'address':
+            case SEARCH.SEARCH_KEYS.ADDRESS:
                 parentRoute = TRANSACTIONS.PEGNET_PARENT_ROUTES.ADDRESSES;
                 break;
             default:
                 parentRoute = TRANSACTIONS.PEGNET_PARENT_ROUTES.TRANSACTIONS;
         }
 
-        const pegnetDataWithRouting = Object.assign({},
-            pegnetData,
-            {query},
-            {parentRoute},
-        );
-
-        return pegnetDataWithRouting;
+        // return a combination of api response + other data needed for determining
+        // which API call to make
+        return Object.assign({}, pegnetData, {query}, {parentRoute});
     }
 
     async searchPegnet(query) {
         const splitQuery = query.includes('-') ? query.split('-')[1] : undefined;
-        const requestArray = [
-            await this.executeGetTransactions(query, 'address'),
-        ];
+        // create an array of searches starting with an address search
+        const requestArray = [await this.executeGetTransactions(query, SEARCH.SEARCH_KEYS.ADDRESS)];
 
         // if it's a valid sha-256, search for entryhash first, otherwise
         // skip this search, def not a transaction id
         if (
             // only validating part of TxId after the TxIndex
-            splitQuery
-            && REGEX.VALIDATE.SHA_256.test(splitQuery)
+            splitQuery &&
+            REGEX.VALIDATE.SHA_256.test(splitQuery.toLowerCase())
         ) {
-            requestArray.unshift(await this.executeGetTransactions(query, 'txid'));
+            // since it's a valid sha-256, make this the first search we do
+            requestArray.unshift(
+                await this.executeGetTransactions(query.toLowerCase(), SEARCH.SEARCH_KEYS.TXID),
+            );
         }
 
         const searchResultResponse = await Promise.all(requestArray);
@@ -163,27 +200,27 @@ export default class Search extends Component {
             return true;
         }
 
-        return pegnetResponse.result.actions[0].txid === query;
-    }
+        return pegnetResponse.result.actions[0].txid === query.toLowerCase();
+    };
 
-    handleChange(event) {
+    handleChange = (event) => {
         this.setState({
             query: event.target.value,
             error: '',
         });
     }
 
-    handleKeyDown(event) {
+    handleKeyDown = (event) => {
         if (event.keyCode === 13) {
             this.search();
         }
     }
 
-    handleFocus() {
+    handleFocus = () => {
         this.setState({hasFocus: true});
     }
 
-    handleBlur() {
+    handleBlur = () => {
         this.setState({hasFocus: false});
     }
 
@@ -202,7 +239,10 @@ export default class Search extends Component {
                         onBlur={this.handleBlur}
                         ref={this.setInputRef}
                     />
-                    <div className={classNames(styles.help, {[styles.visible]: this.state.hasFocus})}>
+                    <div
+                        className={classNames(styles.help, {
+                            [styles.visible]: this.state.hasFocus,
+                        })}>
                         {this.getHelpText()}
                     </div>
                 </div>
