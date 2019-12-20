@@ -1,6 +1,9 @@
 ## Changelog
 
-### 2019-12-10: 0.3.2-rc1
+### 2019-12-19: 0.3.2-rc2
+- [EX-195] - Fixed error/"no results found" handling on search
+
+### 2019-12-19: 0.3.2-rc1
 - [EX-195] - Make search case-insensitive and prevent private keys from being passed to the API
 
 ### 2019-12-10: 0.3.1

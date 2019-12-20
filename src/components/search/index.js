@@ -96,7 +96,6 @@ export default class Search extends Component {
     };
 
     async search() {
-        const noPegnetResults = SEARCH.ERROR_MESSAGES.NO_RESULTS_FOUND;
         this.setState({searching: true});
 
         const query = this.state.query.trim();
@@ -118,20 +117,22 @@ export default class Search extends Component {
                         ? this.props.location.pathname
                         : `/${response.parentRoute}/${query}`;
                 if (response.error) {
-                    updatedState.error = noPegnetResults;
-                    throw this.getErrorMessage();
+                    if (isKey(this.state.query)) {
+                        updatedState.errorStatus = ADDRESSES.IS_KEY;
+                        throw this.getErrorMessage(ADDRESSES.IS_KEY, this.state.query);
+                    } else {
+                        throw this.getErrorMessage();
+                    }
                 }
                 this.props.history.push(targetPath);
             } catch (error) {
                 if (!this.state.searching) return;
-                if (updatedState.error === noPegnetResults) {
-                    updatedState.error = this.getErrorMessage();
-                } else if (error.statusCode === 404) {
-                    if (isKey(this.state.query)) {
-                        updatedState.error = this.getErrorMessage(ADDRESSES.IS_KEY, query);
-                    } else {
-                        updatedState.error = this.getErrorMessage();
-                    }
+                // since the API will not give us a 404 for a non-existent search term,
+                // the only thing we'll be able to glean is whether we are searching for
+                // an address that is not one of ours
+                if (updatedState.errorStatus === ADDRESSES.IS_KEY) {
+                    updatedState.error = this.getErrorMessage(ADDRESSES.IS_KEY, this.state.query);
+                // any other errors will get the generic "no results found" type of message
                 } else {
                     updatedState.error = SEARCH.ERROR_MESSAGES.NO_RESULTS_FOUND;
                 }
