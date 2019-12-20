@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-12-20: 0.3.2
+- version bump
+
 ### 2019-12-20: 0.3.2-rc3
 - [EX-195] - Added GA tracking for searches, preventing private address searches from being recorded by GA
 
