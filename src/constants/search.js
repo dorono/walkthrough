@@ -16,6 +16,7 @@ export const SEARCH = {
         ADDRESS: 'address',
         TXID: 'txid',
     },
+    RESTRICTED_PRIVATE_KEY_SEARCH: '(private key query)',
 };
 /* eslint-enable max-len */
 Object.freeze(SEARCH);

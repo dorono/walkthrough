@@ -7,8 +7,7 @@ import {
     isValidPrivateEcAddress,
     isValidPrivateFctAddress,
 } from 'factom/dist/factom-struct';
-// TODO (maybe?): set up Google Analytics for this search
-// import {trackPageView} from 'utils/analytics';
+import {trackPageView} from 'utils/analytics';
 import {REGEX} from 'constants/regex';
 import {requestJSONRPC} from 'api';
 import {
@@ -99,14 +98,13 @@ export default class Search extends Component {
         this.setState({searching: true});
 
         const query = this.state.query.trim();
+        let searchQueryForTracking = query;
+
         const updatedState = {
             searching: false,
             error: '',
             errorStatus: false,
         };
-
-        // TODO (maybe?): set up Google Analytics for this search
-        // trackPageView(`/search?q=${query}`);
 
         // don't even try to hit the API if it's a private key
         if (!this.isPrivateAddress(query, updatedState)) {
@@ -139,9 +137,11 @@ export default class Search extends Component {
             }
         // handle the particular private key errors
         } else {
+            searchQueryForTracking = SEARCH.RESTRICTED_PRIVATE_KEY_SEARCH;
             updatedState.error = this.getErrorMessage(updatedState.errorStatus, query);
         }
 
+        trackPageView(`/search?q=${searchQueryForTracking}`);
         this.setState(updatedState);
         if (updatedState.error) {
             this.input.focus();

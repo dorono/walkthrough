@@ -1,5 +1,8 @@
 ## Changelog
 
+### 2019-12-20: 0.3.2-rc3
+- [EX-195] - Added GA tracking for searches, preventing private address searches from being recorded by GA
+
 ### 2019-12-19: 0.3.2-rc2
 - [EX-195] - Fixed error/"no results found" handling on search
 
