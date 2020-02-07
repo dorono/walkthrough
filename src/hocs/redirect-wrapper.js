@@ -1,9 +1,7 @@
 import React from 'react';
-import {Redirect, withRouter} from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {has} from 'lodash';
 
-// TODO: This is very specific to the error page,
-// would be good to make it more universal at some point
 @withRouter
 export const redirectWrapper = (redirectUrl) => (Component) => {
     class RedirectWrapper extends React.Component {
