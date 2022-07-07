@@ -95,7 +95,7 @@
     "factom": "^1.2.8",
     "js-base64": "^2.5.1",
     "lodash": "4.17.10",
-    "moment": "2.22.2",
+    "moment": "2.29.4",
     "prop-types": "^15.7.2",
     "query-string": "5.0.0",
     "react": "16.12.0",
